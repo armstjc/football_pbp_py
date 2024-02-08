@@ -1,5 +1,4 @@
 # Creation Date: 01/14/2024 4:14 PM EDT
-# Updates:
 # Authors: Joseph Armstrong (armstrongjoseph08@gmail.com)
 # file: `./core/pbp_engine/plays.py`
 # Purpose: Code for generating plays, and their objects.
@@ -74,7 +73,7 @@ class plays:
             # -- "P": QB is in pistol for this play.
             # -- "H": QB is the holder for a FG on this play.
             # -- "K": QB is a punter/kicker for this play.
-            "qb_location": "U",
+            "qb_location": None,
             # Denotes the number of RBs in the backfield for this play.
             "n_offense_backfield": 0,
             "is_no_huddle": False,
@@ -106,13 +105,15 @@ class plays:
             "injured_players": [
                 # if there is a player or players injured
                 # on a play, this is how this section will look like:
-                {
-                    "player_id": None,
-                    "team_id": None,
-                    "player_num": None,
-                    "player_full_name": None,
-                    "player_football_name": None,
-                }
+                # {
+                #     "player_id": None,
+                #     "team_id": None,
+                #     "player_num": None,
+                #     "player_full_name": None,
+                #     "player_football_name": None,
+                #     # String, identiying the suspected injury
+                #     "type_of_injury":None
+                # }
             ],
             # The yardline where the QB attempts the pass.
             # (if the QB actually got a pass off)
@@ -145,7 +146,8 @@ class plays:
             "is_created_reception": False,
             "is_drop": False,
             "is_touchdown": False,
-            "is_turnover": False,  # Set to true if there is a play where there is a turnover by the offense,
+            "is_turnover": False,  
+            # Set to true if there is a play where there is a turnover by the offense,
             # but the offense then forces their own turnover and gets the ball back in that same play.
             # Examples: https://www.youtube.com/watch?v=6jOnMiJKJ5s
             "is_double_turnover": False,
@@ -279,7 +281,7 @@ class plays:
             # -- "P": QB is in pistol for this play.
             # -- "H": QB is the holder for a FG on this play.
             # -- "K": QB is a punter/kicker for this play.
-            "qb_location": "U",
+            "qb_location": None,
             # Denotes the number of RBs in the backfield for this play.
             "n_offense_backfield": 0,
             "is_no_huddle": False,
@@ -926,7 +928,7 @@ class plays:
             # -- "P": QB is in pistol for this play.
             # -- "H": QB is the holder for a FG on this play.
             # -- "K": QB is a punter/kicker for this play.
-            "qb_location": "U",
+            "qb_location": None,
             # Denotes the number of RBs in the backfield for this play.
             "n_offense_backfield": 0,
             "is_no_huddle": False,
@@ -958,13 +960,15 @@ class plays:
             "injured_players": [
                 # if there is a player or players injured
                 # on a play, this is how this section will look like:
-                {
-                    "player_id": None,
-                    "team_id": None,
-                    "player_num": None,
-                    "player_full_name": None,
-                    "player_football_name": None,
-                }
+                # {
+                #     "player_id": None,
+                #     "team_id": None,
+                #     "player_num": None,
+                #     "player_full_name": None,
+                #     "player_football_name": None,
+                #     # String, identiying the suspected injury
+                #     "type_of_injury":None
+                # }
             ],
             # The type of play ran on this conversion attempt.
             # can either ber a "pass" or "run" play.

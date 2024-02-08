@@ -1,12 +1,13 @@
 # Creation Date: 08/16/2023 07:28 PM EST
 # Author: Joseph Armstrong (armstrongjoseph08@gmail.com)
-# File Name: create_sdv_pbp_db.py
+# File Name: ./core/database/create_sdv_pbp_db.py
 # Purpose: Creates a database that can be used for this application.
 ####################################################################################################
 
-import os
-import sqlite3
 import logging
+from os import mkdir
+from os.path import expanduser
+from sqlite3 import connect as sqlite_connect
 
 # import zoneinfo
 
@@ -32,17 +33,17 @@ class sqlite3_sample_files:
 
         sql_script = """
         CREATE TABLE iso_nations(
-            nation_name  TEXT NOT NULL PRIMARY KEY
-            ,nation_iso_alpha_2 TEXT NOT NULL
-            ,nation_iso_alpha_3 TEXT NOT NULL
-            ,nation_iso_numeric INTEGER  NOT NULL
-            ,iso_3166_2 TEXT NOT NULL
-            ,region TEXT
-            ,subregion TEXT
-            ,intermediate_region TEXT
-            ,region_code INTEGER 
-            ,subregion_code INTEGER 
-            ,intermediate_region_code INTEGER 
+            "nation_name"                 TEXT NOT NULL PRIMARY KEY
+            ,"nation_iso_alpha_2"         TEXT NOT NULL
+            ,"nation_iso_alpha_3"         TEXT NOT NULL
+            ,"nation_iso_numeric"         INTEGER  NOT NULL
+            ,"iso_3166_2"                 TEXT NOT NULL
+            ,"region"                     TEXT
+            ,"subregion"                  TEXT
+            ,"intermediate_region"        TEXT
+            ,"region_code"                INTEGER 
+            ,"subregion_code"             INTEGER 
+            ,"intermediate_region_code"   INTEGER 
         );
 
         INSERT INTO iso_nations(nation_name,nation_iso_alpha_2,nation_iso_alpha_3,nation_iso_numeric,iso_3166_2,region,subregion,intermediate_region,region_code,subregion_code,intermediate_region_code) VALUES
@@ -318,13 +319,13 @@ class sqlite3_sample_files:
 
         sql_script = """
         CREATE TABLE IF NOT EXISTS "iso_3166_2" (
-            "nation_iso_alpha_2" char(2) NOT NULL,
-            "nation_iso_alpha_3" char(3) NOT NULL,
-            "nation_iso_numeric" INT NOT NULL,
-            "subdivision_iso_3166_2_code" char(6) PRIMARY KEY,
-            "subdivision_name" TEXT NOT NULL,
-            "subdivision_category" TEXT NOT NULL,
-            "subdivision_parent" char(6)
+            "nation_iso_alpha_2"            char(2) NOT NULL,
+            "nation_iso_alpha_3"            char(3) NOT NULL,
+            "nation_iso_numeric"            INT NOT NULL,
+            "subdivision_iso_3166_2_code"   char(6) PRIMARY KEY,
+            "subdivision_name"              TEXT NOT NULL,
+            "subdivision_category"          TEXT NOT NULL,
+            "subdivision_parent"            char(6)
         );
         """
         return sql_script.replace("        ", "")
@@ -5455,8 +5456,8 @@ class sqlite3_sample_files:
 
         sql_script = """
         CREATE TABLE iso_timezones(
-            "timezone_name" TEXT NOT NULL PRIMARY KEY
-            ,"nation_iso_alpha_2" TEXT NOT NULL
+            "timezone_name"         TEXT NOT NULL PRIMARY KEY
+            ,"nation_iso_alpha_2"   TEXT NOT NULL
         );
         INSERT INTO iso_timezones("timezone_name","nation_iso_alpha_2") VALUES
             ('Europe/Andorra','AD')
@@ -5807,81 +5808,84 @@ class sqlite3_sample_files:
 
         sql_script = """
         CREATE TABLE "fb_leagues" (
-            "league_id"	TEXT UNIQUE,
-            "league_long_name"	TEXT NOT NULL,
-            "league_short_name"	TEXT NOT NULL,
-            "league_sport_type"	TEXT NOT NULL,
-            "league_default_sex"	TEXT NOT NULL,
-            "league_default_gender"	TEXT NOT NULL,
-            "league_notes"	TEXT,
-            "field_length"	INTEGER NOT NULL DEFAULT 100,
-            "downs"	INTEGER NOT NULL DEFAULT 4,
-            "first_down_yards"	INTEGER NOT NULL DEFAULT 10,
-            "end_zone_length"	INTEGER NOT NULL DEFAULT 10,
-            "kickoff_yardline"	INTEGER NOT NULL DEFAULT 35,
-            "safety_kick_yardline"	INTEGER NOT NULL DEFAULT 20,
-            "kickoff_touchback_yardline"	INTEGER NOT NULL DEFAULT 75,
-            "punt_touchback_yardline"	INTEGER NOT NULL DEFAULT 80,
-            "normal_touchback_yardline"	INTEGER NOT NULL DEFAULT 80,
-            "kansas_ot_yardline"	INTEGER NOT NULL DEFAULT 25,
-            "pat_yardline"	INTEGER NOT NULL DEFAULT 3,
-            "1PC_yardline"	INTEGER NOT NULL DEFAULT 3,
-            "2PC_yardline"	INTEGER NOT NULL DEFAULT 3,
-            "3PC_yardline"	INTEGER NOT NULL DEFAULT 10,
-            "quarters"	INTEGER NOT NULL DEFAULT 900,
-            "timeouts_per_half"	INTEGER NOT NULL DEFAULT 3,
-            "ot_period_seconds"	INTEGER NOT NULL DEFAULT 900,
-            "ot_periods"	INTEGER NOT NULL DEFAULT 1,
-            "ot_periods_until_shootout"	INTEGER NOT NULL DEFAULT -1,
-            "min_xfl_ot_periods"	INTEGER NOT NULL DEFAULT -1,
-            "set_xfl_ot_periods"	INTEGER NOT NULL DEFAULT -1,
-            "touchdown_points"	INTEGER NOT NULL DEFAULT 6,
-            "field_goal_points"	INTEGER NOT NULL DEFAULT 3,
-            "safety_points"	INTEGER NOT NULL DEFAULT 2,
-            "pat_points"	INTEGER NOT NULL DEFAULT 1,
-            "pat_defense"	INTEGER NOT NULL DEFAULT 2,
-            "pat_safety"	INTEGER NOT NULL DEFAULT 1,
-            "players_on_field"	INTEGER NOT NULL DEFAULT 11,
-            "preseason_overtime_enabled"	INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
-            "reg_season_ot_enabled"	INTEGER NOT NULL DEFAULT 1 COLLATE BINARY,
-            "postseason_ot_enabled"	INTEGER NOT NULL DEFAULT 1 COLLATE BINARY,
-            "preseason_sudden_death_ot"	INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
-            "reg_season_sudden_death_ot"	INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
-            "postseason_sudden_death_ot"	INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
-            "preseason_mod_sudden_death_ot"	INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
-            "reg_season_mod_sudden_death_ot"	INTEGER NOT NULL DEFAULT 1 COLLATE BINARY,
-            "postseason_mod_sudden_death_ot"	INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
-            "preseason_super_modified_ot"	INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
-            "reg_season_super_modified_ot"	INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
-            "postseason_super_modified_ot"	INTEGER NOT NULL DEFAULT 1 COLLATE BINARY,
-            "preseason_kansas_ot"	INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
-            "reg_season_kansas_ot"	INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
-            "postseason_kansas_ot"	INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
-            "preseason_ncaa_ot"	INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
-            "reg_season_ncaa_ot"	INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
-            "postseason_ncaa_ot"	INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
-            "preseason_xfl_ot"	INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
-            "reg_season_xfl_ot"	INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
-            "postseason_xfl_ot"	INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
-            "preseason_full_period_ot"	INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
-            "reg_season_full_period_ot"	INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
-            "postseason_full_period_ot"	INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
-            "two_forward_passes"	INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
-            "spikes_are_team_stats"	INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
-            "sacks_are_rushes"	INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
-            "kneeldowns_are_team_stats"	INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
+            "league_id"	                            TEXT UNIQUE,
+            "league_long_name"	                    TEXT NOT NULL,
+            "league_short_name"	                    TEXT NOT NULL,
+            "league_sport_type"	                    TEXT NOT NULL,
+            "league_default_sex"	                TEXT NOT NULL,
+            "league_default_gender"	                TEXT NOT NULL,
+            "league_notes"	                        TEXT,
+            "field_length"	                        INTEGER NOT NULL DEFAULT 100,
+            "downs"	                                INTEGER NOT NULL DEFAULT 4,
+            "first_down_yards"	                    INTEGER NOT NULL DEFAULT 10,
+            "end_zone_length"	                    INTEGER NOT NULL DEFAULT 10,
+            "kickoff_yardline"	                    INTEGER NOT NULL DEFAULT 35,
+            "safety_kick_yardline"	                INTEGER NOT NULL DEFAULT 20,
+            "kickoff_touchback_yardline"	        INTEGER NOT NULL DEFAULT 75,
+            "punt_touchback_yardline"	            INTEGER NOT NULL DEFAULT 80,
+            "normal_touchback_yardline"	            INTEGER NOT NULL DEFAULT 80,
+            "kansas_ot_yardline"	                INTEGER NOT NULL DEFAULT 25,
+            "pat_yardline"	                        INTEGER NOT NULL DEFAULT 3,
+            "1PC_yardline"	                        INTEGER NOT NULL DEFAULT 3,
+            "2PC_yardline"	                        INTEGER NOT NULL DEFAULT 3,
+            "3PC_yardline"	                        INTEGER NOT NULL DEFAULT 10,
+            "quarters"	                            INTEGER NOT NULL DEFAULT 4,
+            "timeouts_per_half"	                    INTEGER NOT NULL DEFAULT 3,
+            "ot_period_seconds"	                    INTEGER NOT NULL DEFAULT 900,
+            "game_seconds"	                        INTEGER NOT NULL DEFAULT 3600,
+            "half_seconds"	                        INTEGER NOT NULL DEFAULT 1800,
+            "quarter_seconds"	                    INTEGER NOT NULL DEFAULT 900,
+            "ot_periods"	                        INTEGER NOT NULL DEFAULT 1,
+            "ot_periods_until_shootout"	            INTEGER NOT NULL DEFAULT -1,
+            "min_xfl_ot_periods"	                INTEGER NOT NULL DEFAULT -1,
+            "set_xfl_ot_periods"	                INTEGER NOT NULL DEFAULT -1,
+            "touchdown_points"	                    INTEGER NOT NULL DEFAULT 6,
+            "field_goal_points"	                    INTEGER NOT NULL DEFAULT 3,
+            "safety_points"	                        INTEGER NOT NULL DEFAULT 2,
+            "pat_points"	                        INTEGER NOT NULL DEFAULT 1,
+            "pat_defense"	                        INTEGER NOT NULL DEFAULT 2,
+            "pat_safety"	                        INTEGER NOT NULL DEFAULT 1,
+            "players_on_field"	                    INTEGER NOT NULL DEFAULT 11,
+            "preseason_overtime_enabled"	        INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
+            "reg_season_ot_enabled"	                INTEGER NOT NULL DEFAULT 1 COLLATE BINARY,
+            "postseason_ot_enabled"	                INTEGER NOT NULL DEFAULT 1 COLLATE BINARY,
+            "preseason_sudden_death_ot"	            INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
+            "reg_season_sudden_death_ot"	        INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
+            "postseason_sudden_death_ot"	        INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
+            "preseason_mod_sudden_death_ot"	        INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
+            "reg_season_mod_sudden_death_ot"	    INTEGER NOT NULL DEFAULT 1 COLLATE BINARY,
+            "postseason_mod_sudden_death_ot"	    INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
+            "preseason_super_modified_ot"	        INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
+            "reg_season_super_modified_ot"	        INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
+            "postseason_super_modified_ot"	        INTEGER NOT NULL DEFAULT 1 COLLATE BINARY,
+            "preseason_kansas_ot"	                INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
+            "reg_season_kansas_ot"	                INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
+            "postseason_kansas_ot"	                INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
+            "preseason_ncaa_ot"	                    INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
+            "reg_season_ncaa_ot"	                INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
+            "postseason_ncaa_ot"	                INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
+            "preseason_xfl_ot"	                    INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
+            "reg_season_xfl_ot"	                    INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
+            "postseason_xfl_ot"	                    INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
+            "preseason_full_period_ot"	            INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
+            "reg_season_full_period_ot"	            INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
+            "postseason_full_period_ot"	            INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
+            "two_forward_passes"	                INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
+            "spikes_are_team_stats"	                INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
+            "sacks_are_rushes"	                    INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
+            "kneeldowns_are_team_stats"	            INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
             "kickoff_fc_always_goes_to_touchback"	INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
-            "kickoffs_enabled"	INTEGER NOT NULL DEFAULT 1 COLLATE BINARY,
-            "use_xfl_kickoff"	INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
-            "drop_kick_enabled"	INTEGER NOT NULL DEFAULT 1 COLLATE BINARY,
-            "drop_kick_bonus_point"	INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
-            "fg_adds_ez_length"	INTEGER NOT NULL DEFAULT 1 COLLATE BINARY,
-            "long_fg_bonus_point"	INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
-            "xp_is_a_fg"	INTEGER NOT NULL DEFAULT 1 COLLATE BINARY,
-            "rouges_enabled"	INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
-            "punting_enabled"	INTEGER NOT NULL DEFAULT 1 COLLATE BINARY,
-            "onside_punts_enabled"	INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
-            "fair_catch_enabled"	INTEGER NOT NULL DEFAULT 1 COLLATE BINARY,
+            "kickoffs_enabled"	                    INTEGER NOT NULL DEFAULT 1 COLLATE BINARY,
+            "use_xfl_kickoff"	                    INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
+            "drop_kick_enabled"	                    INTEGER NOT NULL DEFAULT 1 COLLATE BINARY,
+            "drop_kick_bonus_point"	                INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
+            "fg_adds_ez_length"	                    INTEGER NOT NULL DEFAULT 1 COLLATE BINARY,
+            "long_fg_bonus_point"	                INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
+            "xp_is_a_fg"	                        INTEGER NOT NULL DEFAULT 1 COLLATE BINARY,
+            "rouges_enabled"	                    INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
+            "punting_enabled"	                    INTEGER NOT NULL DEFAULT 1 COLLATE BINARY,
+            "onside_punts_enabled"	                INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
+            "fair_catch_enabled"	                INTEGER NOT NULL DEFAULT 1 COLLATE BINARY,
             CONSTRAINT "pk_league_id" PRIMARY KEY("league_id")
         );
 
@@ -5911,77 +5915,80 @@ class sqlite3_sample_files:
 
         sql_script = """
         CREATE TABLE IF NOT EXISTS "fb_seasons" (
-            "season" INT NOT NULL,
-            "league_id" TEXT NOT NULL,
-            "season_notes" TEXT,
-            "field_length"	INTEGER NOT NULL DEFAULT 100,
-            "downs"	INTEGER NOT NULL DEFAULT 4,
-            "first_down_yards"	INTEGER NOT NULL DEFAULT 10,
-            "end_zone_length"	INTEGER NOT NULL DEFAULT 10,
-            "kickoff_yardline"	INTEGER NOT NULL DEFAULT 35,
-            "safety_kick_yardline"	INTEGER NOT NULL DEFAULT 20,
-            "kickoff_touchback_yardline"	INTEGER NOT NULL DEFAULT 75,
-            "punt_touchback_yardline"	INTEGER NOT NULL DEFAULT 80,
-            "normal_touchback_yardline"	INTEGER NOT NULL DEFAULT 80,
-            "kansas_ot_yardline"	INTEGER NOT NULL DEFAULT 25,
-            "pat_yardline"	INTEGER NOT NULL DEFAULT 3,
-            "1PC_yardline"	INTEGER NOT NULL DEFAULT 3,
-            "2PC_yardline"	INTEGER NOT NULL DEFAULT 3,
-            "3PC_yardline"	INTEGER NOT NULL DEFAULT 10,
-            "quarters"	INTEGER NOT NULL DEFAULT 900,
-            "timeouts_per_half"	INTEGER NOT NULL DEFAULT 3,
-            "ot_period_seconds"	INTEGER NOT NULL DEFAULT 900,
-            "ot_periods"	INTEGER NOT NULL DEFAULT 1,
-            "ot_periods_until_shootout"	INTEGER NOT NULL DEFAULT -1,
-            "min_xfl_ot_periods"	INTEGER NOT NULL DEFAULT -1,
-            "set_xfl_ot_periods"	INTEGER NOT NULL DEFAULT -1,
-            "touchdown_points"	INTEGER NOT NULL DEFAULT 6,
-            "field_goal_points"	INTEGER NOT NULL DEFAULT 3,
-            "safety_points"	INTEGER NOT NULL DEFAULT 2,
-            "pat_points"	INTEGER NOT NULL DEFAULT 1,
-            "pat_defense"	INTEGER NOT NULL DEFAULT 2,
-            "pat_safety"	INTEGER NOT NULL DEFAULT 1,
-            "players_on_field"	INTEGER NOT NULL DEFAULT 11,
-            "preseason_overtime_enabled"	INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
-            "reg_season_ot_enabled"	INTEGER NOT NULL DEFAULT 1 COLLATE BINARY,
-            "postseason_ot_enabled"	INTEGER NOT NULL DEFAULT 1 COLLATE BINARY,
-            "preseason_sudden_death_ot"	INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
-            "reg_season_sudden_death_ot"	INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
-            "postseason_sudden_death_ot"	INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
-            "preseason_mod_sudden_death_ot"	INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
-            "reg_season_mod_sudden_death_ot"	INTEGER NOT NULL DEFAULT 1 COLLATE BINARY,
-            "postseason_mod_sudden_death_ot"	INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
-            "preseason_super_modified_ot"	INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
-            "reg_season_super_modified_ot"	INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
-            "postseason_super_modified_ot"	INTEGER NOT NULL DEFAULT 1 COLLATE BINARY,
-            "preseason_kansas_ot"	INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
-            "reg_season_kansas_ot"	INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
-            "postseason_kansas_ot"	INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
-            "preseason_ncaa_ot"	INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
-            "reg_season_ncaa_ot"	INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
-            "postseason_ncaa_ot"	INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
-            "preseason_xfl_ot"	INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
-            "reg_season_xfl_ot"	INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
-            "postseason_xfl_ot"	INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
-            "preseason_full_period_ot"	INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
-            "reg_season_full_period_ot"	INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
-            "postseason_full_period_ot"	INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
-            "two_forward_passes"	INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
-            "spikes_are_team_stats"	INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
-            "sacks_are_rushes"	INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
-            "kneeldowns_are_team_stats"	INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
+            "season"                                INT NOT NULL,
+            "league_id"                             TEXT NOT NULL,
+            "season_notes"                          TEXT,
+            "field_length"	                        INTEGER NOT NULL DEFAULT 100,
+            "downs"	                                INTEGER NOT NULL DEFAULT 4,
+            "first_down_yards"	                    INTEGER NOT NULL DEFAULT 10,
+            "end_zone_length"	                    INTEGER NOT NULL DEFAULT 10,
+            "kickoff_yardline"	                    INTEGER NOT NULL DEFAULT 35,
+            "safety_kick_yardline"	                INTEGER NOT NULL DEFAULT 20,
+            "kickoff_touchback_yardline"	        INTEGER NOT NULL DEFAULT 75,
+            "punt_touchback_yardline"	            INTEGER NOT NULL DEFAULT 80,
+            "normal_touchback_yardline"	            INTEGER NOT NULL DEFAULT 80,
+            "kansas_ot_yardline"	                INTEGER NOT NULL DEFAULT 25,
+            "pat_yardline"	                        INTEGER NOT NULL DEFAULT 3,
+            "1PC_yardline"	                        INTEGER NOT NULL DEFAULT 3,
+            "2PC_yardline"	                        INTEGER NOT NULL DEFAULT 3,
+            "3PC_yardline"	                        INTEGER NOT NULL DEFAULT 10,
+            "quarters"	                            INTEGER NOT NULL DEFAULT 4,
+            "timeouts_per_half"	                    INTEGER NOT NULL DEFAULT 3,
+            "ot_period_seconds"	                    INTEGER NOT NULL DEFAULT 900,
+            "game_seconds"	                        INTEGER NOT NULL DEFAULT 3600,
+            "half_seconds"	                        INTEGER NOT NULL DEFAULT 1800,
+            "quarter_seconds"	                    INTEGER NOT NULL DEFAULT 900,
+            "ot_periods"	                        INTEGER NOT NULL DEFAULT 1,
+            "ot_periods_until_shootout"	            INTEGER NOT NULL DEFAULT -1,
+            "min_xfl_ot_periods"	                INTEGER NOT NULL DEFAULT -1,
+            "set_xfl_ot_periods"	                INTEGER NOT NULL DEFAULT -1,
+            "touchdown_points"	                    INTEGER NOT NULL DEFAULT 6,
+            "field_goal_points"	                    INTEGER NOT NULL DEFAULT 3,
+            "safety_points"	                        INTEGER NOT NULL DEFAULT 2,
+            "pat_points"	                        INTEGER NOT NULL DEFAULT 1,
+            "pat_defense"	                        INTEGER NOT NULL DEFAULT 2,
+            "pat_safety"	                        INTEGER NOT NULL DEFAULT 1,
+            "players_on_field"	                    INTEGER NOT NULL DEFAULT 11,
+            "preseason_overtime_enabled"	        INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
+            "reg_season_ot_enabled"	                INTEGER NOT NULL DEFAULT 1 COLLATE BINARY,
+            "postseason_ot_enabled"	                INTEGER NOT NULL DEFAULT 1 COLLATE BINARY,
+            "preseason_sudden_death_ot"	            INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
+            "reg_season_sudden_death_ot"	        INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
+            "postseason_sudden_death_ot"	        INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
+            "preseason_mod_sudden_death_ot"	        INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
+            "reg_season_mod_sudden_death_ot"	    INTEGER NOT NULL DEFAULT 1 COLLATE BINARY,
+            "postseason_mod_sudden_death_ot"	    INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
+            "preseason_super_modified_ot"	        INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
+            "reg_season_super_modified_ot"	        INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
+            "postseason_super_modified_ot"	        INTEGER NOT NULL DEFAULT 1 COLLATE BINARY,
+            "preseason_kansas_ot"	                INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
+            "reg_season_kansas_ot"	                INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
+            "postseason_kansas_ot"	                INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
+            "preseason_ncaa_ot"	                    INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
+            "reg_season_ncaa_ot"	                INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
+            "postseason_ncaa_ot"	                INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
+            "preseason_xfl_ot"	                    INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
+            "reg_season_xfl_ot"	                    INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
+            "postseason_xfl_ot"	                    INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
+            "preseason_full_period_ot"	            INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
+            "reg_season_full_period_ot"	            INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
+            "postseason_full_period_ot"	            INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
+            "two_forward_passes"	                INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
+            "spikes_are_team_stats"	                INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
+            "sacks_are_rushes"	                    INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
+            "kneeldowns_are_team_stats"	            INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
             "kickoff_fc_always_goes_to_touchback"	INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
-            "kickoffs_enabled"	INTEGER NOT NULL DEFAULT 1 COLLATE BINARY,
-            "use_xfl_kickoff"	INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
-            "drop_kick_enabled"	INTEGER NOT NULL DEFAULT 1 COLLATE BINARY,
-            "drop_kick_bonus_point"	INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
-            "fg_adds_ez_length"	INTEGER NOT NULL DEFAULT 1 COLLATE BINARY,
-            "long_fg_bonus_point"	INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
-            "xp_is_a_fg"	INTEGER NOT NULL DEFAULT 1 COLLATE BINARY,
-            "rouges_enabled"	INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
-            "punting_enabled"	INTEGER NOT NULL DEFAULT 1 COLLATE BINARY,
-            "onside_punts_enabled"	INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
-            "fair_catch_enabled"	INTEGER NOT NULL DEFAULT 1 COLLATE BINARY,
+            "kickoffs_enabled"	                    INTEGER NOT NULL DEFAULT 1 COLLATE BINARY,
+            "use_xfl_kickoff"	                    INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
+            "drop_kick_enabled"	                    INTEGER NOT NULL DEFAULT 1 COLLATE BINARY,
+            "drop_kick_bonus_point"	                INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
+            "fg_adds_ez_length"	                    INTEGER NOT NULL DEFAULT 1 COLLATE BINARY,
+            "long_fg_bonus_point"	                INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
+            "xp_is_a_fg"	                        INTEGER NOT NULL DEFAULT 1 COLLATE BINARY,
+            "rouges_enabled"	                    INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
+            "punting_enabled"	                    INTEGER NOT NULL DEFAULT 1 COLLATE BINARY,
+            "onside_punts_enabled"	                INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
+            "fair_catch_enabled"	                INTEGER NOT NULL DEFAULT 1 COLLATE BINARY,
             FOREIGN KEY ("league_id")
                 REFERENCES "fb_leagues" ("league_id")
                     ON DELETE CASCADE
@@ -6018,30 +6025,28 @@ class sqlite3_sample_files:
 
         sql_script = """
         CREATE TABLE IF NOT EXISTS "fb_teams" (
-            "season" INT NOT NULL,
-            "league_id" INT NOT NULL,
-            "team_id" TEXT PRIMARY KEY,
-            "pfr_team_id" TEXT, -- Pro Football Reference Team ID (NFL)
-            "pfr_fran_id" TEXT, -- Pro Football Reference Franchise ID (NFL)
-            "sr_team_id" TEXT, -- Sports Reference Team ID (CFB)
-            "ncaa_old_team_id" INT, -- NCAA Team ID (stats.ncaa.org team ID)
-            "ncaa_team_id" INT, -- NCAA Team ID (Newer Genius Sports system, not compatible with the stats.ncaa.org site)
-            "stats_crew_team_id" TEXT, -- Stats Crew Team ID (Various, https://www.statscrew.com/)
-            "footballdb_team_id" TEXT, -- Football Database Team ID (https://www.footballdb.com/)
-            "team_abv" TEXT NOT NULL,
-            "team_name" TEXT NOT NULL,
-            "team_location" TEXT NOT NULL,
-            "team_nickname" TEXT NOT NULL,
-            "team_city" TEXT,
-            "team_state" TEXT,
-            "team_confrence" TEXT,
-            "team_division" TEXT,
-            "team_head_coach" TEXT,
-            "team_oc" TEXT,
-            "team_dc" TEXT,
-            "team_primary_logo" BLOB,
-            "team_secondary_logo" BLOB,
-            "team_notes" TEXT,
+            "season"                INT NOT NULL,
+            "league_id"             TEXT NOT NULL,
+            "team_id"               TEXT NOT NULL,
+            "pfr_team_id"           TEXT, -- Pro Football Reference Team ID (NFL)
+            "pfr_fran_id"           TEXT, -- Pro Football Reference Franchise ID (NFL)
+            "sr_team_id"            TEXT, -- Sports Reference Team ID (CFB)
+            "ncaa_old_team_id"      INT, -- NCAA Team ID (stats.ncaa.org team ID)
+            "ncaa_team_id"          INT, -- NCAA Team ID (Newer Genius Sports system, not compatible with the stats.ncaa.org site)
+            "stats_crew_team_id"    TEXT, -- Stats Crew Team ID (Various, https://www.statscrew.com/)
+            "footballdb_team_id"    TEXT, -- Football Database Team ID (https://www.footballdb.com/)
+            "team_abv"              TEXT NOT NULL,
+            "team_name"             TEXT NOT NULL,
+            "team_location"         TEXT NOT NULL,
+            "team_nickname"         TEXT NOT NULL,
+            "team_city"             TEXT,
+            "team_state"            TEXT,
+            "team_confrence"        TEXT,
+            "team_division"         TEXT,
+            "team_head_coach"       TEXT,
+            "team_oc"               TEXT,
+            "team_dc"               TEXT,
+            "team_notes"            TEXT,
             FOREIGN KEY ("league_id")
                 REFERENCES "fb_leagues" ("league_id")
                     ON DELETE CASCADE
@@ -6077,44 +6082,42 @@ class sqlite3_sample_files:
 
         sql_script = """
         CREATE TABLE IF NOT EXISTS "fb_rosters"(
-            "season" INT NOT NULL,
-            "league_id" TEXT NOT NULL,
-            "team_id" TEXT NOT NULL,
-            "team_abv" TEXT NOT NULL,
-            "player_id" INTEGER PRIMARY KEY AUTOINCREMENT,
-            "position" TEXT NOT NULL, -- Won't be set by a user.
-            "depth_chart_position" TEXT NOT NULL,
-            "jersey_number" TEXT NOT NULL, -- TEXT so a player can be identified by "00", "01", "1A", or "1O"/"1D"
-            "status" TEXT NOT NULL,
-            "player_full_name" TEXT NOT NULL,
-            "player_football_name" TEXT,-- Defaults to the value of "player_first_name", but can be set to a differient value (for example, Boomer Esiason, who's birth name is Norman Esiason, can have his "player_first_name" == "Norman", and his "player_football_name" == "Boomer"). 
-            "player_first_name" TEXT NOT NULL,
-            "player_last_name" TEXT NOT NULL,
-            "player_bday" TEXT,-- SQLite has no internal date/datetime datatype. Birthdays will be stored as "YYYY-MM-DD".
-            "height" INT, -- Player height, in inches
-            "height_ft" INT, -- Calculated before data is inserted, this and "height_in" combine to show the player's height.
-            "height_in" INT, -- For example, if a player is 5'10", "height_ft" will be set to `5`, "height_in" will be set to `10`, and "height" will be `70`.
-            "weight" INT, -- Player weight, in lbs.
-            "college" TEXT,
-            "gsis_id" TEXT,-- NFL GSIS Player ID.
-            "espn_id" INT, -- ESPN Player ID.
-            "sportradar_id" TEXT,-- Sportradar Player ID.
-            "yahoo_id" INT, -- Yahoo Sports Player ID.
-            "rotowire_id" INT, -- Rotowire Player ID.
-            "pff_id" INT, -- Pro Football Focus (PFF) Player ID.
-            "pfr_id" TEXT,-- Pro Football Reference Player ID.
-            "fantasy_data_id" INT,
-            "sleeper_id" INT,
-            "esb_id" TEXT,
-            "smart_id" TEXT,
-            "years_exp" INT NOT NULL,
-            "headshot_url" TEXT,
-            "headshot_image" BLOB,
-            "ngs_position" TEXT,-- Only here for nflverse compatability.
-            "week" INT,
-            "game_type" TEXT,-- can be "PRE", "REG", or "POST". Optionally, postseason games can be represented by "WC" (wild card), "DIV" (divisional round), "CON" (confrence championship), or "SB" (Super Bowl)
-            "status_description_abbr" TEXT,-- Here for nflverse compatability. 
-            /* Can have the following values, and is explained in detail here: https://www.the33rdteam.com/category/analysis/how-and-why-the-practice-squad-works/
+            "season"                    INT NOT NULL,
+            "league_id"                 TEXT NOT NULL,
+            "team_id"                   TEXT NOT NULL,
+            "player_id"                 INTEGER PRIMARY KEY AUTOINCREMENT,
+            "position"                  TEXT NOT NULL, -- Won't be set by a user.
+            "depth_chart_position"      TEXT NOT NULL, -- TEXT so a player can be identified by "00", "01", "1A", or "1O"/"1D"
+            "jersey_number"             TEXT NOT NULL, 
+            "status"                    TEXT NOT NULL,
+            "player_full_name"          TEXT NOT NULL, 
+            "player_football_name"      TEXT, -- Defaults to the value of "player_first_name", but can be set to a differient value (for example, Boomer Esiason, who's birth name is Norman Esiason, you can have his "player_first_name" == "Norman" and his "player_football_name" == "Boomer"). 
+            "player_first_name"         TEXT NOT NULL,
+            "player_last_name"          TEXT NOT NULL, 
+            "player_bday"               TEXT, -- SQLite has no internal date/datetime datatype. Birthdays will be stored as "YYYY-MM-DD".
+            "height"                    INT, -- Player height, in inches.
+            "height_ft"                 INT, -- Calculated before data is inserted, this and "height_in" combine to show the player's height.
+            "height_in"                 INT, -- For example, if a player is 5'10", "height_ft" will be set to `5`, and "height_in" will be set to `10`, and "height" will be `70`.
+            "weight"                    INT, -- Player weight, in lbs.
+            "college"                   TEXT,
+            "gsis_id"                   TEXT,-- NFL GSIS Player ID.
+            "espn_id"                   INT, -- ESPN Player ID.
+            "sportradar_id"             TEXT,-- Sportradar Player ID.
+            "yahoo_id"                  INT, -- Yahoo Sports Player ID.
+            "rotowire_id"               INT, -- Rotowire Player ID.
+            "pff_id"                    INT, -- Pro Football Focus (PFF) Player ID.
+            "pfr_id"                    TEXT,-- Pro Football Reference Player ID.
+            "fantasy_data_id"           INT,
+            "sleeper_id"                INT,
+            "esb_id"                    TEXT,
+            "smart_id"                  TEXT,
+            "years_exp"                 INT NOT NULL,
+            "headshot_url"              TEXT,
+            "headshot_image"            BLOB,
+            "ngs_position"              TEXT,-- Only here for nflverse compatability.
+            "status_description_abbr"   TEXT,-- Here for nflverse compatability. 
+            /* Can have the following values, and is explained in detail here: 
+            https://www.the33rdteam.com/category/analysis/how-and-why-the-practice-squad-works/
                 -- "A01": Active player.
                 -- "E02": Ex/Comm. Perm. 
                 -- "P01": Practice Squad Player.
@@ -6137,8 +6140,8 @@ class sqlite3_sample_files:
                 -- "R48": Reserve/Injured, Designated For Return.
                 -- "W03": Waived, no recall.
             */
-            "entry_year" INT, -- Year this player finished college, and/or started playing professionally.
-            "rookie_year" INT, -- Year this player started playing in this league.
+            "entry_year"                INT, -- Year this player finished college, and/or started playing professionally.
+            "rookie_year"               INT, -- Year this player started playing in this league.
             FOREIGN KEY ("league_id")
                 REFERENCES "fb_leagues" ("league_id")
                     ON DELETE CASCADE
@@ -6153,128 +6156,131 @@ class sqlite3_sample_files:
         CREATE UNIQUE INDEX idx_rosters_id
         ON "fb_rosters" ("season","league_id","team_id","jersey_number","player_full_name");
 
-        INSERT INTO fb_rosters(season,league_id,team_id,team_abv,position,depth_chart_position,jersey_number,status,player_full_name,player_football_name,player_first_name,player_last_name,player_bday,height,height_ft,height_in,weight,college,years_exp,entry_year,rookie_year) VALUES (2019,'DEFL','UGF','UGF','QB','QB',4,'Active','Will Horton','Will','Will','Horton','09/06/1997',73,6,1,242,'UGF',0,2019,2019);
-        INSERT INTO fb_rosters(season,league_id,team_id,team_abv,position,depth_chart_position,jersey_number,status,player_full_name,player_football_name,player_first_name,player_last_name,player_bday,height,height_ft,height_in,weight,college,years_exp,entry_year,rookie_year) VALUES (2019,'DEFL','UGF','UGF','QB','QB',16,'Active','Howard Cooke','Howard','Howard','Cooke','09/20/1990',75,6,3,255,'UGF',0,2019,2019);
-        INSERT INTO fb_rosters(season,league_id,team_id,team_abv,position,depth_chart_position,jersey_number,status,player_full_name,player_football_name,player_first_name,player_last_name,player_bday,height,height_ft,height_in,weight,college,years_exp,entry_year,rookie_year) VALUES (2019,'DEFL','UGF','UGF','QB','QB',5,'Active','Rodney Calhoun','Rodney','Rodney','Calhoun','07/30/2000',75,6,3,216,'UGF',0,2019,2019);
-        INSERT INTO fb_rosters(season,league_id,team_id,team_abv,position,depth_chart_position,jersey_number,status,player_full_name,player_football_name,player_first_name,player_last_name,player_bday,height,height_ft,height_in,weight,college,years_exp,entry_year,rookie_year) VALUES (2019,'DEFL','UGF','UGF','RB','RB',7,'Active','BJ Hale','BJ','BJ','Hale','04/25/1998',73,6,1,229,'UGF',0,2019,2019);
-        INSERT INTO fb_rosters(season,league_id,team_id,team_abv,position,depth_chart_position,jersey_number,status,player_full_name,player_football_name,player_first_name,player_last_name,player_bday,height,height_ft,height_in,weight,college,years_exp,entry_year,rookie_year) VALUES (2019,'DEFL','UGF','UGF','RB','RB',2,'Active','Ryan Dingle','Ryan','Ryan','Dingle','08/07/2001',71,5,11,190,'UGF',0,2019,2019);
-        INSERT INTO fb_rosters(season,league_id,team_id,team_abv,position,depth_chart_position,jersey_number,status,player_full_name,player_football_name,player_first_name,player_last_name,player_bday,height,height_ft,height_in,weight,college,years_exp,entry_year,rookie_year) VALUES (2019,'DEFL','UGF','UGF','RB','RB',42,'Active','Rob Minton','Rob','Rob','Minton','08/27/1995',67,5,7,189,'UGF',0,2019,2019);
-        INSERT INTO fb_rosters(season,league_id,team_id,team_abv,position,depth_chart_position,jersey_number,status,player_full_name,player_football_name,player_first_name,player_last_name,player_bday,height,height_ft,height_in,weight,college,years_exp,entry_year,rookie_year) VALUES (2019,'DEFL','UGF','UGF','RB','FB',40,'Active','Tom Adamo','Tom','Tom','Adamo','02/08/1991',73,6,1,232,'UGF',0,2019,2019);
-        INSERT INTO fb_rosters(season,league_id,team_id,team_abv,position,depth_chart_position,jersey_number,status,player_full_name,player_football_name,player_first_name,player_last_name,player_bday,height,height_ft,height_in,weight,college,years_exp,entry_year,rookie_year) VALUES (2019,'DEFL','UGF','UGF','RB','FB',39,'Active','Jason Eaton','Jason','Jason','Eaton','08/06/2003',72,6,0,236,'UGF',0,2019,2019);
-        INSERT INTO fb_rosters(season,league_id,team_id,team_abv,position,depth_chart_position,jersey_number,status,player_full_name,player_football_name,player_first_name,player_last_name,player_bday,height,height_ft,height_in,weight,college,years_exp,entry_year,rookie_year) VALUES (2019,'DEFL','UGF','UGF','RB','RB',11,'Active','Elliot Denman','Elliot','Elliot','Denman','08/19/1992',73,6,1,180,'UGF',0,2019,2019);
-        INSERT INTO fb_rosters(season,league_id,team_id,team_abv,position,depth_chart_position,jersey_number,status,player_full_name,player_football_name,player_first_name,player_last_name,player_bday,height,height_ft,height_in,weight,college,years_exp,entry_year,rookie_year) VALUES (2019,'DEFL','UGF','UGF','RB','RB',12,'Active','Neghan Stance','Neghan','Neghan','Stance','06/25/1992',74,6,2,209,'UGF',0,2019,2019);
-        INSERT INTO fb_rosters(season,league_id,team_id,team_abv,position,depth_chart_position,jersey_number,status,player_full_name,player_football_name,player_first_name,player_last_name,player_bday,height,height_ft,height_in,weight,college,years_exp,entry_year,rookie_year) VALUES (2019,'DEFL','UGF','UGF','RB','RB',88,'Active','Torren Engle','Torren','Torren','Engle','09/30/1992',72,6,0,175,'UGF',0,2019,2019);
-        INSERT INTO fb_rosters(season,league_id,team_id,team_abv,position,depth_chart_position,jersey_number,status,player_full_name,player_football_name,player_first_name,player_last_name,player_bday,height,height_ft,height_in,weight,college,years_exp,entry_year,rookie_year) VALUES (2019,'DEFL','UGF','UGF','RB','RB',84,'Active','Vance McMahon','Vance','Vance','McMahon','10/04/1998',72,6,0,185,'UGF',0,2019,2019);
-        INSERT INTO fb_rosters(season,league_id,team_id,team_abv,position,depth_chart_position,jersey_number,status,player_full_name,player_football_name,player_first_name,player_last_name,player_bday,height,height_ft,height_in,weight,college,years_exp,entry_year,rookie_year) VALUES (2019,'DEFL','UGF','UGF','RB','RB',6,'Active','Jake Nelson','Jake','Jake','Nelson','06/27/1999',71,5,11,165,'UGF',0,2019,2019);
-        INSERT INTO fb_rosters(season,league_id,team_id,team_abv,position,depth_chart_position,jersey_number,status,player_full_name,player_football_name,player_first_name,player_last_name,player_bday,height,height_ft,height_in,weight,college,years_exp,entry_year,rookie_year) VALUES (2019,'DEFL','UGF','UGF','TE','TE',18,'Active','Tez Triplett','Tez','Tez','Triplett','10/24/1993',76,6,4,233,'UGF',0,2019,2019);
-        INSERT INTO fb_rosters(season,league_id,team_id,team_abv,position,depth_chart_position,jersey_number,status,player_full_name,player_football_name,player_first_name,player_last_name,player_bday,height,height_ft,height_in,weight,college,years_exp,entry_year,rookie_year) VALUES (2019,'DEFL','UGF','UGF','TE','TE',80,'Active','Nick Riley','Nick','Nick','Riley','09/06/1991',75,6,3,219,'UGF',0,2019,2019);
-        INSERT INTO fb_rosters(season,league_id,team_id,team_abv,position,depth_chart_position,jersey_number,status,player_full_name,player_football_name,player_first_name,player_last_name,player_bday,height,height_ft,height_in,weight,college,years_exp,entry_year,rookie_year) VALUES (2019,'DEFL','UGF','UGF','TE','TE',90,'Active','Ernest Hunter','Ernest','Ernest','Hunter','10/24/2003',75,6,3,231,'UGF',0,2019,2019);
-        INSERT INTO fb_rosters(season,league_id,team_id,team_abv,position,depth_chart_position,jersey_number,status,player_full_name,player_football_name,player_first_name,player_last_name,player_bday,height,height_ft,height_in,weight,college,years_exp,entry_year,rookie_year) VALUES (2019,'DEFL','UGF','UGF','OL','LT',77,'Active','Eric Robinson','Eric','Eric','Robinson','01/07/1999',78,6,6,312,'UGF',0,2019,2019);
-        INSERT INTO fb_rosters(season,league_id,team_id,team_abv,position,depth_chart_position,jersey_number,status,player_full_name,player_football_name,player_first_name,player_last_name,player_bday,height,height_ft,height_in,weight,college,years_exp,entry_year,rookie_year) VALUES (2019,'DEFL','UGF','UGF','OL','OT',71,'Active','Bryce Bass','Bryce','Bryce','Bass','11/22/2004',73,6,1,258,'UGF',0,2019,2019);
-        INSERT INTO fb_rosters(season,league_id,team_id,team_abv,position,depth_chart_position,jersey_number,status,player_full_name,player_football_name,player_first_name,player_last_name,player_bday,height,height_ft,height_in,weight,college,years_exp,entry_year,rookie_year) VALUES (2019,'DEFL','UGF','UGF','OL','RT',55,'Active','Emmitt Rich','Emmitt','Emmitt','Rich','07/29/2004',75,6,3,303,'UGF',0,2019,2019);
-        INSERT INTO fb_rosters(season,league_id,team_id,team_abv,position,depth_chart_position,jersey_number,status,player_full_name,player_football_name,player_first_name,player_last_name,player_bday,height,height_ft,height_in,weight,college,years_exp,entry_year,rookie_year) VALUES (2019,'DEFL','UGF','UGF','OL','OT',64,'Active','Tyson James','Tyson','Tyson','James','01/31/1991',75,6,3,287,'UGF',0,2019,2019);
-        INSERT INTO fb_rosters(season,league_id,team_id,team_abv,position,depth_chart_position,jersey_number,status,player_full_name,player_football_name,player_first_name,player_last_name,player_bday,height,height_ft,height_in,weight,college,years_exp,entry_year,rookie_year) VALUES (2019,'DEFL','UGF','UGF','OL','RG',57,'Active','Brent Tanner','Brent','Brent','Tanner','05/31/2003',75,6,3,281,'UGF',0,2019,2019);
-        INSERT INTO fb_rosters(season,league_id,team_id,team_abv,position,depth_chart_position,jersey_number,status,player_full_name,player_football_name,player_first_name,player_last_name,player_bday,height,height_ft,height_in,weight,college,years_exp,entry_year,rookie_year) VALUES (2019,'DEFL','UGF','UGF','OL','OG',63,'Active','D.D. Henderson','D.D.','D.D.','Henderson','11/04/1996',72,6,0,297,'UGF',0,2019,2019);
-        INSERT INTO fb_rosters(season,league_id,team_id,team_abv,position,depth_chart_position,jersey_number,status,player_full_name,player_football_name,player_first_name,player_last_name,player_bday,height,height_ft,height_in,weight,college,years_exp,entry_year,rookie_year) VALUES (2019,'DEFL','UGF','UGF','OL','LG',72,'Active','J.T. Milton','J.T.','J.T.','Milton','03/20/2001',75,6,3,279,'UGF',0,2019,2019);
-        INSERT INTO fb_rosters(season,league_id,team_id,team_abv,position,depth_chart_position,jersey_number,status,player_full_name,player_football_name,player_first_name,player_last_name,player_bday,height,height_ft,height_in,weight,college,years_exp,entry_year,rookie_year) VALUES (2019,'DEFL','UGF','UGF','OL','OG',59,'Active','Adam Huber','Adam','Adam','Huber','03/09/2004',73,6,1,300,'UGF',0,2019,2019);
-        INSERT INTO fb_rosters(season,league_id,team_id,team_abv,position,depth_chart_position,jersey_number,status,player_full_name,player_football_name,player_first_name,player_last_name,player_bday,height,height_ft,height_in,weight,college,years_exp,entry_year,rookie_year) VALUES (2019,'DEFL','UGF','UGF','OL','C',61,'Active','Bubba Eldridge','Bubba','Bubba','Eldridge','11/22/1999',76,6,4,305,'UGF',0,2019,2019);
-        INSERT INTO fb_rosters(season,league_id,team_id,team_abv,position,depth_chart_position,jersey_number,status,player_full_name,player_football_name,player_first_name,player_last_name,player_bday,height,height_ft,height_in,weight,college,years_exp,entry_year,rookie_year) VALUES (2019,'DEFL','UGF','UGF','OL','C',54,'Active','Shaud Bates','Shaud','Shaud','Bates','10/20/2002',70,5,10,284,'UGF',0,2019,2019);
-        INSERT INTO fb_rosters(season,league_id,team_id,team_abv,position,depth_chart_position,jersey_number,status,player_full_name,player_football_name,player_first_name,player_last_name,player_bday,height,height_ft,height_in,weight,college,years_exp,entry_year,rookie_year) VALUES (2019,'DEFL','UGF','UGF','DL','LDE',89,'Active','LeRoy Singleton','LeRoy','LeRoy','Singleton','08/02/1996',76,6,4,249,'UGF',0,2019,2019);
-        INSERT INTO fb_rosters(season,league_id,team_id,team_abv,position,depth_chart_position,jersey_number,status,player_full_name,player_football_name,player_first_name,player_last_name,player_bday,height,height_ft,height_in,weight,college,years_exp,entry_year,rookie_year) VALUES (2019,'DEFL','UGF','UGF','DL','RDE',91,'Active','Jakari McClelland','Jakari','Jakari','McClelland','08/20/2003',72,6,0,248,'UGF',0,2019,2019);
-        INSERT INTO fb_rosters(season,league_id,team_id,team_abv,position,depth_chart_position,jersey_number,status,player_full_name,player_football_name,player_first_name,player_last_name,player_bday,height,height_ft,height_in,weight,college,years_exp,entry_year,rookie_year) VALUES (2019,'DEFL','UGF','UGF','DL','DE',95,'Active','Eric Jennings','Eric','Eric','Jennings','07/01/1992',75,6,3,250,'UGF',0,2019,2019);
-        INSERT INTO fb_rosters(season,league_id,team_id,team_abv,position,depth_chart_position,jersey_number,status,player_full_name,player_football_name,player_first_name,player_last_name,player_bday,height,height_ft,height_in,weight,college,years_exp,entry_year,rookie_year) VALUES (2019,'DEFL','UGF','UGF','DL','DE',66,'Active','Harrison Hodges','Harrison','Harrison','Hodges','05/17/1991',76,6,4,250,'UGF',0,2019,2019);
-        INSERT INTO fb_rosters(season,league_id,team_id,team_abv,position,depth_chart_position,jersey_number,status,player_full_name,player_football_name,player_first_name,player_last_name,player_bday,height,height_ft,height_in,weight,college,years_exp,entry_year,rookie_year) VALUES (2019,'DEFL','UGF','UGF','DL','NT',87,'Active','Leigh Manley','Leigh','Leigh','Manley','06/13/2003',72,6,0,280,'UGF',0,2019,2019);
-        INSERT INTO fb_rosters(season,league_id,team_id,team_abv,position,depth_chart_position,jersey_number,status,player_full_name,player_football_name,player_first_name,player_last_name,player_bday,height,height_ft,height_in,weight,college,years_exp,entry_year,rookie_year) VALUES (2019,'DEFL','UGF','UGF','DL','DT',98,'Active','D.D. Nixon','D.D.','D.D.','Nixon','04/07/1994',77,6,5,273,'UGF',0,2019,2019);
-        INSERT INTO fb_rosters(season,league_id,team_id,team_abv,position,depth_chart_position,jersey_number,status,player_full_name,player_football_name,player_first_name,player_last_name,player_bday,height,height_ft,height_in,weight,college,years_exp,entry_year,rookie_year) VALUES (2019,'DEFL','UGF','UGF','DL','DT',96,'Active','Eli Griffith','Eli','Eli','Griffith','10/25/1994',75,6,3,279,'UGF',0,2019,2019);
-        INSERT INTO fb_rosters(season,league_id,team_id,team_abv,position,depth_chart_position,jersey_number,status,player_full_name,player_football_name,player_first_name,player_last_name,player_bday,height,height_ft,height_in,weight,college,years_exp,entry_year,rookie_year) VALUES (2019,'DEFL','UGF','UGF','DL','DT',67,'Active','J.T. Benton','J.T.','J.T.','Benton','01/16/2005',73,6,1,243,'UGF',0,2019,2019);
-        INSERT INTO fb_rosters(season,league_id,team_id,team_abv,position,depth_chart_position,jersey_number,status,player_full_name,player_football_name,player_first_name,player_last_name,player_bday,height,height_ft,height_in,weight,college,years_exp,entry_year,rookie_year) VALUES (2019,'DEFL','UGF','UGF','DL','NG',92,'Active','Mike Dailey','Mike','Mike','Dailey','03/30/1992',73,6,1,287,'UGF',0,2019,2019);
-        INSERT INTO fb_rosters(season,league_id,team_id,team_abv,position,depth_chart_position,jersey_number,status,player_full_name,player_football_name,player_first_name,player_last_name,player_bday,height,height_ft,height_in,weight,college,years_exp,entry_year,rookie_year) VALUES (2019,'DEFL','UGF','UGF','DL','DT',78,'Active','Gabriel Johnson','Gabriel','Gabriel','Johnson','01/07/1995',70,5,10,248,'UGF',0,2019,2019);
-        INSERT INTO fb_rosters(season,league_id,team_id,team_abv,position,depth_chart_position,jersey_number,status,player_full_name,player_football_name,player_first_name,player_last_name,player_bday,height,height_ft,height_in,weight,college,years_exp,entry_year,rookie_year) VALUES (2019,'DEFL','UGF','UGF','LB','ROLB',45,'Active','Harry Bridges','Harry','Harry','Bridges','12/30/2004',74,6,2,220,'UGF',0,2019,2019);
-        INSERT INTO fb_rosters(season,league_id,team_id,team_abv,position,depth_chart_position,jersey_number,status,player_full_name,player_football_name,player_first_name,player_last_name,player_bday,height,height_ft,height_in,weight,college,years_exp,entry_year,rookie_year) VALUES (2019,'DEFL','UGF','UGF','LB','LOLB',50,'Active','Tyler Ruff','Tyler','Tyler','Ruff','08/28/1993',73,6,1,227,'UGF',0,2019,2019);
-        INSERT INTO fb_rosters(season,league_id,team_id,team_abv,position,depth_chart_position,jersey_number,status,player_full_name,player_football_name,player_first_name,player_last_name,player_bday,height,height_ft,height_in,weight,college,years_exp,entry_year,rookie_year) VALUES (2019,'DEFL','UGF','UGF','LB','EDGE',99,'Active','Ira Riley','Ira','Ira','Riley','04/16/1992',74,6,2,238,'UGF',0,2019,2019);
-        INSERT INTO fb_rosters(season,league_id,team_id,team_abv,position,depth_chart_position,jersey_number,status,player_full_name,player_football_name,player_first_name,player_last_name,player_bday,height,height_ft,height_in,weight,college,years_exp,entry_year,rookie_year) VALUES (2019,'DEFL','UGF','UGF','LB','OLB',49,'Active','Donta Erickson','Donta','Donta','Erickson','02/23/1996',72,6,0,220,'UGF',0,2019,2019);
-        INSERT INTO fb_rosters(season,league_id,team_id,team_abv,position,depth_chart_position,jersey_number,status,player_full_name,player_football_name,player_first_name,player_last_name,player_bday,height,height_ft,height_in,weight,college,years_exp,entry_year,rookie_year) VALUES (2019,'DEFL','UGF','UGF','LB','ILB',52,'Active','Eric Tyson','Eric','Eric','Tyson','09/08/2001',72,6,0,235,'UGF',0,2019,2019);
-        INSERT INTO fb_rosters(season,league_id,team_id,team_abv,position,depth_chart_position,jersey_number,status,player_full_name,player_football_name,player_first_name,player_last_name,player_bday,height,height_ft,height_in,weight,college,years_exp,entry_year,rookie_year) VALUES (2019,'DEFL','UGF','UGF','LB','MLB',51,'Active','Elgin Landry','Elgin','Elgin','Landry','07/15/2003',72,6,0,231,'UGF',0,2019,2019);
-        INSERT INTO fb_rosters(season,league_id,team_id,team_abv,position,depth_chart_position,jersey_number,status,player_full_name,player_football_name,player_first_name,player_last_name,player_bday,height,height_ft,height_in,weight,college,years_exp,entry_year,rookie_year) VALUES (2019,'DEFL','UGF','UGF','DB','RCB',37,'Active','Andrew Dale','Andrew','Andrew','Dale','04/07/1994',75,6,3,200,'UGF',0,2019,2019);
-        INSERT INTO fb_rosters(season,league_id,team_id,team_abv,position,depth_chart_position,jersey_number,status,player_full_name,player_football_name,player_first_name,player_last_name,player_bday,height,height_ft,height_in,weight,college,years_exp,entry_year,rookie_year) VALUES (2019,'DEFL','UGF','UGF','DB','LCB',19,'Active','Avery Thompson','Avery','Avery','Thompson','10/13/2004',70,5,10,185,'UGF',0,2019,2019);
-        INSERT INTO fb_rosters(season,league_id,team_id,team_abv,position,depth_chart_position,jersey_number,status,player_full_name,player_football_name,player_first_name,player_last_name,player_bday,height,height_ft,height_in,weight,college,years_exp,entry_year,rookie_year) VALUES (2019,'DEFL','UGF','UGF','DB','SCB',1,'Active','Casey Eaton','Casey','Casey','Eaton','11/16/1990',74,6,2,195,'UGF',0,2019,2019);
-        INSERT INTO fb_rosters(season,league_id,team_id,team_abv,position,depth_chart_position,jersey_number,status,player_full_name,player_football_name,player_first_name,player_last_name,player_bday,height,height_ft,height_in,weight,college,years_exp,entry_year,rookie_year) VALUES (2019,'DEFL','UGF','UGF','DB','CB',46,'Active','Derek Lindsey','Derek','Derek','Lindsey','04/12/1997',68,5,8,175,'UGF',0,2019,2019);
-        INSERT INTO fb_rosters(season,league_id,team_id,team_abv,position,depth_chart_position,jersey_number,status,player_full_name,player_football_name,player_first_name,player_last_name,player_bday,height,height_ft,height_in,weight,college,years_exp,entry_year,rookie_year) VALUES (2019,'DEFL','UGF','UGF','DB','CB',28,'Active','Kareem Huffman','Kareem','Kareem','Huffman','07/16/1991',68,5,8,177,'UGF',0,2019,2019);
-        INSERT INTO fb_rosters(season,league_id,team_id,team_abv,position,depth_chart_position,jersey_number,status,player_full_name,player_football_name,player_first_name,player_last_name,player_bday,height,height_ft,height_in,weight,college,years_exp,entry_year,rookie_year) VALUES (2019,'DEFL','UGF','UGF','DB','CB',24,'Active','Jimmie Ricks','Jimmie','Jimmie','Ricks','03/12/1997',67,5,7,160,'UGF',0,2019,2019);
-        INSERT INTO fb_rosters(season,league_id,team_id,team_abv,position,depth_chart_position,jersey_number,status,player_full_name,player_football_name,player_first_name,player_last_name,player_bday,height,height_ft,height_in,weight,college,years_exp,entry_year,rookie_year) VALUES (2019,'DEFL','UGF','UGF','DB','FS',26,'Active','Benny Preston','Benny','Benny','Preston','01/04/1994',73,6,1,180,'UGF',0,2019,2019);
-        INSERT INTO fb_rosters(season,league_id,team_id,team_abv,position,depth_chart_position,jersey_number,status,player_full_name,player_football_name,player_first_name,player_last_name,player_bday,height,height_ft,height_in,weight,college,years_exp,entry_year,rookie_year) VALUES (2019,'DEFL','UGF','UGF','DB','SAF',23,'Active','Keenan Manning','Keenan','Keenan','Manning','11/25/1992',73,6,1,185,'UGF',0,2019,2019);
-        INSERT INTO fb_rosters(season,league_id,team_id,team_abv,position,depth_chart_position,jersey_number,status,player_full_name,player_football_name,player_first_name,player_last_name,player_bday,height,height_ft,height_in,weight,college,years_exp,entry_year,rookie_year) VALUES (2019,'DEFL','UGF','UGF','DB','SS',34,'Active','Buck Poole','Buck','Buck','Poole','01/04/2002',71,5,11,188,'UGF',0,2019,2019);
-        INSERT INTO fb_rosters(season,league_id,team_id,team_abv,position,depth_chart_position,jersey_number,status,player_full_name,player_football_name,player_first_name,player_last_name,player_bday,height,height_ft,height_in,weight,college,years_exp,entry_year,rookie_year) VALUES (2019,'DEFL','UGF','UGF','DB','SAF',48,'Active','Kendal Huber','Kendal','Kendal','Huber','04/10/1991',70,5,10,189,'UGF',0,2019,2019);
-        INSERT INTO fb_rosters(season,league_id,team_id,team_abv,position,depth_chart_position,jersey_number,status,player_full_name,player_football_name,player_first_name,player_last_name,player_bday,height,height_ft,height_in,weight,college,years_exp,entry_year,rookie_year) VALUES (2019,'DEFL','UGF','UGF','SPEC','K',38,'Active','Andy Francis','Andy','Andy','Francis','05/17/2005',73,6,1,170,'UGF',0,2019,2019);
-        INSERT INTO fb_rosters(season,league_id,team_id,team_abv,position,depth_chart_position,jersey_number,status,player_full_name,player_football_name,player_first_name,player_last_name,player_bday,height,height_ft,height_in,weight,college,years_exp,entry_year,rookie_year) VALUES (2019,'DEFL','UGF','UGF','SPEC','K',62,'Active','Rex Johnson','Rex','Rex','Johnson','05/27/2001',73,6,1,175,'UGF',0,2019,2019);
-        INSERT INTO fb_rosters(season,league_id,team_id,team_abv,position,depth_chart_position,jersey_number,status,player_full_name,player_football_name,player_first_name,player_last_name,player_bday,height,height_ft,height_in,weight,college,years_exp,entry_year,rookie_year) VALUES (2019,'DEFL','UGF','UGF','SPEC','P',69,'Active','Jacob Rigdon','Jacob','Jacob','Rigdon','03/08/2003',72,6,0,180,'UGF',0,2019,2019);
-        INSERT INTO fb_rosters(season,league_id,team_id,team_abv,position,depth_chart_position,jersey_number,status,player_full_name,player_football_name,player_first_name,player_last_name,player_bday,height,height_ft,height_in,weight,college,years_exp,entry_year,rookie_year) VALUES (2019,'DEFL','UGF','UGF','SPEC','P',65,'Active','Stephen Washington','Stephen','Stephen','Washington','03/15/2004',75,6,3,185,'UGF',0,2019,2019);
-        INSERT INTO fb_rosters(season,league_id,team_id,team_abv,position,depth_chart_position,jersey_number,status,player_full_name,player_football_name,player_first_name,player_last_name,player_bday,height,height_ft,height_in,weight,college,years_exp,entry_year,rookie_year) VALUES (2019,'DEFL','UGF','UGF','SPEC','LS',14,'Active','Logjammer D''Baggagecling','Logjammer','Logjammer','D''Baggagecling','12/08/2001',72,6,0,180,'UGF',0,2019,2019);
-        INSERT INTO fb_rosters(season,league_id,team_id,team_abv,position,depth_chart_position,jersey_number,status,player_full_name,player_football_name,player_first_name,player_last_name,player_bday,height,height_ft,height_in,weight,college,years_exp,entry_year,rookie_year) VALUES (2019,'DEFL','UGF','UGF','SPEC','LS',56,'Active','Triple Parakeet-Shoes','Triple','Triple','Parakeet-Shoes','07/26/2000',72,6,0,181,'UGF',0,2019,2019);
-        INSERT INTO fb_rosters(season,league_id,team_id,team_abv,position,depth_chart_position,jersey_number,status,player_full_name,player_football_name,player_first_name,player_last_name,player_bday,height,height_ft,height_in,weight,college,years_exp,entry_year,rookie_year) VALUES (2019,'DEFL','DVSU','DVSU','QB','QB',19,'Active','Micheal Wilson','Micheal','Micheal','Wilson','10/23/1999',74,6,2,206,'DVSU',0,2019,2019);
-        INSERT INTO fb_rosters(season,league_id,team_id,team_abv,position,depth_chart_position,jersey_number,status,player_full_name,player_football_name,player_first_name,player_last_name,player_bday,height,height_ft,height_in,weight,college,years_exp,entry_year,rookie_year) VALUES (2019,'DEFL','DVSU','DVSU','QB','QB',18,'Active','Antwon Goodwin','Antwon','Antwon','Goodwin','10/01/1998',74,6,2,198,'DVSU',0,2019,2019);
-        INSERT INTO fb_rosters(season,league_id,team_id,team_abv,position,depth_chart_position,jersey_number,status,player_full_name,player_football_name,player_first_name,player_last_name,player_bday,height,height_ft,height_in,weight,college,years_exp,entry_year,rookie_year) VALUES (2019,'DEFL','DVSU','DVSU','QB','QB',1,'Active','JT Martinez','JT','JT','Martinez','03/30/1992',73,6,1,200,'DVSU',0,2019,2019);
-        INSERT INTO fb_rosters(season,league_id,team_id,team_abv,position,depth_chart_position,jersey_number,status,player_full_name,player_football_name,player_first_name,player_last_name,player_bday,height,height_ft,height_in,weight,college,years_exp,entry_year,rookie_year) VALUES (2019,'DEFL','DVSU','DVSU','QB','QB',5,'Active','Travis Wood','Travis','Travis','Wood','06/24/1998',76,6,4,219,'DVSU',0,2019,2019);
-        INSERT INTO fb_rosters(season,league_id,team_id,team_abv,position,depth_chart_position,jersey_number,status,player_full_name,player_football_name,player_first_name,player_last_name,player_bday,height,height_ft,height_in,weight,college,years_exp,entry_year,rookie_year) VALUES (2019,'DEFL','DVSU','DVSU','RB','RB',21,'Active','Matt Morrow','Matt','Matt','Morrow','09/06/1992',70,5,10,199,'DVSU',0,2019,2019);
-        INSERT INTO fb_rosters(season,league_id,team_id,team_abv,position,depth_chart_position,jersey_number,status,player_full_name,player_football_name,player_first_name,player_last_name,player_bday,height,height_ft,height_in,weight,college,years_exp,entry_year,rookie_year) VALUES (2019,'DEFL','DVSU','DVSU','RB','RB',2,'Active','Zach Thompson','Zach','Zach','Thompson','05/29/1999',70,5,10,196,'DVSU',0,2019,2019);
-        INSERT INTO fb_rosters(season,league_id,team_id,team_abv,position,depth_chart_position,jersey_number,status,player_full_name,player_football_name,player_first_name,player_last_name,player_bday,height,height_ft,height_in,weight,college,years_exp,entry_year,rookie_year) VALUES (2019,'DEFL','DVSU','DVSU','RB','RB',30,'Active','Jamie James','Jamie','Jamie','James','07/01/1995',70,5,10,204,'DVSU',0,2019,2019);
-        INSERT INTO fb_rosters(season,league_id,team_id,team_abv,position,depth_chart_position,jersey_number,status,player_full_name,player_football_name,player_first_name,player_last_name,player_bday,height,height_ft,height_in,weight,college,years_exp,entry_year,rookie_year) VALUES (2019,'DEFL','DVSU','DVSU','RB','RB',41,'Active','Terence Wall','Terence','Terence','Wall','10/27/1992',70,5,10,210,'DVSU',0,2019,2019);
-        INSERT INTO fb_rosters(season,league_id,team_id,team_abv,position,depth_chart_position,jersey_number,status,player_full_name,player_football_name,player_first_name,player_last_name,player_bday,height,height_ft,height_in,weight,college,years_exp,entry_year,rookie_year) VALUES (2019,'DEFL','DVSU','DVSU','RB','RB',12,'Active','Tre Eaton','Tre','Tre','Eaton','11/17/1991',68,5,8,190,'DVSU',0,2019,2019);
-        INSERT INTO fb_rosters(season,league_id,team_id,team_abv,position,depth_chart_position,jersey_number,status,player_full_name,player_football_name,player_first_name,player_last_name,player_bday,height,height_ft,height_in,weight,college,years_exp,entry_year,rookie_year) VALUES (2019,'DEFL','DVSU','DVSU','RB','FB',49,'Active','Perry Samuels','Perry','Perry','Samuels','07/15/2001',74,6,2,225,'DVSU',0,2019,2019);
-        INSERT INTO fb_rosters(season,league_id,team_id,team_abv,position,depth_chart_position,jersey_number,status,player_full_name,player_football_name,player_first_name,player_last_name,player_bday,height,height_ft,height_in,weight,college,years_exp,entry_year,rookie_year) VALUES (2019,'DEFL','DVSU','DVSU','RB','FB',29,'Active','Chip Godsey','Chip','Chip','Godsey','12/12/2001',76,6,4,215,'DVSU',0,2019,2019);
-        INSERT INTO fb_rosters(season,league_id,team_id,team_abv,position,depth_chart_position,jersey_number,status,player_full_name,player_football_name,player_first_name,player_last_name,player_bday,height,height_ft,height_in,weight,college,years_exp,entry_year,rookie_year) VALUES (2019,'DEFL','DVSU','DVSU','RB','FB',25,'Active','Kellen West','Kellen','Kellen','West','03/11/1997',71,5,11,200,'DVSU',0,2019,2019);
-        INSERT INTO fb_rosters(season,league_id,team_id,team_abv,position,depth_chart_position,jersey_number,status,player_full_name,player_football_name,player_first_name,player_last_name,player_bday,height,height_ft,height_in,weight,college,years_exp,entry_year,rookie_year) VALUES (2019,'DEFL','DVSU','DVSU','WR','WR',3,'Active','Seth McKenna','Seth','Seth','McKenna','11/20/2003',67,5,7,170,'DVSU',0,2019,2019);
-        INSERT INTO fb_rosters(season,league_id,team_id,team_abv,position,depth_chart_position,jersey_number,status,player_full_name,player_football_name,player_first_name,player_last_name,player_bday,height,height_ft,height_in,weight,college,years_exp,entry_year,rookie_year) VALUES (2019,'DEFL','DVSU','DVSU','WR','WR',80,'Active','Richard Boulder','Richard','Richard','Boulder','12/11/2004',71,5,11,180,'DVSU',0,2019,2019);
-        INSERT INTO fb_rosters(season,league_id,team_id,team_abv,position,depth_chart_position,jersey_number,status,player_full_name,player_football_name,player_first_name,player_last_name,player_bday,height,height_ft,height_in,weight,college,years_exp,entry_year,rookie_year) VALUES (2019,'DEFL','DVSU','DVSU','WR','WR',85,'Active','Brady Millar','Brady','Brady','Millar','11/09/1993',74,6,2,220,'DVSU',0,2019,2019);
-        INSERT INTO fb_rosters(season,league_id,team_id,team_abv,position,depth_chart_position,jersey_number,status,player_full_name,player_football_name,player_first_name,player_last_name,player_bday,height,height_ft,height_in,weight,college,years_exp,entry_year,rookie_year) VALUES (2019,'DEFL','DVSU','DVSU','WR','WR',47,'Active','Alex King','Alex','Alex','King','02/23/1994',74,6,2,220,'DVSU',0,2019,2019);
-        INSERT INTO fb_rosters(season,league_id,team_id,team_abv,position,depth_chart_position,jersey_number,status,player_full_name,player_football_name,player_first_name,player_last_name,player_bday,height,height_ft,height_in,weight,college,years_exp,entry_year,rookie_year) VALUES (2019,'DEFL','DVSU','DVSU','WR','WR',84,'Active','Jacob Hill','Jacob','Jacob','Hill','11/20/2000',73,6,1,196,'DVSU',0,2019,2019);
-        INSERT INTO fb_rosters(season,league_id,team_id,team_abv,position,depth_chart_position,jersey_number,status,player_full_name,player_football_name,player_first_name,player_last_name,player_bday,height,height_ft,height_in,weight,college,years_exp,entry_year,rookie_year) VALUES (2019,'DEFL','DVSU','DVSU','WR','WR',34,'Active','Estman Gorman','Estman','Estman','Gorman','01/11/1992',72,6,0,175,'DVSU',0,2019,2019);
-        INSERT INTO fb_rosters(season,league_id,team_id,team_abv,position,depth_chart_position,jersey_number,status,player_full_name,player_football_name,player_first_name,player_last_name,player_bday,height,height_ft,height_in,weight,college,years_exp,entry_year,rookie_year) VALUES (2019,'DEFL','DVSU','DVSU','TE','TE',81,'Active','Grankie Gandy','Grankie','Grankie','Gandy','05/03/2001',74,6,2,236,'DVSU',0,2019,2019);
-        INSERT INTO fb_rosters(season,league_id,team_id,team_abv,position,depth_chart_position,jersey_number,status,player_full_name,player_football_name,player_first_name,player_last_name,player_bday,height,height_ft,height_in,weight,college,years_exp,entry_year,rookie_year) VALUES (2019,'DEFL','DVSU','DVSU','TE','TE',86,'Active','Bernard Gill','Bernard','Bernard','Gill','04/12/1991',71,5,11,191,'DVSU',0,2019,2019);
-        INSERT INTO fb_rosters(season,league_id,team_id,team_abv,position,depth_chart_position,jersey_number,status,player_full_name,player_football_name,player_first_name,player_last_name,player_bday,height,height_ft,height_in,weight,college,years_exp,entry_year,rookie_year) VALUES (2019,'DEFL','DVSU','DVSU','OL','LT',72,'Active','Patrick Boulware','Patrick','Patrick','Boulware','11/15/1995',78,6,6,270,'DVSU',0,2019,2019);
-        INSERT INTO fb_rosters(season,league_id,team_id,team_abv,position,depth_chart_position,jersey_number,status,player_full_name,player_football_name,player_first_name,player_last_name,player_bday,height,height_ft,height_in,weight,college,years_exp,entry_year,rookie_year) VALUES (2019,'DEFL','DVSU','DVSU','OL','RT',52,'Active','Benji Odom','Benji','Benji','Odom','02/29/1996',78,6,6,264,'DVSU',0,2019,2019);
-        INSERT INTO fb_rosters(season,league_id,team_id,team_abv,position,depth_chart_position,jersey_number,status,player_full_name,player_football_name,player_first_name,player_last_name,player_bday,height,height_ft,height_in,weight,college,years_exp,entry_year,rookie_year) VALUES (2019,'DEFL','DVSU','DVSU','OL','OT',68,'Active','Deshon Haley','Deshon','Deshon','Haley','06/13/1991',78,6,6,287,'DVSU',0,2019,2019);
-        INSERT INTO fb_rosters(season,league_id,team_id,team_abv,position,depth_chart_position,jersey_number,status,player_full_name,player_football_name,player_first_name,player_last_name,player_bday,height,height_ft,height_in,weight,college,years_exp,entry_year,rookie_year) VALUES (2019,'DEFL','DVSU','DVSU','OL','OT',75,'Active','C.J. Rozner','C.J.','C.J.','Rozner','08/09/1996',78,6,6,278,'DVSU',0,2019,2019);
-        INSERT INTO fb_rosters(season,league_id,team_id,team_abv,position,depth_chart_position,jersey_number,status,player_full_name,player_football_name,player_first_name,player_last_name,player_bday,height,height_ft,height_in,weight,college,years_exp,entry_year,rookie_year) VALUES (2019,'DEFL','DVSU','DVSU','OL','OT',70,'Active','Bobby Giles','Bobby','Bobby','Giles','02/11/2004',77,6,5,287,'DVSU',0,2019,2019);
-        INSERT INTO fb_rosters(season,league_id,team_id,team_abv,position,depth_chart_position,jersey_number,status,player_full_name,player_football_name,player_first_name,player_last_name,player_bday,height,height_ft,height_in,weight,college,years_exp,entry_year,rookie_year) VALUES (2019,'DEFL','DVSU','DVSU','OL','OT',64,'Active','Davon Snyder','Davon','Davon','Snyder','08/11/1993',75,6,3,239,'DVSU',0,2019,2019);
-        INSERT INTO fb_rosters(season,league_id,team_id,team_abv,position,depth_chart_position,jersey_number,status,player_full_name,player_football_name,player_first_name,player_last_name,player_bday,height,height_ft,height_in,weight,college,years_exp,entry_year,rookie_year) VALUES (2019,'DEFL','DVSU','DVSU','OL','RG',78,'Active','Jermaine Hodges','Jermaine','Jermaine','Hodges','02/18/2004',75,6,3,261,'DVSU',0,2019,2019);
-        INSERT INTO fb_rosters(season,league_id,team_id,team_abv,position,depth_chart_position,jersey_number,status,player_full_name,player_football_name,player_first_name,player_last_name,player_bday,height,height_ft,height_in,weight,college,years_exp,entry_year,rookie_year) VALUES (2019,'DEFL','DVSU','DVSU','OL','LG',62,'Active','Aaron White','Aaron','Aaron','White','02/21/1997',76,6,4,317,'DVSU',0,2019,2019);
-        INSERT INTO fb_rosters(season,league_id,team_id,team_abv,position,depth_chart_position,jersey_number,status,player_full_name,player_football_name,player_first_name,player_last_name,player_bday,height,height_ft,height_in,weight,college,years_exp,entry_year,rookie_year) VALUES (2019,'DEFL','DVSU','DVSU','OL','OG',67,'Active','Errick Humphrey','Errick','Errick','Humphrey','03/29/1991',76,6,4,306,'DVSU',0,2019,2019);
-        INSERT INTO fb_rosters(season,league_id,team_id,team_abv,position,depth_chart_position,jersey_number,status,player_full_name,player_football_name,player_first_name,player_last_name,player_bday,height,height_ft,height_in,weight,college,years_exp,entry_year,rookie_year) VALUES (2019,'DEFL','DVSU','DVSU','OL','OG',58,'Active','Blake Klein','Blake','Blake','Klein','09/19/2001',78,6,6,255,'DVSU',0,2019,2019);
-        INSERT INTO fb_rosters(season,league_id,team_id,team_abv,position,depth_chart_position,jersey_number,status,player_full_name,player_football_name,player_first_name,player_last_name,player_bday,height,height_ft,height_in,weight,college,years_exp,entry_year,rookie_year) VALUES (2019,'DEFL','DVSU','DVSU','OL','C',63,'Active','Matt Hampton','Matt','Matt','Hampton','05/13/1995',74,6,2,240,'DVSU',0,2019,2019);
-        INSERT INTO fb_rosters(season,league_id,team_id,team_abv,position,depth_chart_position,jersey_number,status,player_full_name,player_football_name,player_first_name,player_last_name,player_bday,height,height_ft,height_in,weight,college,years_exp,entry_year,rookie_year) VALUES (2019,'DEFL','DVSU','DVSU','OL','C',71,'Active','Reshard Boone','Reshard','Reshard','Boone','09/28/1999',73,6,1,265,'DVSU',0,2019,2019);
-        INSERT INTO fb_rosters(season,league_id,team_id,team_abv,position,depth_chart_position,jersey_number,status,player_full_name,player_football_name,player_first_name,player_last_name,player_bday,height,height_ft,height_in,weight,college,years_exp,entry_year,rookie_year) VALUES (2019,'DEFL','DVSU','DVSU','DL','LDE',92,'Active','Brylan Down','Brylan','Brylan','Down','11/30/2004',74,6,2,228,'DVSU',0,2019,2019);
-        INSERT INTO fb_rosters(season,league_id,team_id,team_abv,position,depth_chart_position,jersey_number,status,player_full_name,player_football_name,player_first_name,player_last_name,player_bday,height,height_ft,height_in,weight,college,years_exp,entry_year,rookie_year) VALUES (2019,'DEFL','DVSU','DVSU','DL','RDE',93,'Active','Dom Atamo','Dom','Dom','Atamo','08/27/2001',74,6,2,235,'DVSU',0,2019,2019);
-        INSERT INTO fb_rosters(season,league_id,team_id,team_abv,position,depth_chart_position,jersey_number,status,player_full_name,player_football_name,player_first_name,player_last_name,player_bday,height,height_ft,height_in,weight,college,years_exp,entry_year,rookie_year) VALUES (2019,'DEFL','DVSU','DVSU','DL','DE',99,'Active','Nolan Poole','Nolan','Nolan','Poole','01/07/2003',75,6,3,259,'DVSU',0,2019,2019);
-        INSERT INTO fb_rosters(season,league_id,team_id,team_abv,position,depth_chart_position,jersey_number,status,player_full_name,player_football_name,player_first_name,player_last_name,player_bday,height,height_ft,height_in,weight,college,years_exp,entry_year,rookie_year) VALUES (2019,'DEFL','DVSU','DVSU','DL','DE',96,'Active','Del Smith','Del','Del','Smith','01/03/1998',78,6,6,250,'DVSU',0,2019,2019);
-        INSERT INTO fb_rosters(season,league_id,team_id,team_abv,position,depth_chart_position,jersey_number,status,player_full_name,player_football_name,player_first_name,player_last_name,player_bday,height,height_ft,height_in,weight,college,years_exp,entry_year,rookie_year) VALUES (2019,'DEFL','DVSU','DVSU','DL','DE',48,'Active','Wesley Stamps','Wesley','Wesley','Stamps','10/30/2001',76,6,4,243,'DVSU',0,2019,2019);
-        INSERT INTO fb_rosters(season,league_id,team_id,team_abv,position,depth_chart_position,jersey_number,status,player_full_name,player_football_name,player_first_name,player_last_name,player_bday,height,height_ft,height_in,weight,college,years_exp,entry_year,rookie_year) VALUES (2019,'DEFL','DVSU','DVSU','DL','DT',95,'Active','Joe Walker','Joe','Joe','Walker','09/06/1999',74,6,2,238,'DVSU',0,2019,2019);
-        INSERT INTO fb_rosters(season,league_id,team_id,team_abv,position,depth_chart_position,jersey_number,status,player_full_name,player_football_name,player_first_name,player_last_name,player_bday,height,height_ft,height_in,weight,college,years_exp,entry_year,rookie_year) VALUES (2019,'DEFL','DVSU','DVSU','DL','DT',91,'Active','Sammy Sam','Sammy','Sammy','Sam','01/03/2001',75,6,3,260,'DVSU',0,2019,2019);
-        INSERT INTO fb_rosters(season,league_id,team_id,team_abv,position,depth_chart_position,jersey_number,status,player_full_name,player_football_name,player_first_name,player_last_name,player_bday,height,height_ft,height_in,weight,college,years_exp,entry_year,rookie_year) VALUES (2019,'DEFL','DVSU','DVSU','DL','DT',65,'Active','Nathan McKee','Nathan','Nathan','McKee','03/04/1999',76,6,4,253,'DVSU',0,2019,2019);
-        INSERT INTO fb_rosters(season,league_id,team_id,team_abv,position,depth_chart_position,jersey_number,status,player_full_name,player_football_name,player_first_name,player_last_name,player_bday,height,height_ft,height_in,weight,college,years_exp,entry_year,rookie_year) VALUES (2019,'DEFL','DVSU','DVSU','DL','DT',61,'Active','Doug Campers','Doug','Doug','Campers','08/18/1994',74,6,2,253,'DVSU',0,2019,2019);
-        INSERT INTO fb_rosters(season,league_id,team_id,team_abv,position,depth_chart_position,jersey_number,status,player_full_name,player_football_name,player_first_name,player_last_name,player_bday,height,height_ft,height_in,weight,college,years_exp,entry_year,rookie_year) VALUES (2019,'DEFL','DVSU','DVSU','LB','OLB',73,'Active','Neil Krause','Neil','Neil','Krause','04/25/1992',73,6,1,195,'DVSU',0,2019,2019);
-        INSERT INTO fb_rosters(season,league_id,team_id,team_abv,position,depth_chart_position,jersey_number,status,player_full_name,player_football_name,player_first_name,player_last_name,player_bday,height,height_ft,height_in,weight,college,years_exp,entry_year,rookie_year) VALUES (2019,'DEFL','DVSU','DVSU','LB','OLB',56,'Active','Oliver McIntyre','Oliver','Oliver','McIntyre','04/23/1999',72,6,0,206,'DVSU',0,2019,2019);
-        INSERT INTO fb_rosters(season,league_id,team_id,team_abv,position,depth_chart_position,jersey_number,status,player_full_name,player_football_name,player_first_name,player_last_name,player_bday,height,height_ft,height_in,weight,college,years_exp,entry_year,rookie_year) VALUES (2019,'DEFL','DVSU','DVSU','LB','EDGE',98,'Active','Johnnie Barr','Johnnie','Johnnie','Barr','10/17/1994',72,6,0,211,'DVSU',0,2019,2019);
-        INSERT INTO fb_rosters(season,league_id,team_id,team_abv,position,depth_chart_position,jersey_number,status,player_full_name,player_football_name,player_first_name,player_last_name,player_bday,height,height_ft,height_in,weight,college,years_exp,entry_year,rookie_year) VALUES (2019,'DEFL','DVSU','DVSU','LB','EDGE',94,'Active','Abdul Young','Abdul','Abdul','Young','05/05/1994',73,6,1,222,'DVSU',0,2019,2019);
-        INSERT INTO fb_rosters(season,league_id,team_id,team_abv,position,depth_chart_position,jersey_number,status,player_full_name,player_football_name,player_first_name,player_last_name,player_bday,height,height_ft,height_in,weight,college,years_exp,entry_year,rookie_year) VALUES (2019,'DEFL','DVSU','DVSU','LB','LB',45,'Active','Samuel Schneider','Samuel','Samuel','Schneider','10/17/1990',73,6,1,214,'DVSU',0,2019,2019);
-        INSERT INTO fb_rosters(season,league_id,team_id,team_abv,position,depth_chart_position,jersey_number,status,player_full_name,player_football_name,player_first_name,player_last_name,player_bday,height,height_ft,height_in,weight,college,years_exp,entry_year,rookie_year) VALUES (2019,'DEFL','DVSU','DVSU','LB','MLB',55,'Active','DD Rodgers','DD','DD','Rodgers','07/08/2002',74,6,2,217,'DVSU',0,2019,2019);
-        INSERT INTO fb_rosters(season,league_id,team_id,team_abv,position,depth_chart_position,jersey_number,status,player_full_name,player_football_name,player_first_name,player_last_name,player_bday,height,height_ft,height_in,weight,college,years_exp,entry_year,rookie_year) VALUES (2019,'DEFL','DVSU','DVSU','LB','ILB',55,'Active','Will Hughes','Will','Will','Hughes','03/23/1999',74,6,2,220,'DVSU',0,2019,2019);
-        INSERT INTO fb_rosters(season,league_id,team_id,team_abv,position,depth_chart_position,jersey_number,status,player_full_name,player_football_name,player_first_name,player_last_name,player_bday,height,height_ft,height_in,weight,college,years_exp,entry_year,rookie_year) VALUES (2019,'DEFL','DVSU','DVSU','LB','ILB',43,'Active','Cooper Stevenson','Cooper','Cooper','Stevenson','02/04/2001',73,6,1,213,'DVSU',0,2019,2019);
-        INSERT INTO fb_rosters(season,league_id,team_id,team_abv,position,depth_chart_position,jersey_number,status,player_full_name,player_football_name,player_first_name,player_last_name,player_bday,height,height_ft,height_in,weight,college,years_exp,entry_year,rookie_year) VALUES (2019,'DEFL','DVSU','DVSU','LB','LB',87,'Active','Grant Eaton','Grant','Grant','Eaton','11/03/1991',73,6,1,225,'DVSU',0,2019,2019);
-        INSERT INTO fb_rosters(season,league_id,team_id,team_abv,position,depth_chart_position,jersey_number,status,player_full_name,player_football_name,player_first_name,player_last_name,player_bday,height,height_ft,height_in,weight,college,years_exp,entry_year,rookie_year) VALUES (2019,'DEFL','DVSU','DVSU','DB','LCB',24,'Active','Bill Dingle','Bill','Bill','Dingle','12/08/2001',69,5,9,180,'DVSU',0,2019,2019);
-        INSERT INTO fb_rosters(season,league_id,team_id,team_abv,position,depth_chart_position,jersey_number,status,player_full_name,player_football_name,player_first_name,player_last_name,player_bday,height,height_ft,height_in,weight,college,years_exp,entry_year,rookie_year) VALUES (2019,'DEFL','DVSU','DVSU','DB','RCB',39,'Active','Jeremy Jimmy','Jeremy','Jeremy','Jimmy','11/22/2000',72,6,0,180,'DVSU',0,2019,2019);
-        INSERT INTO fb_rosters(season,league_id,team_id,team_abv,position,depth_chart_position,jersey_number,status,player_full_name,player_football_name,player_first_name,player_last_name,player_bday,height,height_ft,height_in,weight,college,years_exp,entry_year,rookie_year) VALUES (2019,'DEFL','DVSU','DVSU','DB','NCB',4,'Active','DeAngelo Woodard','DeAngelo','DeAngelo','Woodard','06/02/1994',72,6,0,185,'DVSU',0,2019,2019);
-        INSERT INTO fb_rosters(season,league_id,team_id,team_abv,position,depth_chart_position,jersey_number,status,player_full_name,player_football_name,player_first_name,player_last_name,player_bday,height,height_ft,height_in,weight,college,years_exp,entry_year,rookie_year) VALUES (2019,'DEFL','DVSU','DVSU','DB','DCB',46,'Active','Lemarcus Parsons','Lemarcus','Lemarcus','Parsons','09/09/1997',71,5,11,175,'DVSU',0,2019,2019);
-        INSERT INTO fb_rosters(season,league_id,team_id,team_abv,position,depth_chart_position,jersey_number,status,player_full_name,player_football_name,player_first_name,player_last_name,player_bday,height,height_ft,height_in,weight,college,years_exp,entry_year,rookie_year) VALUES (2019,'DEFL','DVSU','DVSU','DB','FS',36,'Active','Jesse Shelton','Jesse','Jesse','Shelton','08/25/2004',74,6,2,190,'DVSU',0,2019,2019);
-        INSERT INTO fb_rosters(season,league_id,team_id,team_abv,position,depth_chart_position,jersey_number,status,player_full_name,player_football_name,player_first_name,player_last_name,player_bday,height,height_ft,height_in,weight,college,years_exp,entry_year,rookie_year) VALUES (2019,'DEFL','DVSU','DVSU','DB','SAF',23,'Active','Chris Hickmon','Chris','Chris','Hickmon','01/23/1998',74,6,2,199,'DVSU',0,2019,2019);
-        INSERT INTO fb_rosters(season,league_id,team_id,team_abv,position,depth_chart_position,jersey_number,status,player_full_name,player_football_name,player_first_name,player_last_name,player_bday,height,height_ft,height_in,weight,college,years_exp,entry_year,rookie_year) VALUES (2019,'DEFL','DVSU','DVSU','DB','SS',31,'Active','Timothy Dickens','Timothy','Timothy','Dickens','08/24/1996',74,6,2,194,'DVSU',0,2019,2019);
-        INSERT INTO fb_rosters(season,league_id,team_id,team_abv,position,depth_chart_position,jersey_number,status,player_full_name,player_football_name,player_first_name,player_last_name,player_bday,height,height_ft,height_in,weight,college,years_exp,entry_year,rookie_year) VALUES (2019,'DEFL','DVSU','DVSU','DB','SAF',26,'Active','LaShaun Gutierrez','LaShaun','LaShaun','Gutierrez','08/26/1995',71,5,11,191,'DVSU',0,2019,2019);
-        INSERT INTO fb_rosters(season,league_id,team_id,team_abv,position,depth_chart_position,jersey_number,status,player_full_name,player_football_name,player_first_name,player_last_name,player_bday,height,height_ft,height_in,weight,college,years_exp,entry_year,rookie_year) VALUES (2019,'DEFL','DVSU','DVSU','SPEC','K',17,'Active','Justin Powell','Justin','Justin','Powell','01/04/1999',70,5,10,209,'DVSU',0,2019,2019);
-        INSERT INTO fb_rosters(season,league_id,team_id,team_abv,position,depth_chart_position,jersey_number,status,player_full_name,player_football_name,player_first_name,player_last_name,player_bday,height,height_ft,height_in,weight,college,years_exp,entry_year,rookie_year) VALUES (2019,'DEFL','DVSU','DVSU','SPEC','P',69,'Active','Rob Butler','Rob','Rob','Butler','11/12/2002',73,6,1,195,'DVSU',0,2019,2019);
-        INSERT INTO fb_rosters(season,league_id,team_id,team_abv,position,depth_chart_position,jersey_number,status,player_full_name,player_football_name,player_first_name,player_last_name,player_bday,height,height_ft,height_in,weight,college,years_exp,entry_year,rookie_year) VALUES (2019,'DEFL','DVSU','DVSU','SPEC','LS',79,'Active','Velociraptor Maloish','Velociraptor','Scoish','Maloish','11/25/1999',0,NULL,NULL,NULL,'DVSU',0,2019,2019);
-        INSERT INTO fb_rosters(season,league_id,team_id,team_abv,position,depth_chart_position,jersey_number,status,player_full_name,player_football_name,player_first_name,player_last_name,player_bday,height,height_ft,height_in,weight,college,years_exp,entry_year,rookie_year) VALUES (2019,'DEFL','DVSU','DVSU','SPEC','LS',83,'Active','Aristokles Prabhu','Aristokles','Aristokles','Prabhu','03/18/2005',0,NULL,NULL,NULL,'DVSU',0,2019,2019);
-        INSERT INTO fb_rosters(season,league_id,team_id,team_abv,position,depth_chart_position,jersey_number,status,player_full_name,player_football_name,player_first_name,player_last_name,player_bday,height,height_ft,height_in,weight,college,years_exp,entry_year,rookie_year) VALUES (2019,'DEFL','DVSU','DVSU','SPEC','K',15,'Active','Legume Druprix','Legume','Legume','Druprix','03/22/1997',72,6,0,191,'DVSU',0,2019,2019);
-        INSERT INTO fb_rosters(season,league_id,team_id,team_abv,position,depth_chart_position,jersey_number,status,player_full_name,player_football_name,player_first_name,player_last_name,player_bday,height,height_ft,height_in,weight,college,years_exp,entry_year,rookie_year) VALUES (2019,'DEFL','DVSU','DVSU','SPEC','P',20,'Active','Creme De La Creme','Creme','Creme','De La Creme','04/15/2003',0,NULL,NULL,NULL,'DVSU',0,2019,2019);
+        INSERT INTO fb_rosters
+            (season,"league_id","team_id","player_id",position,"depth_chart_position","jersey_number",status,"player_full_name","player_football_name","player_first_name","player_last_name","player_bday",height,"height_ft","height_in",weight,college,"gsis_id","espn_id","sportradar_id","yahoo_id","rotowire_id","pff_id","pfr_id","fantasy_data_id","sleeper_id","esb_id","smart_id","years_exp","headshot_url","headshot_image","ngs_position","status_description_abbr","entry_year","rookie_year")
+        VALUES  
+            (2019,'DEFL','UGF',1,'QB','QB',4,'Active','Will Horton','Will','Will','Horton','09/06/1997',73,6,1,242,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
+            ,(2019,'DEFL','UGF',2,'QB','QB',16,'Active','Howard Cooke','Howard','Howard','Cooke','09/20/1990',75,6,3,255,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
+            ,(2019,'DEFL','UGF',3,'QB','QB',5,'Active','Rodney Calhoun','Rodney','Rodney','Calhoun','07/30/2000',75,6,3,216,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
+            ,(2019,'DEFL','UGF',4,'RB','RB',7,'Active','BJ Hale','BJ','BJ','Hale','04/25/1998',73,6,1,229,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
+            ,(2019,'DEFL','UGF',5,'RB','RB',2,'Active','Ryan Dingle','Ryan','Ryan','Dingle','08/07/2001',71,5,11,190,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
+            ,(2019,'DEFL','UGF',6,'RB','RB',42,'Active','Rob Minton','Rob','Rob','Minton','08/27/1995',67,5,7,189,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
+            ,(2019,'DEFL','UGF',7,'RB','FB',40,'Active','Tom Adamo','Tom','Tom','Adamo','02/08/1991',73,6,1,232,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
+            ,(2019,'DEFL','UGF',8,'RB','FB',39,'Active','Jason Eaton','Jason','Jason','Eaton','08/06/2003',72,6,0,236,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
+            ,(2019,'DEFL','UGF',9,'RB','RB',11,'Active','Elliot Denman','Elliot','Elliot','Denman','08/19/1992',73,6,1,180,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
+            ,(2019,'DEFL','UGF',10,'WR','WR',12,'Active','Neghan Stance','Neghan','Neghan','Stance','06/25/1992',74,6,2,209,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
+            ,(2019,'DEFL','UGF',11,'WR','WR',88,'Active','Torren Engle','Torren','Torren','Engle','09/30/1992',72,6,0,175,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
+            ,(2019,'DEFL','UGF',12,'WR','WR',84,'Active','Vance McMahon','Vance','Vance','McMahon','10/04/1998',72,6,0,185,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
+            ,(2019,'DEFL','UGF',13,'WR','WR',6,'Active','Jake Nelson','Jake','Jake','Nelson','06/27/1999',71,5,11,165,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
+            ,(2019,'DEFL','UGF',14,'TE','TE',18,'Active','Tez Triplett','Tez','Tez','Triplett','10/24/1993',76,6,4,233,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
+            ,(2019,'DEFL','UGF',15,'TE','TE',80,'Active','Nick Riley','Nick','Nick','Riley','09/06/1991',75,6,3,219,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
+            ,(2019,'DEFL','UGF',16,'TE','TE',90,'Active','Ernest Hunter','Ernest','Ernest','Hunter','10/24/2003',75,6,3,231,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
+            ,(2019,'DEFL','UGF',17,'OL','LT',77,'Active','Eric Robinson','Eric','Eric','Robinson','01/07/1999',78,6,6,312,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
+            ,(2019,'DEFL','UGF',18,'OL','OT',71,'Active','Bryce Bass','Bryce','Bryce','Bass','11/22/2004',73,6,1,258,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
+            ,(2019,'DEFL','UGF',19,'OL','RT',55,'Active','Emmitt Rich','Emmitt','Emmitt','Rich','07/29/2004',75,6,3,303,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
+            ,(2019,'DEFL','UGF',20,'OL','OT',64,'Active','Tyson James','Tyson','Tyson','James','01/31/1991',75,6,3,287,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
+            ,(2019,'DEFL','UGF',21,'OL','RG',57,'Active','Brent Tanner','Brent','Brent','Tanner','05/31/2003',75,6,3,281,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
+            ,(2019,'DEFL','UGF',22,'OL','OG',63,'Active','D.D. Henderson','D.D.','D.D.','Henderson','11/04/1996',72,6,0,297,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
+            ,(2019,'DEFL','UGF',23,'OL','LG',72,'Active','J.T. Milton','J.T.','J.T.','Milton','03/20/2001',75,6,3,279,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
+            ,(2019,'DEFL','UGF',24,'OL','OG',59,'Active','Adam Huber','Adam','Adam','Huber','03/09/2004',73,6,1,300,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
+            ,(2019,'DEFL','UGF',25,'OL','C',61,'Active','Bubba Eldridge','Bubba','Bubba','Eldridge','11/22/1999',76,6,4,305,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
+            ,(2019,'DEFL','UGF',26,'OL','C',54,'Active','Shaud Bates','Shaud','Shaud','Bates','10/20/2002',70,5,10,284,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
+            ,(2019,'DEFL','UGF',27,'DL','LDE',89,'Active','LeRoy Singleton','LeRoy','LeRoy','Singleton','08/02/1996',76,6,4,249,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
+            ,(2019,'DEFL','UGF',28,'DL','RDE',91,'Active','Jakari McClelland','Jakari','Jakari','McClelland','08/20/2003',72,6,0,248,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
+            ,(2019,'DEFL','UGF',29,'DL','DE',95,'Active','Eric Jennings','Eric','Eric','Jennings','07/01/1992',75,6,3,250,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
+            ,(2019,'DEFL','UGF',30,'DL','DE',66,'Active','Harrison Hodges','Harrison','Harrison','Hodges','05/17/1991',76,6,4,250,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
+            ,(2019,'DEFL','UGF',31,'DL','NT',87,'Active','Leigh Manley','Leigh','Leigh','Manley','06/13/2003',72,6,0,280,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
+            ,(2019,'DEFL','UGF',32,'DL','DT',98,'Active','D.D. Nixon','D.D.','D.D.','Nixon','04/07/1994',77,6,5,273,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
+            ,(2019,'DEFL','UGF',33,'DL','DT',96,'Active','Eli Griffith','Eli','Eli','Griffith','10/25/1994',75,6,3,279,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
+            ,(2019,'DEFL','UGF',34,'DL','DT',67,'Active','J.T. Benton','J.T.','J.T.','Benton','01/16/2005',73,6,1,243,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
+            ,(2019,'DEFL','UGF',35,'DL','NG',92,'Active','Mike Dailey','Mike','Mike','Dailey','03/30/1992',73,6,1,287,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
+            ,(2019,'DEFL','UGF',36,'DL','DT',78,'Active','Gabriel Johnson','Gabriel','Gabriel','Johnson','01/07/1995',70,5,10,248,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
+            ,(2019,'DEFL','UGF',37,'LB','ROLB',45,'Active','Harry Bridges','Harry','Harry','Bridges','12/30/2004',74,6,2,220,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
+            ,(2019,'DEFL','UGF',38,'LB','LOLB',50,'Active','Tyler Ruff','Tyler','Tyler','Ruff','08/28/1993',73,6,1,227,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
+            ,(2019,'DEFL','UGF',39,'LB','EDGE',99,'Active','Ira Riley','Ira','Ira','Riley','04/16/1992',74,6,2,238,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
+            ,(2019,'DEFL','UGF',40,'LB','OLB',49,'Active','Donta Erickson','Donta','Donta','Erickson','02/23/1996',72,6,0,220,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
+            ,(2019,'DEFL','UGF',41,'LB','ILB',52,'Active','Eric Tyson','Eric','Eric','Tyson','09/08/2001',72,6,0,235,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
+            ,(2019,'DEFL','UGF',42,'LB','MLB',51,'Active','Elgin Landry','Elgin','Elgin','Landry','07/15/2003',72,6,0,231,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
+            ,(2019,'DEFL','UGF',43,'DB','RCB',37,'Active','Andrew Dale','Andrew','Andrew','Dale','04/07/1994',75,6,3,200,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
+            ,(2019,'DEFL','UGF',44,'DB','LCB',19,'Active','Avery Thompson','Avery','Avery','Thompson','10/13/2004',70,5,10,185,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
+            ,(2019,'DEFL','UGF',45,'DB','SCB',1,'Active','Casey Eaton','Casey','Casey','Eaton','11/16/1990',74,6,2,195,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
+            ,(2019,'DEFL','UGF',46,'DB','CB',46,'Active','Derek Lindsey','Derek','Derek','Lindsey','04/12/1997',68,5,8,175,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
+            ,(2019,'DEFL','UGF',47,'DB','CB',28,'Active','Kareem Huffman','Kareem','Kareem','Huffman','07/16/1991',68,5,8,177,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
+            ,(2019,'DEFL','UGF',48,'DB','CB',24,'Active','Jimmie Ricks','Jimmie','Jimmie','Ricks','03/12/1997',67,5,7,160,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
+            ,(2019,'DEFL','UGF',49,'DB','FS',26,'Active','Benny Preston','Benny','Benny','Preston','01/04/1994',73,6,1,180,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
+            ,(2019,'DEFL','UGF',50,'DB','SAF',23,'Active','Keenan Manning','Keenan','Keenan','Manning','11/25/1992',73,6,1,185,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
+            ,(2019,'DEFL','UGF',51,'DB','SS',34,'Active','Buck Poole','Buck','Buck','Poole','01/04/2002',71,5,11,188,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
+            ,(2019,'DEFL','UGF',52,'DB','SAF',48,'Active','Kendal Huber','Kendal','Kendal','Huber','04/10/1991',70,5,10,189,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
+            ,(2019,'DEFL','UGF',53,'SPEC','K',38,'Active','Andy Francis','Andy','Andy','Francis','05/17/2005',73,6,1,170,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
+            ,(2019,'DEFL','UGF',54,'SPEC','K',62,'Active','Rex Johnson','Rex','Rex','Johnson','05/27/2001',73,6,1,175,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
+            ,(2019,'DEFL','UGF',55,'SPEC','P',69,'Active','Jacob Rigdon','Jacob','Jacob','Rigdon','03/08/2003',72,6,0,180,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
+            ,(2019,'DEFL','UGF',56,'SPEC','P',65,'Active','Stephen Washington','Stephen','Stephen','Washington','03/15/2004',75,6,3,185,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
+            ,(2019,'DEFL','UGF',57,'SPEC','LS',14,'Active','Logjammer D''Baggagecling','Logjammer','Logjammer','D''Baggagecling','12/08/2001',72,6,0,180,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
+            ,(2019,'DEFL','UGF',58,'SPEC','LS',56,'Active','Triple Parakeet-Shoes','Triple','Triple','Parakeet-Shoes','07/26/2000',72,6,0,181,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
+            ,(2019,'DEFL','DVSU',59,'QB','QB',19,'Active','Micheal Wilson','Micheal','Micheal','Wilson','10/23/1999',74,6,2,206,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
+            ,(2019,'DEFL','DVSU',60,'QB','QB',18,'Active','Antwon Goodwin','Antwon','Antwon','Goodwin','10/01/1998',74,6,2,198,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
+            ,(2019,'DEFL','DVSU',61,'QB','QB',1,'Active','JT Martinez','JT','JT','Martinez','03/30/1992',73,6,1,200,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
+            ,(2019,'DEFL','DVSU',62,'QB','QB',5,'Active','Travis Wood','Travis','Travis','Wood','06/24/1998',76,6,4,219,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
+            ,(2019,'DEFL','DVSU',63,'RB','RB',21,'Active','Matt Morrow','Matt','Matt','Morrow','09/06/1992',70,5,10,199,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
+            ,(2019,'DEFL','DVSU',64,'RB','RB',2,'Active','Zach Thompson','Zach','Zach','Thompson','05/29/1999',70,5,10,196,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
+            ,(2019,'DEFL','DVSU',65,'RB','RB',30,'Active','Jamie James','Jamie','Jamie','James','07/01/1995',70,5,10,204,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
+            ,(2019,'DEFL','DVSU',66,'RB','RB',41,'Active','Terence Wall','Terence','Terence','Wall','10/27/1992',70,5,10,210,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
+            ,(2019,'DEFL','DVSU',67,'RB','RB',12,'Active','Tre Eaton','Tre','Tre','Eaton','11/17/1991',68,5,8,190,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
+            ,(2019,'DEFL','DVSU',68,'RB','FB',49,'Active','Perry Samuels','Perry','Perry','Samuels','07/15/2001',74,6,2,225,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
+            ,(2019,'DEFL','DVSU',69,'RB','FB',29,'Active','Chip Godsey','Chip','Chip','Godsey','12/12/2001',76,6,4,215,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
+            ,(2019,'DEFL','DVSU',70,'RB','FB',25,'Active','Kellen West','Kellen','Kellen','West','03/11/1997',71,5,11,200,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
+            ,(2019,'DEFL','DVSU',71,'WR','WR',3,'Active','Seth McKenna','Seth','Seth','McKenna','11/20/2003',67,5,7,170,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
+            ,(2019,'DEFL','DVSU',72,'WR','WR',80,'Active','Richard Boulder','Richard','Richard','Boulder','12/11/2004',71,5,11,180,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
+            ,(2019,'DEFL','DVSU',73,'WR','WR',85,'Active','Brady Millar','Brady','Brady','Millar','11/09/1993',74,6,2,220,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
+            ,(2019,'DEFL','DVSU',74,'WR','WR',47,'Active','Alex King','Alex','Alex','King','02/23/1994',74,6,2,220,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
+            ,(2019,'DEFL','DVSU',75,'WR','WR',84,'Active','Jacob Hill','Jacob','Jacob','Hill','11/20/2000',73,6,1,196,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
+            ,(2019,'DEFL','DVSU',76,'WR','WR',34,'Active','Estman Gorman','Estman','Estman','Gorman','01/11/1992',72,6,0,175,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
+            ,(2019,'DEFL','DVSU',77,'TE','TE',81,'Active','Grankie Gandy','Grankie','Grankie','Gandy','05/03/2001',74,6,2,236,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
+            ,(2019,'DEFL','DVSU',78,'TE','TE',86,'Active','Bernard Gill','Bernard','Bernard','Gill','04/12/1991',71,5,11,191,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
+            ,(2019,'DEFL','DVSU',79,'OL','LT',72,'Active','Patrick Boulware','Patrick','Patrick','Boulware','11/15/1995',78,6,6,270,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
+            ,(2019,'DEFL','DVSU',80,'OL','RT',52,'Active','Benji Odom','Benji','Benji','Odom','02/29/1996',78,6,6,264,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
+            ,(2019,'DEFL','DVSU',81,'OL','OT',68,'Active','Deshon Haley','Deshon','Deshon','Haley','06/13/1991',78,6,6,287,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
+            ,(2019,'DEFL','DVSU',82,'OL','OT',75,'Active','C.J. Rozner','C.J.','C.J.','Rozner','08/09/1996',78,6,6,278,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
+            ,(2019,'DEFL','DVSU',83,'OL','OT',70,'Active','Bobby Giles','Bobby','Bobby','Giles','02/11/2004',77,6,5,287,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
+            ,(2019,'DEFL','DVSU',84,'OL','OT',64,'Active','Davon Snyder','Davon','Davon','Snyder','08/11/1993',75,6,3,239,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
+            ,(2019,'DEFL','DVSU',85,'OL','RG',78,'Active','Jermaine Hodges','Jermaine','Jermaine','Hodges','02/18/2004',75,6,3,261,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
+            ,(2019,'DEFL','DVSU',86,'OL','LG',62,'Active','Aaron White','Aaron','Aaron','White','02/21/1997',76,6,4,317,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
+            ,(2019,'DEFL','DVSU',87,'OL','OG',67,'Active','Errick Humphrey','Errick','Errick','Humphrey','03/29/1991',76,6,4,306,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
+            ,(2019,'DEFL','DVSU',88,'OL','OG',58,'Active','Blake Klein','Blake','Blake','Klein','09/19/2001',78,6,6,255,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
+            ,(2019,'DEFL','DVSU',89,'OL','C',63,'Active','Matt Hampton','Matt','Matt','Hampton','05/13/1995',74,6,2,240,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
+            ,(2019,'DEFL','DVSU',90,'OL','C',71,'Active','Reshard Boone','Reshard','Reshard','Boone','09/28/1999',73,6,1,265,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
+            ,(2019,'DEFL','DVSU',91,'DL','LDE',92,'Active','Brylan Down','Brylan','Brylan','Down','11/30/2004',74,6,2,228,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
+            ,(2019,'DEFL','DVSU',92,'DL','RDE',93,'Active','Dom Atamo','Dom','Dom','Atamo','08/27/2001',74,6,2,235,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
+            ,(2019,'DEFL','DVSU',93,'DL','DE',99,'Active','Nolan Poole','Nolan','Nolan','Poole','01/07/2003',75,6,3,259,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
+            ,(2019,'DEFL','DVSU',94,'DL','DE',96,'Active','Del Smith','Del','Del','Smith','01/03/1998',78,6,6,250,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
+            ,(2019,'DEFL','DVSU',95,'DL','DE',48,'Active','Wesley Stamps','Wesley','Wesley','Stamps','10/30/2001',76,6,4,243,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
+            ,(2019,'DEFL','DVSU',96,'DL','DT',95,'Active','Joe Walker','Joe','Joe','Walker','09/06/1999',74,6,2,238,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
+            ,(2019,'DEFL','DVSU',97,'DL','DT',91,'Active','Sammy Sam','Sammy','Sammy','Sam','01/03/2001',75,6,3,260,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
+            ,(2019,'DEFL','DVSU',98,'DL','DT',65,'Active','Nathan McKee','Nathan','Nathan','McKee','03/04/1999',76,6,4,253,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
+            ,(2019,'DEFL','DVSU',99,'DL','DT',61,'Active','Doug Campers','Doug','Doug','Campers','08/18/1994',74,6,2,253,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
+            ,(2019,'DEFL','DVSU',100,'LB','OLB',73,'Active','Neil Krause','Neil','Neil','Krause','04/25/1992',73,6,1,195,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
+            ,(2019,'DEFL','DVSU',101,'LB','OLB',56,'Active','Oliver McIntyre','Oliver','Oliver','McIntyre','04/23/1999',72,6,0,206,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
+            ,(2019,'DEFL','DVSU',102,'LB','EDGE',98,'Active','Johnnie Barr','Johnnie','Johnnie','Barr','10/17/1994',72,6,0,211,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
+            ,(2019,'DEFL','DVSU',103,'LB','EDGE',94,'Active','Abdul Young','Abdul','Abdul','Young','05/05/1994',73,6,1,222,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
+            ,(2019,'DEFL','DVSU',104,'LB','LB',45,'Active','Samuel Schneider','Samuel','Samuel','Schneider','10/17/1990',73,6,1,214,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
+            ,(2019,'DEFL','DVSU',105,'LB','MLB',55,'Active','DD Rodgers','DD','DD','Rodgers','07/08/2002',74,6,2,217,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
+            ,(2019,'DEFL','DVSU',106,'LB','ILB',55,'Active','Will Hughes','Will','Will','Hughes','03/23/1999',74,6,2,220,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
+            ,(2019,'DEFL','DVSU',107,'LB','ILB',43,'Active','Cooper Stevenson','Cooper','Cooper','Stevenson','02/04/2001',73,6,1,213,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
+            ,(2019,'DEFL','DVSU',108,'LB','LB',87,'Active','Grant Eaton','Grant','Grant','Eaton','11/03/1991',73,6,1,225,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
+            ,(2019,'DEFL','DVSU',109,'DB','LCB',24,'Active','Bill Dingle','Bill','Bill','Dingle','12/08/2001',69,5,9,180,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
+            ,(2019,'DEFL','DVSU',110,'DB','RCB',39,'Active','Jeremy Jimmy','Jeremy','Jeremy','Jimmy','11/22/2000',72,6,0,180,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
+            ,(2019,'DEFL','DVSU',111,'DB','NCB',4,'Active','DeAngelo Woodard','DeAngelo','DeAngelo','Woodard','06/02/1994',72,6,0,185,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
+            ,(2019,'DEFL','DVSU',112,'DB','DCB',46,'Active','Lemarcus Parsons','Lemarcus','Lemarcus','Parsons','09/09/1997',71,5,11,175,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
+            ,(2019,'DEFL','DVSU',113,'DB','FS',36,'Active','Jesse Shelton','Jesse','Jesse','Shelton','08/25/2004',74,6,2,190,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
+            ,(2019,'DEFL','DVSU',114,'DB','SAF',23,'Active','Chris Hickmon','Chris','Chris','Hickmon','01/23/1998',74,6,2,199,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
+            ,(2019,'DEFL','DVSU',115,'DB','SS',31,'Active','Timothy Dickens','Timothy','Timothy','Dickens','08/24/1996',74,6,2,194,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
+            ,(2019,'DEFL','DVSU',116,'DB','SAF',26,'Active','LaShaun Gutierrez','LaShaun','LaShaun','Gutierrez','08/26/1995',71,5,11,191,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
+            ,(2019,'DEFL','DVSU',117,'SPEC','K',17,'Active','Justin Powell','Justin','Justin','Powell','01/04/1999',70,5,10,209,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
+            ,(2019,'DEFL','DVSU',118,'SPEC','P',69,'Active','Rob Butler','Rob','Rob','Butler','11/12/2002',73,6,1,195,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
+            ,(2019,'DEFL','DVSU',119,'SPEC','LS',79,'Active','Velociraptor Maloish','Velociraptor','Scoish','Maloish','11/25/1999',0,NULL,NULL,NULL,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
+            ,(2019,'DEFL','DVSU',120,'SPEC','LS',83,'Active','Aristokles Prabhu','Aristokles','Aristokles','Prabhu','03/18/2005',0,NULL,NULL,NULL,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
+            ,(2019,'DEFL','DVSU',121,'SPEC','K',15,'Active','Legume Druprix','Legume','Legume','Druprix','03/22/1997',72,6,0,191,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
+            ,(2019,'DEFL','DVSU',122,'SPEC','P',20,'Active','Creme De La Creme','Creme','Creme','De La Creme','04/15/2003',0,NULL,NULL,NULL,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019);
 
         """
         return sql_script.replace("        ", "")
@@ -6295,25 +6301,31 @@ class sqlite3_sample_files:
 
         sql_script = """
         CREATE TABLE IF NOT EXISTS "fb_stadiums"(
-            "stadium_id" INTEGER PRIMARY KEY AUTOINCREMENT,
-            "team_id" TEXT NOT NULL, -- Set to `???` if the stadium has no designated home team for some reason.
-            "pfr_stadium_id" TEXT,
-            "stadium_name" TEXT NOT NULL,
-            "stadium_capacity" INT NOT NULL,
-            "stadium_city" TEXT NOT NULL,
-            "stadium_state" TEXT NOT NULL, -- ISO 3166-2 Code
-            "stadium_nation" TEXT NOT NULL,
-            "is_dome" BOOLEAN DEFAULT "FALSE" NOT NULL,
-            "is_retractable_roof" BOOLEAN DEFAULT "FALSE" NOT NULL -- If a stadium has a retractable roof, this and "is_dome" are set to TRUE.
+            "stadium_id"            INTEGER PRIMARY KEY AUTOINCREMENT,
+            "team_id"               TEXT NOT NULL, -- Set to `???` if the stadium has no designated home team for some reason.
+            "pfr_stadium_id"        TEXT,
+            "stadium_name"          TEXT NOT NULL,
+            "stadium_capacity"      INT NOT NULL,
+            "stadium_city"          TEXT NOT NULL,
+            "stadium_state"         TEXT NOT NULL, -- ISO 3166-2 Code
+            "stadium_nation"        TEXT NOT NULL, -- ISO 3 Letter code
+            "is_dome"               BOOLEAN DEFAULT FALSE NOT NULL,
+            "is_retractable_roof"   BOOLEAN DEFAULT FALSE NOT NULL, -- If a stadium has a retractable roof, this and "is_dome" are set to TRUE.
+            "stadium_plus_code"     TEXT,
+            "stadium_elevation_ft"  INT,
+            "stadium_elevation_m"   INT,
+            "stadium_timezone"      TEXT NOT NULL,
+            "stadium_location_x"    FLOAT,
+            "stadium_location_y"    FLOAT
             
         );
 
         CREATE UNIQUE INDEX idx_stadiums_id
         ON "fb_stadiums" ("stadium_id","team_id");
 
-        INSERT INTO fb_stadiums(stadium_id,team_id,pfr_stadium_id,stadium_name,stadium_capacity,stadium_city,stadium_state,stadium_nation,is_dome,is_retractable_roof) VALUES
-            (1,'UGF',NULL,'Adamo Dome',50000,'Fairborn','US-GA','USA','TRUE','FALSE')
-            ,(2,'DVSU',NULL,'Death Valley Stadium',10000,'Death Valley','US-NV','USA','FALSE','FALSE');
+        INSERT INTO fb_stadiums(stadium_id,team_id,pfr_stadium_id,stadium_name,stadium_capacity,stadium_city,stadium_state,stadium_nation,is_dome,is_retractable_roof,stadium_timezone) VALUES
+            (1,'UGF',NULL,'Adamo Dome',50000,'Fairborn','US-GA','USA',TRUE,FALSE,'America/Phoenix')
+            ,(2,'DVSU',NULL,'Death Valley Stadium',10000,'Death Valley','US-NV','USA',FALSE,FALSE,'America/New_York');
 
         """
         return sql_script.replace("        ", "")
@@ -6336,40 +6348,41 @@ class sqlite3_sample_files:
 
         sql_script = """
         CREATE TABLE IF NOT EXISTS 'fb_weekly_rosters'(
-            'season' INT NOT NULL,
-            'league_id' TEXT NOT NULL,
-            'team_id' TEXT NOT NULL,
-            'team_abv' TEXT NOT NULL,
-            'position' TEXT NOT NULL, -- Won't be set by a user.
-            'depth_chart_position' TEXT NOT NULL,
-            'jersey_number' TEXT NOT NULL, -- TEXT so a player can be identified by '00', '01', '1A', or '1O'/'1D'
-            'status' TEXT NOT NULL,
-            'player_full_name' TEXT NOT NULL,
-            'player_football_name' TEXT,-- Defaults to the value of 'player_first_name', but can be set to a differient value (for example, Boomer Esiason, who's birth name is Norman Esiason, can have his 'player_first_name' == 'Norman', and his 'player_football_name' == 'Boomer'). 
-            'player_first_name' TEXT NOT NULL,
-            'player_last_name' TEXT NOT NULL,
-            'player_bday' TEXT,-- SQLite has no internal date/datetime datatype. Birthdays will be stored as 'YYYY-MM-DD'.
-            'height' INT, -- Player height, in inches
-            'height_ft' INT, -- Calculated before data is inserted, this and 'height_in' combine to show the player's height.
-            'height_in' INT, -- For example, if a player is 5'10', 'height_ft' will be set to `5`, 'height_in' will be set to `10`, and 'height' will be `70`.
-            'weight' INT, -- Player weight, in lbs.
-            'college' TEXT,
-            'gsis_id' TEXT,-- NFL GSIS Player ID.
-            'espn_id' INT, -- ESPN Player ID.
-            'sportradar_id' TEXT,-- Sportradar Player ID.
-            'yahoo_id' INT, -- Yahoo Sports Player ID.
-            'rotowire_id' INT, -- Rotowire Player ID.
-            'pff_id' INT, -- Pro Football Focus (PFF) Player ID.
-            'pfr_id' TEXT,-- Pro Football Reference Player ID.
-            'fantasy_data_id' INT,
-            'sleeper_id' INT,
-            'years_exp' INT NOT NULL,
-            'headshot_url' TEXT,-- Letting users modify this is a bad idea. Only here for nflverse compatability. Users can modify 'headshot_image' instead.
-            'headshot_image' BLOB,
-            'ngs_position' TEXT,-- Only here for nflverse compatability.
-            'week' INT NOT NULL,
-            'game_type' TEXT NOT NULL, -- can be 'PRE', 'REG', or 'POST'. Optionally, postseason games can be represented by 'WC' (wild card), 'DIV' (divisional round), 'CON' (confrence championship), or 'SB' (Super Bowl)
-            'status_description_abbr' TEXT, -- Here for nflverse compatability. 
+            'season'                    INT NOT NULL,
+            'game_id'                   INT NOT NULL,
+            'league_id'                 TEXT NOT NULL,
+            'team_id'                   TEXT NOT NULL,
+            'team_abv'                  TEXT NOT NULL,
+            'position'                  TEXT NOT NULL, -- Won't be set by a user.
+            'depth_chart_position'      TEXT NOT NULL,
+            'jersey_number'             TEXT NOT NULL, -- TEXT so a player can be identified by '00', '01', '1A', or '1O'/'1D'
+            'status'                    TEXT NOT NULL,
+            'player_full_name'          TEXT NOT NULL,
+            'player_football_name'      TEXT,-- Defaults to the value of 'player_first_name', but can be set to a differient value (for example, Boomer Esiason, who's birth name is Norman Esiason, can have his 'player_first_name' == 'Norman', and his 'player_football_name' == 'Boomer'). 
+            'player_first_name'         TEXT NOT NULL,
+            'player_last_name'          TEXT NOT NULL,
+            'player_bday'               TEXT,-- SQLite has no internal date/datetime datatype. Birthdays will be stored as 'YYYY-MM-DD'.
+            'height'                    INT, -- Player height, in inches
+            'height_ft'                 INT, -- Calculated before data is inserted, this and 'height_in' combine to show the player's height.
+            'height_in'                 INT, -- For example, if a player is 5'10', 'height_ft' will be set to `5`, 'height_in' will be set to `10`, and 'height' will be `70`.
+            'weight'                    INT, -- Player weight, in lbs.
+            'college'                   TEXT,
+            'gsis_id'                   TEXT,-- NFL GSIS Player ID.
+            'espn_id'                   INT, -- ESPN Player ID.
+            'sportradar_id'             TEXT,-- Sportradar Player ID.
+            'yahoo_id'                  INT, -- Yahoo Sports Player ID.
+            'rotowire_id'               INT, -- Rotowire Player ID.
+            'pff_id'                    INT, -- Pro Football Focus (PFF) Player ID.
+            'pfr_id'                    TEXT,-- Pro Football Reference Player ID.
+            'fantasy_data_id'           INT,
+            'sleeper_id'                INT,
+            'years_exp'                 INT NOT NULL,
+            'headshot_url'              TEXT,-- Letting users modify this is a bad idea. Only here for nflverse compatability. Users can modify 'headshot_image' instead.
+            'headshot_image'            BLOB,
+            'ngs_position'              TEXT,-- Only here for nflverse compatability.
+            'week'                      INT NOT NULL,
+            'game_type'                 TEXT NOT NULL, -- can be 'PRE', 'REG', or 'POST'. Optionally, postseason games can be represented by 'WC' (wild card), 'DIV' (divisional round), 'CON' (confrence championship), or 'SB' (Super Bowl)
+            'status_description_abbr'   TEXT, -- Here for nflverse compatability. 
             /* Can have the following values, and is explained in detail here: https://www.the33rdteam.com/category/analysis/how-and-why-the-practice-squad-works/
                 -- 'A01': Active player.
                 -- 'E02': Ex/Comm. Perm. 
@@ -6393,10 +6406,10 @@ class sqlite3_sample_files:
                 -- 'R48': Reserve/Injured, Designated For Return.
                 -- 'W03': Waived, no recall.
             */
-            'esb_id' TEXT,
-            'smart_id' TEXT,
-            'entry_year' INT, -- Year this player finished college, and/or started playing professionally.
-            'rookie_year' INT -- Year this player started playing in this league.
+            'esb_id'                    TEXT,
+            'smart_id'                  TEXT,
+            'entry_year'                INT, -- Year this player finished college, and/or started playing professionally.
+            'rookie_year'               INT -- Year this player started playing in this league.
 
         );
 
@@ -6404,129 +6417,131 @@ class sqlite3_sample_files:
         ON 'fb_weekly_rosters' ('season','league_id','team_id','jersey_number','player_full_name','week','game_type');
 
 
-        INSERT INTO fb_weekly_rosters(season,'league_id','team_id','team_abv',position,'depth_chart_position','jersey_number',status,'player_full_name','player_football_name','player_first_name','player_last_name','player_bday',height,'height_ft','height_in',weight,college,'gsis_id','espn_id','sportradar_id','yahoo_id','rotowire_id','pff_id','pfr_id','fantasy_data_id','sleeper_id','years_exp','headshot_url','headshot_image','ngs_position',week,'game_type','status_description_abbr','esb_id','smart_id','entry_year','rookie_year') VALUES
-            (2019,'DEFL','UGF','UGF','QB','QB',4,'Active','Will Horton','Will','Will','Horton','09/06/1997',73,6,1,242,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','UGF','UGF','QB','QB',16,'Active','Howard Cooke','Howard','Howard','Cooke','09/20/1990',75,6,3,255,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','UGF','UGF','QB','QB',5,'Active','Rodney Calhoun','Rodney','Rodney','Calhoun','07/30/2000',75,6,3,216,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','UGF','UGF','RB','RB',7,'Active','BJ Hale','BJ','BJ','Hale','04/25/1998',73,6,1,229,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','UGF','UGF','RB','RB',2,'Active','Ryan Dingle','Ryan','Ryan','Dingle','08/07/2001',71,5,11,190,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','UGF','UGF','RB','RB',42,'Active','Rob Minton','Rob','Rob','Minton','08/27/1995',67,5,7,189,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','UGF','UGF','RB','FB',40,'Active','Tom Adamo','Tom','Tom','Adamo','02/08/1991',73,6,1,232,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','UGF','UGF','RB','FB',39,'Active','Jason Eaton','Jason','Jason','Eaton','08/06/2003',72,6,0,236,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','UGF','UGF','RB','RB',11,'Active','Elliot Denman','Elliot','Elliot','Denman','08/19/1992',73,6,1,180,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','UGF','UGF','RB','RB',12,'Active','Neghan Stance','Neghan','Neghan','Stance','06/25/1992',74,6,2,209,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','UGF','UGF','RB','RB',88,'Active','Torren Engle','Torren','Torren','Engle','09/30/1992',72,6,0,175,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','UGF','UGF','RB','RB',84,'Active','Vance McMahon','Vance','Vance','McMahon','10/04/1998',72,6,0,185,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','UGF','UGF','RB','RB',6,'Active','Jake Nelson','Jake','Jake','Nelson','06/27/1999',71,5,11,165,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','UGF','UGF','TE','TE',18,'Active','Tez Triplett','Tez','Tez','Triplett','10/24/1993',76,6,4,233,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','UGF','UGF','TE','TE',80,'Active','Nick Riley','Nick','Nick','Riley','09/06/1991',75,6,3,219,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','UGF','UGF','TE','TE',90,'Active','Ernest Hunter','Ernest','Ernest','Hunter','10/24/2003',75,6,3,231,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','UGF','UGF','OL','LT',77,'Active','Eric Robinson','Eric','Eric','Robinson','01/07/1999',78,6,6,312,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','UGF','UGF','OL','OT',71,'Active','Bryce Bass','Bryce','Bryce','Bass','11/22/2004',73,6,1,258,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','UGF','UGF','OL','RT',55,'Active','Emmitt Rich','Emmitt','Emmitt','Rich','07/29/2004',75,6,3,303,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','UGF','UGF','OL','OT',64,'Active','Tyson James','Tyson','Tyson','James','01/31/1991',75,6,3,287,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','UGF','UGF','OL','RG',57,'Active','Brent Tanner','Brent','Brent','Tanner','05/31/2003',75,6,3,281,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','UGF','UGF','OL','OG',63,'Active','D.D. Henderson','D.D.','D.D.','Henderson','11/04/1996',72,6,0,297,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','UGF','UGF','OL','LG',72,'Active','J.T. Milton','J.T.','J.T.','Milton','03/20/2001',75,6,3,279,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','UGF','UGF','OL','OG',59,'Active','Adam Huber','Adam','Adam','Huber','03/09/2004',73,6,1,300,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','UGF','UGF','OL','C',61,'Active','Bubba Eldridge','Bubba','Bubba','Eldridge','11/22/1999',76,6,4,305,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','UGF','UGF','OL','C',54,'Active','Shaud Bates','Shaud','Shaud','Bates','10/20/2002',70,5,10,284,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','UGF','UGF','DL','LDE',89,'Active','LeRoy Singleton','LeRoy','LeRoy','Singleton','08/02/1996',76,6,4,249,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','UGF','UGF','DL','RDE',91,'Active','Jakari McClelland','Jakari','Jakari','McClelland','08/20/2003',72,6,0,248,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','UGF','UGF','DL','DE',95,'Active','Eric Jennings','Eric','Eric','Jennings','07/01/1992',75,6,3,250,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','UGF','UGF','DL','DE',66,'Active','Harrison Hodges','Harrison','Harrison','Hodges','05/17/1991',76,6,4,250,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','UGF','UGF','DL','NT',87,'Active','Leigh Manley','Leigh','Leigh','Manley','06/13/2003',72,6,0,280,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','UGF','UGF','DL','DT',98,'Active','D.D. Nixon','D.D.','D.D.','Nixon','04/07/1994',77,6,5,273,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','UGF','UGF','DL','DT',96,'Active','Eli Griffith','Eli','Eli','Griffith','10/25/1994',75,6,3,279,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','UGF','UGF','DL','DT',67,'Active','J.T. Benton','J.T.','J.T.','Benton','01/16/2005',73,6,1,243,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','UGF','UGF','DL','NG',92,'Active','Mike Dailey','Mike','Mike','Dailey','03/30/1992',73,6,1,287,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','UGF','UGF','DL','DT',78,'Active','Gabriel Johnson','Gabriel','Gabriel','Johnson','01/07/1995',70,5,10,248,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','UGF','UGF','LB','ROLB',45,'Active','Harry Bridges','Harry','Harry','Bridges','12/30/2004',74,6,2,220,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','UGF','UGF','LB','LOLB',50,'Active','Tyler Ruff','Tyler','Tyler','Ruff','08/28/1993',73,6,1,227,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','UGF','UGF','LB','EDGE',99,'Active','Ira Riley','Ira','Ira','Riley','04/16/1992',74,6,2,238,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','UGF','UGF','LB','OLB',49,'Active','Donta Erickson','Donta','Donta','Erickson','02/23/1996',72,6,0,220,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','UGF','UGF','LB','ILB',52,'Active','Eric Tyson','Eric','Eric','Tyson','09/08/2001',72,6,0,235,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','UGF','UGF','LB','MLB',51,'Active','Elgin Landry','Elgin','Elgin','Landry','07/15/2003',72,6,0,231,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','UGF','UGF','DB','RCB',37,'Active','Andrew Dale','Andrew','Andrew','Dale','04/07/1994',75,6,3,200,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','UGF','UGF','DB','LCB',19,'Active','Avery Thompson','Avery','Avery','Thompson','10/13/2004',70,5,10,185,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','UGF','UGF','DB','SCB',1,'Active','Casey Eaton','Casey','Casey','Eaton','11/16/1990',74,6,2,195,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','UGF','UGF','DB','CB',46,'Active','Derek Lindsey','Derek','Derek','Lindsey','04/12/1997',68,5,8,175,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','UGF','UGF','DB','CB',28,'Active','Kareem Huffman','Kareem','Kareem','Huffman','07/16/1991',68,5,8,177,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','UGF','UGF','DB','CB',24,'Active','Jimmie Ricks','Jimmie','Jimmie','Ricks','03/12/1997',67,5,7,160,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','UGF','UGF','DB','FS',26,'Active','Benny Preston','Benny','Benny','Preston','01/04/1994',73,6,1,180,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','UGF','UGF','DB','SAF',23,'Active','Keenan Manning','Keenan','Keenan','Manning','11/25/1992',73,6,1,185,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','UGF','UGF','DB','SS',34,'Active','Buck Poole','Buck','Buck','Poole','01/04/2002',71,5,11,188,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','UGF','UGF','DB','SAF',48,'Active','Kendal Huber','Kendal','Kendal','Huber','04/10/1991',70,5,10,189,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','UGF','UGF','SPEC','K',38,'Active','Andy Francis','Andy','Andy','Francis','05/17/2005',73,6,1,170,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','UGF','UGF','SPEC','K',62,'Active','Rex Johnson','Rex','Rex','Johnson','05/27/2001',73,6,1,175,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','UGF','UGF','SPEC','P',69,'Active','Jacob Rigdon','Jacob','Jacob','Rigdon','03/08/2003',72,6,0,180,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','UGF','UGF','SPEC','P',65,'Active','Stephen Washington','Stephen','Stephen','Washington','03/15/2004',75,6,3,185,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','UGF','UGF','SPEC','LS',14,'Active','Logjammer D''Baggagecling','Logjammer','Logjammer','D''Baggagecling','12/08/2001',72,6,0,180,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','UGF','UGF','SPEC','LS',56,'Active','Triple Parakeet-Shoes','Triple','Triple','Parakeet-Shoes','07/26/2000',72,6,0,181,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','DVSU','DVSU','QB','QB',19,'Active','Micheal Wilson','Micheal','Micheal','Wilson','10/23/1999',74,6,2,206,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','DVSU','DVSU','QB','QB',18,'Active','Antwon Goodwin','Antwon','Antwon','Goodwin','10/01/1998',74,6,2,198,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','DVSU','DVSU','QB','QB',1,'Active','JT Martinez','JT','JT','Martinez','03/30/1992',73,6,1,200,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','DVSU','DVSU','QB','QB',5,'Active','Travis Wood','Travis','Travis','Wood','06/24/1998',76,6,4,219,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','DVSU','DVSU','RB','RB',21,'Active','Matt Morrow','Matt','Matt','Morrow','09/06/1992',70,5,10,199,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','DVSU','DVSU','RB','RB',2,'Active','Zach Thompson','Zach','Zach','Thompson','05/29/1999',70,5,10,196,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','DVSU','DVSU','RB','RB',30,'Active','Jamie James','Jamie','Jamie','James','07/01/1995',70,5,10,204,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','DVSU','DVSU','RB','RB',41,'Active','Terence Wall','Terence','Terence','Wall','10/27/1992',70,5,10,210,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','DVSU','DVSU','RB','RB',12,'Active','Tre Eaton','Tre','Tre','Eaton','11/17/1991',68,5,8,190,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','DVSU','DVSU','RB','FB',49,'Active','Perry Samuels','Perry','Perry','Samuels','07/15/2001',74,6,2,225,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','DVSU','DVSU','RB','FB',29,'Active','Chip Godsey','Chip','Chip','Godsey','12/12/2001',76,6,4,215,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','DVSU','DVSU','RB','FB',25,'Active','Kellen West','Kellen','Kellen','West','03/11/1997',71,5,11,200,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','DVSU','DVSU','WR','WR',3,'Active','Seth McKenna','Seth','Seth','McKenna','11/20/2003',67,5,7,170,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','DVSU','DVSU','WR','WR',80,'Active','Richard Boulder','Richard','Richard','Boulder','12/11/2004',71,5,11,180,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','DVSU','DVSU','WR','WR',85,'Active','Brady Millar','Brady','Brady','Millar','11/09/1993',74,6,2,220,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','DVSU','DVSU','WR','WR',47,'Active','Alex King','Alex','Alex','King','02/23/1994',74,6,2,220,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','DVSU','DVSU','WR','WR',84,'Active','Jacob Hill','Jacob','Jacob','Hill','11/20/2000',73,6,1,196,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','DVSU','DVSU','WR','WR',34,'Active','Estman Gorman','Estman','Estman','Gorman','01/11/1992',72,6,0,175,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','DVSU','DVSU','TE','TE',81,'Active','Grankie Gandy','Grankie','Grankie','Gandy','05/03/2001',74,6,2,236,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','DVSU','DVSU','TE','TE',86,'Active','Bernard Gill','Bernard','Bernard','Gill','04/12/1991',71,5,11,191,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','DVSU','DVSU','OL','LT',72,'Active','Patrick Boulware','Patrick','Patrick','Boulware','11/15/1995',78,6,6,270,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','DVSU','DVSU','OL','RT',52,'Active','Benji Odom','Benji','Benji','Odom','02/29/1996',78,6,6,264,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','DVSU','DVSU','OL','OT',68,'Active','Deshon Haley','Deshon','Deshon','Haley','06/13/1991',78,6,6,287,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','DVSU','DVSU','OL','OT',75,'Active','C.J. Rozner','C.J.','C.J.','Rozner','08/09/1996',78,6,6,278,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','DVSU','DVSU','OL','OT',70,'Active','Bobby Giles','Bobby','Bobby','Giles','02/11/2004',77,6,5,287,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','DVSU','DVSU','OL','OT',64,'Active','Davon Snyder','Davon','Davon','Snyder','08/11/1993',75,6,3,239,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','DVSU','DVSU','OL','RG',78,'Active','Jermaine Hodges','Jermaine','Jermaine','Hodges','02/18/2004',75,6,3,261,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','DVSU','DVSU','OL','LG',62,'Active','Aaron White','Aaron','Aaron','White','02/21/1997',76,6,4,317,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','DVSU','DVSU','OL','OG',67,'Active','Errick Humphrey','Errick','Errick','Humphrey','03/29/1991',76,6,4,306,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','DVSU','DVSU','OL','OG',58,'Active','Blake Klein','Blake','Blake','Klein','09/19/2001',78,6,6,255,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','DVSU','DVSU','OL','C',63,'Active','Matt Hampton','Matt','Matt','Hampton','05/13/1995',74,6,2,240,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','DVSU','DVSU','OL','C',71,'Active','Reshard Boone','Reshard','Reshard','Boone','09/28/1999',73,6,1,265,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','DVSU','DVSU','DL','LDE',92,'Active','Brylan Down','Brylan','Brylan','Down','11/30/2004',74,6,2,228,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','DVSU','DVSU','DL','RDE',93,'Active','Dom Atamo','Dom','Dom','Atamo','08/27/2001',74,6,2,235,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','DVSU','DVSU','DL','DE',99,'Active','Nolan Poole','Nolan','Nolan','Poole','01/07/2003',75,6,3,259,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','DVSU','DVSU','DL','DE',96,'Active','Del Smith','Del','Del','Smith','01/03/1998',78,6,6,250,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','DVSU','DVSU','DL','DE',48,'Active','Wesley Stamps','Wesley','Wesley','Stamps','10/30/2001',76,6,4,243,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','DVSU','DVSU','DL','DT',95,'Active','Joe Walker','Joe','Joe','Walker','09/06/1999',74,6,2,238,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','DVSU','DVSU','DL','DT',91,'Active','Sammy Sam','Sammy','Sammy','Sam','01/03/2001',75,6,3,260,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','DVSU','DVSU','DL','DT',65,'Active','Nathan McKee','Nathan','Nathan','McKee','03/04/1999',76,6,4,253,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','DVSU','DVSU','DL','DT',61,'Active','Doug Campers','Doug','Doug','Campers','08/18/1994',74,6,2,253,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','DVSU','DVSU','LB','OLB',73,'Active','Neil Krause','Neil','Neil','Krause','04/25/1992',73,6,1,195,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','DVSU','DVSU','LB','OLB',56,'Active','Oliver McIntyre','Oliver','Oliver','McIntyre','04/23/1999',72,6,0,206,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','DVSU','DVSU','LB','EDGE',98,'Active','Johnnie Barr','Johnnie','Johnnie','Barr','10/17/1994',72,6,0,211,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','DVSU','DVSU','LB','EDGE',94,'Active','Abdul Young','Abdul','Abdul','Young','05/05/1994',73,6,1,222,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','DVSU','DVSU','LB','LB',45,'Active','Samuel Schneider','Samuel','Samuel','Schneider','10/17/1990',73,6,1,214,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','DVSU','DVSU','LB','MLB',55,'Active','DD Rodgers','DD','DD','Rodgers','07/08/2002',74,6,2,217,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','DVSU','DVSU','LB','ILB',55,'Active','Will Hughes','Will','Will','Hughes','03/23/1999',74,6,2,220,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','DVSU','DVSU','LB','ILB',43,'Active','Cooper Stevenson','Cooper','Cooper','Stevenson','02/04/2001',73,6,1,213,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','DVSU','DVSU','LB','LB',87,'Active','Grant Eaton','Grant','Grant','Eaton','11/03/1991',73,6,1,225,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','DVSU','DVSU','DB','LCB',24,'Active','Bill Dingle','Bill','Bill','Dingle','12/08/2001',69,5,9,180,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','DVSU','DVSU','DB','RCB',39,'Active','Jeremy Jimmy','Jeremy','Jeremy','Jimmy','11/22/2000',72,6,0,180,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','DVSU','DVSU','DB','NCB',4,'Active','DeAngelo Woodard','DeAngelo','DeAngelo','Woodard','06/02/1994',72,6,0,185,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','DVSU','DVSU','DB','DCB',46,'Active','Lemarcus Parsons','Lemarcus','Lemarcus','Parsons','09/09/1997',71,5,11,175,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','DVSU','DVSU','DB','FS',36,'Active','Jesse Shelton','Jesse','Jesse','Shelton','08/25/2004',74,6,2,190,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','DVSU','DVSU','DB','SAF',23,'Active','Chris Hickmon','Chris','Chris','Hickmon','01/23/1998',74,6,2,199,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','DVSU','DVSU','DB','SS',31,'Active','Timothy Dickens','Timothy','Timothy','Dickens','08/24/1996',74,6,2,194,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','DVSU','DVSU','DB','SAF',26,'Active','LaShaun Gutierrez','LaShaun','LaShaun','Gutierrez','08/26/1995',71,5,11,191,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','DVSU','DVSU','SPEC','K',17,'Active','Justin Powell','Justin','Justin','Powell','01/04/1999',70,5,10,209,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','DVSU','DVSU','SPEC','P',69,'Active','Rob Butler','Rob','Rob','Butler','11/12/2002',73,6,1,195,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','DVSU','DVSU','SPEC','LS',79,'Active','Velociraptor Maloish','Velociraptor','Scoish','Maloish','11/25/1999',0,NULL,NULL,NULL,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','DVSU','DVSU','SPEC','LS',83,'Active','Aristokles Prabhu','Aristokles','Aristokles','Prabhu','03/18/2005',0,NULL,NULL,NULL,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','DVSU','DVSU','SPEC','K',15,'Active','Legume Druprix','Legume','Legume','Druprix','03/22/1997',72,6,0,191,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','DVSU','DVSU','SPEC','P',20,'Active','Creme De La Creme','Creme','Creme','De La Creme','04/15/2003',0,NULL,NULL,NULL,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019);
+        INSERT INTO fb_weekly_rosters(
+            'season','game_id','league_id','team_id','team_abv','position','depth_chart_position','jersey_number','status','player_full_name','player_football_name','player_first_name','player_last_name','player_bday','height','height_ft','height_in','weight','college','gsis_id','espn_id','sportradar_id','yahoo_id','rotowire_id','pff_id','pfr_id','fantasy_data_id','sleeper_id','years_exp','headshot_url','headshot_image','ngs_position','week','game_type','status_description_abbr','esb_id','smart_id','entry_year','rookie_year') 
+        VALUES
+            (2019, 1,'DEFL','UGF','UGF','QB','QB',4,'Active','Will Horton','Will','Will','Horton','09/06/1997',73,6,1,242,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
+            ,(2019,1,'DEFL','UGF','UGF','QB','QB',16,'Active','Howard Cooke','Howard','Howard','Cooke','09/20/1990',75,6,3,255,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
+            ,(2019,1,'DEFL','UGF','UGF','QB','QB',5,'Active','Rodney Calhoun','Rodney','Rodney','Calhoun','07/30/2000',75,6,3,216,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
+            ,(2019,1,'DEFL','UGF','UGF','RB','RB',7,'Active','BJ Hale','BJ','Brian','Hale','04/25/1998',73,6,1,229,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
+            ,(2019,1,'DEFL','UGF','UGF','RB','RB',2,'Active','Ryan Dingle','Ryan','Ryan','Dingle','08/07/2001',71,5,11,190,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
+            ,(2019,1,'DEFL','UGF','UGF','RB','RB',42,'Active','Rob Minton','Rob','Rob','Minton','08/27/1995',67,5,7,189,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
+            ,(2019,1,'DEFL','UGF','UGF','RB','FB',40,'Active','Tom Adamo','Tom','Tom','Adamo','02/08/1991',73,6,1,232,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
+            ,(2019,1,'DEFL','UGF','UGF','RB','FB',39,'Active','Jason Eaton','Jason','Jason','Eaton','08/06/2003',72,6,0,236,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
+            ,(2019,1,'DEFL','UGF','UGF','WR','WR',11,'Active','Elliot Denman','Elliot','Elliot','Denman','08/19/1992',73,6,1,180,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
+            ,(2019,1,'DEFL','UGF','UGF','WR','WR',12,'Active','Neghan Stance','Neghan','Neghan','Stance','06/25/1992',74,6,2,209,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
+            ,(2019,1,'DEFL','UGF','UGF','WR','WR',88,'Active','Torren Engle','Torren','Torren','Engle','09/30/1992',72,6,0,175,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
+            ,(2019,1,'DEFL','UGF','UGF','WR','WR',84,'Active','Vance McMahon','Vance','Vance','McMahon','10/04/1998',72,6,0,185,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
+            ,(2019,1,'DEFL','UGF','UGF','WR','WR',6,'Active','Jake Nelson','Jake','Jake','Nelson','06/27/1999',71,5,11,165,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
+            ,(2019,1,'DEFL','UGF','UGF','TE','TE',18,'Active','Tez Triplett','Tez','Tez','Triplett','10/24/1993',76,6,4,233,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
+            ,(2019,1,'DEFL','UGF','UGF','TE','TE',80,'Active','Nick Riley','Nick','Nick','Riley','09/06/1991',75,6,3,219,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
+            ,(2019,1,'DEFL','UGF','UGF','TE','TE',90,'Active','Ernest Hunter','Ernest','Ernest','Hunter','10/24/2003',75,6,3,231,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
+            ,(2019,1,'DEFL','UGF','UGF','OL','LT',77,'Active','Eric Robinson','Eric','Eric','Robinson','01/07/1999',78,6,6,312,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
+            ,(2019,1,'DEFL','UGF','UGF','OL','OT',71,'Active','Bryce Bass','Bryce','Bryce','Bass','11/22/2004',73,6,1,258,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
+            ,(2019,1,'DEFL','UGF','UGF','OL','RT',55,'Active','Emmitt Rich','Emmitt','Emmitt','Rich','07/29/2004',75,6,3,303,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
+            ,(2019,1,'DEFL','UGF','UGF','OL','OT',64,'Active','Tyson James','Tyson','Tyson','James','01/31/1991',75,6,3,287,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
+            ,(2019,1,'DEFL','UGF','UGF','OL','RG',57,'Active','Brent Tanner','Brent','Brent','Tanner','05/31/2003',75,6,3,281,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
+            ,(2019,1,'DEFL','UGF','UGF','OL','OG',63,'Active','D.D. Henderson','D.D.','Dave','Henderson','11/04/1996',72,6,0,297,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
+            ,(2019,1,'DEFL','UGF','UGF','OL','LG',72,'Active','J.T. Milton','J.T.','Jeff','Milton','03/20/2001',75,6,3,279,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
+            ,(2019,1,'DEFL','UGF','UGF','OL','OG',59,'Active','Adam Huber','Adam','Adam','Huber','03/09/2004',73,6,1,300,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
+            ,(2019,1,'DEFL','UGF','UGF','OL','C',61,'Active','Bubba Eldridge','Bubba','Bubba','Eldridge','11/22/1999',76,6,4,305,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
+            ,(2019,1,'DEFL','UGF','UGF','OL','C',54,'Active','Shaud Bates','Shaud','Shaud','Bates','10/20/2002',70,5,10,284,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
+            ,(2019,1,'DEFL','UGF','UGF','DL','LDE',89,'Active','LeRoy Singleton','LeRoy','LeRoy','Singleton','08/02/1996',76,6,4,249,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
+            ,(2019,1,'DEFL','UGF','UGF','DL','RDE',91,'Active','Jakari McClelland','Jakari','Jakari','McClelland','08/20/2003',72,6,0,248,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
+            ,(2019,1,'DEFL','UGF','UGF','DL','DE',95,'Active','Eric Jennings','Eric','Eric','Jennings','07/01/1992',75,6,3,250,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
+            ,(2019,1,'DEFL','UGF','UGF','DL','DE',66,'Active','Harrison Hodges','Harrison','Harrison','Hodges','05/17/1991',76,6,4,250,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
+            ,(2019,1,'DEFL','UGF','UGF','DL','NT',87,'Active','Leigh Manley','Leigh','Leigh','Manley','06/13/2003',72,6,0,280,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
+            ,(2019,1,'DEFL','UGF','UGF','DL','DT',98,'Active','D.D. Nixon','D.D.','Dent','Nixon','04/07/1994',77,6,5,273,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
+            ,(2019,1,'DEFL','UGF','UGF','DL','DT',96,'Active','Eli Griffith','Eli','Eli','Griffith','10/25/1994',75,6,3,279,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
+            ,(2019,1,'DEFL','UGF','UGF','DL','DT',67,'Active','J.T. Benton','J.T.','John','Benton','01/16/2005',73,6,1,243,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
+            ,(2019,1,'DEFL','UGF','UGF','DL','NG',92,'Active','Mike Dailey','Mike','Mike','Dailey','03/30/1992',73,6,1,287,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
+            ,(2019,1,'DEFL','UGF','UGF','DL','DT',78,'Active','Gabriel Johnson','Gabriel','Gabriel','Johnson','01/07/1995',70,5,10,248,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
+            ,(2019,1,'DEFL','UGF','UGF','LB','ROLB',45,'Active','Harry Bridges','Harry','Harry','Bridges','12/30/2004',74,6,2,220,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
+            ,(2019,1,'DEFL','UGF','UGF','LB','LOLB',50,'Active','Tyler Ruff','Tyler','Tyler','Ruff','08/28/1993',73,6,1,227,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
+            ,(2019,1,'DEFL','UGF','UGF','LB','EDGE',99,'Active','Ira Riley','Ira','Ira','Riley','04/16/1992',74,6,2,238,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
+            ,(2019,1,'DEFL','UGF','UGF','LB','OLB',49,'Active','Donta Erickson','Donta','Donta','Erickson','02/23/1996',72,6,0,220,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
+            ,(2019,1,'DEFL','UGF','UGF','LB','ILB',52,'Active','Eric Tyson','Eric','Eric','Tyson','09/08/2001',72,6,0,235,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
+            ,(2019,1,'DEFL','UGF','UGF','LB','MLB',51,'Active','Elgin Landry','Elgin','Elgin','Landry','07/15/2003',72,6,0,231,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
+            ,(2019,1,'DEFL','UGF','UGF','DB','RCB',37,'Active','Andrew Dale','Andrew','Andrew','Dale','04/07/1994',75,6,3,200,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
+            ,(2019,1,'DEFL','UGF','UGF','DB','LCB',19,'Active','Avery Thompson','Avery','Avery','Thompson','10/13/2004',70,5,10,185,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
+            ,(2019,1,'DEFL','UGF','UGF','DB','SCB',1,'Active','Casey Eaton','Casey','Casey','Eaton','11/16/1990',74,6,2,195,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
+            ,(2019,1,'DEFL','UGF','UGF','DB','CB',46,'Active','Derek Lindsey','Derek','Derek','Lindsey','04/12/1997',68,5,8,175,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
+            ,(2019,1,'DEFL','UGF','UGF','DB','CB',28,'Active','Kareem Huffman','Kareem','Kareem','Huffman','07/16/1991',68,5,8,177,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
+            ,(2019,1,'DEFL','UGF','UGF','DB','CB',24,'Active','Jimmie Ricks','Jimmie','Jimmie','Ricks','03/12/1997',67,5,7,160,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
+            ,(2019,1,'DEFL','UGF','UGF','DB','FS',26,'Active','Benny Preston','Benny','Benny','Preston','01/04/1994',73,6,1,180,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
+            ,(2019,1,'DEFL','UGF','UGF','DB','SAF',23,'Active','Keenan Manning','Keenan','Keenan','Manning','11/25/1992',73,6,1,185,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
+            ,(2019,1,'DEFL','UGF','UGF','DB','SS',34,'Active','Buck Poole','Buck','Buck','Poole','01/04/2002',71,5,11,188,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
+            ,(2019,1,'DEFL','UGF','UGF','DB','SAF',48,'Active','Kendal Huber','Kendal','Kendal','Huber','04/10/1991',70,5,10,189,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
+            ,(2019,1,'DEFL','UGF','UGF','SPEC','K',38,'Active','Andy Francis','Andy','Andy','Francis','05/17/2005',73,6,1,170,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
+            ,(2019,1,'DEFL','UGF','UGF','SPEC','K',62,'Active','Rex Johnson','Rex','Rex','Johnson','05/27/2001',73,6,1,175,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
+            ,(2019,1,'DEFL','UGF','UGF','SPEC','P',69,'Active','Jacob Rigdon','Jacob','Jacob','Rigdon','03/08/2003',72,6,0,180,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
+            ,(2019,1,'DEFL','UGF','UGF','SPEC','P',65,'Active','Stephen Washington','Stephen','Stephen','Washington','03/15/2004',75,6,3,185,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
+            ,(2019,1,'DEFL','UGF','UGF','SPEC','LS',14,'Active','Logjammer D''Baggagecling','Logjammer','Logjammer','D''Baggagecling','12/08/2001',72,6,0,180,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
+            ,(2019,1,'DEFL','UGF','UGF','SPEC','LS',56,'Active','Triple Parakeet-Shoes','Triple','Triple','Parakeet-Shoes','07/26/2000',72,6,0,181,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
+            ,(2019,1,'DEFL','DVSU','DVSU','QB','QB',19,'Active','Micheal Wilson','Micheal','Micheal','Wilson','10/23/1999',74,6,2,206,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
+            ,(2019,1,'DEFL','DVSU','DVSU','QB','QB',18,'Active','Antwon Goodwin','Antwon','Antwon','Goodwin','10/01/1998',74,6,2,198,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
+            ,(2019,1,'DEFL','DVSU','DVSU','QB','QB',1,'Active','JT Martinez','JT','John','Martinez','03/30/1992',73,6,1,200,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
+            ,(2019,1,'DEFL','DVSU','DVSU','QB','QB',5,'Active','Travis Wood','Travis','Travis','Wood','06/24/1998',76,6,4,219,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
+            ,(2019,1,'DEFL','DVSU','DVSU','RB','RB',21,'Active','Matt Morrow','Matt','Matt','Morrow','09/06/1992',70,5,10,199,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
+            ,(2019,1,'DEFL','DVSU','DVSU','RB','RB',2,'Active','Zach Thompson','Zach','Zach','Thompson','05/29/1999',70,5,10,196,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
+            ,(2019,1,'DEFL','DVSU','DVSU','RB','RB',30,'Active','Jamie James','Jamie','Jamie','James','07/01/1995',70,5,10,204,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
+            ,(2019,1,'DEFL','DVSU','DVSU','RB','RB',41,'Active','Terence Wall','Terence','Terence','Wall','10/27/1992',70,5,10,210,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
+            ,(2019,1,'DEFL','DVSU','DVSU','RB','RB',12,'Active','Tre Eaton','Tre','Tre','Eaton','11/17/1991',68,5,8,190,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
+            ,(2019,1,'DEFL','DVSU','DVSU','RB','FB',49,'Active','Perry Samuels','Perry','Perry','Samuels','07/15/2001',74,6,2,225,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
+            ,(2019,1,'DEFL','DVSU','DVSU','RB','FB',29,'Active','Chip Godsey','Chip','Chip','Godsey','12/12/2001',76,6,4,215,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
+            ,(2019,1,'DEFL','DVSU','DVSU','RB','FB',25,'Active','Kellen West','Kellen','Kellen','West','03/11/1997',71,5,11,200,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
+            ,(2019,1,'DEFL','DVSU','DVSU','WR','WR',3,'Active','Seth McKenna','Seth','Seth','McKenna','11/20/2003',67,5,7,170,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
+            ,(2019,1,'DEFL','DVSU','DVSU','WR','WR',80,'Active','Richard Boulder','Richard','Richard','Boulder','12/11/2004',71,5,11,180,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
+            ,(2019,1,'DEFL','DVSU','DVSU','WR','WR',85,'Active','Brady Millar','Brady','Brady','Millar','11/09/1993',74,6,2,220,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
+            ,(2019,1,'DEFL','DVSU','DVSU','WR','WR',47,'Active','Alex King','Alex','Alex','King','02/23/1994',74,6,2,220,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
+            ,(2019,1,'DEFL','DVSU','DVSU','WR','WR',84,'Active','Jacob Hill','Jacob','Jacob','Hill','11/20/2000',73,6,1,196,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
+            ,(2019,1,'DEFL','DVSU','DVSU','WR','WR',34,'Active','Estman Gorman','Estman','Estman','Gorman','01/11/1992',72,6,0,175,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
+            ,(2019,1,'DEFL','DVSU','DVSU','TE','TE',81,'Active','Grankie Gandy','Grankie','Grankie','Gandy','05/03/2001',74,6,2,236,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
+            ,(2019,1,'DEFL','DVSU','DVSU','TE','TE',86,'Active','Bernard Gill','Bernard','Bernard','Gill','04/12/1991',71,5,11,191,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
+            ,(2019,1,'DEFL','DVSU','DVSU','OL','LT',72,'Active','Patrick Boulware','Patrick','Patrick','Boulware','11/15/1995',78,6,6,270,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
+            ,(2019,1,'DEFL','DVSU','DVSU','OL','RT',52,'Active','Benji Odom','Benji','Benji','Odom','02/29/1996',78,6,6,264,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
+            ,(2019,1,'DEFL','DVSU','DVSU','OL','OT',68,'Active','Deshon Haley','Deshon','Deshon','Haley','06/13/1991',78,6,6,287,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
+            ,(2019,1,'DEFL','DVSU','DVSU','OL','OT',75,'Active','C.J. Rozner','C.J.','Chris','Rozner','08/09/1996',78,6,6,278,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
+            ,(2019,1,'DEFL','DVSU','DVSU','OL','OT',70,'Active','Bobby Giles','Bobby','Bobby','Giles','02/11/2004',77,6,5,287,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
+            ,(2019,1,'DEFL','DVSU','DVSU','OL','OT',64,'Active','Davon Snyder','Davon','Davon','Snyder','08/11/1993',75,6,3,239,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
+            ,(2019,1,'DEFL','DVSU','DVSU','OL','RG',78,'Active','Jermaine Hodges','Jermaine','Jermaine','Hodges','02/18/2004',75,6,3,261,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
+            ,(2019,1,'DEFL','DVSU','DVSU','OL','LG',62,'Active','Aaron White','Aaron','Aaron','White','02/21/1997',76,6,4,317,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
+            ,(2019,1,'DEFL','DVSU','DVSU','OL','OG',67,'Active','Errick Humphrey','Errick','Errick','Humphrey','03/29/1991',76,6,4,306,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
+            ,(2019,1,'DEFL','DVSU','DVSU','OL','OG',58,'Active','Blake Klein','Blake','Blake','Klein','09/19/2001',78,6,6,255,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
+            ,(2019,1,'DEFL','DVSU','DVSU','OL','C',63,'Active','Matt Hampton','Matt','Matt','Hampton','05/13/1995',74,6,2,240,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
+            ,(2019,1,'DEFL','DVSU','DVSU','OL','C',71,'Active','Reshard Boone','Reshard','Reshard','Boone','09/28/1999',73,6,1,265,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
+            ,(2019,1,'DEFL','DVSU','DVSU','DL','LDE',92,'Active','Brylan Down','Brylan','Brylan','Down','11/30/2004',74,6,2,228,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
+            ,(2019,1,'DEFL','DVSU','DVSU','DL','RDE',93,'Active','Dom Atamo','Dom','Dom','Atamo','08/27/2001',74,6,2,235,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
+            ,(2019,1,'DEFL','DVSU','DVSU','DL','DE',99,'Active','Nolan Poole','Nolan','Nolan','Poole','01/07/2003',75,6,3,259,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
+            ,(2019,1,'DEFL','DVSU','DVSU','DL','DE',96,'Active','Del Smith','Del','Del','Smith','01/03/1998',78,6,6,250,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
+            ,(2019,1,'DEFL','DVSU','DVSU','DL','DE',48,'Active','Wesley Stamps','Wesley','Wesley','Stamps','10/30/2001',76,6,4,243,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
+            ,(2019,1,'DEFL','DVSU','DVSU','DL','DT',95,'Active','Joe Walker','Joe','Joe','Walker','09/06/1999',74,6,2,238,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
+            ,(2019,1,'DEFL','DVSU','DVSU','DL','DT',91,'Active','Sammy Sam','Sammy','Sammy','Sam','01/03/2001',75,6,3,260,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
+            ,(2019,1,'DEFL','DVSU','DVSU','DL','DT',65,'Active','Nathan McKee','Nathan','Nathan','McKee','03/04/1999',76,6,4,253,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
+            ,(2019,1,'DEFL','DVSU','DVSU','DL','DT',61,'Active','Doug Campers','Doug','Doug','Campers','08/18/1994',74,6,2,253,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
+            ,(2019,1,'DEFL','DVSU','DVSU','LB','OLB',73,'Active','Neil Krause','Neil','Neil','Krause','04/25/1992',73,6,1,195,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
+            ,(2019,1,'DEFL','DVSU','DVSU','LB','OLB',56,'Active','Oliver McIntyre','Oliver','Oliver','McIntyre','04/23/1999',72,6,0,206,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
+            ,(2019,1,'DEFL','DVSU','DVSU','LB','EDGE',98,'Active','Johnnie Barr','Johnnie','Johnnie','Barr','10/17/1994',72,6,0,211,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
+            ,(2019,1,'DEFL','DVSU','DVSU','LB','EDGE',94,'Active','Abdul Young','Abdul','Abdul','Young','05/05/1994',73,6,1,222,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
+            ,(2019,1,'DEFL','DVSU','DVSU','LB','LB',45,'Active','Samuel Schneider','Samuel','Samuel','Schneider','10/17/1990',73,6,1,214,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
+            ,(2019,1,'DEFL','DVSU','DVSU','LB','MLB',55,'Active','DD Rodgers','DD','DD','Rodgers','07/08/2002',74,6,2,217,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
+            ,(2019,1,'DEFL','DVSU','DVSU','LB','ILB',55,'Active','Will Hughes','Will','Will','Hughes','03/23/1999',74,6,2,220,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
+            ,(2019,1,'DEFL','DVSU','DVSU','LB','ILB',43,'Active','Cooper Stevenson','Cooper','Cooper','Stevenson','02/04/2001',73,6,1,213,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
+            ,(2019,1,'DEFL','DVSU','DVSU','LB','LB',87,'Active','Grant Eaton','Grant','Grant','Eaton','11/03/1991',73,6,1,225,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
+            ,(2019,1,'DEFL','DVSU','DVSU','DB','LCB',24,'Active','Bill Dingle','Bill','Bill','Dingle','12/08/2001',69,5,9,180,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
+            ,(2019,1,'DEFL','DVSU','DVSU','DB','RCB',39,'Active','Jeremy Jimmy','Jeremy','Jeremy','Jimmy','11/22/2000',72,6,0,180,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
+            ,(2019,1,'DEFL','DVSU','DVSU','DB','NCB',4,'Active','DeAngelo Woodard','DeAngelo','DeAngelo','Woodard','06/02/1994',72,6,0,185,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
+            ,(2019,1,'DEFL','DVSU','DVSU','DB','DCB',46,'Active','Lemarcus Parsons','Lemarcus','Lemarcus','Parsons','09/09/1997',71,5,11,175,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
+            ,(2019,1,'DEFL','DVSU','DVSU','DB','FS',36,'Active','Jesse Shelton','Jesse','Jesse','Shelton','08/25/2004',74,6,2,190,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
+            ,(2019,1,'DEFL','DVSU','DVSU','DB','SAF',23,'Active','Chris Hickmon','Chris','Chris','Hickmon','01/23/1998',74,6,2,199,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
+            ,(2019,1,'DEFL','DVSU','DVSU','DB','SS',31,'Active','Timothy Dickens','Timothy','Timothy','Dickens','08/24/1996',74,6,2,194,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
+            ,(2019,1,'DEFL','DVSU','DVSU','DB','SAF',26,'Active','LaShaun Gutierrez','LaShaun','LaShaun','Gutierrez','08/26/1995',71,5,11,191,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
+            ,(2019,1,'DEFL','DVSU','DVSU','SPEC','K',17,'Active','Justin Powell','Justin','Justin','Powell','01/04/1999',70,5,10,209,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
+            ,(2019,1,'DEFL','DVSU','DVSU','SPEC','P',69,'Active','Rob Butler','Rob','Rob','Butler','11/12/2002',73,6,1,195,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
+            ,(2019,1,'DEFL','DVSU','DVSU','SPEC','LS',79,'Active','Velociraptor Maloish','Velociraptor','Scoish','Maloish','11/25/1999',0,NULL,NULL,NULL,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
+            ,(2019,1,'DEFL','DVSU','DVSU','SPEC','LS',83,'Active','Aristokles Prabhu','Aristokles','Aristokles','Prabhu','03/18/2005',0,NULL,NULL,NULL,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
+            ,(2019,1,'DEFL','DVSU','DVSU','SPEC','K',15,'Active','Legume Druprix','Legume','Legume','Druprix','03/22/1997',72,6,0,191,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
+            ,(2019,1,'DEFL','DVSU','DVSU','SPEC','P',20,'Active','Creme De La Creme','Creme','Creme','De La Creme','04/15/2003',0,NULL,NULL,NULL,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019);
 
         """
         return sql_script.replace("        ", "")
@@ -6549,31 +6564,33 @@ class sqlite3_sample_files:
 
         sql_script = """
         CREATE TABLE IF NOT EXISTS "fb_depth_charts"(
-            "season" INT NOT NULL,
-            "league_id" TEXT NOT NULL,
-            "team_abv" TEXT NOT NULL,
-            "week" INT NOT NULL,
-            "game_type" INT NOT NULL,
-            "depth_team" INT NOT NULL, -- Indicates where this player is on the depth chart for this specific position. For example, the starting QB will have a "depth_team" of `1`, QB2 will have a "depth_team" of `2`, and QB3 will have a "depth_team" of `3`. 
-            "player_jersey_number" TEXT NOT NULL, -- TEXT so a player can be identified by "00", "01", "1A", or "1O"/"1D"
-            "player_last_name" TEXT NOT NULL,
-            "player_first_name" TEXT NOT NULL,
-            "player_football_name" TEXT NOT NULL, -- Defaults to the value of "player_first_name", but can be set to a differient value (for example, Boomer Esiason, who's birth name is Norman Esiason, can have his "player_first_name" == "Norman", and his "player_football_name" == "Boomer").
-            "player_full_name" TEXT NOT NULL,
-            "formation" TEXT NOT NULL, -- Will be set to "Offense", "Defense", or "Special Teams".
-            "player_position" TEXT NOT NULL,
+            "season"                INT NOT NULL,
+            "league_id"             TEXT NOT NULL,
+            "team_abv"              TEXT NOT NULL,
+            "game_id"               INT NOT NULL,
+            "week"                  INT NOT NULL,
+            "game_type"             TEXT NOT NULL,
+            "depth_team"            INT NOT NULL, -- Indicates where this player is on the depth chart for this specific position. For example, the starting QB will have a "depth_team" of `1`, QB2 will have a "depth_team" of `2`, and QB3 will have a "depth_team" of `3`. 
+            "player_id"             INT NOT NULL,
+            "player_jersey_number"  TEXT NOT NULL, -- TEXT so a player can be identified by "00", "01", "1A", or "1O"/"1D"
+            "player_last_name"      TEXT NOT NULL,
+            "player_first_name"     TEXT NOT NULL,
+            "player_football_name"  TEXT NOT NULL, -- Defaults to the value of "player_first_name", but can be set to a differient value (for example, Boomer Esiason, who's birth name is Norman Esiason, can have his "player_first_name" == "Norman", and his "player_football_name" == "Boomer").
+            "player_full_name"      TEXT NOT NULL,
+            "formation"             TEXT NOT NULL, -- Will be set to "offense", "defense", or "special_teams".
+            "player_position"       TEXT NOT NULL,
             "player_depth_position" TEXT NOT NULL,
-            "gsis_id" TEXT,-- NFL GSIS Player ID.
-            "espn_id" INT, -- ESPN Player ID.
-            "sportradar_id" TEXT,-- Sportradar Player ID.
-            "yahoo_id" INT, -- Yahoo Sports Player ID.
-            "rotowire_id" INT, -- Rotowire Player ID.
-            "pff_id" INT, -- Pro Football Focus (PFF) Player ID.
-            "pfr_id" TEXT,-- Pro Football Reference Player ID.
-            "fantasy_data_id" INT,
-            "sleeper_id" INT,
-            "esb_id" TEXT,
-            "smart_id" TEXT,
+            "gsis_id"               TEXT,-- NFL GSIS Player ID.
+            "espn_id"               INT, -- ESPN Player ID.
+            "sportradar_id"         TEXT,-- Sportradar Player ID.
+            "yahoo_id"              INT, -- Yahoo Sports Player ID.
+            "rotowire_id"           INT, -- Rotowire Player ID.
+            "pff_id"                INT, -- Pro Football Focus (PFF) Player ID.
+            "pfr_id"                TEXT,-- Pro Football Reference Player ID.
+            "fantasy_data_id"       INT,
+            "sleeper_id"            INT,
+            "esb_id"                TEXT,
+            "smart_id"              TEXT,
             FOREIGN KEY ("league_id")
                 REFERENCES "fb_leagues" ("league_id")
                     ON DELETE CASCADE
@@ -6587,6 +6604,67 @@ class sqlite3_sample_files:
         CREATE UNIQUE INDEX idx_depth_charts_id
         ON "fb_depth_charts" ("season","league_id","team_id","player_full_name","week","game_type","player_depth_position","depth_team");
 
+        INSERT INTO fb_depth_charts
+            (season,"league_id","team_abv","game_id",week,"game_type","depth_team","player_id","player_jersey_number","player_last_name","player_first_name","player_football_name","player_full_name",formation,"player_position","player_depth_position","gsis_id","espn_id","sportradar_id","yahoo_id","rotowire_id","pff_id","pfr_id","fantasy_data_id","sleeper_id","esb_id","smart_id")
+        VALUES
+            (2019,'DEFL','UGF',1,1,'REG',1,1,4,'Horton','Will','Will','Horton','offense','QB','QB',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL)
+            ,(2019,'DEFL','UGF',1,1,'REG',2,2,16,'Cooke','Howard','Howard','Howard Cooke','offense','QB','QB',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL)
+            ,(2019,'DEFL','UGF',1,1,'REG',3,3,5,'Calhoun','Rodney','Rod','Rod Calhoun','offense','QB','QB',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL)
+            ,(2019,'DEFL','UGF',1,1,'REG',1,4,7,'Active','BJ Hale','BJ','BJ','Hale','RB','RB',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL)
+            ,(2019,'DEFL','UGF',1,1,'REG',2,5,2,'Active','Ryan Dingle','Ryan','Ryan','Dingle','RB','RB',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL)
+            ,(2019,'DEFL','UGF',1,1,'REG',3,6,42,'Active','Rob Minton','Rob','Rob','Minton','RB','RB',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL)
+            ,(2019,'DEFL','UGF',1,1,'REG',1,7,40,'Active','Tom Adamo','Tom','Tom','Adamo','RB','FB',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL)
+            ,(2019,'DEFL','UGF',1,1,'REG',2,8,39,'Active','Jason Eaton','Jason','Jason','Eaton','RB','FB',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL)
+            ,(2019,'DEFL','UGF',1,1,'REG',1,9,11,'Active','Elliot Denman','Elliot','Elliot','Denman','WR','WR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL)
+            ,(2019,'DEFL','UGF',1,1,'REG',2,10,12,'Active','Neghan Stance','Neghan','Neghan','Stance','WR','WR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL)
+            ,(2019,'DEFL','UGF',1,1,'REG',3,11,88,'Active','Torren Engle','Torren','Torren','Engle','WR','WR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL)
+            ,(2019,'DEFL','UGF',1,1,'REG',4,12,84,'Active','Vance McMahon','Vance','Vance','McMahon','WR','WR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL)
+            ,(2019,'DEFL','UGF',1,1,'REG',5,13,6,'Active','Jake Nelson','Jake','Jake','Nelson','WR','WR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL)
+            ,(2019,'DEFL','UGF',1,1,'REG',1,14,18,'Active','Tez Triplett','Tez','Tez','Triplett','TE','TE',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL)
+            ,(2019,'DEFL','UGF',1,1,'REG',2,15,80,'Active','Nick Riley','Nick','Nick','Riley','TE','TE',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL)
+            ,(2019,'DEFL','UGF',1,1,'REG',3,16,90,'Active','Ernest Hunter','Ernest','Ernest','Hunter','TE','TE',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL)
+            ,(2019,'DEFL','UGF',1,1,'REG',1,17,77,'Active','Eric Robinson','Eric','Eric','Robinson','OL','LT',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL)
+            ,(2019,'DEFL','UGF',1,1,'REG',2,18,71,'Active','Bryce Bass','Bryce','Bryce','Bass','OL','LT',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL)
+            ,(2019,'DEFL','UGF',1,1,'REG',1,19,55,'Active','Emmitt Rich','Emmitt','Emmitt','Rich','OL','RT',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL)
+            ,(2019,'DEFL','UGF',1,1,'REG',2,20,64,'Active','Tyson James','Tyson','Tyson','James','OL','RT',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL)
+            ,(2019,'DEFL','UGF',1,1,'REG',1,21,57,'Active','Brent Tanner','Brent','Brent','Tanner','OL','RG',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL)
+            ,(2019,'DEFL','UGF',1,1,'REG',2,22,63,'Active','D.D. Henderson','D.D.','D.D.','Henderson','OL','RG',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL)
+            ,(2019,'DEFL','UGF',1,1,'REG',1,23,72,'Active','J.T. Milton','J.T.','J.T.','Milton','OL','LG',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL)
+            ,(2019,'DEFL','UGF',1,1,'REG',2,24,59,'Active','Adam Huber','Adam','Adam','Huber','OL','LG',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL)
+            ,(2019,'DEFL','UGF',1,1,'REG',1,25,61,'Active','Bubba Eldridge','Bubba','Bubba','Eldridge','OL','C',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL)
+            ,(2019,'DEFL','UGF',1,1,'REG',2,26,54,'Active','Shaud Bates','Shaud','Shaud','Bates','OL','C',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL)
+            ,(2019,'DEFL','UGF',1,1,'REG',1,27,89,'Active','LeRoy Singleton','LeRoy','LeRoy','Singleton','DL','LDE',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL)
+            ,(2019,'DEFL','UGF',1,1,'REG',1,28,91,'Active','Jakari McClelland','Jakari','Jakari','McClelland','DL','RDE',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL)
+            ,(2019,'DEFL','UGF',1,1,'REG',2,29,95,'Active','Eric Jennings','Eric','Eric','Jennings','DL','LDE',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL)
+            ,(2019,'DEFL','UGF',1,1,'REG',2,30,66,'Active','Harrison Hodges','Harrison','Harrison','Hodges','DL','RDE',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL)
+            ,(2019,'DEFL','UGF',1,1,'REG',1,31,87,'Active','Leigh Manley','Leigh','Leigh','Manley','DL','NT',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL)
+            ,(2019,'DEFL','UGF',1,1,'REG',1,32,98,'Active','D.D. Nixon','D.D.','D.D.','Nixon','DL','DT',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL)
+            ,(2019,'DEFL','UGF',1,1,'REG',2,33,96,'Active','Eli Griffith','Eli','Eli','Griffith','DL','DT',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL)
+            ,(2019,'DEFL','UGF',1,1,'REG',3,34,67,'Active','J.T. Benton','J.T.','J.T.','Benton','DL','DT',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL)
+            ,(2019,'DEFL','UGF',1,1,'REG',2,35,92,'Active','Mike Dailey','Mike','Mike','Dailey','DL','NT',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL)
+            ,(2019,'DEFL','UGF',1,1,'REG',4,36,78,'Active','Gabriel Johnson','Gabriel','Gabriel','Johnson','DL','DT',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL)
+            ,(2019,'DEFL','UGF',1,1,'REG',1,37,45,'Active','Harry Bridges','Harry','Harry','Bridges','LB','ROLB',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL)
+            ,(2019,'DEFL','UGF',1,1,'REG',1,38,50,'Active','Tyler Ruff','Tyler','Tyler','Ruff','LB','LOLB',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL)
+            ,(2019,'DEFL','UGF',1,1,'REG',2,39,99,'Active','Ira Riley','Ira','Ira','Riley','LB','ROLB',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL)
+            ,(2019,'DEFL','UGF',1,1,'REG',2,40,49,'Active','Donta Erickson','Donta','Donta','Erickson','LB','LOLB',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL)
+            ,(2019,'DEFL','UGF',1,1,'REG',1,41,52,'Active','Eric Tyson','Eric','Eric','Tyson','LB','ILB',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL)
+            ,(2019,'DEFL','UGF',1,1,'REG',2,42,51,'Active','Elgin Landry','Elgin','Elgin','Landry','LB','ILB',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL)
+            ,(2019,'DEFL','UGF',1,1,'REG',1,43,37,'Active','Andrew Dale','Andrew','Andrew','Dale','DB','RCB',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL)
+            ,(2019,'DEFL','UGF',1,1,'REG',1,44,19,'Active','Avery Thompson','Avery','Avery','Thompson','DB','LCB',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL)
+            ,(2019,'DEFL','UGF',1,1,'REG',2,45,1,'Active','Casey Eaton','Casey','Casey','Eaton','DB','SCB',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL)
+            ,(2019,'DEFL','UGF',1,1,'REG',2,46,46,'Active','Derek Lindsey','Derek','Derek','Lindsey','DB','CB',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL)
+            ,(2019,'DEFL','UGF',1,1,'REG',3,47,28,'Active','Kareem Huffman','Kareem','Kareem','Huffman','DB','CB',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL)
+            ,(2019,'DEFL','UGF',1,1,'REG',3,48,24,'Active','Jimmie Ricks','Jimmie','Jimmie','Ricks','DB','CB',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL)
+            ,(2019,'DEFL','UGF',1,1,'REG',1,49,26,'Active','Benny Preston','Benny','Benny','Preston','DB','FS',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL)
+            ,(2019,'DEFL','UGF',1,1,'REG',2,50,23,'Active','Keenan Manning','Keenan','Keenan','Manning','DB','SAF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL)
+            ,(2019,'DEFL','UGF',1,1,'REG',1,51,34,'Active','Buck Poole','Buck','Buck','Poole','DB','SS',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL)
+            ,(2019,'DEFL','UGF',1,1,'REG',2,52,48,'Active','Kendal Huber','Kendal','Kendal','Huber','DB','SAF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL)
+            ,(2019,'DEFL','UGF',1,1,'REG',1,53,38,'Active','Andy Francis','Andy','Andy','Francis','SPEC','K',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL)
+            ,(2019,'DEFL','UGF',1,1,'REG',2,54,62,'Active','Rex Johnson','Rex','Rex','Johnson','SPEC','K',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL)
+            ,(2019,'DEFL','UGF',1,1,'REG',1,55,69,'Active','Jacob Rigdon','Jacob','Jacob','Rigdon','SPEC','P',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL)
+            ,(2019,'DEFL','UGF',1,1,'REG',2,56,65,'Active','Stephen Washington','Stephen','Stephen','Washington','SPEC','P',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL)
+            ,(2019,'DEFL','UGF',1,1,'REG',1,57,14,'Active','Logjammer D''Baggagecling','Logjammer','Logjammer','D''Baggagecling','SPEC','LS',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL)
+            ,(2019,'DEFL','UGF',1,1,'REG',2,58,56,'Active','Triple Parakeet-Shoes','Triple','Triple','Parakeet-Shoes','SPEC','LS',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
         """
         return sql_script.replace("        ", "")
 
@@ -6608,38 +6686,37 @@ class sqlite3_sample_files:
 
         sql_script = """
         CREATE TABLE IF NOT EXISTS "fb_schedule"(
-            "game_is_in_progress"	INTEGER NOT NULL DEFAULT 0,
-            "game_is_finished"	INTEGER NOT NULL DEFAULT 0,
-            "season" INT NOT NULL,
-            "game_id" INTEGER PRIMARY KEY AUTOINCREMENT,
-            "league_id" TEXT NOT NULL,
-            "game_status" TEXT NOT NULL, -- Can be "finished", "in_progress", "delayed", or "not_started"
-            "nflverse_game_id" TEXT NOT NULL, -- Formatted as "[season]_[week]_[away_team_abv]_[home_team_abv]", can either be generated, or specified by a user.
-            "game_type" TEXT NOT NULL, -- can be "PRE", "REG", or "POST". Optionally, postseason games can be represented by "WC" (wild card), "DIV" (divisional round), "CON" (confrence championship), or "SB" (Super Bowl)
-            "week" INT NOT NULL,
-            "game_day" TEXT NOT NULL, -- Dates will be stored as "YYYY-MM-DD".
-            "game_time" TEXT NOT NULL, -- Formatted as "HH:MM:SS", in 24-hour time.
-            "game_time_zone" TEXT NOT NULL, 
-            "game_time_offset" DOUBLE NOT NULL,
-            "game_datetime_iso" TEXT NOT NULL, -- Stored as "YYYY-MM-DDTHH:MM:SS", 
-            "game_day_of_week" TEXT NOT NULL, -- Like "Monday" or "Sunday"
-            "away_team_abv" TEXT NOT NULL,
-            "away_team_score" INT DEFAULT 0 NOT NULL,
-            "home_team_abv" TEXT NOT NULL,
-            "home_team_score" INT DEFAULT 0 NOT NULL,
-            "nflverse_old_game_id" INT,
-            "gsis_id" INT,
-            "nfl_detail_id" TEXT,
-            "pfr_game_id" TEXT,
-            "pff_game_id" TEXT,
-            "espn_game_id" INT,
-            "ftn_game_id" INT,
-            "away_days_rest" INT,
-            "home_days_rest" INT,
-            "is_neutral_site_game" BOOLEAN DEFAULT "FALSE" NOT NULL,
-            "is_overtime_game" BOOLEAN DEFAULT "FALSE" NOT NULL,
-            "is_divisional_game" BOOLEAN DEFAULT "FALSE" NOT NULL,
-            "game_roof" TEXT NOT NULL, -- Can be one of the following categories: 
+            "game_is_in_progress"   INTEGER NOT NULL DEFAULT 0,
+            "game_is_finished"      INTEGER NOT NULL DEFAULT 0,
+            "season"                INT NOT NULL,
+            "game_id"               INTEGER PRIMARY KEY AUTOINCREMENT,
+            "league_id"             TEXT NOT NULL,
+            "game_status"           TEXT NOT NULL, -- Can be "finished", "in_progress", "delayed", or "not_started"
+            "nflverse_game_id"      TEXT NOT NULL, -- Formatted as "[season]_[week]_[away_team_abv]_[home_team_abv]", can either be generated, or specified by a user.
+            "game_type"             TEXT NOT NULL, -- can be "PRE", "REG", or "POST". Optionally, postseason games can be represented by "WC" (wild card), "DIV" (divisional round), "CON" (confrence championship), or "SB" (Super Bowl)
+            "week"                  INT NOT NULL,
+            "game_day"              TEXT NOT NULL, -- Dates will be stored as "YYYY-MM-DD".
+            "game_time"             TEXT NOT NULL, -- Formatted as "HH:MM:SS", in 24-hour time.
+            "game_time_zone"        TEXT NOT NULL, 
+            "game_datetime_utc"     TEXT NOT NULL, -- Stored as "YYYY-MM-DDTHH:MM:SS", 
+            "game_day_of_week"      TEXT NOT NULL, -- Like "Monday" or "Sunday"
+            "away_team_abv"         TEXT NOT NULL,
+            "away_team_score"       INT DEFAULT 0 NOT NULL,
+            "home_team_abv"         TEXT NOT NULL,
+            "home_team_score"       INT DEFAULT 0 NOT NULL,
+            "nflverse_old_game_id"  INT,
+            "gsis_id"               INT,
+            "nfl_detail_id"         TEXT,
+            "pfr_game_id"           TEXT,
+            "pff_game_id"           TEXT,
+            "espn_game_id"          INT,
+            "ftn_game_id"           INT,
+            "away_days_rest"        INT,
+            "home_days_rest"        INT,
+            "is_neutral_site_game"  BOOLEAN DEFAULT FALSE NOT NULL,
+            "is_overtime_game"      BOOLEAN DEFAULT FALSE NOT NULL,
+            "is_divisional_game"    BOOLEAN DEFAULT FALSE NOT NULL,
+            "game_roof"             TEXT NOT NULL, -- Can be one of the following categories: 
             /*
             -- "dome": Means the game is played in a stadium with a covered roof, but the roof cannot be opened up to see the sky.
             -- "outdoors": Means the stadium lacks a roof to cover the stadium in any capacity.
@@ -6658,22 +6735,22 @@ class sqlite3_sample_files:
             -- "matrixturf"
             -- "sportturf"
             */
-            "temp_f" DOUBLE, -- Temperature, in Fahrenheit (°F)
-            "temp_c" DOUBLE, -- Temperature, in Celsius (°C)
-            "wind" INT, -- Wind Speed, in MPH unless otherwise specified.
-            "away_coach_name" TEXT NOT NULL,
-            "home_coach_name" TEXT NOT NULL,
-            "stadium_ID" INT NOT NULL,
-            "stadium_name" TEXT NOT NULL,
-            "pfr_stadium_id" TEXT,
+            "temp_f"                DOUBLE, -- Temperature, in Fahrenheit (°F)
+            "temp_c"                DOUBLE, -- Temperature, in Celsius (°C)
+            "wind"                  INT, -- Wind Speed, in MPH unless otherwise specified.
+            "away_coach_name"       TEXT NOT NULL,
+            "home_coach_name"       TEXT NOT NULL,
+            "stadium_ID"            INT NOT NULL,
+            "stadium_name"          TEXT NOT NULL,
+            "pfr_stadium_id"        TEXT,
             FOREIGN KEY ("stadium_id") REFERENCES "fb_stadiums" ("stadium_id") ON DELETE NO ACTION ON UPDATE NO ACTION
         );
 
         CREATE UNIQUE INDEX idx_schedule_id
         ON "fb_schedule" ("game_id","away_team_abv","home_team_abv");
         
-        INSERT INTO fb_schedule(season,league_id,game_status,nflverse_game_id,game_type,week,game_day,game_time,game_time_zone,game_time_offset,game_datetime_iso,game_day_of_week,away_team_abv,home_team_abv,game_roof,surface,away_coach_name,home_coach_name,stadium_name,stadium_id) 
-        VALUES (2019,'DEFL','finished','2019_1_DVSU_UGF','REG',1,'08/01/2019','12:00','EST',5,'2019-08-01T07:00:00','Thursday','DVSU','UGF','dome','fieldturf','Bob Gyles','Caden Ernest','Adamo Dome',1);
+        INSERT INTO fb_schedule(season,league_id,game_status,nflverse_game_id,game_type,week,game_day,game_time,game_time_zone,game_datetime_utc,game_day_of_week,away_team_abv,home_team_abv,game_roof,surface,away_coach_name,home_coach_name,stadium_name,stadium_id) 
+        VALUES (2019,'DEFL','finished','2019_1_DVSU_UGF','REG',1,'08/01/2019','12:00','EST','2019-08-01T07:00:00','Thursday','DVSU','UGF','dome','fieldturf','Bob Gyles','Caden Ernest','Adamo Dome',1);
 
         """
         return sql_script.replace("        ", "")
@@ -6695,18 +6772,18 @@ class sqlite3_sample_files:
 
         sql_script = """
         CREATE TABLE IF NOT EXISTS "fb_betting"(
-            "game_id" INT NOT NULL,
-            "betting_book" TEXT NOT NULL,
-            "over_under_open" DOUBLE,
-            "over_under_close" DOUBLE,
-            "home_spread_open" DOUBLE,
-            "home_spread_close" DOUBLE,
-            "away_spread_open" DOUBLE,
-            "away_spread_close" DOUBLE,
-            "home_moneyline_open" INT,
-            "home_moneyline_close" INT,
-            "away_moneyline_open" INT,
-            "away_moneyline_close" INT,
+            "game_id"               INT NOT NULL,
+            "betting_book"          TEXT NOT NULL,
+            "over_under_open"       DOUBLE,
+            "over_under_close"      DOUBLE,
+            "home_spread_open"      DOUBLE,
+            "home_spread_close"     DOUBLE,
+            "away_spread_open"      DOUBLE,
+            "away_spread_close"     DOUBLE,
+            "home_moneyline_open"   INT,
+            "home_moneyline_close"  INT,
+            "away_moneyline_open"   INT,
+            "away_moneyline_close"  INT,
             FOREIGN KEY ("game_id")
                 REFERENCES "fb_schedule" ("game_id")
                     ON DELETE CASCADE
@@ -6740,9 +6817,9 @@ class sqlite3_sample_files:
 
         sql_script = """
         CREATE TABLE IF NOT EXISTS "fb_game_refs"(
-            "game_id" INT NOT NULL,
-            "ref_num" INT, -- If unkown (rare, but can theoretically happen), just set this to `0` or NULL.
-            "ref_position_abv" TEXT NOT NULL, -- Can be the following values:
+            "game_id"           INT NOT NULL,
+            "ref_num"           INT, -- If unkown (rare, but can theoretically happen), just set this to `0` or NULL.
+            "ref_position_abv"  TEXT NOT NULL, -- Can be the following values:
             /*
             -- "R": Referee. Responsible for the general supervision of the game and has the final authority on all rulings.
             -- "U": Umpire. Stands behind the defensive line and linebackers, observing the blocks by the offensive line and defenders trying to ward off those blocks, looking for holding or illegal blocks.
@@ -6769,9 +6846,9 @@ class sqlite3_sample_files:
             source: https://en.wikipedia.org/wiki/Official_(gridiron_football)
             */
             "ref_position_name" TEXT NOT NULL,
-            "ref_full_name" TEXT NOT NULL, -- ["ref_full_name"] = ["ref_first_name"] + " " + ["ref_last_name"]
-            "ref_first_name" TEXT NOT NULL,
-            "ref_last_name" TEXT NOT NULL,
+            "ref_full_name"     TEXT NOT NULL, -- ["ref_full_name"] = ["ref_first_name"] + " " + ["ref_last_name"]
+            "ref_first_name"    TEXT NOT NULL,
+            "ref_last_name"     TEXT NOT NULL,
             FOREIGN KEY ("game_id")
                 REFERENCES "fb_schedule" ("game_id")
                     ON DELETE CASCADE
@@ -6818,7 +6895,7 @@ class sqlite3_sample_files:
 
         sql_script = """
         CREATE TABLE IF NOT EXISTS "fb_pbp" (
-            "game_id"	INT NOT NULL,
+            "game_id"	    INT NOT NULL,
             "game_json_str"	TEXT NOT NULL,
             FOREIGN KEY(game_id) REFERENCES  fb_schedule(game_id)
         );
@@ -6830,17 +6907,22 @@ def create_app_sqlite3_db(custom_dir: str = None):
     """ """
     # print(sqlite3_sample_files.leagues_sql_file())
 
+
     if custom_dir is not None:
-        con = sqlite3.connect(f"{custom_dir}/sdv_pbp_py.sqlite")
+        con = sqlite_connect(f"{custom_dir}/sdv_pbp_py.sqlite")
     else:
-        home_dir = os.path.expanduser("~")
+        home_dir = expanduser("~")
         try:
-            os.mkdir(f"{home_dir}/.sdv_pbp/")
+            mkdir(f"{home_dir}/.sdv_pbp/")
+
+            # if platform.system() == "Windows":
+            #     system(f"attrib +h {home_dir}/.sdv_pbp")
         except FileExistsError:
             logging.info(f"{home_dir}/.sdv_pbp/ already exists.")
+            
         # os.mkdir(f'{home_dir}/.sdv_pbp/')
 
-        con = sqlite3.connect(f"{home_dir}/.sdv_pbp/sdv_pbp_py.sqlite")
+        con = sqlite_connect(f"{home_dir}/.sdv_pbp/sdv_pbp_py.sqlite")
 
     cur = con.cursor()
 
@@ -6880,8 +6962,8 @@ def create_app_sqlite3_db(custom_dir: str = None):
     cur.executescript(sqlite3_sample_files.schedule_sql_file())
     con.commit()
 
-    cur.executescript(sqlite3_sample_files.game_betting_sql_file())
-    con.commit()
+    # cur.executescript(sqlite3_sample_files.game_betting_sql_file())
+    # con.commit()
 
     cur.executescript(sqlite3_sample_files.game_refs_sql_file())
     con.commit()
@@ -6891,5 +6973,6 @@ def create_app_sqlite3_db(custom_dir: str = None):
 
 
 if __name__ == "__main__":
+
     # For Debug purposesF
     create_app_sqlite3_db()

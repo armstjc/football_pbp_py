@@ -1,5 +1,4 @@
 # Creation Date: 01/21/2024 7:50 PM EDT
-# Updates:
 # Authors: Joseph Armstrong (armstrongjoseph08@gmail.com)
 # file: `./core/export/export_as_maxpreps.py`
 # Purpose: Tenative code for exporting a game in a format that works with 
