@@ -1,11 +1,12 @@
 # Creation Date: 08/16/2023 07:28 PM EST
+# Last Updated: 02/11/2024 11:50 AM EST
 # Author: Joseph Armstrong (armstrongjoseph08@gmail.com)
 # File Name: ./core/database/create_sdv_pbp_db.py
 # Purpose: Creates a database that can be used for this application.
 ####################################################################################################
 
 import logging
-from os import mkdir
+from os import makedirs
 from os.path import expanduser
 from sqlite3 import connect as sqlite_connect
 
@@ -32,10 +33,10 @@ class sqlite3_sample_files:
         """
 
         sql_script = """
-        CREATE TABLE iso_nations(
-            "nation_name"                 TEXT NOT NULL PRIMARY KEY
+        CREATE TABLE IF NOT EXISTS iso_nations(
+            "nation_name"                 TEXT NOT NULL
             ,"nation_iso_alpha_2"         TEXT NOT NULL
-            ,"nation_iso_alpha_3"         TEXT NOT NULL
+            ,"nation_iso_alpha_3"         TEXT NOT NULL PRIMARY KEY
             ,"nation_iso_numeric"         INTEGER  NOT NULL
             ,"iso_3166_2"                 TEXT NOT NULL
             ,"region"                     TEXT
@@ -6003,6 +6004,7 @@ class sqlite3_sample_files:
             (2022,"DEFL","The 2022 season for the Default Football League."),
             (2021,"DEFL","The 2021 season for the Default Football League."),
             (2020,"DEFL","The 2020 season for the Default Football League."),
+            --(2020,"NFL","The 2020 season for the National Football League."),
             (2019,"DEFL","The 2019 season for the Default Football League.");
 
         """
@@ -6315,9 +6317,8 @@ class sqlite3_sample_files:
             "stadium_elevation_ft"  INT,
             "stadium_elevation_m"   INT,
             "stadium_timezone"      TEXT NOT NULL,
-            "stadium_location_x"    FLOAT,
-            "stadium_location_y"    FLOAT
-            
+            "stadium_location_x"    FLOAT, -- Longitude
+            "stadium_location_y"    FLOAT -- Latitude
         );
 
         CREATE UNIQUE INDEX idx_stadiums_id
@@ -6907,23 +6908,33 @@ def create_app_sqlite3_db(custom_dir: str = None):
     """ """
     # print(sqlite3_sample_files.leagues_sql_file())
 
-
+    sql_file = ""
     if custom_dir is not None:
-        con = sqlite_connect(f"{custom_dir}/sdv_pbp_py.sqlite")
+        custom_dir
+        try:
+            makedirs(f"{custom_dir}/.sdv_pbp/")
+
+            # if platform.system() == "Windows":
+            #     system(f"attrib +h {home_dir}/.sdv_pbp")
+        except FileExistsError:
+            logging.info(f"{custom_dir}/.sdv_pbp/ already exists.")
+            
+        sql_file = f"{custom_dir}/.sdv_pbp/sdv_pbp_py.sqlite"
+
     else:
         home_dir = expanduser("~")
         try:
-            mkdir(f"{home_dir}/.sdv_pbp/")
+            makedirs(f"{home_dir}/.sdv_pbp/")
 
             # if platform.system() == "Windows":
             #     system(f"attrib +h {home_dir}/.sdv_pbp")
         except FileExistsError:
             logging.info(f"{home_dir}/.sdv_pbp/ already exists.")
-            
-        # os.mkdir(f'{home_dir}/.sdv_pbp/')
+        sql_file = f"{home_dir}/.sdv_pbp/sdv_pbp_py.sqlite"
 
-        con = sqlite_connect(f"{home_dir}/.sdv_pbp/sdv_pbp_py.sqlite")
+    del custom_dir
 
+    con = sqlite_connect(sql_file)
     cur = con.cursor()
 
     cur.executescript(sqlite3_sample_files.iso_nations())

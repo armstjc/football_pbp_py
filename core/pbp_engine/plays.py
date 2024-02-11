@@ -1,4 +1,5 @@
 # Creation Date: 01/14/2024 4:14 PM EDT
+# Last Updated: 02/11/2024 11:50 AM EST
 # Authors: Joseph Armstrong (armstrongjoseph08@gmail.com)
 # file: `./core/pbp_engine/plays.py`
 # Purpose: Code for generating plays, and their objects.
@@ -146,7 +147,7 @@ class plays:
             "is_created_reception": False,
             "is_drop": False,
             "is_touchdown": False,
-            "is_turnover": False,  
+            "is_turnover": False,
             # Set to true if there is a play where there is a turnover by the offense,
             # but the offense then forces their own turnover and gets the ball back in that same play.
             # Examples: https://www.youtube.com/watch?v=6jOnMiJKJ5s
@@ -210,6 +211,21 @@ class plays:
                 #     "player_lost_fumble":False,
                 #     "player_lateraled":False,
                 #     "scored_touchdown":False,
+                # }
+            ],
+            "participating_players": [
+                ## If someone is adding player participation data,
+                ## here is how it will be formatted:
+                # {
+                #     "player_id":None,
+                #     "team_id":None,
+                #     "player_num":None,
+                #     "player_full_name":None,
+                #     "player_football_name":None,
+                #     # Player position for this play.
+                #     # So if a player has a roster position of "OT",
+                #     # and he's playing LT, this is set to "LT".
+                #     "player_position":None
                 # }
             ],
         }
@@ -362,6 +378,21 @@ class plays:
                 #     "player_lost_fumble":False,
                 #     "player_lateraled":False,
                 #     "scored_touchdown":False,
+                # }
+            ],
+            "participating_players": [
+                ## If someone is adding player participation data,
+                ## here is how it will be formatted:
+                # {
+                #     "player_id":None,
+                #     "team_id":None,
+                #     "player_num":None,
+                #     "player_full_name":None,
+                #     "player_football_name":None,
+                #     # Player position for this play.
+                #     # So if a player has a roster position of "OT",
+                #     # and he's playing LT, this is set to "LT".
+                #     "player_position":None
                 # }
             ],
         }
@@ -523,6 +554,21 @@ class plays:
                 #     "player_lost_fumble":False,
                 #     "player_lateraled":False,
                 #     "scored_touchdown":False,
+                # }
+            ],
+            "participating_players": [
+                ## If someone is adding player participation data,
+                ## here is how it will be formatted:
+                # {
+                #     "player_id":None,
+                #     "team_id":None,
+                #     "player_num":None,
+                #     "player_full_name":None,
+                #     "player_football_name":None,
+                #     # Player position for this play.
+                #     # So if a player has a roster position of "OT",
+                #     # and he's playing LT, this is set to "LT".
+                #     "player_position":None
                 # }
             ],
         }
@@ -695,6 +741,21 @@ class plays:
                 #     "scored_touchdown":False,
                 # }
             ],
+            "participating_players": [
+                ## If someone is adding player participation data,
+                ## here is how it will be formatted:
+                # {
+                #     "player_id":None,
+                #     "team_id":None,
+                #     "player_num":None,
+                #     "player_full_name":None,
+                #     "player_football_name":None,
+                #     # Player position for this play.
+                #     # So if a player has a roster position of "OT",
+                #     # and he's playing LT, this is set to "LT".
+                #     "player_position":None
+                # }
+            ],
         }
 
         return fg_play
@@ -857,6 +918,21 @@ class plays:
                 #     "scored_touchdown":False,
                 # }
             ],
+            "participating_players": [
+                ## If someone is adding player participation data,
+                ## here is how it will be formatted:
+                # {
+                #     "player_id":None,
+                #     "team_id":None,
+                #     "player_num":None,
+                #     "player_full_name":None,
+                #     "player_football_name":None,
+                #     # Player position for this play.
+                #     # So if a player has a roster position of "OT",
+                #     # and he's playing LT, this is set to "LT".
+                #     "player_position":None
+                # }
+            ],
         }
 
         return xp_play
@@ -972,7 +1048,7 @@ class plays:
             ],
             # The type of play ran on this conversion attempt.
             # can either ber a "pass" or "run" play.
-            "conversion_play_type":"pass", 
+            "conversion_play_type": "pass",
             # The yardline where the QB attempts the pass.
             # (if the QB actually got a pass off)
             "pass_attempted_at_yardline": None,
@@ -1076,11 +1152,26 @@ class plays:
                 #     "scored_touchdown":False,
                 # }
             ],
+            "participating_players": [
+                ## If someone is adding player participation data,
+                ## here is how it will be formatted:
+                # {
+                #     "player_id":None,
+                #     "team_id":None,
+                #     "player_num":None,
+                #     "player_full_name":None,
+                #     "player_football_name":None,
+                #     # Player position for this play.
+                #     # So if a player has a roster position of "OT",
+                #     # and he's playing LT, this is set to "LT".
+                #     "player_position":None
+                # }
+            ],
         }
 
         return conversion_play
 
-    def kickoff_play(is_safety_kickoff:bool=False):
+    def kickoff_play(is_safety_kickoff: bool = False):
         """
         Data structure for a kickoff play.
         """
@@ -1114,7 +1205,6 @@ class plays:
             "defteam_post": None,
             "pos_team": None,
             "def_team": None,
-
             "drive_num": 0,
             # Can be one of the following values:
             #  - `1`: First Half
@@ -1123,7 +1213,7 @@ class plays:
             "half_num": 0,
             "quarter_num": 0,
             "is_scoring_play": False,
-            "is_safety_kickoff":is_safety_kickoff,
+            "is_safety_kickoff": is_safety_kickoff,
             "is_touchback": False,
             "is_safety": False,
             "yardline_start": None,
@@ -1185,8 +1275,8 @@ class plays:
             "is_bad_snap": False,
             "is_fumble": False,
             "is_assisted_tackle": False,
-            "is_own_kickoff_recovery":False,
-            "own_kickoff_recovery_player":{
+            "is_own_kickoff_recovery": False,
+            "own_kickoff_recovery_player": {
                 # {
                 #     "player_id":None,
                 #     "team_id":None,
@@ -1241,6 +1331,21 @@ class plays:
                 #     "player_lost_fumble":False,
                 #     "player_lateraled":False,
                 #     "scored_touchdown":False,
+                # }
+            ],
+            "participating_players": [
+                ## If someone is adding player participation data,
+                ## here is how it will be formatted:
+                # {
+                #     "player_id":None,
+                #     "team_id":None,
+                #     "player_num":None,
+                #     "player_full_name":None,
+                #     "player_football_name":None,
+                #     # Player position for this play.
+                #     # So if a player has a roster position of "OT",
+                #     # and he's playing LT, this is set to "LT".
+                #     "player_position":None
                 # }
             ],
         }
@@ -1413,6 +1518,21 @@ class plays:
                 #     "player_lost_fumble":False,
                 #     "player_lateraled":False,
                 #     "scored_touchdown":False,
+                # }
+            ],
+            "participating_players": [
+                ## If someone is adding player participation data,
+                ## here is how it will be formatted:
+                # {
+                #     "player_id":None,
+                #     "team_id":None,
+                #     "player_num":None,
+                #     "player_full_name":None,
+                #     "player_football_name":None,
+                #     # Player position for this play.
+                #     # So if a player has a roster position of "OT",
+                #     # and he's playing LT, this is set to "LT".
+                #     "player_position":None
                 # }
             ],
         }

@@ -1,18 +1,19 @@
 # Creation Date: 01/27/2024 12:02 PM EDT
+# Last Updated: 02/11/2024 11:50 AM EST
 # Authors: Joseph Armstrong (armstrongjoseph08@gmail.com)
 # file: `./core/settings/settings_core.py`
 # Purpose: Core code for the settings of this application.
 ################################################################################
+import json
 import logging
-from datetime import datetime, timezone
 from os import makedirs, mkdir
 from os.path import exists, expanduser
 
-from tzlocal import get_localzone
+from core.time import get_utc_and_local_time
 
 
 class app_themes:
-    def theme_names()-> list:
+    def theme_names() -> list:
         return [
             "Black",
             "Blue Mono",
@@ -168,7 +169,7 @@ class app_themes:
             "Topanga",
         ]
 
-    def theme_conversion_dictionary()-> dict:
+    def theme_conversion_dictionary() -> dict:
         return {
             "Black": "Black",
             "Blue Mono": "BlueMono",
@@ -324,7 +325,8 @@ class app_themes:
             "Topanga": "",
         }
 
-class app_settings():
+
+class app_settings:
     def __init__(self) -> None:
         pass
 
@@ -337,7 +339,6 @@ class app_settings():
         home_dir = home_dir.replace("\\", "/")
         home_dir = f"{home_dir}/.sdv_pbp"
 
-        local_timezone = get_localzone()
         if exists(home_dir):
             pass
         else:
@@ -356,18 +357,14 @@ class app_settings():
                     + e
                 )
 
-        now = datetime.now()
-        now = now.replace(tzinfo=local_timezone)
-        utc_time = datetime.now(timezone.utc)
-        now_formated = now.isoformat()
-        utc_time_formated = utc_time.isoformat()
-
+        now_formated, utc_time_formated = get_utc_and_local_time()
         # print()
         default_settings = {
             "app_version": "0.0.1",
             # Could be a feature in the future where someone could
             # chart out a historical game, and be able upload the
             # game's JSON file directly through GitHub.
+            "app_theme":"DarkBlue",
             "user_identity": {
                 "internet_identity": "Anonymous_Person",
                 "first_name": None,
@@ -386,10 +383,13 @@ class app_settings():
             "last_opened": now_formated,
             "last_opened_utc": utc_time_formated,
             "debug_log_to_file": False,
-            "show_menubar":True,
-            "defaults":{
-                "default_league":"DEFL"
-            }
+            "show_menubar": True,
+            "defaults": {
+                "default_league": "DEFL", 
+                "default_season": 2019,
+                "default_team":"-ALL-",
+                "default_week":1
+            },
         }
         return default_settings
 
@@ -404,8 +404,75 @@ class app_settings():
         except FileExistsError:
             logging.info(f"{home_dir}/.sdv_pbp/ already exists.")
 
-        
+        try:
+            with open(f"{home_dir}/.sdv_pbp/settings.json", "r") as f:
+                json_str = f.read()
+        except FileNotFoundError:
+            logging.warning(
+                "Settings file not found in "
+                + f"`{home_dir}/.sdv_pbp/`."
+                + "Attempting to create a settings file."
+            )
+            app_settings.create_settings_file()
+            with open(f"{home_dir}/.sdv_pbp/settings.json", "r") as f:
+                json_str = f.read()
+
+        json_arr = json.loads(json_str)
+
+        now_formated, utc_time_formated = get_utc_and_local_time()
+        json_arr["last_opened"] = now_formated
+        json_arr["last_opened_utc"] = utc_time_formated
+        return json_arr
+
+    def create_settings_file() -> None:
+        """ """
+        settings_dict = app_settings.generate_settings_data()
+
+        home_dir = expanduser("~")
+        home_dir = home_dir.replace("\\", "/")
+        home_dir = f"{home_dir}/.sdv_pbp"
+
+        # local_timezone = get_localzone()
+        if exists(home_dir):
+            pass
+        else:
+            logging.warning(
+                f"{home_dir} doesn't exist. Attempting to create the directory."
+            )
+            try:
+                makedirs(home_dir)
+            except Exception as e:
+                logging.critical(f"An unhandled exception has occured {e}")
+                raise NotADirectoryError(
+                    "A directory for housing application data could not be made at \n"
+                    + home_dir
+                    + ".\nThis is a critical error, and the application must shut down.\n"
+                    + "Full exception: "
+                    + e
+                )
+
+        with open(f"{home_dir}/settings.json", "w+") as f:
+            f.write(json.dumps(settings_dict, indent=4))
+
+    def save_settings(settings_dict: dict):
+        """ """
+        home_dir = expanduser("~")
+
+        try:
+            mkdir(f"{home_dir}/.sdv_pbp/")
+        except FileExistsError:
+            logging.info(f"{home_dir}/.sdv_pbp/ already exists.")
+
+        try:
+            with open(f"{home_dir}/.sdv_pbp/settings.json", "r") as f:
+                f.write(json.dumps(settings_dict))
+        except Exception as e:
+            logging.critical(
+                "Unhandled exception. "
+                + "Could not write to settings file. "
+                + f"Exception: {e}"
+            )
+
 
 if __name__ == "__main__":
-    settings_dict = app_settings.generate_settings_data()
-    print(settings_dict)
+    print(app_settings.load_settings())
