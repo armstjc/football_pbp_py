@@ -3,7 +3,7 @@
 # Authors: Joseph Armstrong (armstrongjoseph08@gmail.com)
 # file: `./core/pbp_engine/plays.py`
 # Purpose: Code for generating plays, and their objects.
-################################################################################
+###############################################################################
 
 
 class plays:
@@ -121,7 +121,8 @@ class plays:
             "pass_attempted_at_yardline": None,
             "pass_caught_at_yardline": None,
             # If the pass is caught,
-            # this is the yardline where the reciver was first touched by a defender.
+            # this is the yardline where
+            # the reciver was first touched by a defender.
             "first_contact_yardline": None,
             "passer": {
                 "player_id": None,
@@ -148,15 +149,18 @@ class plays:
             "is_drop": False,
             "is_touchdown": False,
             "is_turnover": False,
-            # Set to true if there is a play where there is a turnover by the offense,
-            # but the offense then forces their own turnover and gets the ball back in that same play.
+            # Set to true if there is a play
+            # where there is a turnover by the offense,
+            # but the offense then forces
+            # their own turnover and gets the ball back in that same play.
             # Examples: https://www.youtube.com/watch?v=6jOnMiJKJ5s
             "is_double_turnover": False,
             "is_bad_snap": False,
             "is_sack_play": False,
             "receiver": {
-                ## If this pass play results in a completed pass,
-                ## this is what will be populated in this section.
+                # If this pass play results in a completed pass,
+                # this is what will be populated in this section.
+
                 # "player_id":None,
                 # "team_id":None,
                 # "player_num":None,
@@ -167,8 +171,9 @@ class plays:
             "is_receiver_fumble": False,
             "is_assisted_tackle": False,
             "tacklers": [
-                ## If this pass play results in a completed pass,
-                ## this is what will be populated in this section.
+                # If this pass play results in a completed pass,
+                # this is what will be populated in this section.
+
                 # {
                 #     "player_id":None,
                 #     "team_id":None,
@@ -181,8 +186,9 @@ class plays:
                 # }
             ],
             "forced_fumbles": [
-                ## If this pass play results in a completed pass,
-                ## this is what will be populated in this section.
+                # If this pass play results in a completed pass,
+                # this is what will be populated in this section.
+
                 # {
                 #     "forced_fumble_num":0,
                 #     "player_id":None,
@@ -194,8 +200,9 @@ class plays:
                 # }
             ],
             "fumble_recoveries": [
-                ## If this pass play results in a completed pass,
-                ## this is what will be populated in this section.
+                # If this pass play results in a completed pass,
+                # this is what will be populated in this section.
+
                 # {
                 #     "fumble_recovery_num":0,
                 #     "player_id":None,
@@ -214,8 +221,9 @@ class plays:
                 # }
             ],
             "participating_players": [
-                ## If someone is adding player participation data,
-                ## here is how it will be formatted:
+                # If someone is adding player participation data,
+                # here is how it will be formatted:
+
                 # {
                 #     "player_id":None,
                 #     "team_id":None,
@@ -325,8 +333,11 @@ class plays:
             "is_read_option": False,
             "is_trick_play": False,
             "is_touchdown": False,
-            "is_turnover": False,  # Set to true if there is a play where there is a turnover by the offense,
-            # but the offense then forces their own turnover and gets the ball back in that same play.
+            "is_turnover": False,
+            # Set to true if there is a play
+            # where there is a turnover by the offense,
+            # but the offense then forces their own turnover,
+            # and gets the ball back in that same play.
             # Examples: https://www.youtube.com/watch?v=6jOnMiJKJ5s
             "is_double_turnover": False,
             "is_bad_snap": False,
@@ -334,8 +345,9 @@ class plays:
             "is_qb_kneel": False,
             "is_assisted_tackle": False,
             "tacklers": [
-                ## If this pass play results in a completed pass,
-                ## this is what will be populated in this section.
+                # If this pass play results in a completed pass,
+                # this is what will be populated in this section.
+
                 # {
                 #     "player_id":None,
                 #     "team_id":None,
@@ -348,8 +360,9 @@ class plays:
                 # }
             ],
             "forced_fumbles": [
-                ## If this pass play results in a completed pass,
-                ## this is what will be populated in this section.
+                # If this pass play results in a completed pass,
+                # this is what will be populated in this section.
+
                 # {
                 #     "forced_fumble_num":0,
                 #     "player_id":None,
@@ -361,8 +374,9 @@ class plays:
                 # }
             ],
             "fumble_recoveries": [
-                ## If this pass play results in a completed pass,
-                ## this is what will be populated in this section.
+                # If this pass play results in a completed pass,
+                # this is what will be populated in this section.
+
                 # {
                 #     "fumble_recovery_num":0,
                 #     "player_id":None,
@@ -381,8 +395,9 @@ class plays:
                 # }
             ],
             "participating_players": [
-                ## If someone is adding player participation data,
-                ## here is how it will be formatted:
+                # If someone is adding player participation data,
+                # here is how it will be formatted:
+
                 # {
                 #     "player_id":None,
                 #     "team_id":None,
@@ -494,16 +509,20 @@ class plays:
             },
             "is_trick_play": False,
             "is_touchdown": False,
-            "is_turnover": False,  # Set to true if there is a play where there is a turnover by the offense,
-            # but the offense then forces their own turnover and gets the ball back in that same play.
+            "is_turnover": False,
+            # Set to true if there is a play
+            # where there is a turnover by the offense,
+            # but the offense then forces their own turnover
+            # and gets the ball back in that same play.
             # Examples: https://www.youtube.com/watch?v=6jOnMiJKJ5s
             "is_double_turnover": False,
             "is_bad_snap": False,
             "is_fumble": False,
             "is_assisted_tackle": False,
             "tacklers": [
-                ## If this pass play results in a completed pass,
-                ## this is what will be populated in this section.
+                # If this pass play results in a completed pass,
+                # this is what will be populated in this section.
+
                 # {
                 #     "player_id":None,
                 #     "team_id":None,
@@ -524,8 +543,9 @@ class plays:
                 #     "player_football_name":None,
             },
             "forced_fumbles": [
-                ## If this pass play results in a completed pass,
-                ## this is what will be populated in this section.
+                # If this pass play results in a completed pass,
+                # this is what will be populated in this section.
+
                 # {
                 #     "forced_fumble_num":0,
                 #     "player_id":None,
@@ -537,8 +557,9 @@ class plays:
                 # }
             ],
             "fumble_recoveries": [
-                ## If this pass play results in a completed pass,
-                ## this is what will be populated in this section.
+                # If this pass play results in a completed pass,
+                # this is what will be populated in this section.
+
                 # {
                 #     "fumble_recovery_num":0,
                 #     "player_id":None,
@@ -557,8 +578,9 @@ class plays:
                 # }
             ],
             "participating_players": [
-                ## If someone is adding player participation data,
-                ## here is how it will be formatted:
+                # If someone is adding player participation data,
+                # here is how it will be formatted:
+
                 # {
                 #     "player_id":None,
                 #     "team_id":None,
@@ -679,8 +701,11 @@ class plays:
             },
             "is_trick_play": False,
             "is_touchdown": False,
-            "is_turnover": False,  # Set to true if there is a play where there is a turnover by the offense,
-            # but the offense then forces their own turnover and gets the ball back in that same play.
+            "is_turnover": False,
+            # Set to true if there is a play
+            # where there is a turnover by the offense,
+            # but the offense then forces their own turnover
+            # and gets the ball back in that same play.
             # Examples: https://www.youtube.com/watch?v=6jOnMiJKJ5s
             "is_double_turnover": False,
             "is_bad_snap": False,
@@ -695,8 +720,9 @@ class plays:
                 #     "player_football_name":None,
             },
             "tacklers": [
-                ## If this pass play results in a completed pass,
-                ## this is what will be populated in this section.
+                # If this pass play results in a completed pass,
+                # this is what will be populated in this section.
+
                 # {
                 #     "player_id":None,
                 #     "team_id":None,
@@ -709,8 +735,9 @@ class plays:
                 # }
             ],
             "forced_fumbles": [
-                ## If this pass play results in a completed pass,
-                ## this is what will be populated in this section.
+                # If this pass play results in a completed pass,
+                # this is what will be populated in this section.
+
                 # {
                 #     "forced_fumble_num":0,
                 #     "player_id":None,
@@ -722,8 +749,9 @@ class plays:
                 # }
             ],
             "fumble_recoveries": [
-                ## If this pass play results in a completed pass,
-                ## this is what will be populated in this section.
+                # If this pass play results in a completed pass,
+                # this is what will be populated in this section.
+
                 # {
                 #     "fumble_recovery_num":0,
                 #     "player_id":None,
@@ -742,8 +770,9 @@ class plays:
                 # }
             ],
             "participating_players": [
-                ## If someone is adding player participation data,
-                ## here is how it will be formatted:
+                # If someone is adding player participation data,
+                # here is how it will be formatted:
+
                 # {
                 #     "player_id":None,
                 #     "team_id":None,
@@ -856,8 +885,10 @@ class plays:
             "is_trick_play": False,
             "is_touchdown": False,
             "is_turnover": False,
-            # Set to true if there is a play where there is a turnover by the offense,
-            # but the offense then forces their own turnover and gets the ball back in that same play.
+            # Set to true if there is a play
+            # where there is a turnover by the offense,
+            # but the offense then forces their own turnover
+            # and gets the ball back in that same play.
             # Examples: https://www.youtube.com/watch?v=6jOnMiJKJ5s
             "is_double_turnover": False,
             "is_bad_snap": False,
@@ -872,8 +903,9 @@ class plays:
                 #     "player_football_name":None,
             },
             "tacklers": [
-                ## If this pass play results in a completed pass,
-                ## this is what will be populated in this section.
+                # If this pass play results in a completed pass,
+                # this is what will be populated in this section.
+
                 # {
                 #     "player_id":None,
                 #     "team_id":None,
@@ -886,8 +918,9 @@ class plays:
                 # }
             ],
             "forced_fumbles": [
-                ## If this pass play results in a completed pass,
-                ## this is what will be populated in this section.
+                # If this pass play results in a completed pass,
+                # this is what will be populated in this section.
+
                 # {
                 #     "forced_fumble_num":0,
                 #     "player_id":None,
@@ -899,8 +932,9 @@ class plays:
                 # }
             ],
             "fumble_recoveries": [
-                ## If this pass play results in a completed pass,
-                ## this is what will be populated in this section.
+                # If this pass play results in a completed pass,
+                # this is what will be populated in this section.
+
                 # {
                 #     "fumble_recovery_num":0,
                 #     "player_id":None,
@@ -919,8 +953,9 @@ class plays:
                 # }
             ],
             "participating_players": [
-                ## If someone is adding player participation data,
-                ## here is how it will be formatted:
+                # If someone is adding player participation data,
+                # here is how it will be formatted:
+
                 # {
                 #     "player_id":None,
                 #     "team_id":None,
@@ -1054,7 +1089,8 @@ class plays:
             "pass_attempted_at_yardline": None,
             "pass_caught_at_yardline": None,
             # If the pass is caught,
-            # this is the yardline where the reciver was first touched by a defender.
+            # this is the yardline
+            # where the reciver was first touched by a defender.
             "first_contact_yardline": None,
             "passer": {
                 "player_id": None,
@@ -1080,15 +1116,19 @@ class plays:
             "is_created_reception": False,
             "is_drop": False,
             "is_touchdown": False,
-            "is_turnover": False,  # Set to true if there is a play where there is a turnover by the offense,
-            # but the offense then forces their own turnover and gets the ball back in that same play.
+            "is_turnover": False,
+            # Set to true if there is a play
+            # where there is a turnover by the offense,
+            # but the offense then forces their own turnover
+            # and gets the ball back in that same play.
             # Examples: https://www.youtube.com/watch?v=6jOnMiJKJ5s
             "is_double_turnover": False,
             "is_bad_snap": False,
             "is_sack_play": False,
             "receiver": {
-                ## If this pass play results in a completed pass,
-                ## this is what will be populated in this section.
+                # If this pass play results in a completed pass,
+                # this is what will be populated in this section.
+
                 # "player_id":None,
                 # "team_id":None,
                 # "player_num":None,
@@ -1106,8 +1146,9 @@ class plays:
             "is_receiver_fumble": False,
             "is_assisted_tackle": False,
             "tacklers": [
-                ## If this pass play results in a completed pass,
-                ## this is what will be populated in this section.
+                # If this pass play results in a completed pass,
+                # this is what will be populated in this section.
+
                 # {
                 #     "player_id":None,
                 #     "team_id":None,
@@ -1120,8 +1161,9 @@ class plays:
                 # }
             ],
             "forced_fumbles": [
-                ## If this pass play results in a completed pass,
-                ## this is what will be populated in this section.
+                # If this pass play results in a completed pass,
+                # this is what will be populated in this section.
+
                 # {
                 #     "forced_fumble_num":0,
                 #     "player_id":None,
@@ -1133,8 +1175,9 @@ class plays:
                 # }
             ],
             "fumble_recoveries": [
-                ## If this pass play results in a completed pass,
-                ## this is what will be populated in this section.
+                # If this pass play results in a completed pass,
+                # this is what will be populated in this section.
+
                 # {
                 #     "fumble_recovery_num":0,
                 #     "player_id":None,
@@ -1153,8 +1196,9 @@ class plays:
                 # }
             ],
             "participating_players": [
-                ## If someone is adding player participation data,
-                ## here is how it will be formatted:
+                # If someone is adding player participation data,
+                # here is how it will be formatted:
+
                 # {
                 #     "player_id":None,
                 #     "team_id":None,
@@ -1198,7 +1242,8 @@ class plays:
             "away_score": None,
             "home_score_post": None,
             "away_score_post": None,
-            # In Kickoffs, "pos_team" is the returning team, "def_team" is the kicking team.
+            # In Kickoffs, "pos_team" is the returning team,
+            # "def_team" is the kicking team.
             "posteam_score": None,
             "defteam_score": None,
             "posteam_post": None,
@@ -1268,8 +1313,11 @@ class plays:
             },
             "is_trick_play": False,
             "is_touchdown": False,
-            "is_turnover": False,  # Set to true if there is a play where there is a turnover by the offense,
-            # but the offense then forces their own turnover and gets the ball back in that same play.
+            "is_turnover": False,
+            # Set to true if there is a play
+            # where there is a turnover by the offense,
+            # but the offense then forces their own turnover
+            # and gets the ball back in that same play.
             # Examples: https://www.youtube.com/watch?v=6jOnMiJKJ5s
             "is_double_turnover": False,
             "is_bad_snap": False,
@@ -1287,8 +1335,9 @@ class plays:
                 # }
             },
             "tacklers": [
-                ## If this pass play results in a completed pass,
-                ## this is what will be populated in this section.
+                # If this pass play results in a completed pass,
+                # this is what will be populated in this section.
+
                 # {
                 #     "player_id":None,
                 #     "team_id":None,
@@ -1301,8 +1350,9 @@ class plays:
                 # }
             ],
             "forced_fumbles": [
-                ## If this pass play results in a completed pass,
-                ## this is what will be populated in this section.
+                # If this pass play results in a completed pass,
+                # this is what will be populated in this section.
+
                 # {
                 #     "forced_fumble_num":0,
                 #     "player_id":None,
@@ -1314,8 +1364,9 @@ class plays:
                 # }
             ],
             "fumble_recoveries": [
-                ## If this pass play results in a completed pass,
-                ## this is what will be populated in this section.
+                # If this pass play results in a completed pass,
+                # this is what will be populated in this section.
+
                 # {
                 #     "fumble_recovery_num":0,
                 #     "player_id":None,
@@ -1334,8 +1385,9 @@ class plays:
                 # }
             ],
             "participating_players": [
-                ## If someone is adding player participation data,
-                ## here is how it will be formatted:
+                # If someone is adding player participation data,
+                # here is how it will be formatted:
+
                 # {
                 #     "player_id":None,
                 #     "team_id":None,
@@ -1458,8 +1510,11 @@ class plays:
             },
             "is_trick_play": False,
             "is_touchdown": False,
-            "is_turnover": False,  # Set to true if there is a play where there is a turnover by the offense,
-            # but the offense then forces their own turnover and gets the ball back in that same play.
+            "is_turnover": False,
+            # Set to true if there is a play
+            # where there is a turnover by the offense,
+            # but the offense then forces their own turnover
+            # and gets the ball back in that same play.
             # Examples: https://www.youtube.com/watch?v=6jOnMiJKJ5s
             "is_double_turnover": False,
             "is_bad_snap": False,
@@ -1474,8 +1529,9 @@ class plays:
                 #     "player_football_name":None,
             },
             "tacklers": [
-                ## If this pass play results in a completed pass,
-                ## this is what will be populated in this section.
+                # If this pass play results in a completed pass,
+                # this is what will be populated in this section.
+
                 # {
                 #     "player_id":None,
                 #     "team_id":None,
@@ -1488,8 +1544,9 @@ class plays:
                 # }
             ],
             "forced_fumbles": [
-                ## If this pass play results in a completed pass,
-                ## this is what will be populated in this section.
+                # If this pass play results in a completed pass,
+                # this is what will be populated in this section.
+
                 # {
                 #     "forced_fumble_num":0,
                 #     "player_id":None,
@@ -1501,8 +1558,9 @@ class plays:
                 # }
             ],
             "fumble_recoveries": [
-                ## If this pass play results in a completed pass,
-                ## this is what will be populated in this section.
+                # If this pass play results in a completed pass,
+                # this is what will be populated in this section.
+
                 # {
                 #     "fumble_recovery_num":0,
                 #     "player_id":None,
@@ -1521,8 +1579,9 @@ class plays:
                 # }
             ],
             "participating_players": [
-                ## If someone is adding player participation data,
-                ## here is how it will be formatted:
+                # If someone is adding player participation data,
+                # here is how it will be formatted:
+
                 # {
                 #     "player_id":None,
                 #     "team_id":None,

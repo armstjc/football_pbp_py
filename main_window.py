@@ -3,7 +3,7 @@
 # Authors: Joseph Armstrong (armstrongjoseph08@gmail.com)
 # file: `./main_window.py`
 # Purpose: Main startup window for this application.
-################################################################################
+###############################################################################
 
 from os.path import expanduser
 
@@ -13,7 +13,7 @@ import PySimpleGUI as sg
 from core.database.load_db_elements import sqlite3_load_data
 from core.database.sqlite3_connectors import initialize_sqlite3_connectors
 from core.settings.settings_core import app_settings
-from resources.embeded import embeded_elements
+from core.other.embeded import embeded_elements
 
 
 class main_window:
@@ -62,8 +62,6 @@ class main_window:
     def __init__(self):
         self.app_startup()
 
-
-    
     def app_startup(self):
         # Load in settings file
         self.settings_dict = app_settings.load_settings()
@@ -108,11 +106,11 @@ class main_window:
         )
         self.clean_shown_schedule_df()
         self.refresh_league_teams(
-            lg_abv=self.default_league,lg_season=self.defalt_season
+            lg_abv=self.default_league, lg_season=self.defalt_season
         )
         self.main()
-    
-    ## Data Manipulation
+
+    # Data Manipulation
     def set_settings(self) -> None:
         """ """
         self.default_league = self.settings_dict["defaults"]["default_league"]
@@ -141,7 +139,9 @@ class main_window:
         self.shown_schedule_df = self.fb_schedule_df.filter(
             (pl.col("league_id") == lg_abv) & (pl.col("season") == lg_season)
         )
-        self.shown_schedule_df = self.shown_schedule_df.sort("nflverse_game_id")
+        self.shown_schedule_df = self.shown_schedule_df.sort(
+            "nflverse_game_id"
+        )
         self.clean_shown_schedule_df()
 
     def refresh_league_weeks(self):
@@ -185,7 +185,16 @@ class main_window:
                     "Exit",
                 ],
             ],
-            ["New", ["New League", "New Season", "New Team", "New Game", "New Player"]],
+            [
+                "New",
+                [
+                    "New League",
+                    "New Season",
+                    "New Team",
+                    "New Game",
+                    "New Player"
+                ]
+            ],
             ["test", ["stets"]],
             [
                 "Help",
@@ -203,7 +212,8 @@ class main_window:
                     enable_events=True,
                     key="-LEAGUE_ABV_COMBO-",
                 ),
-                sg.Button("League Settings", key="-LG_SETTINGS-", size=(15, 1)),
+                sg.Button("League Settings",
+                          key="-LG_SETTINGS-", size=(15, 1)),
                 # sg.Push(),
                 # sg.Button("test")
             ],
@@ -216,7 +226,8 @@ class main_window:
                     enable_events=True,
                     key="-LEAGUE_SEASON_COMBO-",
                 ),
-                sg.Button("Season Settings", key="-SEA_SETTINGS-", size=(15, 1)),
+                sg.Button("Season Settings",
+                          key="-SEA_SETTINGS-", size=(15, 1)),
             ],
             [
                 sg.Text("Team:\t"),
@@ -228,7 +239,8 @@ class main_window:
                     enable_events=True,
                     key="-TEAM_SEASON_COMBO-",
                 ),
-                sg.Button("Team Settings", key="-TEAM_SETTINGS-", size=(15, 1)),
+                sg.Button("Team Settings",
+                          key="-TEAM_SETTINGS-", size=(15, 1)),
             ],
             [
                 sg.Text("Week:\t"),
@@ -240,7 +252,13 @@ class main_window:
                     key="-WEEK_SEASON_COMBO-",
                 ),
             ],
-            [sg.Button("New Game", key="-NEW_GAME_BUTTON-", expand_x=True)],
+            [
+                sg.Button(
+                    "New Game",
+                    key="-NEW_GAME_BUTTON-",
+                    expand_x=True
+                )
+            ],
             [
                 sg.Button(
                     "Import Game",
@@ -251,7 +269,10 @@ class main_window:
             ],
             [
                 sg.Button(
-                    "Edit Game", key="-EDIT_GAME_BUTTON-", expand_x=True, disabled=True
+                    "Edit Game",
+                    key="-EDIT_GAME_BUTTON-",
+                    expand_x=True,
+                    disabled=True
                 )
             ],
             [
@@ -326,7 +347,7 @@ class main_window:
                     print(embeded_elements.app_version())
                 case "Exit":
                     keep_open = False
-                ## File
+                # File
                 case "New Game":
                     print(event)
                 case "Load Game":
@@ -345,7 +366,7 @@ class main_window:
                     print(event)
                 case "Export League":
                     print(event)
-                ## New
+                # New
                 case "New League":
                     print(event)
                 case "New Season":
@@ -356,7 +377,7 @@ class main_window:
                     print(event)
                 case "New Player":
                     print(event)
-                ## Help
+                # Help
                 case "Documentation (Local)":
                     print(event)
                 case "Docuemntation (Web)":
@@ -366,14 +387,16 @@ class main_window:
                     print(event)
                 case "-LEAGUE_SEASON_COMBO-":
                     self.filter_shown_schedule_df(
-                        values["-LEAGUE_ABV_COMBO-"], values["-LEAGUE_SEASON_COMBO-"]
+                        values["-LEAGUE_ABV_COMBO-"],
+                        values["-LEAGUE_SEASON_COMBO-"]
                     )
                     window["-SCHEDULE_TABLE-"].update(
                         values=self.shown_schedule_df.rows()
                     )
                 case "-SEA_SETTINGS-":
                     self.filter_shown_schedule_df(
-                        values["-LEAGUE_ABV_COMBO-"], values["-LEAGUE_SEASON_COMBO-"]
+                        values["-LEAGUE_ABV_COMBO-"],
+                        values["-LEAGUE_SEASON_COMBO-"]
                     )
                     window["-SCHEDULE_TABLE-"].update(
                         values=self.shown_schedule_df.rows()

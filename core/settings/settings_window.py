@@ -3,6 +3,16 @@
 # Authors: Joseph Armstrong (armstrongjoseph08@gmail.com)
 # file: `./core/settings/main_window.py`
 # Purpose: Settins window for this application.
-################################################################################
+###############################################################################
 
 import PySimpleGUI as sg
+
+
+class settings_window:
+
+    def __init__(self) -> None:
+        self.main()
+
+    def main():
+        layout = []
+        sg.Window("Settings", layout)

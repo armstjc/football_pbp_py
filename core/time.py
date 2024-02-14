@@ -3,7 +3,7 @@
 # Authors: Joseph Armstrong (armstrongjoseph08@gmail.com)
 # file: `./core/time.py`
 # Purpose: Core code for the settings of this application.
-################################################################################
+###############################################################################
 
 from datetime import datetime, timezone
 
@@ -11,9 +11,7 @@ from tzlocal import get_localzone
 
 
 def get_utc_and_local_time() -> datetime:
-    """
-    
-    """
+    """ """
     local_timezone = get_localzone()
 
     now = datetime.now()
@@ -22,4 +20,4 @@ def get_utc_and_local_time() -> datetime:
     now_formated = now.isoformat()
     utc_time_formated = utc_time.isoformat()
 
-    return now_formated,utc_time_formated
+    return now_formated, utc_time_formated
