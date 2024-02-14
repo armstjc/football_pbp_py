@@ -3,7 +3,7 @@
 # Author: Joseph Armstrong (armstrongjoseph08@gmail.com)
 # File Name: ./core/database/create_sdv_pbp_db.py
 # Purpose: Creates a database that can be used for this application.
-####################################################################################################
+###############################################################################
 
 import logging
 from os import makedirs
@@ -22,7 +22,7 @@ class sqlite3_sample_files:
     def iso_nations() -> str:
         """
         Returns a SQLite3 script that creates a table to hold ISO country data.
-        Data sourced from https://github.com/lukes/ISO-3166-Countries-with-Regional-Codes/blob/master/all/all.csv
+
         Parameters
         ----------
         None
@@ -42,262 +42,589 @@ class sqlite3_sample_files:
             ,"region"                     TEXT
             ,"subregion"                  TEXT
             ,"intermediate_region"        TEXT
-            ,"region_code"                INTEGER 
-            ,"subregion_code"             INTEGER 
-            ,"intermediate_region_code"   INTEGER 
+            ,"region_code"                INTEGER
+            ,"subregion_code"             INTEGER
+            ,"intermediate_region_code"   INTEGER
         );
 
-        INSERT INTO iso_nations(nation_name,nation_iso_alpha_2,nation_iso_alpha_3,nation_iso_numeric,iso_3166_2,region,subregion,intermediate_region,region_code,subregion_code,intermediate_region_code) VALUES
-            ('Afghanistan','AF','AFG',004,'ISO 3166-2:AF','Asia','Southern Asia',NULL,142,034,NULL)
-            ,('Åland Islands','AX','ALA',248,'ISO 3166-2:AX','Europe','Northern Europe',NULL,150,154,NULL)
-            ,('Albania','AL','ALB',008,'ISO 3166-2:AL','Europe','Southern Europe',NULL,150,039,NULL)
-            ,('Algeria','DZ','DZA',012,'ISO 3166-2:DZ','Africa','Northern Africa',NULL,002,015,NULL)
-            ,('American Samoa','AS','ASM',016,'ISO 3166-2:AS','Oceania','Polynesia',NULL,009,061,NULL)
-            ,('Andorra','AD','AND',020,'ISO 3166-2:AD','Europe','Southern Europe',NULL,150,039,NULL)
-            ,('Angola','AO','AGO',024,'ISO 3166-2:AO','Africa','Sub-Saharan Africa','Middle Africa',002,202,017)
-            ,('Anguilla','AI','AIA',660,'ISO 3166-2:AI','Americas','Latin America and the Caribbean','Caribbean',019,419,029)
-            ,('Antarctica','AQ','ATA',010,'ISO 3166-2:AQ',NULL,NULL,NULL,NULL,NULL,NULL)
-            ,('Antigua and Barbuda','AG','ATG',028,'ISO 3166-2:AG','Americas','Latin America and the Caribbean','Caribbean',019,419,029)
-            ,('Argentina','AR','ARG',032,'ISO 3166-2:AR','Americas','Latin America and the Caribbean','South America',019,419,005)
-            ,('Armenia','AM','ARM',051,'ISO 3166-2:AM','Asia','Western Asia',NULL,142,145,NULL)
-            ,('Aruba','AW','ABW',533,'ISO 3166-2:AW','Americas','Latin America and the Caribbean','Caribbean',019,419,029)
-            ,('Australia','AU','AUS',036,'ISO 3166-2:AU','Oceania','Australia and New Zealand',NULL,009,053,NULL)
-            ,('Austria','AT','AUT',040,'ISO 3166-2:AT','Europe','Western Europe',NULL,150,155,NULL)
-            ,('Azerbaijan','AZ','AZE',031,'ISO 3166-2:AZ','Asia','Western Asia',NULL,142,145,NULL)
-            ,('Bahamas','BS','BHS',044,'ISO 3166-2:BS','Americas','Latin America and the Caribbean','Caribbean',019,419,029)
-            ,('Bahrain','BH','BHR',048,'ISO 3166-2:BH','Asia','Western Asia',NULL,142,145,NULL)
-            ,('Bangladesh','BD','BGD',050,'ISO 3166-2:BD','Asia','Southern Asia',NULL,142,034,NULL)
-            ,('Barbados','BB','BRB',052,'ISO 3166-2:BB','Americas','Latin America and the Caribbean','Caribbean',019,419,029)
-            ,('Belarus','BY','BLR',112,'ISO 3166-2:BY','Europe','Eastern Europe',NULL,150,151,NULL)
-            ,('Belgium','BE','BEL',056,'ISO 3166-2:BE','Europe','Western Europe',NULL,150,155,NULL)
-            ,('Belize','BZ','BLZ',084,'ISO 3166-2:BZ','Americas','Latin America and the Caribbean','Central America',019,419,013)
-            ,('Benin','BJ','BEN',204,'ISO 3166-2:BJ','Africa','Sub-Saharan Africa','Western Africa',002,202,011)
-            ,('Bermuda','BM','BMU',060,'ISO 3166-2:BM','Americas','Northern America',NULL,019,021,NULL)
-            ,('Bhutan','BT','BTN',064,'ISO 3166-2:BT','Asia','Southern Asia',NULL,142,034,NULL)
-            ,('Bolivia (Plurinational State of)','BO','BOL',068,'ISO 3166-2:BO','Americas','Latin America and the Caribbean','South America',019,419,005)
-            ,('Bonaire, Sint Eustatius and Saba','BQ','BES',535,'ISO 3166-2:BQ','Americas','Latin America and the Caribbean','Caribbean',019,419,029)
-            ,('Bosnia and Herzegovina','BA','BIH',070,'ISO 3166-2:BA','Europe','Southern Europe',NULL,150,039,NULL)
-            ,('Botswana','BW','BWA',072,'ISO 3166-2:BW','Africa','Sub-Saharan Africa','Southern Africa',002,202,018)
-            ,('Bouvet Island','BV','BVT',074,'ISO 3166-2:BV','Americas','Latin America and the Caribbean','South America',019,419,005)
-            ,('Brazil','BR','BRA',076,'ISO 3166-2:BR','Americas','Latin America and the Caribbean','South America',019,419,005)
-            ,('British Indian Ocean Territory','IO','IOT',086,'ISO 3166-2:IO','Africa','Sub-Saharan Africa','Eastern Africa',002,202,014)
-            ,('Brunei Darussalam','BN','BRN',096,'ISO 3166-2:BN','Asia','South-eastern Asia',NULL,142,035,NULL)
-            ,('Bulgaria','BG','BGR',100,'ISO 3166-2:BG','Europe','Eastern Europe',NULL,150,151,NULL)
-            ,('Burkina Faso','BF','BFA',854,'ISO 3166-2:BF','Africa','Sub-Saharan Africa','Western Africa',002,202,011)
-            ,('Burundi','BI','BDI',108,'ISO 3166-2:BI','Africa','Sub-Saharan Africa','Eastern Africa',002,202,014)
-            ,('Cabo Verde','CV','CPV',132,'ISO 3166-2:CV','Africa','Sub-Saharan Africa','Western Africa',002,202,011)
-            ,('Cambodia','KH','KHM',116,'ISO 3166-2:KH','Asia','South-eastern Asia',NULL,142,035,NULL)
-            ,('Cameroon','CM','CMR',120,'ISO 3166-2:CM','Africa','Sub-Saharan Africa','Middle Africa',002,202,017)
-            ,('Canada','CA','CAN',124,'ISO 3166-2:CA','Americas','Northern America',NULL,019,021,NULL)
-            ,('Cayman Islands','KY','CYM',136,'ISO 3166-2:KY','Americas','Latin America and the Caribbean','Caribbean',019,419,029)
-            ,('Central African Republic','CF','CAF',140,'ISO 3166-2:CF','Africa','Sub-Saharan Africa','Middle Africa',002,202,017)
-            ,('Chad','TD','TCD',148,'ISO 3166-2:TD','Africa','Sub-Saharan Africa','Middle Africa',002,202,017)
-            ,('Chile','CL','CHL',152,'ISO 3166-2:CL','Americas','Latin America and the Caribbean','South America',019,419,005)
-            ,('China','CN','CHN',156,'ISO 3166-2:CN','Asia','Eastern Asia',NULL,142,030,NULL)
-            ,('Christmas Island','CX','CXR',162,'ISO 3166-2:CX','Oceania','Australia and New Zealand',NULL,009,053,NULL)
-            ,('Cocos (Keeling) Islands','CC','CCK',166,'ISO 3166-2:CC','Oceania','Australia and New Zealand',NULL,009,053,NULL)
-            ,('Colombia','CO','COL',170,'ISO 3166-2:CO','Americas','Latin America and the Caribbean','South America',019,419,005)
-            ,('Comoros','KM','COM',174,'ISO 3166-2:KM','Africa','Sub-Saharan Africa','Eastern Africa',002,202,014)
-            ,('Congo','CG','COG',178,'ISO 3166-2:CG','Africa','Sub-Saharan Africa','Middle Africa',002,202,017)
-            ,('Congo, Democratic Republic of the','CD','COD',180,'ISO 3166-2:CD','Africa','Sub-Saharan Africa','Middle Africa',002,202,017)
-            ,('Cook Islands','CK','COK',184,'ISO 3166-2:CK','Oceania','Polynesia',NULL,009,061,NULL)
-            ,('Costa Rica','CR','CRI',188,'ISO 3166-2:CR','Americas','Latin America and the Caribbean','Central America',019,419,013)
-            ,('Côte d''Ivoire','CI','CIV',384,'ISO 3166-2:CI','Africa','Sub-Saharan Africa','Western Africa',002,202,011)
-            ,('Croatia','HR','HRV',191,'ISO 3166-2:HR','Europe','Southern Europe',NULL,150,039,NULL)
-            ,('Cuba','CU','CUB',192,'ISO 3166-2:CU','Americas','Latin America and the Caribbean','Caribbean',019,419,029)
-            ,('Curaçao','CW','CUW',531,'ISO 3166-2:CW','Americas','Latin America and the Caribbean','Caribbean',019,419,029)
-            ,('Cyprus','CY','CYP',196,'ISO 3166-2:CY','Asia','Western Asia',NULL,142,145,NULL)
-            ,('Czechia','CZ','CZE',203,'ISO 3166-2:CZ','Europe','Eastern Europe',NULL,150,151,NULL)
-            ,('Denmark','DK','DNK',208,'ISO 3166-2:DK','Europe','Northern Europe',NULL,150,154,NULL)
-            ,('Djibouti','DJ','DJI',262,'ISO 3166-2:DJ','Africa','Sub-Saharan Africa','Eastern Africa',002,202,014)
-            ,('Dominica','DM','DMA',212,'ISO 3166-2:DM','Americas','Latin America and the Caribbean','Caribbean',019,419,029)
-            ,('Dominican Republic','DO','DOM',214,'ISO 3166-2:DO','Americas','Latin America and the Caribbean','Caribbean',019,419,029)
-            ,('Ecuador','EC','ECU',218,'ISO 3166-2:EC','Americas','Latin America and the Caribbean','South America',019,419,005)
-            ,('Egypt','EG','EGY',818,'ISO 3166-2:EG','Africa','Northern Africa',NULL,002,015,NULL)
-            ,('El Salvador','SV','SLV',222,'ISO 3166-2:SV','Americas','Latin America and the Caribbean','Central America',019,419,013)
-            ,('Equatorial Guinea','GQ','GNQ',226,'ISO 3166-2:GQ','Africa','Sub-Saharan Africa','Middle Africa',002,202,017)
-            ,('Eritrea','ER','ERI',232,'ISO 3166-2:ER','Africa','Sub-Saharan Africa','Eastern Africa',002,202,014)
-            ,('Estonia','EE','EST',233,'ISO 3166-2:EE','Europe','Northern Europe',NULL,150,154,NULL)
-            ,('Eswatini','SZ','SWZ',748,'ISO 3166-2:SZ','Africa','Sub-Saharan Africa','Southern Africa',002,202,018)
-            ,('Ethiopia','ET','ETH',231,'ISO 3166-2:ET','Africa','Sub-Saharan Africa','Eastern Africa',002,202,014)
-            ,('Falkland Islands (Malvinas)','FK','FLK',238,'ISO 3166-2:FK','Americas','Latin America and the Caribbean','South America',019,419,005)
-            ,('Faroe Islands','FO','FRO',234,'ISO 3166-2:FO','Europe','Northern Europe',NULL,150,154,NULL)
-            ,('Fiji','FJ','FJI',242,'ISO 3166-2:FJ','Oceania','Melanesia',NULL,009,054,NULL)
-            ,('Finland','FI','FIN',246,'ISO 3166-2:FI','Europe','Northern Europe',NULL,150,154,NULL)
-            ,('France','FR','FRA',250,'ISO 3166-2:FR','Europe','Western Europe',NULL,150,155,NULL)
-            ,('French Guiana','GF','GUF',254,'ISO 3166-2:GF','Americas','Latin America and the Caribbean','South America',019,419,005)
-            ,('French Polynesia','PF','PYF',258,'ISO 3166-2:PF','Oceania','Polynesia',NULL,009,061,NULL)
-            ,('French Southern Territories','TF','ATF',260,'ISO 3166-2:TF','Africa','Sub-Saharan Africa','Eastern Africa',002,202,014)
-            ,('Gabon','GA','GAB',266,'ISO 3166-2:GA','Africa','Sub-Saharan Africa','Middle Africa',002,202,017)
-            ,('Gambia','GM','GMB',270,'ISO 3166-2:GM','Africa','Sub-Saharan Africa','Western Africa',002,202,011)
-            ,('Georgia','GE','GEO',268,'ISO 3166-2:GE','Asia','Western Asia',NULL,142,145,NULL)
-            ,('Germany','DE','DEU',276,'ISO 3166-2:DE','Europe','Western Europe',NULL,150,155,NULL)
-            ,('Ghana','GH','GHA',288,'ISO 3166-2:GH','Africa','Sub-Saharan Africa','Western Africa',002,202,011)
-            ,('Gibraltar','GI','GIB',292,'ISO 3166-2:GI','Europe','Southern Europe',NULL,150,039,NULL)
-            ,('Greece','GR','GRC',300,'ISO 3166-2:GR','Europe','Southern Europe',NULL,150,039,NULL)
-            ,('Greenland','GL','GRL',304,'ISO 3166-2:GL','Americas','Northern America',NULL,019,021,NULL)
-            ,('Grenada','GD','GRD',308,'ISO 3166-2:GD','Americas','Latin America and the Caribbean','Caribbean',019,419,029)
-            ,('Guadeloupe','GP','GLP',312,'ISO 3166-2:GP','Americas','Latin America and the Caribbean','Caribbean',019,419,029)
-            ,('Guam','GU','GUM',316,'ISO 3166-2:GU','Oceania','Micronesia',NULL,009,057,NULL)
-            ,('Guatemala','GT','GTM',320,'ISO 3166-2:GT','Americas','Latin America and the Caribbean','Central America',019,419,013)
-            ,('Guernsey','GG','GGY',831,'ISO 3166-2:GG','Europe','Northern Europe','Channel Islands',150,154,830)
-            ,('Guinea','GN','GIN',324,'ISO 3166-2:GN','Africa','Sub-Saharan Africa','Western Africa',002,202,011)
-            ,('Guinea-Bissau','GW','GNB',624,'ISO 3166-2:GW','Africa','Sub-Saharan Africa','Western Africa',002,202,011)
-            ,('Guyana','GY','GUY',328,'ISO 3166-2:GY','Americas','Latin America and the Caribbean','South America',019,419,005)
-            ,('Haiti','HT','HTI',332,'ISO 3166-2:HT','Americas','Latin America and the Caribbean','Caribbean',019,419,029)
-            ,('Heard Island and McDonald Islands','HM','HMD',334,'ISO 3166-2:HM','Oceania','Australia and New Zealand',NULL,009,053,NULL)
-            ,('Holy See','VA','VAT',336,'ISO 3166-2:VA','Europe','Southern Europe',NULL,150,039,NULL)
-            ,('Honduras','HN','HND',340,'ISO 3166-2:HN','Americas','Latin America and the Caribbean','Central America',019,419,013)
-            ,('Hong Kong','HK','HKG',344,'ISO 3166-2:HK','Asia','Eastern Asia',NULL,142,030,NULL)
-            ,('Hungary','HU','HUN',348,'ISO 3166-2:HU','Europe','Eastern Europe',NULL,150,151,NULL)
-            ,('Iceland','IS','ISL',352,'ISO 3166-2:IS','Europe','Northern Europe',NULL,150,154,NULL)
-            ,('India','IN','IND',356,'ISO 3166-2:IN','Asia','Southern Asia',NULL,142,034,NULL)
-            ,('Indonesia','ID','IDN',360,'ISO 3166-2:ID','Asia','South-eastern Asia',NULL,142,035,NULL)
-            ,('Iran (Islamic Republic of)','IR','IRN',364,'ISO 3166-2:IR','Asia','Southern Asia',NULL,142,034,NULL)
-            ,('Iraq','IQ','IRQ',368,'ISO 3166-2:IQ','Asia','Western Asia',NULL,142,145,NULL)
-            ,('Ireland','IE','IRL',372,'ISO 3166-2:IE','Europe','Northern Europe',NULL,150,154,NULL)
-            ,('Isle of Man','IM','IMN',833,'ISO 3166-2:IM','Europe','Northern Europe',NULL,150,154,NULL)
-            ,('Israel','IL','ISR',376,'ISO 3166-2:IL','Asia','Western Asia',NULL,142,145,NULL)
-            ,('Italy','IT','ITA',380,'ISO 3166-2:IT','Europe','Southern Europe',NULL,150,039,NULL)
-            ,('Jamaica','JM','JAM',388,'ISO 3166-2:JM','Americas','Latin America and the Caribbean','Caribbean',019,419,029)
-            ,('Japan','JP','JPN',392,'ISO 3166-2:JP','Asia','Eastern Asia',NULL,142,030,NULL)
-            ,('Jersey','JE','JEY',832,'ISO 3166-2:JE','Europe','Northern Europe','Channel Islands',150,154,830)
-            ,('Jordan','JO','JOR',400,'ISO 3166-2:JO','Asia','Western Asia',NULL,142,145,NULL)
-            ,('Kazakhstan','KZ','KAZ',398,'ISO 3166-2:KZ','Asia','Central Asia',NULL,142,143,NULL)
-            ,('Kenya','KE','KEN',404,'ISO 3166-2:KE','Africa','Sub-Saharan Africa','Eastern Africa',002,202,014)
-            ,('Kiribati','KI','KIR',296,'ISO 3166-2:KI','Oceania','Micronesia',NULL,009,057,NULL)
-            ,('Korea (Democratic People''s Republic of)','KP','PRK',408,'ISO 3166-2:KP','Asia','Eastern Asia',NULL,142,030,NULL)
-            ,('Korea, Republic of','KR','KOR',410,'ISO 3166-2:KR','Asia','Eastern Asia',NULL,142,030,NULL)
-            ,('Kuwait','KW','KWT',414,'ISO 3166-2:KW','Asia','Western Asia',NULL,142,145,NULL)
-            ,('Kyrgyzstan','KG','KGZ',417,'ISO 3166-2:KG','Asia','Central Asia',NULL,142,143,NULL)
-            ,('Lao People''s Democratic Republic','LA','LAO',418,'ISO 3166-2:LA','Asia','South-eastern Asia',NULL,142,035,NULL)
-            ,('Latvia','LV','LVA',428,'ISO 3166-2:LV','Europe','Northern Europe',NULL,150,154,NULL)
-            ,('Lebanon','LB','LBN',422,'ISO 3166-2:LB','Asia','Western Asia',NULL,142,145,NULL)
-            ,('Lesotho','LS','LSO',426,'ISO 3166-2:LS','Africa','Sub-Saharan Africa','Southern Africa',002,202,018)
-            ,('Liberia','LR','LBR',430,'ISO 3166-2:LR','Africa','Sub-Saharan Africa','Western Africa',002,202,011)
-            ,('Libya','LY','LBY',434,'ISO 3166-2:LY','Africa','Northern Africa',NULL,002,015,NULL)
-            ,('Liechtenstein','LI','LIE',438,'ISO 3166-2:LI','Europe','Western Europe',NULL,150,155,NULL)
-            ,('Lithuania','LT','LTU',440,'ISO 3166-2:LT','Europe','Northern Europe',NULL,150,154,NULL)
-            ,('Luxembourg','LU','LUX',442,'ISO 3166-2:LU','Europe','Western Europe',NULL,150,155,NULL)
-            ,('Macao','MO','MAC',446,'ISO 3166-2:MO','Asia','Eastern Asia',NULL,142,030,NULL)
-            ,('Madagascar','MG','MDG',450,'ISO 3166-2:MG','Africa','Sub-Saharan Africa','Eastern Africa',002,202,014)
-            ,('Malawi','MW','MWI',454,'ISO 3166-2:MW','Africa','Sub-Saharan Africa','Eastern Africa',002,202,014)
-            ,('Malaysia','MY','MYS',458,'ISO 3166-2:MY','Asia','South-eastern Asia',NULL,142,035,NULL)
-            ,('Maldives','MV','MDV',462,'ISO 3166-2:MV','Asia','Southern Asia',NULL,142,034,NULL)
-            ,('Mali','ML','MLI',466,'ISO 3166-2:ML','Africa','Sub-Saharan Africa','Western Africa',002,202,011)
-            ,('Malta','MT','MLT',470,'ISO 3166-2:MT','Europe','Southern Europe',NULL,150,039,NULL)
-            ,('Marshall Islands','MH','MHL',584,'ISO 3166-2:MH','Oceania','Micronesia',NULL,009,057,NULL)
-            ,('Martinique','MQ','MTQ',474,'ISO 3166-2:MQ','Americas','Latin America and the Caribbean','Caribbean',019,419,029)
-            ,('Mauritania','MR','MRT',478,'ISO 3166-2:MR','Africa','Sub-Saharan Africa','Western Africa',002,202,011)
-            ,('Mauritius','MU','MUS',480,'ISO 3166-2:MU','Africa','Sub-Saharan Africa','Eastern Africa',002,202,014)
-            ,('Mayotte','YT','MYT',175,'ISO 3166-2:YT','Africa','Sub-Saharan Africa','Eastern Africa',002,202,014)
-            ,('Mexico','MX','MEX',484,'ISO 3166-2:MX','Americas','Latin America and the Caribbean','Central America',019,419,013)
-            ,('Micronesia (Federated States of)','FM','FSM',583,'ISO 3166-2:FM','Oceania','Micronesia',NULL,009,057,NULL)
-            ,('Moldova, Republic of','MD','MDA',498,'ISO 3166-2:MD','Europe','Eastern Europe',NULL,150,151,NULL)
-            ,('Monaco','MC','MCO',492,'ISO 3166-2:MC','Europe','Western Europe',NULL,150,155,NULL)
-            ,('Mongolia','MN','MNG',496,'ISO 3166-2:MN','Asia','Eastern Asia',NULL,142,030,NULL)
-            ,('Montenegro','ME','MNE',499,'ISO 3166-2:ME','Europe','Southern Europe',NULL,150,039,NULL)
-            ,('Montserrat','MS','MSR',500,'ISO 3166-2:MS','Americas','Latin America and the Caribbean','Caribbean',019,419,029)
-            ,('Morocco','MA','MAR',504,'ISO 3166-2:MA','Africa','Northern Africa',NULL,002,015,NULL)
-            ,('Mozambique','MZ','MOZ',508,'ISO 3166-2:MZ','Africa','Sub-Saharan Africa','Eastern Africa',002,202,014)
-            ,('Myanmar','MM','MMR',104,'ISO 3166-2:MM','Asia','South-eastern Asia',NULL,142,035,NULL)
-            ,('Namibia','NA','NAM',516,'ISO 3166-2:NA','Africa','Sub-Saharan Africa','Southern Africa',002,202,018)
-            ,('Nauru','NR','NRU',520,'ISO 3166-2:NR','Oceania','Micronesia',NULL,009,057,NULL)
-            ,('Nepal','NP','NPL',524,'ISO 3166-2:NP','Asia','Southern Asia',NULL,142,034,NULL)
-            ,('Netherlands','NL','NLD',528,'ISO 3166-2:NL','Europe','Western Europe',NULL,150,155,NULL)
-            ,('New Caledonia','NC','NCL',540,'ISO 3166-2:NC','Oceania','Melanesia',NULL,009,054,NULL)
-            ,('New Zealand','NZ','NZL',554,'ISO 3166-2:NZ','Oceania','Australia and New Zealand',NULL,009,053,NULL)
-            ,('Nicaragua','NI','NIC',558,'ISO 3166-2:NI','Americas','Latin America and the Caribbean','Central America',019,419,013)
-            ,('Niger','NE','NER',562,'ISO 3166-2:NE','Africa','Sub-Saharan Africa','Western Africa',002,202,011)
-            ,('Nigeria','NG','NGA',566,'ISO 3166-2:NG','Africa','Sub-Saharan Africa','Western Africa',002,202,011)
-            ,('Niue','NU','NIU',570,'ISO 3166-2:NU','Oceania','Polynesia',NULL,009,061,NULL)
-            ,('Norfolk Island','NF','NFK',574,'ISO 3166-2:NF','Oceania','Australia and New Zealand',NULL,009,053,NULL)
-            ,('North Macedonia','MK','MKD',807,'ISO 3166-2:MK','Europe','Southern Europe',NULL,150,039,NULL)
-            ,('Northern Mariana Islands','MP','MNP',580,'ISO 3166-2:MP','Oceania','Micronesia',NULL,009,057,NULL)
-            ,('Norway','NO','NOR',578,'ISO 3166-2:NO','Europe','Northern Europe',NULL,150,154,NULL)
-            ,('Oman','OM','OMN',512,'ISO 3166-2:OM','Asia','Western Asia',NULL,142,145,NULL)
-            ,('Pakistan','PK','PAK',586,'ISO 3166-2:PK','Asia','Southern Asia',NULL,142,034,NULL)
-            ,('Palau','PW','PLW',585,'ISO 3166-2:PW','Oceania','Micronesia',NULL,009,057,NULL)
-            ,('Palestine, State of','PS','PSE',275,'ISO 3166-2:PS','Asia','Western Asia',NULL,142,145,NULL)
-            ,('Panama','PA','PAN',591,'ISO 3166-2:PA','Americas','Latin America and the Caribbean','Central America',019,419,013)
-            ,('Papua New Guinea','PG','PNG',598,'ISO 3166-2:PG','Oceania','Melanesia',NULL,009,054,NULL)
-            ,('Paraguay','PY','PRY',600,'ISO 3166-2:PY','Americas','Latin America and the Caribbean','South America',019,419,005)
-            ,('Peru','PE','PER',604,'ISO 3166-2:PE','Americas','Latin America and the Caribbean','South America',019,419,005)
-            ,('Philippines','PH','PHL',608,'ISO 3166-2:PH','Asia','South-eastern Asia',NULL,142,035,NULL)
-            ,('Pitcairn','PN','PCN',612,'ISO 3166-2:PN','Oceania','Polynesia',NULL,009,061,NULL)
-            ,('Poland','PL','POL',616,'ISO 3166-2:PL','Europe','Eastern Europe',NULL,150,151,NULL)
-            ,('Portugal','PT','PRT',620,'ISO 3166-2:PT','Europe','Southern Europe',NULL,150,039,NULL)
-            ,('Puerto Rico','PR','PRI',630,'ISO 3166-2:PR','Americas','Latin America and the Caribbean','Caribbean',019,419,029)
-            ,('Qatar','QA','QAT',634,'ISO 3166-2:QA','Asia','Western Asia',NULL,142,145,NULL)
-            ,('Réunion','RE','REU',638,'ISO 3166-2:RE','Africa','Sub-Saharan Africa','Eastern Africa',002,202,014)
-            ,('Romania','RO','ROU',642,'ISO 3166-2:RO','Europe','Eastern Europe',NULL,150,151,NULL)
-            ,('Russian Federation','RU','RUS',643,'ISO 3166-2:RU','Europe','Eastern Europe',NULL,150,151,NULL)
-            ,('Rwanda','RW','RWA',646,'ISO 3166-2:RW','Africa','Sub-Saharan Africa','Eastern Africa',002,202,014)
-            ,('Saint Barthélemy','BL','BLM',652,'ISO 3166-2:BL','Americas','Latin America and the Caribbean','Caribbean',019,419,029)
-            ,('Saint Helena, Ascension and Tristan da Cunha','SH','SHN',654,'ISO 3166-2:SH','Africa','Sub-Saharan Africa','Western Africa',002,202,011)
-            ,('Saint Kitts and Nevis','KN','KNA',659,'ISO 3166-2:KN','Americas','Latin America and the Caribbean','Caribbean',019,419,029)
-            ,('Saint Lucia','LC','LCA',662,'ISO 3166-2:LC','Americas','Latin America and the Caribbean','Caribbean',019,419,029)
-            ,('Saint Martin (French part)','MF','MAF',663,'ISO 3166-2:MF','Americas','Latin America and the Caribbean','Caribbean',019,419,029)
-            ,('Saint Pierre and Miquelon','PM','SPM',666,'ISO 3166-2:PM','Americas','Northern America',NULL,019,021,NULL)
-            ,('Saint Vincent and the Grenadines','VC','VCT',670,'ISO 3166-2:VC','Americas','Latin America and the Caribbean','Caribbean',019,419,029)
-            ,('Samoa','WS','WSM',882,'ISO 3166-2:WS','Oceania','Polynesia',NULL,009,061,NULL)
-            ,('San Marino','SM','SMR',674,'ISO 3166-2:SM','Europe','Southern Europe',NULL,150,039,NULL)
-            ,('Sao Tome and Principe','ST','STP',678,'ISO 3166-2:ST','Africa','Sub-Saharan Africa','Middle Africa',002,202,017)
-            ,('Saudi Arabia','SA','SAU',682,'ISO 3166-2:SA','Asia','Western Asia',NULL,142,145,NULL)
-            ,('Senegal','SN','SEN',686,'ISO 3166-2:SN','Africa','Sub-Saharan Africa','Western Africa',002,202,011)
-            ,('Serbia','RS','SRB',688,'ISO 3166-2:RS','Europe','Southern Europe',NULL,150,039,NULL)
-            ,('Seychelles','SC','SYC',690,'ISO 3166-2:SC','Africa','Sub-Saharan Africa','Eastern Africa',002,202,014)
-            ,('Sierra Leone','SL','SLE',694,'ISO 3166-2:SL','Africa','Sub-Saharan Africa','Western Africa',002,202,011)
-            ,('Singapore','SG','SGP',702,'ISO 3166-2:SG','Asia','South-eastern Asia',NULL,142,035,NULL)
-            ,('Sint Maarten (Dutch part)','SX','SXM',534,'ISO 3166-2:SX','Americas','Latin America and the Caribbean','Caribbean',019,419,029)
-            ,('Slovakia','SK','SVK',703,'ISO 3166-2:SK','Europe','Eastern Europe',NULL,150,151,NULL)
-            ,('Slovenia','SI','SVN',705,'ISO 3166-2:SI','Europe','Southern Europe',NULL,150,039,NULL)
-            ,('Solomon Islands','SB','SLB',090,'ISO 3166-2:SB','Oceania','Melanesia',NULL,009,054,NULL)
-            ,('Somalia','SO','SOM',706,'ISO 3166-2:SO','Africa','Sub-Saharan Africa','Eastern Africa',002,202,014)
-            ,('South Africa','ZA','ZAF',710,'ISO 3166-2:ZA','Africa','Sub-Saharan Africa','Southern Africa',002,202,018)
-            ,('South Georgia and the South Sandwich Islands','GS','SGS',239,'ISO 3166-2:GS','Americas','Latin America and the Caribbean','South America',019,419,005)
-            ,('South Sudan','SS','SSD',728,'ISO 3166-2:SS','Africa','Sub-Saharan Africa','Eastern Africa',002,202,014)
-            ,('Spain','ES','ESP',724,'ISO 3166-2:ES','Europe','Southern Europe',NULL,150,039,NULL)
-            ,('Sri Lanka','LK','LKA',144,'ISO 3166-2:LK','Asia','Southern Asia',NULL,142,034,NULL)
-            ,('Sudan','SD','SDN',729,'ISO 3166-2:SD','Africa','Northern Africa',NULL,002,015,NULL)
-            ,('Suriname','SR','SUR',740,'ISO 3166-2:SR','Americas','Latin America and the Caribbean','South America',019,419,005)
-            ,('Svalbard and Jan Mayen','SJ','SJM',744,'ISO 3166-2:SJ','Europe','Northern Europe',NULL,150,154,NULL)
-            ,('Sweden','SE','SWE',752,'ISO 3166-2:SE','Europe','Northern Europe',NULL,150,154,NULL)
-            ,('Switzerland','CH','CHE',756,'ISO 3166-2:CH','Europe','Western Europe',NULL,150,155,NULL)
-            ,('Syrian Arab Republic','SY','SYR',760,'ISO 3166-2:SY','Asia','Western Asia',NULL,142,145,NULL)
-            ,('Taiwan, Province of China','TW','TWN',158,'ISO 3166-2:TW','Asia','Eastern Asia',NULL,142,030,NULL)
-            ,('Tajikistan','TJ','TJK',762,'ISO 3166-2:TJ','Asia','Central Asia',NULL,142,143,NULL)
-            ,('Tanzania, United Republic of','TZ','TZA',834,'ISO 3166-2:TZ','Africa','Sub-Saharan Africa','Eastern Africa',002,202,014)
-            ,('Thailand','TH','THA',764,'ISO 3166-2:TH','Asia','South-eastern Asia',NULL,142,035,NULL)
-            ,('Timor-Leste','TL','TLS',626,'ISO 3166-2:TL','Asia','South-eastern Asia',NULL,142,035,NULL)
-            ,('Togo','TG','TGO',768,'ISO 3166-2:TG','Africa','Sub-Saharan Africa','Western Africa',002,202,011)
-            ,('Tokelau','TK','TKL',772,'ISO 3166-2:TK','Oceania','Polynesia',NULL,009,061,NULL)
-            ,('Tonga','TO','TON',776,'ISO 3166-2:TO','Oceania','Polynesia',NULL,009,061,NULL)
-            ,('Trinidad and Tobago','TT','TTO',780,'ISO 3166-2:TT','Americas','Latin America and the Caribbean','Caribbean',019,419,029)
-            ,('Tunisia','TN','TUN',788,'ISO 3166-2:TN','Africa','Northern Africa',NULL,002,015,NULL)
-            ,('Turkey','TR','TUR',792,'ISO 3166-2:TR','Asia','Western Asia',NULL,142,145,NULL)
-            ,('Turkmenistan','TM','TKM',795,'ISO 3166-2:TM','Asia','Central Asia',NULL,142,143,NULL)
-            ,('Turks and Caicos Islands','TC','TCA',796,'ISO 3166-2:TC','Americas','Latin America and the Caribbean','Caribbean',019,419,029)
-            ,('Tuvalu','TV','TUV',798,'ISO 3166-2:TV','Oceania','Polynesia',NULL,009,061,NULL)
-            ,('Uganda','UG','UGA',800,'ISO 3166-2:UG','Africa','Sub-Saharan Africa','Eastern Africa',002,202,014)
-            ,('Ukraine','UA','UKR',804,'ISO 3166-2:UA','Europe','Eastern Europe',NULL,150,151,NULL)
-            ,('United Arab Emirates','AE','ARE',784,'ISO 3166-2:AE','Asia','Western Asia',NULL,142,145,NULL)
-            ,('United Kingdom of Great Britain and Northern Ireland','GB','GBR',826,'ISO 3166-2:GB','Europe','Northern Europe',NULL,150,154,NULL)
-            ,('United States of America','US','USA',840,'ISO 3166-2:US','Americas','Northern America',NULL,019,021,NULL)
-            ,('United States Minor Outlying Islands','UM','UMI',581,'ISO 3166-2:UM','Oceania','Micronesia',NULL,009,057,NULL)
-            ,('Uruguay','UY','URY',858,'ISO 3166-2:UY','Americas','Latin America and the Caribbean','South America',019,419,005)
-            ,('Uzbekistan','UZ','UZB',860,'ISO 3166-2:UZ','Asia','Central Asia',NULL,142,143,NULL)
-            ,('Vanuatu','VU','VUT',548,'ISO 3166-2:VU','Oceania','Melanesia',NULL,009,054,NULL)
-            ,('Venezuela (Bolivarian Republic of)','VE','VEN',862,'ISO 3166-2:VE','Americas','Latin America and the Caribbean','South America',019,419,005)
-            ,('Viet Nam','VN','VNM',704,'ISO 3166-2:VN','Asia','South-eastern Asia',NULL,142,035,NULL)
-            ,('Virgin Islands (British)','VG','VGB',092,'ISO 3166-2:VG','Americas','Latin America and the Caribbean','Caribbean',019,419,029)
-            ,('Virgin Islands (U.S.)','VI','VIR',850,'ISO 3166-2:VI','Americas','Latin America and the Caribbean','Caribbean',019,419,029)
-            ,('Wallis and Futuna','WF','WLF',876,'ISO 3166-2:WF','Oceania','Polynesia',NULL,009,061,NULL)
-            ,('Western Sahara','EH','ESH',732,'ISO 3166-2:EH','Africa','Northern Africa',NULL,002,015,NULL)
-            ,('Yemen','YE','YEM',887,'ISO 3166-2:YE','Asia','Western Asia',NULL,142,145,NULL)
-            ,('Zambia','ZM','ZMB',894,'ISO 3166-2:ZM','Africa','Sub-Saharan Africa','Eastern Africa',002,202,014)
-            ,('Zimbabwe','ZW','ZWE',716,'ISO 3166-2:ZW','Africa','Sub-Saharan Africa','Eastern Africa',002,202,014);
-            
+        INSERT INTO iso_nations(
+            nation_name,
+            nation_iso_alpha_2,
+            nation_iso_alpha_3,
+            nation_iso_numeric,
+            iso_3166_2,
+            region,
+            subregion,
+            intermediate_region,
+            region_code,
+            subregion_code,
+            intermediate_region_code)
+        VALUES
+            ('Afghanistan','AF','AFG',004,'ISO 3166-2:AF',
+                'Asia','Southern Asia',NULL,142,034,NULL)
+            ,('Åland Islands','AX','ALA',248,'ISO 3166-2:AX',
+                'Europe','Northern Europe',NULL,150,154,NULL)
+            ,('Albania','AL','ALB',008,'ISO 3166-2:AL',
+                'Europe','Southern Europe',NULL,150,039,NULL)
+            ,('Algeria','DZ','DZA',012,'ISO 3166-2:DZ',
+                'Africa','Northern Africa',NULL,002,015,NULL)
+            ,('American Samoa','AS','ASM',016,'ISO 3166-2:AS',
+                'Oceania','Polynesia',NULL,009,061,NULL)
+            ,('Andorra','AD','AND',020,'ISO 3166-2:AD',
+                'Europe','Southern Europe',NULL,150,039,NULL)
+            ,('Angola','AO','AGO',024,'ISO 3166-2:AO',
+                'Africa','Sub-Saharan Africa','Middle Africa',002,202,017)
+            ,('Anguilla','AI','AIA',660,'ISO 3166-2:AI',
+                'Americas','Latin America and the Caribbean',
+                'Caribbean',019,419,029)
+            ,('Antarctica','AQ','ATA',010,'ISO 3166-2:AQ',
+                NULL,NULL,NULL,NULL,NULL,NULL)
+            ,('Antigua and Barbuda','AG','ATG',028,'ISO 3166-2:AG',
+                'Americas','Latin America and the Caribbean',
+                'Caribbean',019,419,029)
+            ,('Argentina','AR','ARG',032,'ISO 3166-2:AR',
+                'Americas','Latin America and the Caribbean',
+                'South America',019,419,005)
+            ,('Armenia','AM','ARM',051,'ISO 3166-2:AM',
+                'Asia','Western Asia',NULL,142,145,NULL)
+            ,('Aruba','AW','ABW',533,'ISO 3166-2:AW',
+                'Americas','Latin America and the Caribbean',
+                'Caribbean',019,419,029)
+            ,('Australia','AU','AUS',036,'ISO 3166-2:AU',
+                'Oceania','Australia and New Zealand',NULL,009,053,NULL)
+            ,('Austria','AT','AUT',040,'ISO 3166-2:AT',
+                'Europe','Western Europe',NULL,150,155,NULL)
+            ,('Azerbaijan','AZ','AZE',031,'ISO 3166-2:AZ',
+                'Asia','Western Asia',NULL,142,145,NULL)
+            ,('Bahamas','BS','BHS',044,'ISO 3166-2:BS',
+                'Americas','Latin America and the Caribbean',
+                'Caribbean',019,419,029)
+            ,('Bahrain','BH','BHR',048,'ISO 3166-2:BH',
+                'Asia','Western Asia',NULL,142,145,NULL)
+            ,('Bangladesh','BD','BGD',050,'ISO 3166-2:BD',
+                'Asia','Southern Asia',NULL,142,034,NULL)
+            ,('Barbados','BB','BRB',052,'ISO 3166-2:BB',
+                'Americas','Latin America and the Caribbean',
+                'Caribbean',019,419,029)
+            ,('Belarus','BY','BLR',112,'ISO 3166-2:BY',
+                'Europe','Eastern Europe',NULL,150,151,NULL)
+            ,('Belgium','BE','BEL',056,'ISO 3166-2:BE',
+                'Europe','Western Europe',NULL,150,155,NULL)
+            ,('Belize','BZ','BLZ',084,'ISO 3166-2:BZ',
+                'Americas','Latin America and the Caribbean',
+                'Central America',019,419,013)
+            ,('Benin','BJ','BEN',204,'ISO 3166-2:BJ',
+                'Africa','Sub-Saharan Africa','Western Africa',002,202,011)
+            ,('Bermuda','BM','BMU',060,'ISO 3166-2:BM',
+                'Americas','Northern America',NULL,019,021,NULL)
+            ,('Bhutan','BT','BTN',064,'ISO 3166-2:BT',
+                'Asia','Southern Asia',NULL,142,034,NULL)
+            ,('Bolivia (Plurinational State of)',
+                'BO','BOL',068,'ISO 3166-2:BO',
+                'Americas','Latin America and the Caribbean',
+                'South America',019,419,005)
+            ,('Bonaire, Sint Eustatius and Saba',
+                'BQ','BES',535,'ISO 3166-2:BQ',
+                'Americas','Latin America and the Caribbean',
+                'Caribbean',019,419,029)
+            ,('Bosnia and Herzegovina','BA','BIH',070,'ISO 3166-2:BA',
+                'Europe','Southern Europe',NULL,150,039,NULL)
+            ,('Botswana','BW','BWA',072,'ISO 3166-2:BW',
+                'Africa','Sub-Saharan Africa','Southern Africa',002,202,018)
+            ,('Bouvet Island','BV','BVT',074,'ISO 3166-2:BV',
+                'Americas','Latin America and the Caribbean',
+                'South America',019,419,005)
+            ,('Brazil','BR','BRA',076,'ISO 3166-2:BR',
+                'Americas','Latin America and the Caribbean',
+                'South America',019,419,005)
+            ,('British Indian Ocean Territory','IO','IOT',086,'ISO 3166-2:IO',
+                'Africa','Sub-Saharan Africa','Eastern Africa',002,202,014)
+            ,('Brunei Darussalam','BN','BRN',096,'ISO 3166-2:BN',
+                'Asia','South-eastern Asia',NULL,142,035,NULL)
+            ,('Bulgaria','BG','BGR',100,'ISO 3166-2:BG',
+                'Europe','Eastern Europe',NULL,150,151,NULL)
+            ,('Burkina Faso','BF','BFA',854,'ISO 3166-2:BF',
+                'Africa','Sub-Saharan Africa','Western Africa',002,202,011)
+            ,('Burundi','BI','BDI',108,'ISO 3166-2:BI',
+                'Africa','Sub-Saharan Africa','Eastern Africa',002,202,014)
+            ,('Cabo Verde','CV','CPV',132,'ISO 3166-2:CV',
+                'Africa','Sub-Saharan Africa','Western Africa',002,202,011)
+            ,('Cambodia','KH','KHM',116,'ISO 3166-2:KH',
+                'Asia','South-eastern Asia',NULL,142,035,NULL)
+            ,('Cameroon','CM','CMR',120,'ISO 3166-2:CM',
+                'Africa','Sub-Saharan Africa','Middle Africa',002,202,017)
+            ,('Canada','CA','CAN',124,'ISO 3166-2:CA',
+                'Americas','Northern America',NULL,019,021,NULL)
+            ,('Cayman Islands','KY','CYM',136,'ISO 3166-2:KY',
+                'Americas','Latin America and the Caribbean',
+                'Caribbean',019,419,029)
+            ,('Central African Republic','CF','CAF',140,'ISO 3166-2:CF',
+                'Africa','Sub-Saharan Africa','Middle Africa',002,202,017)
+            ,('Chad','TD','TCD',148,'ISO 3166-2:TD',
+                'Africa','Sub-Saharan Africa','Middle Africa',002,202,017)
+            ,('Chile','CL','CHL',152,'ISO 3166-2:CL',
+                'Americas','Latin America and the Caribbean',
+                'South America',019,419,005)
+            ,('China','CN','CHN',156,'ISO 3166-2:CN',
+                'Asia','Eastern Asia',NULL,142,030,NULL)
+            ,('Christmas Island','CX','CXR',162,'ISO 3166-2:CX',
+                'Oceania','Australia and New Zealand',NULL,009,053,NULL)
+            ,('Cocos (Keeling) Islands','CC','CCK',166,'ISO 3166-2:CC',
+                'Oceania','Australia and New Zealand',NULL,009,053,NULL)
+            ,('Colombia','CO','COL',170,'ISO 3166-2:CO',
+                'Americas','Latin America and the Caribbean',
+                'South America',019,419,005)
+            ,('Comoros','KM','COM',174,'ISO 3166-2:KM',
+                'Africa','Sub-Saharan Africa','Eastern Africa',002,202,014)
+            ,('Congo','CG','COG',178,'ISO 3166-2:CG',
+                'Africa','Sub-Saharan Africa','Middle Africa',002,202,017)
+            ,('Congo, Democratic Republic of the',
+                'CD','COD',180,'ISO 3166-2:CD',
+                'Africa','Sub-Saharan Africa','Middle Africa',002,202,017)
+            ,('Cook Islands','CK','COK',184,'ISO 3166-2:CK',
+                'Oceania','Polynesia',NULL,009,061,NULL)
+            ,('Costa Rica','CR','CRI',188,'ISO 3166-2:CR',
+                'Americas','Latin America and the Caribbean',
+                'Central America',019,419,013)
+            ,('Côte d''Ivoire','CI','CIV',384,'ISO 3166-2:CI',
+                'Africa','Sub-Saharan Africa','Western Africa',002,202,011)
+            ,('Croatia','HR','HRV',191,'ISO 3166-2:HR',
+                'Europe','Southern Europe',NULL,150,039,NULL)
+            ,('Cuba','CU','CUB',192,'ISO 3166-2:CU',
+                'Americas','Latin America and the Caribbean',
+                'Caribbean',019,419,029)
+            ,('Curaçao','CW','CUW',531,'ISO 3166-2:CW',
+                'Americas','Latin America and the Caribbean',
+                'Caribbean',019,419,029)
+            ,('Cyprus','CY','CYP',196,'ISO 3166-2:CY',
+                'Asia','Western Asia',NULL,142,145,NULL)
+            ,('Czechia','CZ','CZE',203,'ISO 3166-2:CZ',
+                'Europe','Eastern Europe',NULL,150,151,NULL)
+            ,('Denmark','DK','DNK',208,'ISO 3166-2:DK',
+                'Europe','Northern Europe',NULL,150,154,NULL)
+            ,('Djibouti','DJ','DJI',262,'ISO 3166-2:DJ',
+                'Africa','Sub-Saharan Africa','Eastern Africa',002,202,014)
+            ,('Dominica','DM','DMA',212,'ISO 3166-2:DM',
+                'Americas','Latin America and the Caribbean',
+                'Caribbean',019,419,029)
+            ,('Dominican Republic','DO','DOM',214,'ISO 3166-2:DO',
+                'Americas','Latin America and the Caribbean',
+                'Caribbean',019,419,029)
+            ,('Ecuador','EC','ECU',218,'ISO 3166-2:EC',
+                'Americas','Latin America and the Caribbean',
+                'South America',019,419,005)
+            ,('Egypt','EG','EGY',818,'ISO 3166-2:EG',
+                'Africa','Northern Africa',NULL,002,015,NULL)
+            ,('El Salvador','SV','SLV',222,'ISO 3166-2:SV',
+                'Americas','Latin America and the Caribbean',
+                'Central America',019,419,013)
+            ,('Equatorial Guinea','GQ','GNQ',226,'ISO 3166-2:GQ',
+                'Africa','Sub-Saharan Africa','Middle Africa',002,202,017)
+            ,('Eritrea','ER','ERI',232,'ISO 3166-2:ER',
+                'Africa','Sub-Saharan Africa','Eastern Africa',002,202,014)
+            ,('Estonia','EE','EST',233,'ISO 3166-2:EE',
+                'Europe','Northern Europe',NULL,150,154,NULL)
+            ,('Eswatini','SZ','SWZ',748,'ISO 3166-2:SZ',
+                'Africa','Sub-Saharan Africa','Southern Africa',002,202,018)
+            ,('Ethiopia','ET','ETH',231,'ISO 3166-2:ET',
+                'Africa','Sub-Saharan Africa','Eastern Africa',002,202,014)
+            ,('Falkland Islands (Malvinas)','FK','FLK',238,'ISO 3166-2:FK',
+                'Americas','Latin America and the Caribbean',
+                'South America',019,419,005)
+            ,('Faroe Islands','FO','FRO',234,'ISO 3166-2:FO',
+                'Europe','Northern Europe',NULL,150,154,NULL)
+            ,('Fiji','FJ','FJI',242,'ISO 3166-2:FJ',
+                'Oceania','Melanesia',NULL,009,054,NULL)
+            ,('Finland','FI','FIN',246,'ISO 3166-2:FI',
+                'Europe','Northern Europe',NULL,150,154,NULL)
+            ,('France','FR','FRA',250,'ISO 3166-2:FR',
+                'Europe','Western Europe',NULL,150,155,NULL)
+            ,('French Guiana','GF','GUF',254,'ISO 3166-2:GF',
+                'Americas','Latin America and the Caribbean',
+                'South America',019,419,005)
+            ,('French Polynesia','PF','PYF',258,'ISO 3166-2:PF',
+                'Oceania','Polynesia',NULL,009,061,NULL)
+            ,('French Southern Territories','TF','ATF',260,'ISO 3166-2:TF',
+                'Africa','Sub-Saharan Africa','Eastern Africa',002,202,014)
+            ,('Gabon','GA','GAB',266,'ISO 3166-2:GA',
+                'Africa','Sub-Saharan Africa','Middle Africa',002,202,017)
+            ,('Gambia','GM','GMB',270,'ISO 3166-2:GM',
+                'Africa','Sub-Saharan Africa','Western Africa',002,202,011)
+            ,('Georgia','GE','GEO',268,'ISO 3166-2:GE',
+                'Asia','Western Asia',NULL,142,145,NULL)
+            ,('Germany','DE','DEU',276,'ISO 3166-2:DE',
+                'Europe','Western Europe',NULL,150,155,NULL)
+            ,('Ghana','GH','GHA',288,'ISO 3166-2:GH',
+                'Africa','Sub-Saharan Africa','Western Africa',002,202,011)
+            ,('Gibraltar','GI','GIB',292,'ISO 3166-2:GI',
+                'Europe','Southern Europe',NULL,150,039,NULL)
+            ,('Greece','GR','GRC',300,'ISO 3166-2:GR',
+                'Europe','Southern Europe',NULL,150,039,NULL)
+            ,('Greenland','GL','GRL',304,'ISO 3166-2:GL',
+                'Americas','Northern America',NULL,019,021,NULL)
+            ,('Grenada','GD','GRD',308,'ISO 3166-2:GD',
+                'Americas','Latin America and the Caribbean',
+                'Caribbean',019,419,029)
+            ,('Guadeloupe','GP','GLP',312,'ISO 3166-2:GP',
+                'Americas','Latin America and the Caribbean',
+                'Caribbean',019,419,029)
+            ,('Guam','GU','GUM',316,'ISO 3166-2:GU',
+                'Oceania','Micronesia',NULL,009,057,NULL)
+            ,('Guatemala','GT','GTM',320,'ISO 3166-2:GT',
+                'Americas','Latin America and the Caribbean',
+                'Central America',019,419,013)
+            ,('Guernsey','GG','GGY',831,'ISO 3166-2:GG',
+                'Europe','Northern Europe','Channel Islands',150,154,830)
+            ,('Guinea','GN','GIN',324,'ISO 3166-2:GN',
+                'Africa','Sub-Saharan Africa','Western Africa',002,202,011)
+            ,('Guinea-Bissau','GW','GNB',624,'ISO 3166-2:GW',
+                'Africa','Sub-Saharan Africa','Western Africa',002,202,011)
+            ,('Guyana','GY','GUY',328,'ISO 3166-2:GY',
+                'Americas','Latin America and the Caribbean',
+                'South America',019,419,005)
+            ,('Haiti','HT','HTI',332,'ISO 3166-2:HT',
+                'Americas','Latin America and the Caribbean',
+                'Caribbean',019,419,029)
+            ,('Heard Island and McDonald Islands',
+                'HM','HMD',334,'ISO 3166-2:HM',
+                'Oceania','Australia and New Zealand',NULL,009,053,NULL)
+            ,('Holy See','VA','VAT',336,'ISO 3166-2:VA',
+                'Europe','Southern Europe',NULL,150,039,NULL)
+            ,('Honduras','HN','HND',340,'ISO 3166-2:HN',
+                'Americas','Latin America and the Caribbean',
+                'Central America',019,419,013)
+            ,('Hong Kong','HK','HKG',344,'ISO 3166-2:HK',
+                'Asia','Eastern Asia',NULL,142,030,NULL)
+            ,('Hungary','HU','HUN',348,'ISO 3166-2:HU',
+                'Europe','Eastern Europe',NULL,150,151,NULL)
+            ,('Iceland','IS','ISL',352,'ISO 3166-2:IS',
+                'Europe','Northern Europe',NULL,150,154,NULL)
+            ,('India','IN','IND',356,'ISO 3166-2:IN',
+                'Asia','Southern Asia',NULL,142,034,NULL)
+            ,('Indonesia','ID','IDN',360,'ISO 3166-2:ID',
+                'Asia','South-eastern Asia',NULL,142,035,NULL)
+            ,('Iran (Islamic Republic of)','IR','IRN',364,'ISO 3166-2:IR',
+                'Asia','Southern Asia',NULL,142,034,NULL)
+            ,('Iraq','IQ','IRQ',368,'ISO 3166-2:IQ',
+                'Asia','Western Asia',NULL,142,145,NULL)
+            ,('Ireland','IE','IRL',372,'ISO 3166-2:IE',
+                'Europe','Northern Europe',NULL,150,154,NULL)
+            ,('Isle of Man','IM','IMN',833,'ISO 3166-2:IM',
+                'Europe','Northern Europe',NULL,150,154,NULL)
+            ,('Israel','IL','ISR',376,'ISO 3166-2:IL',
+                'Asia','Western Asia',NULL,142,145,NULL)
+            ,('Italy','IT','ITA',380,'ISO 3166-2:IT',
+                'Europe','Southern Europe',NULL,150,039,NULL)
+            ,('Jamaica','JM','JAM',388,'ISO 3166-2:JM',
+                'Americas','Latin America and the Caribbean',
+                'Caribbean',019,419,029)
+            ,('Japan','JP','JPN',392,'ISO 3166-2:JP',
+                'Asia','Eastern Asia',NULL,142,030,NULL)
+            ,('Jersey','JE','JEY',832,'ISO 3166-2:JE',
+                'Europe','Northern Europe','Channel Islands',150,154,830)
+            ,('Jordan','JO','JOR',400,'ISO 3166-2:JO',
+                'Asia','Western Asia',NULL,142,145,NULL)
+            ,('Kazakhstan','KZ','KAZ',398,'ISO 3166-2:KZ',
+                'Asia','Central Asia',NULL,142,143,NULL)
+            ,('Kenya','KE','KEN',404,'ISO 3166-2:KE',
+                'Africa','Sub-Saharan Africa','Eastern Africa',002,202,014)
+            ,('Kiribati','KI','KIR',296,'ISO 3166-2:KI',
+                'Oceania','Micronesia',NULL,009,057,NULL)
+            ,('Korea (Democratic People''s Republic of)',
+                'KP','PRK',408,'ISO 3166-2:KP',
+                'Asia','Eastern Asia',NULL,142,030,NULL)
+            ,('Korea, Republic of','KR','KOR',410,'ISO 3166-2:KR',
+                'Asia','Eastern Asia',NULL,142,030,NULL)
+            ,('Kuwait','KW','KWT',414,'ISO 3166-2:KW',
+                'Asia','Western Asia',NULL,142,145,NULL)
+            ,('Kyrgyzstan','KG','KGZ',417,'ISO 3166-2:KG',
+                'Asia','Central Asia',NULL,142,143,NULL)
+            ,('Lao People''s Democratic Republic',
+                'LA','LAO',418,'ISO 3166-2:LA',
+                'Asia','South-eastern Asia',NULL,142,035,NULL)
+            ,('Latvia','LV','LVA',428,'ISO 3166-2:LV',
+                'Europe','Northern Europe',NULL,150,154,NULL)
+            ,('Lebanon','LB','LBN',422,'ISO 3166-2:LB',
+                'Asia','Western Asia',NULL,142,145,NULL)
+            ,('Lesotho','LS','LSO',426,'ISO 3166-2:LS',
+                'Africa','Sub-Saharan Africa','Southern Africa',002,202,018)
+            ,('Liberia','LR','LBR',430,'ISO 3166-2:LR',
+                'Africa','Sub-Saharan Africa','Western Africa',002,202,011)
+            ,('Libya','LY','LBY',434,'ISO 3166-2:LY',
+                'Africa','Northern Africa',NULL,002,015,NULL)
+            ,('Liechtenstein','LI','LIE',438,'ISO 3166-2:LI',
+                'Europe','Western Europe',NULL,150,155,NULL)
+            ,('Lithuania','LT','LTU',440,'ISO 3166-2:LT',
+                'Europe','Northern Europe',NULL,150,154,NULL)
+            ,('Luxembourg','LU','LUX',442,'ISO 3166-2:LU',
+                'Europe','Western Europe',NULL,150,155,NULL)
+            ,('Macao','MO','MAC',446,'ISO 3166-2:MO',
+                'Asia','Eastern Asia',NULL,142,030,NULL)
+            ,('Madagascar','MG','MDG',450,'ISO 3166-2:MG',
+                'Africa','Sub-Saharan Africa','Eastern Africa',002,202,014)
+            ,('Malawi','MW','MWI',454,'ISO 3166-2:MW',
+                'Africa','Sub-Saharan Africa','Eastern Africa',002,202,014)
+            ,('Malaysia','MY','MYS',458,'ISO 3166-2:MY',
+                'Asia','South-eastern Asia',NULL,142,035,NULL)
+            ,('Maldives','MV','MDV',462,'ISO 3166-2:MV',
+                'Asia','Southern Asia',NULL,142,034,NULL)
+            ,('Mali','ML','MLI',466,'ISO 3166-2:ML',
+                'Africa','Sub-Saharan Africa','Western Africa',002,202,011)
+            ,('Malta','MT','MLT',470,'ISO 3166-2:MT',
+                'Europe','Southern Europe',NULL,150,039,NULL)
+            ,('Marshall Islands','MH','MHL',584,'ISO 3166-2:MH',
+                'Oceania','Micronesia',NULL,009,057,NULL)
+            ,('Martinique','MQ','MTQ',474,'ISO 3166-2:MQ',
+                'Americas','Latin America and the Caribbean',
+                'Caribbean',019,419,029)
+            ,('Mauritania','MR','MRT',478,'ISO 3166-2:MR',
+                'Africa','Sub-Saharan Africa','Western Africa',002,202,011)
+            ,('Mauritius','MU','MUS',480,'ISO 3166-2:MU',
+                'Africa','Sub-Saharan Africa','Eastern Africa',002,202,014)
+            ,('Mayotte','YT','MYT',175,'ISO 3166-2:YT',
+                'Africa','Sub-Saharan Africa','Eastern Africa',002,202,014)
+            ,('Mexico','MX','MEX',484,'ISO 3166-2:MX',
+                'Americas','Latin America and the Caribbean',
+                'Central America',019,419,013)
+            ,('Micronesia (Federated States of)',
+                'FM','FSM',583,'ISO 3166-2:FM',
+                'Oceania','Micronesia',NULL,009,057,NULL)
+            ,('Moldova, Republic of',
+                'MD','MDA',498,'ISO 3166-2:MD',
+                'Europe','Eastern Europe',NULL,150,151,NULL)
+            ,('Monaco','MC','MCO',492,'ISO 3166-2:MC',
+                'Europe','Western Europe',NULL,150,155,NULL)
+            ,('Mongolia','MN','MNG',496,'ISO 3166-2:MN',
+                'Asia','Eastern Asia',NULL,142,030,NULL)
+            ,('Montenegro','ME','MNE',499,'ISO 3166-2:ME',
+                'Europe','Southern Europe',NULL,150,039,NULL)
+            ,('Montserrat','MS','MSR',500,'ISO 3166-2:MS',
+                'Americas','Latin America and the Caribbean',
+                'Caribbean',019,419,029)
+            ,('Morocco','MA','MAR',504,'ISO 3166-2:MA',
+                'Africa','Northern Africa',NULL,002,015,NULL)
+            ,('Mozambique','MZ','MOZ',508,'ISO 3166-2:MZ',
+                'Africa','Sub-Saharan Africa','Eastern Africa',002,202,014)
+            ,('Myanmar','MM','MMR',104,'ISO 3166-2:MM',
+                'Asia','South-eastern Asia',NULL,142,035,NULL)
+            ,('Namibia','NA','NAM',516,'ISO 3166-2:NA',
+                'Africa','Sub-Saharan Africa','Southern Africa',002,202,018)
+            ,('Nauru','NR','NRU',520,'ISO 3166-2:NR',
+                'Oceania','Micronesia',NULL,009,057,NULL)
+            ,('Nepal','NP','NPL',524,'ISO 3166-2:NP',
+                'Asia','Southern Asia',NULL,142,034,NULL)
+            ,('Netherlands','NL','NLD',528,'ISO 3166-2:NL',
+                'Europe','Western Europe',NULL,150,155,NULL)
+            ,('New Caledonia','NC','NCL',540,'ISO 3166-2:NC',
+                'Oceania','Melanesia',NULL,009,054,NULL)
+            ,('New Zealand','NZ','NZL',554,'ISO 3166-2:NZ',
+                'Oceania','Australia and New Zealand',NULL,009,053,NULL)
+            ,('Nicaragua','NI','NIC',558,'ISO 3166-2:NI',
+                'Americas','Latin America and the Caribbean',
+                'Central America',019,419,013)
+            ,('Niger','NE','NER',562,'ISO 3166-2:NE',
+                'Africa','Sub-Saharan Africa','Western Africa',002,202,011)
+            ,('Nigeria','NG','NGA',566,'ISO 3166-2:NG',
+                'Africa','Sub-Saharan Africa','Western Africa',002,202,011)
+            ,('Niue','NU','NIU',570,'ISO 3166-2:NU',
+                'Oceania','Polynesia',NULL,009,061,NULL)
+            ,('Norfolk Island','NF','NFK',574,'ISO 3166-2:NF',
+                'Oceania','Australia and New Zealand',NULL,009,053,NULL)
+            ,('North Macedonia','MK','MKD',807,'ISO 3166-2:MK',
+                'Europe','Southern Europe',NULL,150,039,NULL)
+            ,('Northern Mariana Islands','MP','MNP',580,'ISO 3166-2:MP',
+                'Oceania','Micronesia',NULL,009,057,NULL)
+            ,('Norway','NO','NOR',578,'ISO 3166-2:NO',
+                'Europe','Northern Europe',NULL,150,154,NULL)
+            ,('Oman','OM','OMN',512,'ISO 3166-2:OM',
+                'Asia','Western Asia',NULL,142,145,NULL)
+            ,('Pakistan','PK','PAK',586,'ISO 3166-2:PK',
+                'Asia','Southern Asia',NULL,142,034,NULL)
+            ,('Palau','PW','PLW',585,'ISO 3166-2:PW',
+                'Oceania','Micronesia',NULL,009,057,NULL)
+            ,('Palestine, State of','PS','PSE',275,'ISO 3166-2:PS',
+                'Asia','Western Asia',NULL,142,145,NULL)
+            ,('Panama','PA','PAN',591,'ISO 3166-2:PA',
+                'Americas','Latin America and the Caribbean',
+                'Central America',019,419,013)
+            ,('Papua New Guinea','PG','PNG',598,'ISO 3166-2:PG',
+                'Oceania','Melanesia',NULL,009,054,NULL)
+            ,('Paraguay','PY','PRY',600,'ISO 3166-2:PY',
+                'Americas','Latin America and the Caribbean',
+                'South America',019,419,005)
+            ,('Peru','PE','PER',604,'ISO 3166-2:PE',
+                'Americas','Latin America and the Caribbean',
+                'South America',019,419,005)
+            ,('Philippines','PH','PHL',608,'ISO 3166-2:PH',
+                'Asia','South-eastern Asia',NULL,142,035,NULL)
+            ,('Pitcairn','PN','PCN',612,'ISO 3166-2:PN',
+                'Oceania','Polynesia',NULL,009,061,NULL)
+            ,('Poland','PL','POL',616,'ISO 3166-2:PL',
+                'Europe','Eastern Europe',NULL,150,151,NULL)
+            ,('Portugal','PT','PRT',620,'ISO 3166-2:PT',
+                'Europe','Southern Europe',NULL,150,039,NULL)
+            ,('Puerto Rico','PR','PRI',630,'ISO 3166-2:PR',
+                'Americas','Latin America and the Caribbean',
+                'Caribbean',019,419,029)
+            ,('Qatar','QA','QAT',634,'ISO 3166-2:QA',
+                'Asia','Western Asia',NULL,142,145,NULL)
+            ,('Réunion','RE','REU',638,'ISO 3166-2:RE',
+                'Africa','Sub-Saharan Africa','Eastern Africa',002,202,014)
+            ,('Romania','RO','ROU',642,'ISO 3166-2:RO',
+                'Europe','Eastern Europe',NULL,150,151,NULL)
+            ,('Russian Federation','RU','RUS',643,'ISO 3166-2:RU',
+                'Europe','Eastern Europe',NULL,150,151,NULL)
+            ,('Rwanda','RW','RWA',646,'ISO 3166-2:RW',
+                'Africa','Sub-Saharan Africa','Eastern Africa',002,202,014)
+            ,('Saint Barthélemy','BL','BLM',652,'ISO 3166-2:BL',
+                'Americas','Latin America and the Caribbean',
+                'Caribbean',019,419,029)
+            ,('Saint Helena, Ascension and Tristan da Cunha',
+                'SH','SHN',654,'ISO 3166-2:SH',
+                'Africa','Sub-Saharan Africa','Western Africa',002,202,011)
+            ,('Saint Kitts and Nevis','KN','KNA',659,'ISO 3166-2:KN',
+                'Americas','Latin America and the Caribbean',
+                'Caribbean',019,419,029)
+            ,('Saint Lucia','LC','LCA',662,'ISO 3166-2:LC',
+                'Americas','Latin America and the Caribbean',
+                'Caribbean',019,419,029)
+            ,('Saint Martin (French part)','MF','MAF',663,'ISO 3166-2:MF',
+                'Americas','Latin America and the Caribbean',
+                'Caribbean',019,419,029)
+            ,('Saint Pierre and Miquelon','PM','SPM',666,'ISO 3166-2:PM',
+                'Americas','Northern America',NULL,019,021,NULL)
+            ,('Saint Vincent and the Grenadines',
+                'VC','VCT',670,'ISO 3166-2:VC',
+                'Americas','Latin America and the Caribbean',
+                'Caribbean',019,419,029)
+            ,('Samoa','WS','WSM',882,'ISO 3166-2:WS',
+                'Oceania','Polynesia',NULL,009,061,NULL)
+            ,('San Marino','SM','SMR',674,'ISO 3166-2:SM',
+                'Europe','Southern Europe',NULL,150,039,NULL)
+            ,('Sao Tome and Principe','ST','STP',678,'ISO 3166-2:ST',
+                'Africa','Sub-Saharan Africa','Middle Africa',002,202,017)
+            ,('Saudi Arabia','SA','SAU',682,'ISO 3166-2:SA',
+                'Asia','Western Asia',NULL,142,145,NULL)
+            ,('Senegal','SN','SEN',686,'ISO 3166-2:SN',
+                'Africa','Sub-Saharan Africa','Western Africa',002,202,011)
+            ,('Serbia','RS','SRB',688,'ISO 3166-2:RS',
+                'Europe','Southern Europe',NULL,150,039,NULL)
+            ,('Seychelles','SC','SYC',690,'ISO 3166-2:SC',
+                'Africa','Sub-Saharan Africa','Eastern Africa',002,202,014)
+            ,('Sierra Leone','SL','SLE',694,'ISO 3166-2:SL',
+                'Africa','Sub-Saharan Africa','Western Africa',002,202,011)
+            ,('Singapore','SG','SGP',702,'ISO 3166-2:SG',
+                'Asia','South-eastern Asia',NULL,142,035,NULL)
+            ,('Sint Maarten (Dutch part)','SX','SXM',534,'ISO 3166-2:SX',
+                'Americas','Latin America and the Caribbean',
+                'Caribbean',019,419,029)
+            ,('Slovakia','SK','SVK',703,'ISO 3166-2:SK',
+                'Europe','Eastern Europe',NULL,150,151,NULL)
+            ,('Slovenia','SI','SVN',705,'ISO 3166-2:SI',
+                'Europe','Southern Europe',NULL,150,039,NULL)
+            ,('Solomon Islands','SB','SLB',090,'ISO 3166-2:SB',
+                'Oceania','Melanesia',NULL,009,054,NULL)
+            ,('Somalia','SO','SOM',706,'ISO 3166-2:SO',
+                'Africa','Sub-Saharan Africa','Eastern Africa',002,202,014)
+            ,('South Africa','ZA','ZAF',710,'ISO 3166-2:ZA',
+                'Africa','Sub-Saharan Africa','Southern Africa',002,202,018)
+            ,('South Georgia and the South Sandwich Islands',
+                'GS','SGS',239,'ISO 3166-2:GS',
+                'Americas','Latin America and the Caribbean',
+                'South America',019,419,005)
+            ,('South Sudan','SS','SSD',728,'ISO 3166-2:SS',
+                'Africa','Sub-Saharan Africa','Eastern Africa',002,202,014)
+            ,('Spain','ES','ESP',724,'ISO 3166-2:ES',
+                'Europe','Southern Europe',NULL,150,039,NULL)
+            ,('Sri Lanka','LK','LKA',144,'ISO 3166-2:LK',
+                'Asia','Southern Asia',NULL,142,034,NULL)
+            ,('Sudan','SD','SDN',729,'ISO 3166-2:SD',
+                'Africa','Northern Africa',NULL,002,015,NULL)
+            ,('Suriname','SR','SUR',740,'ISO 3166-2:SR',
+                'Americas','Latin America and the Caribbean',
+                'South America',019,419,005)
+            ,('Svalbard and Jan Mayen','SJ','SJM',744,'ISO 3166-2:SJ',
+                'Europe','Northern Europe',NULL,150,154,NULL)
+            ,('Sweden','SE','SWE',752,'ISO 3166-2:SE',
+                'Europe','Northern Europe',NULL,150,154,NULL)
+            ,('Switzerland','CH','CHE',756,'ISO 3166-2:CH',
+                'Europe','Western Europe',NULL,150,155,NULL)
+            ,('Syrian Arab Republic','SY','SYR',760,'ISO 3166-2:SY',
+                'Asia','Western Asia',NULL,142,145,NULL)
+            ,('Taiwan, Province of China','TW','TWN',158,'ISO 3166-2:TW',
+                'Asia','Eastern Asia',NULL,142,030,NULL)
+            ,('Tajikistan','TJ','TJK',762,'ISO 3166-2:TJ',
+                'Asia','Central Asia',NULL,142,143,NULL)
+            ,('Tanzania, United Republic of','TZ','TZA',834,'ISO 3166-2:TZ',
+                'Africa','Sub-Saharan Africa','Eastern Africa',002,202,014)
+            ,('Thailand','TH','THA',764,'ISO 3166-2:TH',
+                'Asia','South-eastern Asia',NULL,142,035,NULL)
+            ,('Timor-Leste','TL','TLS',626,'ISO 3166-2:TL',
+                'Asia','South-eastern Asia',NULL,142,035,NULL)
+            ,('Togo','TG','TGO',768,'ISO 3166-2:TG',
+                'Africa','Sub-Saharan Africa','Western Africa',002,202,011)
+            ,('Tokelau','TK','TKL',772,'ISO 3166-2:TK',
+                'Oceania','Polynesia',NULL,009,061,NULL)
+            ,('Tonga','TO','TON',776,'ISO 3166-2:TO',
+                'Oceania','Polynesia',NULL,009,061,NULL)
+            ,('Trinidad and Tobago','TT','TTO',780,'ISO 3166-2:TT',
+                'Americas','Latin America and the Caribbean',
+                'Caribbean',019,419,029)
+            ,('Tunisia','TN','TUN',788,'ISO 3166-2:TN',
+                'Africa','Northern Africa',NULL,002,015,NULL)
+            ,('Turkey','TR','TUR',792,'ISO 3166-2:TR',
+                'Asia','Western Asia',NULL,142,145,NULL)
+            ,('Turkmenistan','TM','TKM',795,'ISO 3166-2:TM',
+                'Asia','Central Asia',NULL,142,143,NULL)
+            ,('Turks and Caicos Islands','TC','TCA',796,'ISO 3166-2:TC',
+                'Americas','Latin America and the Caribbean',
+                'Caribbean',019,419,029)
+            ,('Tuvalu','TV','TUV',798,'ISO 3166-2:TV',
+                'Oceania','Polynesia',NULL,009,061,NULL)
+            ,('Uganda','UG','UGA',800,'ISO 3166-2:UG',
+                'Africa','Sub-Saharan Africa','Eastern Africa',002,202,014)
+            ,('Ukraine','UA','UKR',804,'ISO 3166-2:UA',
+                'Europe','Eastern Europe',NULL,150,151,NULL)
+            ,('United Arab Emirates','AE','ARE',784,'ISO 3166-2:AE',
+                'Asia','Western Asia',NULL,142,145,NULL)
+            ,('United Kingdom of Great Britain and Northern Ireland',
+                'GB','GBR',826,'ISO 3166-2:GB',
+                'Europe','Northern Europe',NULL,150,154,NULL)
+            ,('United States of America','US','USA',840,'ISO 3166-2:US',
+                'Americas','Northern America',NULL,019,021,NULL)
+            ,('United States Minor Outlying Islands',
+                'UM','UMI',581,'ISO 3166-2:UM',
+                'Oceania','Micronesia',NULL,009,057,NULL)
+            ,('Uruguay','UY','URY',858,'ISO 3166-2:UY',
+                'Americas','Latin America and the Caribbean',
+                'South America',019,419,005)
+            ,('Uzbekistan','UZ','UZB',860,'ISO 3166-2:UZ',
+                'Asia','Central Asia',NULL,142,143,NULL)
+            ,('Vanuatu','VU','VUT',548,'ISO 3166-2:VU',
+                'Oceania','Melanesia',NULL,009,054,NULL)
+            ,('Venezuela (Bolivarian Republic of)',
+                'VE','VEN',862,'ISO 3166-2:VE',
+                'Americas','Latin America and the Caribbean',
+                'South America',019,419,005)
+            ,('Viet Nam','VN','VNM',704,'ISO 3166-2:VN',
+                'Asia','South-eastern Asia',NULL,142,035,NULL)
+            ,('Virgin Islands (British)','VG','VGB',092,'ISO 3166-2:VG',
+                'Americas','Latin America and the Caribbean',
+                'Caribbean',019,419,029)
+            ,('Virgin Islands (U.S.)','VI','VIR',850,'ISO 3166-2:VI',
+                'Americas','Latin America and the Caribbean',
+                'Caribbean',019,419,029)
+            ,('Wallis and Futuna','WF','WLF',876,'ISO 3166-2:WF','Oceania',
+                'Polynesia',NULL,009,061,NULL)
+            ,('Western Sahara','EH','ESH',732,'ISO 3166-2:EH','Africa',
+                'Northern Africa',NULL,002,015,NULL)
+            ,('Yemen','YE','YEM',887,'ISO 3166-2:YE','Asia',
+                'Western Asia',NULL,142,145,NULL)
+            ,('Zambia','ZM','ZMB',894,'ISO 3166-2:ZM','Africa',
+                'Sub-Saharan Africa','Eastern Africa',002,202,014)
+            ,('Zimbabwe','ZW','ZWE',716,'ISO 3166-2:ZW','Africa',
+                'Sub-Saharan Africa','Eastern Africa',002,202,014);
+
         CREATE UNIQUE INDEX idx_iso_nations_id
         ON iso_nations (nation_iso_alpha_3);
 
@@ -333,7 +660,8 @@ class sqlite3_sample_files:
 
     def iso_3166_2_data() -> str:
         """
-        Returns a SQL INSERT script that inserts ISO 3166-2 data into a table designed to hold that data.
+        Returns a SQL INSERT script that inserts ISO 3166-2 data
+        into a table designed to hold that data.
         Data sourced from Wikipedia.
 
         Parameters
@@ -342,11 +670,21 @@ class sqlite3_sample_files:
 
         Returns
         ----------
-        A SQLite3 script that creates a a SQL INSERT script that inserts ISO 3166-2 data.
+        A SQLite3 script that creates a SQL INSERT script
+        that inserts ISO 3166-2 data.
         """
 
         sql_script = """
-        INSERT INTO iso_3166_2(nation_iso_alpha_2,nation_iso_alpha_3,nation_iso_numeric,subdivision_iso_3166_2_code,subdivision_name,subdivision_category,subdivision_parent) VALUES
+        INSERT INTO iso_3166_2(
+            nation_iso_alpha_2,
+            nation_iso_alpha_3,
+            nation_iso_numeric,
+            subdivision_iso_3166_2_code,
+            subdivision_name,
+            subdivision_category,
+            subdivision_parent
+        )
+        VALUES
             ("AD","AND",20,"AD-02","Canillo","parish",NULL)
             ,("AD","AND",20,"AD-03","Encamp","parish",NULL)
             ,("AD","AND",20,"AD-04","La Massana","parish",NULL)
@@ -448,7 +786,8 @@ class sqlite3_sample_files:
             ,("AQ","ATA",10,"AQ-??","Antartica","continent",NULL)
             ,("AR","ARG",32,"AR-A","Salta","province",NULL)
             ,("AR","ARG",32,"AR-B","Buenos Aires","province",NULL)
-            ,("AR","ARG",32,"AR-C","Ciudad Autónoma de Buenos Aires","city",NULL)
+            ,("AR","ARG",32,"AR-C",
+                "Ciudad Autónoma de Buenos Aires","city",NULL)
             ,("AR","ARG",32,"AR-D","San Luis","province",NULL)
             ,("AR","ARG",32,"AR-E","Entre Ríos","province",NULL)
             ,("AR","ARG",32,"AR-F","La Rioja","province",NULL)
@@ -480,7 +819,8 @@ class sqlite3_sample_files:
             ,("AT","AUT",40,"AT-7","Tirol","state",NULL)
             ,("AT","AUT",40,"AT-8","Vorarlberg","state",NULL)
             ,("AT","AUT",40,"AT-9","Wien","state",NULL)
-            ,("AU","AUS",36,"AU-ACT","Australian Capital Territory","territory",NULL)
+            ,("AU","AUS",36,"AU-ACT",
+                "Australian Capital Territory","territory",NULL)
             ,("AU","AUS",36,"AU-NSW","New South Wales","state",NULL)
             ,("AU","AUS",36,"AU-NT","Northern Territory","territory",NULL)
             ,("AU","AUS",36,"AU-QLD","Queensland","state",NULL)
@@ -568,8 +908,10 @@ class sqlite3_sample_files:
             ,("AZ","AZE",31,"AZ-ZAN","Zəngilan","rayon",NULL)
             ,("AZ","AZE",31,"AZ-ZAQ","Zaqatala","rayon",NULL)
             ,("AZ","AZE",31,"AZ-ZAR","Zərdab","rayon",NULL)
-            ,("BA","BIH",70,"BA-BIH","Federacija Bosne i Hercegovine","entity",NULL)
-            ,("BA","BIH",70,"BA-BRC","Brčko distrikt","district_with_special_status",NULL)
+            ,("BA","BIH",70,"BA-BIH",
+                "Federacija Bosne i Hercegovine","entity",NULL)
+            ,("BA","BIH",70,"BA-BRC",
+                "Brčko distrikt","district_with_special_status",NULL)
             ,("BA","BIH",70,"BA-SRP","Republika Srpska","entity",NULL)
             ,("BB","BRB",52,"BB-01","Christ Church","parish",NULL)
             ,("BB","BRB",52,"BB-02","Saint Andrew","parish",NULL)
@@ -654,7 +996,8 @@ class sqlite3_sample_files:
             ,("BD","BGD",50,"BD-F","Rangpur","division",NULL)
             ,("BD","BGD",50,"BD-G","Sylhet","division",NULL)
             ,("BD","BGD",50,"BD-H","Mymensingh","division",NULL)
-            ,("BE","BEL",56,"BE-BRU","Brussels Hoofdstedelijk Gewest","region",NULL)
+            ,("BE","BEL",56,"BE-BRU",
+                "Brussels Hoofdstedelijk Gewest","region",NULL)
             ,("BE","BEL",56,"BE-VAN","Antwerpen","province",NULL)
             ,("BE","BEL",56,"BE-VBR","Vlaams-Brabant","province",NULL)
             ,("BE","BEL",56,"BE-VLG","Vlaams Gewest","region",NULL)
@@ -804,7 +1147,8 @@ class sqlite3_sample_files:
             ,("BO","BOL",68,"BO-T","Tarija","department",NULL)
             ,("BQ","BES",535,"BQ-BO","Bonaire","special_municipalities",NULL)
             ,("BQ","BES",535,"BQ-SA","Saba","special_municipalities",NULL)
-            ,("BQ","BES",535,"BQ-SE","Sint Eustatius","special_municipalities",NULL)
+            ,("BQ","BES",535,"BQ-SE",
+                "Sint Eustatius","special_municipalities",NULL)
             ,("BR","BRA",76,"BR-AC","Acre","state",NULL)
             ,("BR","BRA",76,"BR-AL","Alagoas","state",NULL)
             ,("BR","BRA",76,"BR-AM","Amazonas","state",NULL)
@@ -838,7 +1182,8 @@ class sqlite3_sample_files:
             ,("BS","BHS",44,"BS-BY","Berry Islands","district",NULL)
             ,("BS","BHS",44,"BS-CE","Central Eleuthera","district",NULL)
             ,("BS","BHS",44,"BS-CI","Cat Island","district",NULL)
-            ,("BS","BHS",44,"BS-CK","Crooked Island and Long Cay","district",NULL)
+            ,("BS","BHS",44,"BS-CK",
+                "Crooked Island and Long Cay","district",NULL)
             ,("BS","BHS",44,"BS-CO","Central Abaco","district",NULL)
             ,("BS","BHS",44,"BS-CS","Central Andros","district",NULL)
             ,("BS","BHS",44,"BS-EG","East Grand Bahama","district",NULL)
@@ -918,7 +1263,8 @@ class sqlite3_sample_files:
             ,("CA","CAN",124,"CA-BC","British Columbia","province",NULL)
             ,("CA","CAN",124,"CA-MB","Manitoba","province",NULL)
             ,("CA","CAN",124,"CA-NB","New Brunswick","province",NULL)
-            ,("CA","CAN",124,"CA-NL","Newfoundland and Labrador","province",NULL)
+            ,("CA","CAN",124,"CA-NL",
+                "Newfoundland and Labrador","province",NULL)
             ,("CA","CAN",124,"CA-NS","Nova Scotia","province",NULL)
             ,("CA","CAN",124,"CA-NT","Northwest Territories","territory",NULL)
             ,("CA","CAN",124,"CA-NU","Nunavut","territory",NULL)
@@ -1024,20 +1370,23 @@ class sqlite3_sample_files:
             ,("CI","CIV",384,"CI-YM","Yamoussoukro","autonomous_district",NULL)
             ,("CI","CIV",384,"CI-ZZ","Zanzan","district",NULL)
             ,("CK","COK",184,"CK-??","Cook Islands","country",NULL)
-            ,("CL","CHL",152,"CL-AI","Aisén del General Carlos Ibañez del Campo","region",NULL)
+            ,("CL","CHL",152,"CL-AI",
+                "Aisén del General Carlos Ibañez del Campo","region",NULL)
             ,("CL","CHL",152,"CL-AN","Antofagasta","region",NULL)
             ,("CL","CHL",152,"CL-AP","Arica y Parinacota","region",NULL)
             ,("CL","CHL",152,"CL-AR","La Araucanía","region",NULL)
             ,("CL","CHL",152,"CL-AT","Atacama","region",NULL)
             ,("CL","CHL",152,"CL-BI","Biobío","region",NULL)
             ,("CL","CHL",152,"CL-CO","Coquimbo","region",NULL)
-            ,("CL","CHL",152,"CL-LI","Libertador General Bernardo O'Higgins","region",NULL)
+            ,("CL","CHL",152,"CL-LI",
+                "Libertador General Bernardo O'Higgins","region",NULL)
             ,("CL","CHL",152,"CL-LL","Los Lagos","region",NULL)
             ,("CL","CHL",152,"CL-LR","Los Ríos","region",NULL)
             ,("CL","CHL",152,"CL-MA","Magallanes","region",NULL)
             ,("CL","CHL",152,"CL-ML","Maule","region",NULL)
             ,("CL","CHL",152,"CL-NB","Ñuble","region",NULL)
-            ,("CL","CHL",152,"CL-RM","Región Metropolitana de Santiago","region",NULL)
+            ,("CL","CHL",152,"CL-RM",
+                "Región Metropolitana de Santiago","region",NULL)
             ,("CL","CHL",152,"CL-TA","Tarapacá","region",NULL)
             ,("CL","CHL",152,"CL-VS","Valparaíso","region",NULL)
             ,("CM","CMR",120,"CM-AD","Adamaoua","region",NULL)
@@ -1056,22 +1405,27 @@ class sqlite3_sample_files:
             ,("CN","CHN",156,"CN-FJ","Fujian Sheng","province",NULL)
             ,("CN","CHN",156,"CN-GD","Guangdong Sheng","province",NULL)
             ,("CN","CHN",156,"CN-GS","Gansu Sheng","province",NULL)
-            ,("CN","CHN",156,"CN-GX","Guangxi Zhuangzu Zizhiqu","autonomous_region",NULL)
+            ,("CN","CHN",156,"CN-GX",
+                "Guangxi Zhuangzu Zizhiqu","autonomous_region",NULL)
             ,("CN","CHN",156,"CN-GZ","Guizhou Sheng","province",NULL)
             ,("CN","CHN",156,"CN-HA","Henan Sheng","province",NULL)
             ,("CN","CHN",156,"CN-HB","Hubei Sheng","province",NULL)
             ,("CN","CHN",156,"CN-HE","Hebei Sheng","province",NULL)
             ,("CN","CHN",156,"CN-HI","Hainan Sheng","province",NULL)
-            ,("CN","CHN",156,"CN-HK","Hong Kong SAR","special_administrative_region",NULL)
+            ,("CN","CHN",156,"CN-HK",
+                "Hong Kong SAR","special_administrative_region",NULL)
             ,("CN","CHN",156,"CN-HL","Heilongjiang Sheng","province",NULL)
             ,("CN","CHN",156,"CN-HN","Hunan Sheng","province",NULL)
             ,("CN","CHN",156,"CN-JL","Jilin Sheng","province",NULL)
             ,("CN","CHN",156,"CN-JS","Jiangsu Sheng","province",NULL)
             ,("CN","CHN",156,"CN-JX","Jiangxi Sheng","province",NULL)
             ,("CN","CHN",156,"CN-LN","Liaoning Sheng","province",NULL)
-            ,("CN","CHN",156,"CN-MO","Macao SAR","special_administrative_region",NULL)
-            ,("CN","CHN",156,"CN-NM","Nei Mongol Zizhiqu","autonomous_region",NULL)
-            ,("CN","CHN",156,"CN-NX","Ningxia Huizu Zizhiqu","autonomous_region",NULL)
+            ,("CN","CHN",156,"CN-MO",
+                "Macao SAR","special_administrative_region",NULL)
+            ,("CN","CHN",156,"CN-NM",
+                "Nei Mongol Zizhiqu","autonomous_region",NULL)
+            ,("CN","CHN",156,"CN-NX",
+                "Ningxia Huizu Zizhiqu","autonomous_region",NULL)
             ,("CN","CHN",156,"CN-QH","Qinghai Sheng","province",NULL)
             ,("CN","CHN",156,"CN-SC","Sichuan Sheng","province",NULL)
             ,("CN","CHN",156,"CN-SD","Shandong Sheng","province",NULL)
@@ -1080,7 +1434,8 @@ class sqlite3_sample_files:
             ,("CN","CHN",156,"CN-SX","Shanxi Sheng","province",NULL)
             ,("CN","CHN",156,"CN-TJ","Tianjin Shi","municipality",NULL)
             ,("CN","CHN",156,"CN-TW","Taiwan Sheng","province",NULL)
-            ,("CN","CHN",156,"CN-XJ","Xinjiang Uygur Zizhiqu","autonomous_region",NULL)
+            ,("CN","CHN",156,"CN-XJ",
+                "Xinjiang Uygur Zizhiqu","autonomous_region",NULL)
             ,("CN","CHN",156,"CN-XZ","Xizang Zizhiqu","autonomous_region",NULL)
             ,("CN","CHN",156,"CN-YN","Yunnan Sheng","province",NULL)
             ,("CN","CHN",156,"CN-ZJ","Zhejiang Sheng","province",NULL)
@@ -1098,7 +1453,8 @@ class sqlite3_sample_files:
             ,("CO","COL",170,"CO-CHO","Chocó","department",NULL)
             ,("CO","COL",170,"CO-COR","Córdoba","department",NULL)
             ,("CO","COL",170,"CO-CUN","Cundinamarca","department",NULL)
-            ,("CO","COL",170,"CO-DC","Distrito Capital de Bogotá","capital_district",NULL)
+            ,("CO","COL",170,"CO-DC",
+                "Distrito Capital de Bogotá","capital_district",NULL)
             ,("CO","COL",170,"CO-GUA","Guainía","department",NULL)
             ,("CO","COL",170,"CO-GUV","Guaviare","department",NULL)
             ,("CO","COL",170,"CO-HUI","Huila","department",NULL)
@@ -1111,7 +1467,8 @@ class sqlite3_sample_files:
             ,("CO","COL",170,"CO-QUI","Quindío","department",NULL)
             ,("CO","COL",170,"CO-RIS","Risaralda","department",NULL)
             ,("CO","COL",170,"CO-SAN","Santander","department",NULL)
-            ,("CO","COL",170,"CO-SAP","San Andrés, Providencia y Santa Catalina","department",NULL)
+            ,("CO","COL",170,"CO-SAP",
+                "San Andrés, Providencia y Santa Catalina","department",NULL)
             ,("CO","COL",170,"CO-SUC","Sucre","department",NULL)
             ,("CO","COL",170,"CO-TOL","Tolima","department",NULL)
             ,("CO","COL",170,"CO-VAC","Valle del Cauca","department",NULL)
@@ -1139,12 +1496,15 @@ class sqlite3_sample_files:
             ,("CU","CUB",192,"CU-14","Guantánamo","province",NULL)
             ,("CU","CUB",192,"CU-15","Artemisa","province",NULL)
             ,("CU","CUB",192,"CU-16","Mayabeque","province",NULL)
-            ,("CU","CUB",192,"CU-99","Isla de la Juventud","special_municipality",NULL)
-            ,("CV","CPV",132,"CV-B","Ilhas de Barlavento","geographical_region",NULL)
+            ,("CU","CUB",192,"CU-99",
+                "Isla de la Juventud","special_municipality",NULL)
+            ,("CV","CPV",132,"CV-B",
+                "Ilhas de Barlavento","geographical_region",NULL)
             ,("CV","CPV",132,"CV-BR","Brava","municipality","CV-S")
             ,("CV","CPV",132,"CV-BV","Boa Vista","municipality","CV-B")
             ,("CV","CPV",132,"CV-CA","Santa Catarina","municipality","CV-S")
-            ,("CV","CPV",132,"CV-CF","Santa Catarina do Fogo","municipality","CV-S")
+            ,("CV","CPV",132,"CV-CF",
+                "Santa Catarina do Fogo","municipality","CV-S")
             ,("CV","CPV",132,"CV-CR","Santa Cruz","municipality","CV-S")
             ,("CV","CPV",132,"CV-MA","Maio","municipality","CV-S")
             ,("CV","CPV",132,"CV-MO","Mosteiros","municipality","CV-S")
@@ -1153,17 +1513,22 @@ class sqlite3_sample_files:
             ,("CV","CPV",132,"CV-PR","Praia","municipality","CV-S")
             ,("CV","CPV",132,"CV-RB","Ribeira Brava","municipality","CV-B")
             ,("CV","CPV",132,"CV-RG","Ribeira Grande","municipality","CV-B")
-            ,("CV","CPV",132,"CV-RS","Ribeira Grande de Santiago","municipality","CV-S")
-            ,("CV","CPV",132,"CV-S","Ilhas de Sotavento","geographical_region",NULL)
+            ,("CV","CPV",132,"CV-RS",
+                "Ribeira Grande de Santiago","municipality","CV-S")
+            ,("CV","CPV",132,"CV-S",
+                "Ilhas de Sotavento","geographical_region",NULL)
             ,("CV","CPV",132,"CV-SD","São Domingos","municipality","CV-S")
             ,("CV","CPV",132,"CV-SF","São Filipe","municipality","CV-S")
             ,("CV","CPV",132,"CV-SL","Sal","municipality","CV-B")
             ,("CV","CPV",132,"CV-SM","São Miguel","municipality","CV-S")
-            ,("CV","CPV",132,"CV-SO","São Lourenço dos Órgãos","municipality","CV-S")
-            ,("CV","CPV",132,"CV-SS","São Salvador do Mundo","municipality","CV-S")
+            ,("CV","CPV",132,"CV-SO",
+                "São Lourenço dos Órgãos","municipality","CV-S")
+            ,("CV","CPV",132,"CV-SS",
+                "São Salvador do Mundo","municipality","CV-S")
             ,("CV","CPV",132,"CV-SV","São Vicente","municipality","CV-B")
             ,("CV","CPV",132,"CV-TA","Tarrafal","municipality","CV-S")
-            ,("CV","CPV",132,"CV-TS","Tarrafal de São Nicolau","municipality","CV-B")
+            ,("CV","CPV",132,"CV-TS",
+                "Tarrafal de São Nicolau","municipality","CV-B")
             ,("CW","CUW",531,"CW-??","Curaçao","country",NULL)
             ,("CX","CXR",162,"CX-??","Christmas Island","country",NULL)
             ,("CY","CYP",196,"CY-01","Lefkosia","district",NULL)
@@ -1299,7 +1664,8 @@ class sqlite3_sample_files:
             ,("DM","DMA",212,"DM-09","Saint Patrick","parish",NULL)
             ,("DM","DMA",212,"DM-10","Saint Paul","parish",NULL)
             ,("DM","DMA",212,"DM-11","Saint Peter","parish",NULL)
-            ,("DO","DOM",214,"DO-01","Distrito Nacional (Santo Domingo)","district","DO-40")
+            ,("DO","DOM",214,"DO-01",
+                "Distrito Nacional (Santo Domingo)","district","DO-40")
             ,("DO","DOM",214,"DO-02","Azua","province","DO-41")
             ,("DO","DOM",214,"DO-03","Baoruco","province","DO-38")
             ,("DO","DOM",214,"DO-04","Barahona","province","DO-38")
@@ -1312,7 +1678,8 @@ class sqlite3_sample_files:
             ,("DO","DOM",214,"DO-11","La Altagracia","province","DO-42")
             ,("DO","DOM",214,"DO-12","La Romana","province","DO-42")
             ,("DO","DOM",214,"DO-13","La Vega","province","DO-36")
-            ,("DO","DOM",214,"DO-14","María Trinidad Sánchez","province","DO-33")
+            ,("DO","DOM",214,"DO-14",
+                "María Trinidad Sánchez","province","DO-33")
             ,("DO","DOM",214,"DO-15","Monte Cristi","province","DO-34")
             ,("DO","DOM",214,"DO-16","Pedernales","province","DO-38")
             ,("DO","DOM",214,"DO-17","Peravia","province","DO-41")
@@ -1415,7 +1782,8 @@ class sqlite3_sample_files:
             ,("EC","ECU",218,"EC-P","Pichincha","province",NULL)
             ,("EC","ECU",218,"EC-R","Los Ríos","province",NULL)
             ,("EC","ECU",218,"EC-S","Morona Santiago","province",NULL)
-            ,("EC","ECU",218,"EC-SD","Santo Domingo de los Tsáchilas","province",NULL)
+            ,("EC","ECU",218,"EC-SD",
+                "Santo Domingo de los Tsáchilas","province",NULL)
             ,("EC","ECU",218,"EC-SE","Santa Elena","province",NULL)
             ,("EC","ECU",218,"EC-T","Tungurahua","province",NULL)
             ,("EC","ECU",218,"EC-U","Sucumbíos","province",NULL)
@@ -1555,7 +1923,8 @@ class sqlite3_sample_files:
             ,("ES","ESP",724,"ES-AL","Almería","province","ES-AN")
             ,("ES","ESP",724,"ES-AN","Andalucía","autonomous_community",NULL)
             ,("ES","ESP",724,"ES-AR","Aragón","autonomous_community",NULL)
-            ,("ES","ESP",724,"ES-AS","Asturias, Principado de","autonomous_community",NULL)
+            ,("ES","ESP",724,"ES-AS",
+                "Asturias, Principado de","autonomous_community",NULL)
             ,("ES","ESP",724,"ES-AV","Ávila","province","ES-CL")
             ,("ES","ESP",724,"ES-B","Barcelona","province","ES-CT")
             ,("ES","ESP",724,"ES-BA","Badajoz","province","ES-EX")
@@ -1566,8 +1935,10 @@ class sqlite3_sample_files:
             ,("ES","ESP",724,"ES-CB","Cantabria","autonomous_community",NULL)
             ,("ES","ESP",724,"ES-CC","Cáceres","province","ES-EX")
             ,("ES","ESP",724,"ES-CE","Ceuta","autonomous_north_africa_city",NULL)
-            ,("ES","ESP",724,"ES-CL","Castilla y León","autonomous_community",NULL)
-            ,("ES","ESP",724,"ES-CM","Castilla-La Mancha","autonomous_community",NULL)
+            ,("ES","ESP",724,"ES-CL",
+                "Castilla y León","autonomous_community",NULL)
+            ,("ES","ESP",724,"ES-CM",
+                "Castilla-La Mancha","autonomous_community",NULL)
             ,("ES","ESP",724,"ES-CN","Canarias","autonomous_community",NULL)
             ,("ES","ESP",724,"ES-CO","Córdoba","province","ES-AN")
             ,("ES","ESP",724,"ES-CR","Ciudad Real","province","ES-CM")
@@ -1582,7 +1953,8 @@ class sqlite3_sample_files:
             ,("ES","ESP",724,"ES-GU","Guadalajara","province","ES-CM")
             ,("ES","ESP",724,"ES-H","Huelva","province","ES-AN")
             ,("ES","ESP",724,"ES-HU","Huesca","province","ES-AR")
-            ,("ES","ESP",724,"ES-IB","Illes Balears","autonomous_community",NULL)
+            ,("ES","ESP",724,"ES-IB",
+                "Illes Balears","autonomous_community",NULL)
             ,("ES","ESP",724,"ES-J","Jaén","province","ES-AN")
             ,("ES","ESP",724,"ES-L","Lleida","province","ES-CT")
             ,("ES","ESP",724,"ES-LE","León","province","ES-CL")
@@ -1590,12 +1962,15 @@ class sqlite3_sample_files:
             ,("ES","ESP",724,"ES-LU","Lugo","province","ES-GA")
             ,("ES","ESP",724,"ES-M","Madrid","province","ES-MD")
             ,("ES","ESP",724,"ES-MA","Málaga","province","ES-AN")
-            ,("ES","ESP",724,"ES-MC","Murcia, Región de","autonomous_community",NULL)
-            ,("ES","ESP",724,"ES-MD","Madrid, Comunidad de","autonomous_community",NULL)
+            ,("ES","ESP",724,"ES-MC",
+                "Murcia, Región de","autonomous_community",NULL)
+            ,("ES","ESP",724,"ES-MD",
+                "Madrid, Comunidad de","autonomous_community",NULL)
             ,("ES","ESP",724,"ES-ML","Melilla","autonomous_north_africa_city",NULL)
             ,("ES","ESP",724,"ES-MU","Murcia","province","ES-MC")
             ,("ES","ESP",724,"ES-NA","Navarra","province","ES-NC")
-            ,("ES","ESP",724,"ES-NC","Navarra, Comunidad Foral de","autonomous_community",NULL)
+            ,("ES","ESP",724,"ES-NC",
+                "Navarra, Comunidad Foral de","autonomous_community",NULL)
             ,("ES","ESP",724,"ES-O","Asturias","province","ES-AS")
             ,("ES","ESP",724,"ES-OR","Ourense","province","ES-GA")
             ,("ES","ESP",724,"ES-P","Palencia","province","ES-CL")
@@ -1611,11 +1986,13 @@ class sqlite3_sample_files:
             ,("ES","ESP",724,"ES-SS","Gipuzkoa","province","ES-PV")
             ,("ES","ESP",724,"ES-T","Tarragona","province","ES-CT")
             ,("ES","ESP",724,"ES-TE","Teruel","province","ES-AR")
-            ,("ES","ESP",724,"ES-TF","Santa Cruz de Tenerife","province","ES-CN")
+            ,("ES","ESP",724,"ES-TF",
+                "Santa Cruz de Tenerife","province","ES-CN")
             ,("ES","ESP",724,"ES-TO","Toledo","province","ES-CM")
             ,("ES","ESP",724,"ES-V","Valencia","province","ES-VC")
             ,("ES","ESP",724,"ES-VA","Valladolid","province","ES-CL")
-            ,("ES","ESP",724,"ES-VC","Valenciana, Comunidad","autonomous_community",NULL)
+            ,("ES","ESP",724,"ES-VC",
+                "Valenciana, Comunidad","autonomous_community",NULL)
             ,("ES","ESP",724,"ES-VI","Álava","province","ES-PV")
             ,("ES","ESP",724,"ES-Z","Zaragoza","province","ES-AR")
             ,("ES","ESP",724,"ES-ZA","Zamora","province","ES-CL")
@@ -1628,9 +2005,12 @@ class sqlite3_sample_files:
             ,("ET","ETH",231,"ET-HA","Hārerī Hizb","regional_state",NULL)
             ,("ET","ETH",231,"ET-OR","Oromīya","regional_state",NULL)
             ,("ET","ETH",231,"ET-SI","Sīdama","regional_state",NULL)
-            ,("ET","ETH",231,"ET-SN","YeDebub Bihēroch Bihēreseboch na Hizboch","regional_state",NULL)
+            ,("ET","ETH",231,"ET-SN",
+                "YeDebub Bihēroch Bihēreseboch na Hizboch",
+                "regional_state",NULL)
             ,("ET","ETH",231,"ET-SO","Sumalē","regional_state",NULL)
-            ,("ET","ETH",231,"ET-SW","YeDebub M'irab Ītyop'iya Hizboch","regional_state",NULL)
+            ,("ET","ETH",231,"ET-SW",
+                "YeDebub M'irab Ītyop'iya Hizboch","regional_state",NULL)
             ,("ET","ETH",231,"ET-TI","Tigray","regional_state",NULL)
             ,("FI","FIN",246,"FI-01","Ahvenanmaan maakunta","region",NULL)
             ,("FI","FIN",246,"FI-02","Etelä-Karjala","region",NULL)
@@ -1747,7 +2127,9 @@ class sqlite3_sample_files:
             ,("FR","FRA",250,"FR-67","Bas-Rhin","metropolitan_department","FR-6AE")
             ,("FR","FRA",250,"FR-68","Haut-Rhin","metropolitan_department","FR-6AE")
             ,("FR","FRA",250,"FR-69","Rhône","metropolitan_department","FR-ARA")
-            ,("FR","FRA",250,"FR-69M","Métropole de Lyon","metropolitan_collectivity_with_special_status","FR-ARA")
+            ,("FR","FRA",250,"FR-69M",
+                "Métropole de Lyon",
+                "metropolitan_collectivity_with_special_status","FR-ARA")
             ,("FR","FRA",250,"FR-6AE","Alsace","European_collectivity","FR-GES")
             ,("FR","FRA",250,"FR-70","Haute-Saône","metropolitan_department","FR-BFC")
             ,("FR","FRA",250,"FR-71","Saône-et-Loire","metropolitan_department","FR-BFC")
@@ -1769,7 +2151,8 @@ class sqlite3_sample_files:
             ,("FR","FRA",250,"FR-87","Haute-Vienne","metropolitan_department","FR-NAQ")
             ,("FR","FRA",250,"FR-88","Vosges","metropolitan_department","FR-GES")
             ,("FR","FRA",250,"FR-89","Yonne","metropolitan_department","FR-BFC")
-            ,("FR","FRA",250,"FR-90","Territoire de Belfort","metropolitan_department","FR-BFC")
+            ,("FR","FRA",250,"FR-90",
+                "Territoire de Belfort","metropolitan_department","FR-BFC")
             ,("FR","FRA",250,"FR-91","Essonne","metropolitan_department","FR-IDF")
             ,("FR","FRA",250,"FR-92","Hauts-de-Seine","metropolitan_department","FR-IDF")
             ,("FR","FRA",250,"FR-93","Seine-Saint-Denis","metropolitan_department","FR-IDF")
@@ -1777,15 +2160,19 @@ class sqlite3_sample_files:
             ,("FR","FRA",250,"FR-95","Val-d'Oise","metropolitan_department","FR-IDF")
             ,("FR","FRA",250,"FR-971","Guadeloupe","overseas_departmental_collectivity",NULL)
             ,("FR","FRA",250,"FR-972","Martinique","overseas_unique_territorial_collectivity",NULL)
-            ,("FR","FRA",250,"FR-973","Guyane (française)","overseas_unique_territorial_collectivity",NULL)
-            ,("FR","FRA",250,"FR-974","La Réunion","overseas_departmental_collectivity",NULL)
+            ,("FR","FRA",250,"FR-973",
+                "Guyane (française)",
+                "overseas_unique_territorial_collectivity",NULL)
+            ,("FR","FRA",250,"FR-974",
+                "La Réunion","overseas_departmental_collectivity",NULL)
             ,("FR","FRA",250,"FR-976","Mayotte","overseas_departmental_collectivity",NULL)
             ,("FR","FRA",250,"FR-ARA","Auvergne-Rhône-Alpes","metropolitan_region",NULL)
             ,("FR","FRA",250,"FR-BFC","Bourgogne-Franche-Comté","metropolitan_region",NULL)
             ,("FR","FRA",250,"FR-BL","Saint-Barthélemy","overseas_collectivity",NULL)
             ,("FR","FRA",250,"FR-BRE","Bretagne","metropolitan_region",NULL)
             ,("FR","FRA",250,"FR-CP","Clipperton","dependency",NULL)
-            ,("FR","FRA",250,"FR-CVL","Centre-Val de Loire","metropolitan_region",NULL)
+            ,("FR","FRA",250,"FR-CVL",
+                "Centre-Val de Loire","metropolitan_region",NULL)
             ,("FR","FRA",250,"FR-GES","Grand-Est","metropolitan_region",NULL)
             ,("FR","FRA",250,"FR-HDF","Hauts-de-France","metropolitan_region",NULL)
             ,("FR","FRA",250,"FR-IDF","Île-de-France","metropolitan_region",NULL)
@@ -1796,9 +2183,12 @@ class sqlite3_sample_files:
             ,("FR","FRA",250,"FR-OCC","Occitanie","metropolitan_region",NULL)
             ,("FR","FRA",250,"FR-PAC","Provence-Alpes-Côte-d'Azur","metropolitan_region",NULL)
             ,("FR","FRA",250,"FR-PDL","Pays-de-la-Loire","metropolitan_region",NULL)
-            ,("FR","FRA",250,"FR-PF","Polynésie française","overseas_collectivity",NULL)
-            ,("FR","FRA",250,"FR-PM","Saint-Pierre-et-Miquelon","overseas_collectivity",NULL)
-            ,("FR","FRA",250,"FR-TF","Terres australes françaises","overseas_territory",NULL)
+            ,("FR","FRA",250,"FR-PF",
+                "Polynésie française","overseas_collectivity",NULL)
+            ,("FR","FRA",250,"FR-PM",
+                "Saint-Pierre-et-Miquelon","overseas_collectivity",NULL)
+            ,("FR","FRA",250,"FR-TF",
+                "Terres australes françaises","overseas_territory",NULL)
             ,("FR","FRA",250,"FR-WF","Wallis-et-Futuna","overseas_collectivity",NULL)
             ,("GA","GAB",266,"GA-1","Estuaire","province",NULL)
             ,("GA","GAB",266,"GA-2","Haut-Ogooué","province",NULL)
@@ -1809,43 +2199,62 @@ class sqlite3_sample_files:
             ,("GA","GAB",266,"GA-7","Ogooué-Lolo","province",NULL)
             ,("GA","GAB",266,"GA-8","Ogooué-Maritime","province",NULL)
             ,("GA","GAB",266,"GA-9","Woleu-Ntem","province",NULL)
-            ,("GB","GBR",826,"GB-ABC","Armagh City, Banbridge and Craigavon","district","GB-NIR")
+            ,("GB","GBR",826,"GB-ABC",
+                "Armagh City, Banbridge and Craigavon","district","GB-NIR")
             ,("GB","GBR",826,"GB-ABD","Aberdeenshire","council_area","GB-SCT")
             ,("GB","GBR",826,"GB-ABE","Aberdeen City","council_area","GB-SCT")
-            ,("GB","GBR",826,"GB-AGB","Argyll and Bute","council_area","GB-SCT")
-            ,("GB","GBR",826,"GB-AGY","Isle of Anglesey","unitary_authority","GB-WLS")
-            ,("GB","GBR",826,"GB-AND","Ards and North Down","district","GB-NIR")
-            ,("GB","GBR",826,"GB-ANN","Antrim and Newtownabbey","district","GB-NIR")
+            ,("GB","GBR",826,"GB-AGB",
+                "Argyll and Bute","council_area","GB-SCT")
+            ,("GB","GBR",826,"GB-AGY",
+                "Isle of Anglesey","unitary_authority","GB-WLS")
+            ,("GB","GBR",826,"GB-AND",
+                "Ards and North Down","district","GB-NIR")
+            ,("GB","GBR",826,"GB-ANN",
+                "Antrim and Newtownabbey","district","GB-NIR")
             ,("GB","GBR",826,"GB-ANS","Angus","council_area","GB-SCT")
-            ,("GB","GBR",826,"GB-BAS","Bath and North East Somerset","unitary_authority","GB-ENG")
-            ,("GB","GBR",826,"GB-BBD","Blackburn with Darwen","unitary_authority","GB-ENG")
-            ,("GB","GBR",826,"GB-BCP","Bournemouth, Christchurch and Poole","unitary_authority","GB-ENG")
-            ,("GB","GBR",826,"GB-BDF","Bedford","unitary_authority","GB-ENG")
-            ,("GB","GBR",826,"GB-BDG","Barking and Dagenham","london_borough","GB-ENG")
+            ,("GB","GBR",826,"GB-BAS",
+                "Bath and North East Somerset","unitary_authority","GB-ENG")
+            ,("GB","GBR",826,"GB-BBD",
+                "Blackburn with Darwen","unitary_authority","GB-ENG")
+            ,("GB","GBR",826,"GB-BCP",
+                "Bournemouth, Christchurch and Poole",
+                "unitary_authority","GB-ENG")
+            ,("GB","GBR",826,"GB-BDF",
+                "Bedford","unitary_authority","GB-ENG")
+            ,("GB","GBR",826,"GB-BDG",
+                "Barking and Dagenham","london_borough","GB-ENG")
             ,("GB","GBR",826,"GB-BEN","Brent","london_borough","GB-ENG")
             ,("GB","GBR",826,"GB-BEX","Bexley","london_borough","GB-ENG")
             ,("GB","GBR",826,"GB-BFS","Belfast City","district","GB-NIR")
             ,("GB","GBR",826,"GB-BGE","Bridgend","unitary_authority","GB-WLS")
-            ,("GB","GBR",826,"GB-BGW","Blaenau Gwent","unitary_authority","GB-WLS")
+            ,("GB","GBR",826,"GB-BGW",
+                "Blaenau Gwent","unitary_authority","GB-WLS")
             ,("GB","GBR",826,"GB-BIR","Birmingham","metropolitan_district","GB-ENG")
             ,("GB","GBR",826,"GB-BKM","Buckinghamshire","unitary_authority","GB-ENG")
             ,("GB","GBR",826,"GB-BNE","Barnet","london_borough","GB-ENG")
-            ,("GB","GBR",826,"GB-BNH","Brighton and Hove","unitary_authority","GB-ENG")
+            ,("GB","GBR",826,"GB-BNH",
+                "Brighton and Hove","unitary_authority","GB-ENG")
             ,("GB","GBR",826,"GB-BNS","Barnsley","metropolitan_district","GB-ENG")
             ,("GB","GBR",826,"GB-BOL","Bolton","metropolitan_district","GB-ENG")
             ,("GB","GBR",826,"GB-BPL","Blackpool","unitary_authority","GB-ENG")
-            ,("GB","GBR",826,"GB-BRC","Bracknell Forest","unitary_authority","GB-ENG")
+            ,("GB","GBR",826,"GB-BRC",
+                "Bracknell Forest","unitary_authority","GB-ENG")
             ,("GB","GBR",826,"GB-BRD","Bradford","metropolitan_district","GB-ENG")
             ,("GB","GBR",826,"GB-BRY","Bromley","london_borough","GB-ENG")
-            ,("GB","GBR",826,"GB-BST","Bristol, City of","unitary_authority","GB-ENG")
+            ,("GB","GBR",826,"GB-BST",
+                "Bristol, City of","unitary_authority","GB-ENG")
             ,("GB","GBR",826,"GB-BUR","Bury","metropolitan_district","GB-ENG")
             ,("GB","GBR",826,"GB-CAM","Cambridgeshire","two-tier_county","GB-ENG")
             ,("GB","GBR",826,"GB-CAY","Caerphilly","unitary_authority","GB-WLS")
-            ,("GB","GBR",826,"GB-CBF","Central Bedfordshire","unitary_authority","GB-ENG")
-            ,("GB","GBR",826,"GB-CCG","Causeway Coast and Glens","district","GB-NIR")
+            ,("GB","GBR",826,"GB-CBF",
+                "Central Bedfordshire","unitary_authority","GB-ENG")
+            ,("GB","GBR",826,"GB-CCG",
+                "Causeway Coast and Glens","district","GB-NIR")
             ,("GB","GBR",826,"GB-CGN","Ceredigion","unitary_authority","GB-WLS")
-            ,("GB","GBR",826,"GB-CHE","Cheshire East","unitary_authority","GB-ENG")
-            ,("GB","GBR",826,"GB-CHW","Cheshire West and Chester","unitary_authority","GB-ENG")
+            ,("GB","GBR",826,"GB-CHE",
+                "Cheshire East","unitary_authority","GB-ENG")
+            ,("GB","GBR",826,"GB-CHW",
+                "Cheshire West and Chester","unitary_authority","GB-ENG")
             ,("GB","GBR",826,"GB-CLD","Calderdale","metropolitan_district","GB-ENG")
             ,("GB","GBR",826,"GB-CLK","Clackmannanshire","council_area","GB-SCT")
             ,("GB","GBR",826,"GB-CMA","Cumbria","two-tier_county","GB-ENG")
@@ -1861,30 +2270,37 @@ class sqlite3_sample_files:
             ,("GB","GBR",826,"GB-DEN","Denbighshire","unitary_authority","GB-WLS")
             ,("GB","GBR",826,"GB-DER","Derby","unitary_authority","GB-ENG")
             ,("GB","GBR",826,"GB-DEV","Devon","two-tier_county","GB-ENG")
-            ,("GB","GBR",826,"GB-DGY","Dumfries and Galloway","council_area","GB-SCT")
+            ,("GB","GBR",826,"GB-DGY",
+                "Dumfries and Galloway","council_area","GB-SCT")
             ,("GB","GBR",826,"GB-DNC","Doncaster","metropolitan_district","GB-ENG")
             ,("GB","GBR",826,"GB-DND","Dundee City","council_area","GB-SCT")
             ,("GB","GBR",826,"GB-DOR","Dorset","two-tier_county","GB-ENG")
             ,("GB","GBR",826,"GB-DRS","Derry and Strabane","district","GB-NIR")
             ,("GB","GBR",826,"GB-DUD","Dudley","metropolitan_district","GB-ENG")
-            ,("GB","GBR",826,"GB-DUR","Durham, County","unitary_authority","GB-ENG")
+            ,("GB","GBR",826,"GB-DUR",
+                "Durham, County","unitary_authority","GB-ENG")
             ,("GB","GBR",826,"GB-EAL","Ealing","london_borough","GB-ENG")
             ,("GB","GBR",826,"GB-EAW","England and Wales","country",NULL)
             ,("GB","GBR",826,"GB-EAY","East Ayrshire","council_area","GB-SCT")
-            ,("GB","GBR",826,"GB-EDH","Edinburgh, City of","council_area","GB-SCT")
-            ,("GB","GBR",826,"GB-EDU","East Dunbartonshire","council_area","GB-SCT")
+            ,("GB","GBR",826,"GB-EDH",
+                "Edinburgh, City of","council_area","GB-SCT")
+            ,("GB","GBR",826,"GB-EDU",
+                "East Dunbartonshire","council_area","GB-SCT")
             ,("GB","GBR",826,"GB-ELN","East Lothian","council_area","GB-SCT")
             ,("GB","GBR",826,"GB-ELS","Eilean Siar","council_area","GB-SCT")
             ,("GB","GBR",826,"GB-ENF","Enfield","london_borough","GB-ENG")
             ,("GB","GBR",826,"GB-ENG","England","country",NULL)
-            ,("GB","GBR",826,"GB-ERW","East Renfrewshire","council_area","GB-SCT")
-            ,("GB","GBR",826,"GB-ERY","East Riding of Yorkshire","unitary_authority","GB-ENG")
+            ,("GB","GBR",826,"GB-ERW",
+                "East Renfrewshire","council_area","GB-SCT")
+            ,("GB","GBR",826,"GB-ERY",
+                "East Riding of Yorkshire","unitary_authority","GB-ENG")
             ,("GB","GBR",826,"GB-ESS","Essex","two-tier_county","GB-ENG")
             ,("GB","GBR",826,"GB-ESX","East Sussex","two-tier_county","GB-ENG")
             ,("GB","GBR",826,"GB-FAL","Falkirk","council_area","GB-SCT")
             ,("GB","GBR",826,"GB-FIF","Fife","council_area","GB-SCT")
             ,("GB","GBR",826,"GB-FLN","Flintshire","unitary_authority","GB-WLS")
-            ,("GB","GBR",826,"GB-FMO","Fermanagh and Omagh","district","GB-NIR")
+            ,("GB","GBR",826,"GB-FMO",
+                "Fermanagh and Omagh","district","GB-NIR")
             ,("GB","GBR",826,"GB-GAT","Gateshead","metropolitan_district","GB-ENG")
             ,("GB","GBR",826,"GB-GBN","Great Britain","country",NULL)
             ,("GB","GBR",826,"GB-GLG","Glasgow City","council_area","GB-SCT")
@@ -1898,24 +2314,31 @@ class sqlite3_sample_files:
             ,("GB","GBR",826,"GB-HEF","Herefordshire","unitary_authority","GB-ENG")
             ,("GB","GBR",826,"GB-HIL","Hillingdon","london_borough","GB-ENG")
             ,("GB","GBR",826,"GB-HLD","Highland","council_area","GB-SCT")
-            ,("GB","GBR",826,"GB-HMF","Hammersmith and Fulham","london_borough","GB-ENG")
+            ,("GB","GBR",826,"GB-HMF",
+                "Hammersmith and Fulham","london_borough","GB-ENG")
             ,("GB","GBR",826,"GB-HNS","Hounslow","london_borough","GB-ENG")
             ,("GB","GBR",826,"GB-HPL","Hartlepool","unitary_authority","GB-ENG")
             ,("GB","GBR",826,"GB-HRT","Hertfordshire","two-tier_county","GB-ENG")
             ,("GB","GBR",826,"GB-HRW","Harrow","london_borough","GB-ENG")
             ,("GB","GBR",826,"GB-HRY","Haringey","london_borough","GB-ENG")
-            ,("GB","GBR",826,"GB-IOS","Isles of Scilly","unitary_authority","GB-ENG")
-            ,("GB","GBR",826,"GB-IOW","Isle of Wight","unitary_authority","GB-ENG")
+            ,("GB","GBR",826,"GB-IOS",
+                "Isles of Scilly","unitary_authority","GB-ENG")
+            ,("GB","GBR",826,"GB-IOW",
+                "Isle of Wight","unitary_authority","GB-ENG")
             ,("GB","GBR",826,"GB-ISL","Islington","london_borough","GB-ENG")
             ,("GB","GBR",826,"GB-IVC","Inverclyde","council_area","GB-SCT")
-            ,("GB","GBR",826,"GB-KEC","Kensington and Chelsea","london_borough","GB-ENG")
+            ,("GB","GBR",826,"GB-KEC",
+                "Kensington and Chelsea","london_borough","GB-ENG")
             ,("GB","GBR",826,"GB-KEN","Kent","two-tier_county","GB-ENG")
-            ,("GB","GBR",826,"GB-KHL","Kingston upon Hull","unitary_authority","GB-ENG")
+            ,("GB","GBR",826,"GB-KHL",
+                "Kingston upon Hull","unitary_authority","GB-ENG")
             ,("GB","GBR",826,"GB-KIR","Kirklees","metropolitan_district","GB-ENG")
-            ,("GB","GBR",826,"GB-KTT","Kingston upon Thames","london_borough","GB-ENG")
+            ,("GB","GBR",826,"GB-KTT",
+                "Kingston upon Thames","london_borough","GB-ENG")
             ,("GB","GBR",826,"GB-KWL","Knowsley","metropolitan_district","GB-ENG")
             ,("GB","GBR",826,"GB-LAN","Lancashire","two-tier_county","GB-ENG")
-            ,("GB","GBR",826,"GB-LBC","Lisburn and Castlereagh","district","GB-NIR")
+            ,("GB","GBR",826,"GB-LBC",
+                "Lisburn and Castlereagh","district","GB-NIR")
             ,("GB","GBR",826,"GB-LBH","Lambeth","london_borough","GB-ENG")
             ,("GB","GBR",826,"GB-LCE","Leicester","unitary_authority","GB-ENG")
             ,("GB","GBR",826,"GB-LDS","Leeds","metropolitan_district","GB-ENG")
@@ -1923,69 +2346,94 @@ class sqlite3_sample_files:
             ,("GB","GBR",826,"GB-LEW","Lewisham","london_borough","GB-ENG")
             ,("GB","GBR",826,"GB-LIN","Lincolnshire","two-tier_county","GB-ENG")
             ,("GB","GBR",826,"GB-LIV","Liverpool","metropolitan_district","GB-ENG")
-            ,("GB","GBR",826,"GB-LND","London, City of","city_corporation","GB-ENG")
+            ,("GB","GBR",826,"GB-LND",
+                "London, City of","city_corporation","GB-ENG")
             ,("GB","GBR",826,"GB-LUT","Luton","unitary_authority","GB-ENG")
             ,("GB","GBR",826,"GB-MAN","Manchester","metropolitan_district","GB-ENG")
             ,("GB","GBR",826,"GB-MDB","Middlesbrough","unitary_authority","GB-ENG")
             ,("GB","GBR",826,"GB-MDW","Medway","unitary_authority","GB-ENG")
-            ,("GB","GBR",826,"GB-MEA","Mid and East Antrim","district","GB-NIR")
-            ,("GB","GBR",826,"GB-MIK","Milton Keynes","unitary_authority","GB-ENG")
+            ,("GB","GBR",826,"GB-MEA",
+                "Mid and East Antrim","district","GB-NIR")
+            ,("GB","GBR",826,"GB-MIK",
+                "Milton Keynes","unitary_authority","GB-ENG")
             ,("GB","GBR",826,"GB-MLN","Midlothian","council_area","GB-SCT")
             ,("GB","GBR",826,"GB-MON","Monmouthshire","unitary_authority","GB-WLS")
             ,("GB","GBR",826,"GB-MRT","Merton","london_borough","GB-ENG")
             ,("GB","GBR",826,"GB-MRY","Moray","council_area","GB-SCT")
-            ,("GB","GBR",826,"GB-MTY","Merthyr Tydfil","unitary_authority","GB-WLS")
+            ,("GB","GBR",826,"GB-MTY",
+                "Merthyr Tydfil","unitary_authority","GB-WLS")
             ,("GB","GBR",826,"GB-MUL","Mid-Ulster","district","GB-NIR")
             ,("GB","GBR",826,"GB-NAY","North Ayrshire","council_area","GB-SCT")
             ,("GB","GBR",826,"GB-NBL","Northumberland","unitary_authority","GB-ENG")
-            ,("GB","GBR",826,"GB-NEL","North East Lincolnshire","unitary_authority","GB-ENG")
-            ,("GB","GBR",826,"GB-NET","Newcastle upon Tyne","metropolitan_district","GB-ENG")
+            ,("GB","GBR",826,"GB-NEL",
+                "North East Lincolnshire","unitary_authority","GB-ENG")
+            ,("GB","GBR",826,"GB-NET",
+                "Newcastle upon Tyne","metropolitan_district","GB-ENG")
             ,("GB","GBR",826,"GB-NFK","Norfolk","two-tier_county","GB-ENG")
             ,("GB","GBR",826,"GB-NGM","Nottingham","unitary_authority","GB-ENG")
             ,("GB","GBR",826,"GB-NIR","Northern Ireland","province",NULL)
-            ,("GB","GBR",826,"GB-NLK","North Lanarkshire","council_area","GB-SCT")
-            ,("GB","GBR",826,"GB-NLN","North Lincolnshire","unitary_authority","GB-ENG")
-            ,("GB","GBR",826,"GB-NMD","Newry, Mourne and Down","district","GB-NIR")
-            ,("GB","GBR",826,"GB-NNH","North Northamptonshire","unitary_authority","GB-ENG")
-            ,("GB","GBR",826,"GB-NSM","North Somerset","unitary_authority","GB-ENG")
-            ,("GB","GBR",826,"GB-NTL","Neath Port Talbot","unitary_authority","GB-WLS")
-            ,("GB","GBR",826,"GB-NTT","Nottinghamshire","two-tier_county","GB-ENG")
-            ,("GB","GBR",826,"GB-NTY","North Tyneside","metropolitan_district","GB-ENG")
+            ,("GB","GBR",826,"GB-NLK",
+                "North Lanarkshire","council_area","GB-SCT")
+            ,("GB","GBR",826,"GB-NLN",
+                "North Lincolnshire","unitary_authority","GB-ENG")
+            ,("GB","GBR",826,"GB-NMD",
+                "Newry, Mourne and Down","district","GB-NIR")
+            ,("GB","GBR",826,"GB-NNH",
+                "North Northamptonshire","unitary_authority","GB-ENG")
+            ,("GB","GBR",826,"GB-NSM",
+                "North Somerset","unitary_authority","GB-ENG")
+            ,("GB","GBR",826,"GB-NTL",
+                "Neath Port Talbot","unitary_authority","GB-WLS")
+            ,("GB","GBR",826,"GB-NTT",
+                "Nottinghamshire","two-tier_county","GB-ENG")
+            ,("GB","GBR",826,"GB-NTY",
+                "North Tyneside","metropolitan_district","GB-ENG")
             ,("GB","GBR",826,"GB-NWM","Newham","london_borough","GB-ENG")
             ,("GB","GBR",826,"GB-NWP","Newport","unitary_authority","GB-WLS")
-            ,("GB","GBR",826,"GB-NYK","North Yorkshire","two-tier_county","GB-ENG")
+            ,("GB","GBR",826,"GB-NYK",
+                "North Yorkshire","two-tier_county","GB-ENG")
             ,("GB","GBR",826,"GB-OLD","Oldham","metropolitan_district","GB-ENG")
             ,("GB","GBR",826,"GB-ORK","Orkney Islands","council_area","GB-SCT")
             ,("GB","GBR",826,"GB-OXF","Oxfordshire","two-tier_county","GB-ENG")
             ,("GB","GBR",826,"GB-PEM","Pembrokeshire","unitary_authority","GB-WLS")
-            ,("GB","GBR",826,"GB-PKN","Perth and Kinross","council_area","GB-SCT")
+            ,("GB","GBR",826,"GB-PKN",
+                "Perth and Kinross","council_area","GB-SCT")
             ,("GB","GBR",826,"GB-PLY","Plymouth","unitary_authority","GB-ENG")
             ,("GB","GBR",826,"GB-POR","Portsmouth","unitary_authority","GB-ENG")
             ,("GB","GBR",826,"GB-POW","Powys","unitary_authority","GB-WLS")
             ,("GB","GBR",826,"GB-PTE","Peterborough","unitary_authority","GB-ENG")
-            ,("GB","GBR",826,"GB-RCC","Redcar and Cleveland","unitary_authority","GB-ENG")
-            ,("GB","GBR",826,"GB-RCH","Rochdale","metropolitan_district","GB-ENG")
-            ,("GB","GBR",826,"GB-RCT","Rhondda Cynon Taff","unitary_authority","GB-WLS")
+            ,("GB","GBR",826,"GB-RCC",
+                "Redcar and Cleveland","unitary_authority","GB-ENG")
+            ,("GB","GBR",826,"GB-RCH",
+                "Rochdale","metropolitan_district","GB-ENG")
+            ,("GB","GBR",826,"GB-RCT",
+                "Rhondda Cynon Taff","unitary_authority","GB-WLS")
             ,("GB","GBR",826,"GB-RDB","Redbridge","london_borough","GB-ENG")
             ,("GB","GBR",826,"GB-RDG","Reading","unitary_authority","GB-ENG")
             ,("GB","GBR",826,"GB-RFW","Renfrewshire","council_area","GB-SCT")
-            ,("GB","GBR",826,"GB-RIC","Richmond upon Thames","london_borough","GB-ENG")
+            ,("GB","GBR",826,"GB-RIC",
+                "Richmond upon Thames","london_borough","GB-ENG")
             ,("GB","GBR",826,"GB-ROT","Rotherham","metropolitan_district","GB-ENG")
             ,("GB","GBR",826,"GB-RUT","Rutland","unitary_authority","GB-ENG")
             ,("GB","GBR",826,"GB-SAW","Sandwell","metropolitan_district","GB-ENG")
             ,("GB","GBR",826,"GB-SAY","South Ayrshire","council_area","GB-SCT")
-            ,("GB","GBR",826,"GB-SCB","Scottish Borders","council_area","GB-SCT")
+            ,("GB","GBR",826,"GB-SCB",
+                "Scottish Borders","council_area","GB-SCT")
             ,("GB","GBR",826,"GB-SCT","Scotland","country",NULL)
             ,("GB","GBR",826,"GB-SFK","Suffolk","two-tier_county","GB-ENG")
             ,("GB","GBR",826,"GB-SFT","Sefton","metropolitan_district","GB-ENG")
-            ,("GB","GBR",826,"GB-SGC","South Gloucestershire","unitary_authority","GB-ENG")
-            ,("GB","GBR",826,"GB-SHF","Sheffield","metropolitan_district","GB-ENG")
-            ,("GB","GBR",826,"GB-SHN","St. Helens","metropolitan_district","GB-ENG")
+            ,("GB","GBR",826,"GB-SGC",
+                "South Gloucestershire","unitary_authority","GB-ENG")
+            ,("GB","GBR",826,"GB-SHF",
+                "Sheffield","metropolitan_district","GB-ENG")
+            ,("GB","GBR",826,"GB-SHN",
+                "St. Helens","metropolitan_district","GB-ENG")
             ,("GB","GBR",826,"GB-SHR","Shropshire","unitary_authority","GB-ENG")
             ,("GB","GBR",826,"GB-SKP","Stockport","metropolitan_district","GB-ENG")
             ,("GB","GBR",826,"GB-SLF","Salford","metropolitan_district","GB-ENG")
             ,("GB","GBR",826,"GB-SLG","Slough","unitary_authority","GB-ENG")
-            ,("GB","GBR",826,"GB-SLK","South Lanarkshire","council_area","GB-SCT")
+            ,("GB","GBR",826,"GB-SLK",
+                "South Lanarkshire","council_area","GB-SCT")
             ,("GB","GBR",826,"GB-SND","Sunderland","metropolitan_district","GB-ENG")
             ,("GB","GBR",826,"GB-SOL","Solihull","metropolitan_district","GB-ENG")
             ,("GB","GBR",826,"GB-SOM","Somerset","two-tier_county","GB-ENG")
@@ -1997,23 +2445,30 @@ class sqlite3_sample_files:
             ,("GB","GBR",826,"GB-STN","Sutton","london_borough","GB-ENG")
             ,("GB","GBR",826,"GB-STS","Staffordshire","two-tier_county","GB-ENG")
             ,("GB","GBR",826,"GB-STT","Stockton-on-Tees","unitary_authority","GB-ENG")
-            ,("GB","GBR",826,"GB-STY","South Tyneside","metropolitan_district","GB-ENG")
+            ,("GB","GBR",826,"GB-STY",
+                "South Tyneside","metropolitan_district","GB-ENG")
             ,("GB","GBR",826,"GB-SWA","Swansea","unitary_authority","GB-WLS")
             ,("GB","GBR",826,"GB-SWD","Swindon","unitary_authority","GB-ENG")
             ,("GB","GBR",826,"GB-SWK","Southwark","london_borough","GB-ENG")
             ,("GB","GBR",826,"GB-TAM","Tameside","metropolitan_district","GB-ENG")
-            ,("GB","GBR",826,"GB-TFW","Telford and Wrekin","unitary_authority","GB-ENG")
+            ,("GB","GBR",826,"GB-TFW",
+                "Telford and Wrekin","unitary_authority","GB-ENG")
             ,("GB","GBR",826,"GB-THR","Thurrock","unitary_authority","GB-ENG")
             ,("GB","GBR",826,"GB-TOB","Torbay","unitary_authority","GB-ENG")
             ,("GB","GBR",826,"GB-TOF","Torfaen","unitary_authority","GB-WLS")
             ,("GB","GBR",826,"GB-TRF","Trafford","metropolitan_district","GB-ENG")
-            ,("GB","GBR",826,"GB-TWH","Tower Hamlets","london_borough","GB-ENG")
+            ,("GB","GBR",826,"GB-TWH",
+                "Tower Hamlets","london_borough","GB-ENG")
             ,("GB","GBR",826,"GB-UKM","United Kingdom","country",NULL)
-            ,("GB","GBR",826,"GB-VGL","Vale of Glamorgan, The","unitary_authority","GB-WLS")
+            ,("GB","GBR",826,"GB-VGL",
+                "Vale of Glamorgan, The","unitary_authority","GB-WLS")
             ,("GB","GBR",826,"GB-WAR","Warwickshire","two-tier_county","GB-ENG")
-            ,("GB","GBR",826,"GB-WBK","West Berkshire","unitary_authority","GB-ENG")
-            ,("GB","GBR",826,"GB-WDU","West Dunbartonshire","council_area","GB-SCT")
-            ,("GB","GBR",826,"GB-WFT","Waltham Forest","london_borough","GB-ENG")
+            ,("GB","GBR",826,"GB-WBK",
+                "West Berkshire","unitary_authority","GB-ENG")
+            ,("GB","GBR",826,"GB-WDU",
+                "West Dunbartonshire","council_area","GB-SCT")
+            ,("GB","GBR",826,"GB-WFT",
+                "Waltham Forest","london_borough","GB-ENG")
             ,("GB","GBR",826,"GB-WGN","Wigan","metropolitan_district","GB-ENG")
             ,("GB","GBR",826,"GB-WIL","Wiltshire","unitary_authority","GB-ENG")
             ,("GB","GBR",826,"GB-WKF","Wakefield","metropolitan_district","GB-ENG")
@@ -2022,8 +2477,10 @@ class sqlite3_sample_files:
             ,("GB","GBR",826,"GB-WLS","Wales","country",NULL)
             ,("GB","GBR",826,"GB-WLV","Wolverhampton","metropolitan_district","GB-ENG")
             ,("GB","GBR",826,"GB-WND","Wandsworth","london_borough","GB-ENG")
-            ,("GB","GBR",826,"GB-WNH","West Northamptonshire","unitary_authority","GB-ENG")
-            ,("GB","GBR",826,"GB-WNM","Windsor and Maidenhead","unitary_authority","GB-ENG")
+            ,("GB","GBR",826,"GB-WNH",
+                "West Northamptonshire","unitary_authority","GB-ENG")
+            ,("GB","GBR",826,"GB-WNM",
+                "Windsor and Maidenhead","unitary_authority","GB-ENG")
             ,("GB","GBR",826,"GB-WOK","Wokingham","unitary_authority","GB-ENG")
             ,("GB","GBR",826,"GB-WOR","Worcestershire","two-tier_county","GB-ENG")
             ,("GB","GBR",826,"GB-WRL","Wirral","metropolitan_district","GB-ENG")
@@ -2032,14 +2489,16 @@ class sqlite3_sample_files:
             ,("GB","GBR",826,"GB-WSM","Westminster","london_borough","GB-ENG")
             ,("GB","GBR",826,"GB-WSX","West Sussex","two-tier_county","GB-ENG")
             ,("GB","GBR",826,"GB-YOR","York","unitary_authority","GB-ENG")
-            ,("GB","GBR",826,"GB-ZET","Shetland Islands","council_area","GB-SCT")
+            ,("GB","GBR",826,"GB-ZET",
+                "Shetland Islands","council_area","GB-SCT")
             ,("GD","GRD",308,"GD-01","Saint Andrew","parish",NULL)
             ,("GD","GRD",308,"GD-02","Saint David","parish",NULL)
             ,("GD","GRD",308,"GD-03","Saint George","parish",NULL)
             ,("GD","GRD",308,"GD-04","Saint John","parish",NULL)
             ,("GD","GRD",308,"GD-05","Saint Mark","parish",NULL)
             ,("GD","GRD",308,"GD-06","Saint Patrick","parish",NULL)
-            ,("GD","GRD",308,"GD-10","Southern Grenadine Islands","dependency",NULL)
+            ,("GD","GRD",308,"GD-10",
+                "Southern Grenadine Islands","dependency",NULL)
             ,("GE","GEO",239,"GE-AB","Abkhazia","autonomous_republic",NULL)
             ,("GE","GEO",239,"GE-AJ","Ajaria","autonomous_republic",NULL)
             ,("GE","GEO",239,"GE-GU","Guria","region",NULL)
@@ -2047,7 +2506,8 @@ class sqlite3_sample_files:
             ,("GE","GEO",239,"GE-KA","K'akheti","region",NULL)
             ,("GE","GEO",239,"GE-KK","Kvemo Kartli","region",NULL)
             ,("GE","GEO",239,"GE-MM","Mtskheta-Mtianeti","region",NULL)
-            ,("GE","GEO",239,"GE-RL","Rach'a-Lechkhumi-Kvemo Svaneti","region",NULL)
+            ,("GE","GEO",239,"GE-RL",
+                "Rach'a-Lechkhumi-Kvemo Svaneti","region",NULL)
             ,("GE","GEO",239,"GE-SJ","Samtskhe-Javakheti","region",NULL)
             ,("GE","GEO",239,"GE-SK","Shida Kartli","region",NULL)
             ,("GE","GEO",239,"GE-SZ","Samegrelo-Zemo Svaneti","region",NULL)
@@ -2075,7 +2535,8 @@ class sqlite3_sample_files:
             ,("GL","GRL",304,"GL-KU","Kommune Kujalleq","municipality",NULL)
             ,("GL","GRL",304,"GL-QE","Qeqqata Kommunia","municipality",NULL)
             ,("GL","GRL",304,"GL-QT","Kommune Qeqertalik","municipality",NULL)
-            ,("GL","GRL",304,"GL-SM","Kommuneqarfik Sermersooq","municipality",NULL)
+            ,("GL","GRL",304,"GL-SM",
+                "Kommuneqarfik Sermersooq","municipality",NULL)
             ,("GM","GMB",270,"GM-B","Banjul","city",NULL)
             ,("GM","GMB",270,"GM-L","Lower River","division",NULL)
             ,("GM","GMB",270,"GM-M","Central River","division",NULL)
@@ -2135,7 +2596,8 @@ class sqlite3_sample_files:
             ,("GQ","GNQ",226,"GQ-LI","Litoral","province","GQ-C")
             ,("GQ","GNQ",226,"GQ-WN","Wele-Nzas","province","GQ-C")
             ,("GR","GRC",300,"GR-69","Ágion Óros","self_governed_part",NULL)
-            ,("GR","GRC",300,"GR-A","Anatolikí Makedonía kai Thráki","region",NULL)
+            ,("GR","GRC",300,"GR-A",
+                "Anatolikí Makedonía kai Thráki","region",NULL)
             ,("GR","GRC",300,"GR-B","Kentrikí Makedonía","region",NULL)
             ,("GR","GRC",300,"GR-C","Dytikí Makedonía","region",NULL)
             ,("GR","GRC",300,"GR-D","Ípeiros","region",NULL)
@@ -2148,7 +2610,8 @@ class sqlite3_sample_files:
             ,("GR","GRC",300,"GR-K","Vóreio Aigaío","region",NULL)
             ,("GR","GRC",300,"GR-L","Nótio Aigaío","region",NULL)
             ,("GR","GRC",300,"GR-M","Kríti","region",NULL)
-            ,("GS","SGS",239,"GS-??","South Georgia and the South Sandwich Islands","country",NULL)
+            ,("GS","SGS",239,"GS-??",
+                "South Georgia and the South Sandwich Islands","country",NULL)
             ,("GT","GTM",320,"GT-01","Guatemala","department",NULL)
             ,("GT","GTM",320,"GT-02","El Progreso","department",NULL)
             ,("GT","GTM",320,"GT-03","Sacatepéquez","department",NULL)
@@ -2188,14 +2651,18 @@ class sqlite3_sample_files:
             ,("GY","GUY",328,"GY-CU","Cuyuni-Mazaruni","region",NULL)
             ,("GY","GUY",328,"GY-DE","Demerara-Mahaica","region",NULL)
             ,("GY","GUY",328,"GY-EB","East Berbice-Corentyne","region",NULL)
-            ,("GY","GUY",328,"GY-ES","Essequibo Islands-West Demerara","region",NULL)
+            ,("GY","GUY",328,"GY-ES",
+                "Essequibo Islands-West Demerara","region",NULL)
             ,("GY","GUY",328,"GY-MA","Mahaica-Berbice","region",NULL)
             ,("GY","GUY",328,"GY-PM","Pomeroon-Supenaam","region",NULL)
             ,("GY","GUY",328,"GY-PT","Potaro-Siparuni","region",NULL)
             ,("GY","GUY",328,"GY-UD","Upper Demerara-Berbice","region",NULL)
-            ,("GY","GUY",328,"GY-UT","Upper Takutu-Upper Essequibo","region",NULL)
-            ,("HK","HKG",344,"HK-??","Hong Kong","special_administrative_region",NULL)
-            ,("HM","HMD",334,"HM-??","Heard Island and McDonald Islands","country",NULL)
+            ,("GY","GUY",328,"GY-UT",
+                "Upper Takutu-Upper Essequibo","region",NULL)
+            ,("HK","HKG",344,"HK-??",
+                "Hong Kong","special_administrative_region",NULL)
+            ,("HM","HMD",334,"HM-??",
+                "Heard Island and McDonald Islands","country",NULL)
             ,("HN","HND",340,"HN-AT","Atlántida","department",NULL)
             ,("HN","HND",340,"HN-CH","Choluteca","department",NULL)
             ,("HN","HND",340,"HN-CL","Colón","department",NULL)
@@ -2215,24 +2682,38 @@ class sqlite3_sample_files:
             ,("HN","HND",340,"HN-VA","Valle","department",NULL)
             ,("HN","HND",340,"HN-YO","Yoro","department",NULL)
             ,("HR","HRV",191,"HR-01","Zagrebačka županija","county",NULL)
-            ,("HR","HRV",191,"HR-02","Krapinsko-zagorska županija","county",NULL)
-            ,("HR","HRV",191,"HR-03","Sisačko-moslavačka županija","county",NULL)
+            ,("HR","HRV",191,"HR-02",
+                "Krapinsko-zagorska županija","county",NULL)
+            ,("HR","HRV",191,"HR-03",
+                "Sisačko-moslavačka županija","county",NULL)
             ,("HR","HRV",191,"HR-04","Karlovačka županija","county",NULL)
             ,("HR","HRV",191,"HR-05","Varaždinska županija","county",NULL)
-            ,("HR","HRV",191,"HR-06","Koprivničko-križevačka županija","county",NULL)
-            ,("HR","HRV",191,"HR-07","Bjelovarsko-bilogorska županija","county",NULL)
-            ,("HR","HRV",191,"HR-08","Primorsko-goranska županija","county",NULL)
-            ,("HR","HRV",191,"HR-09","Ličko-senjska županija","county",NULL)
-            ,("HR","HRV",191,"HR-10","Virovitičko-podravska županija","county",NULL)
-            ,("HR","HRV",191,"HR-11","Požeško-slavonska županija","county",NULL)
+            ,("HR","HRV",191,"HR-06",
+                "Koprivničko-križevačka županija","county",NULL)
+            ,("HR","HRV",191,"HR-07",
+                "Bjelovarsko-bilogorska županija","county",NULL)
+            ,("HR","HRV",191,"HR-08",
+                "Primorsko-goranska županija","county",NULL)
+            ,("HR","HRV",191,"HR-09",
+                "Ličko-senjska županija","county",NULL)
+            ,("HR","HRV",191,"HR-10",
+                "Virovitičko-podravska županija","county",NULL)
+            ,("HR","HRV",191,"HR-11",
+                "Požeško-slavonska županija","county",NULL)
             ,("HR","HRV",191,"HR-12","Brodsko-posavska županija","county",NULL)
             ,("HR","HRV",191,"HR-13","Zadarska županija","county",NULL)
-            ,("HR","HRV",191,"HR-14","Osječko-baranjska županija","county",NULL)
-            ,("HR","HRV",191,"HR-15","Šibensko-kninska županija","county",NULL)
-            ,("HR","HRV",191,"HR-16","Vukovarsko-srijemska županija","county",NULL)
-            ,("HR","HRV",191,"HR-17","Splitsko-dalmatinska županija","county",NULL)
-            ,("HR","HRV",191,"HR-18","Istarska županija","county",NULL)
-            ,("HR","HRV",191,"HR-19","Dubrovačko-neretvanska županija","county",NULL)
+            ,("HR","HRV",191,"HR-14",
+                "Osječko-baranjska županija","county",NULL)
+            ,("HR","HRV",191,"HR-15",
+                "Šibensko-kninska županija","county",NULL)
+            ,("HR","HRV",191,"HR-16",
+                "Vukovarsko-srijemska županija","county",NULL)
+            ,("HR","HRV",191,"HR-17",
+                "Splitsko-dalmatinska županija","county",NULL)
+            ,("HR","HRV",191,"HR-18",
+                "Istarska županija","county",NULL)
+            ,("HR","HRV",191,"HR-19",
+                "Dubrovačko-neretvanska županija","county",NULL)
             ,("HR","HRV",191,"HR-20","Međimurska županija","county",NULL)
             ,("HR","HRV",191,"HR-21","Grad Zagreb","city",NULL)
             ,("HT","HTI",332,"HT-AR","Artibonite","department",NULL)
@@ -2290,47 +2771,73 @@ class sqlite3_sample_files:
             ,("HU","HUN",348,"HU-ZE","Zalaegerszeg","city_with_county_rights",NULL)
             ,("ID","IDN",360,"ID-AC","Aceh","province","ID-SM")
             ,("ID","IDN",360,"ID-BA","Bali","province","ID-NU")
-            ,("ID","IDN",360,"ID-BB","Bangka Belitung Islands Kepulauan Bangka Belitung","province","ID-SM")
+            ,("ID","IDN",360,"ID-BB",
+                "Bangka Belitung Islands Kepulauan Bangka Belitung",
+                "province","ID-SM")
             ,("ID","IDN",360,"ID-BE","Bengkulu","province","ID-SM")
             ,("ID","IDN",360,"ID-BT","Banten","province","ID-JW")
             ,("ID","IDN",360,"ID-GO","Gorontalo","province","ID-SL")
             ,("ID","IDN",360,"ID-JA","Jambi","province","ID-SM")
             ,("ID","IDN",360,"ID-JB","West Java Jawa Barat","province","ID-JW")
             ,("ID","IDN",360,"ID-JI","East Java Jawa Timur","province","ID-JW")
-            ,("ID","IDN",360,"ID-JK","Jakarta Jakarta Raya","capital_region","ID-JW")
-            ,("ID","IDN",360,"ID-JT","Central Java Jawa Tengah","province","ID-JW")
+            ,("ID","IDN",360,"ID-JK",
+                "Jakarta Jakarta Raya","capital_region","ID-JW")
+            ,("ID","IDN",360,"ID-JT",
+                "Central Java Jawa Tengah","province","ID-JW")
             ,("ID","IDN",360,"ID-JW","Jawa","geographical_unit",NULL)
             ,("ID","IDN",360,"ID-KA","Kalimantan","geographical_unit",NULL)
-            ,("ID","IDN",360,"ID-KB","West Kalimantan Kalimantan Barat","province","ID-KA")
-            ,("ID","IDN",360,"ID-KI","East Kalimantan Kalimantan Timur","province","ID-KA")
-            ,("ID","IDN",360,"ID-KR","Riau Islands Kepulauan Riau","province","ID-SM")
-            ,("ID","IDN",360,"ID-KS","South Kalimantan Kalimantan Selatan","province","ID-KA")
-            ,("ID","IDN",360,"ID-KT","Central Kalimantan Kalimantan Tengah","province","ID-KA")
-            ,("ID","IDN",360,"ID-KU","North Kalimantan Kalimantan Utara","province","ID-KA")
+            ,("ID","IDN",360,"ID-KB",
+                "West Kalimantan Kalimantan Barat","province","ID-KA")
+            ,("ID","IDN",360,"ID-KI",
+                "East Kalimantan Kalimantan Timur","province","ID-KA")
+            ,("ID","IDN",360,"ID-KR",
+                "Riau Islands Kepulauan Riau","province","ID-SM")
+            ,("ID","IDN",360,"ID-KS",
+                "South Kalimantan Kalimantan Selatan","province","ID-KA")
+            ,("ID","IDN",360,"ID-KT",
+                "Central Kalimantan Kalimantan Tengah","province","ID-KA")
+            ,("ID","IDN",360,"ID-KU",
+                "North Kalimantan Kalimantan Utara","province","ID-KA")
             ,("ID","IDN",360,"ID-LA","Lampung","province","ID-SM")
             ,("ID","IDN",360,"ID-MA","Maluku","province","ID-ML")
             ,("ID","IDN",360,"ID-ML","Maluku","geographical_unit",NULL)
-            ,("ID","IDN",360,"ID-MU","North Maluku Maluku Utara","province","ID-ML")
-            ,("ID","IDN",360,"ID-NB","West Nusa Tenggara Nusa Tenggara Barat","province","ID-NU")
-            ,("ID","IDN",360,"ID-NT","East Nusa Tenggara Nusa Tenggara Timur","province","ID-NU")
+            ,("ID","IDN",360,"ID-MU",
+                "North Maluku Maluku Utara","province","ID-ML")
+            ,("ID","IDN",360,"ID-NB",
+                "West Nusa Tenggara Nusa Tenggara Barat","province","ID-NU")
+            ,("ID","IDN",360,"ID-NT",
+                "East Nusa Tenggara Nusa Tenggara Timur","province","ID-NU")
             ,("ID","IDN",360,"ID-NU","Nusa Tenggara","geographical_unit",NULL)
             ,("ID","IDN",360,"ID-PA","Papua","province","ID-PP")
             ,("ID","IDN",360,"ID-PB","West Papua","province","ID-PP")
-            ,("ID","IDN",360,"ID-PE","Highland Papua Papua Pengunungan","province","ID-PP")
-            ,("ID","IDN",360,"ID-PP","Papua","geographical_unit",NULL)
-            ,("ID","IDN",360,"ID-PS","South Papua Papua Selatan","province","ID-PP")
-            ,("ID","IDN",360,"ID-PT","Central Papua Papua Tengah","province","ID-PP")
-            ,("ID","IDN",360,"ID-RI","Riau","province","ID-SM")
-            ,("ID","IDN",360,"ID-SA","North Sulawesi Sulawesi Utara","province","ID-SL")
-            ,("ID","IDN",360,"ID-SB","West Sumatra Sumatera Barat","province","ID-SM")
-            ,("ID","IDN",360,"ID-SG","Southeast Sulawesi Sulawesi Tenggara","province","ID-SL")
+            ,("ID","IDN",360,"ID-PE",
+                "Highland Papua Papua Pengunungan","province","ID-PP")
+            ,("ID","IDN",360,"ID-PP",
+                "Papua","geographical_unit",NULL)
+            ,("ID","IDN",360,"ID-PS",
+                "South Papua Papua Selatan","province","ID-PP")
+            ,("ID","IDN",360,"ID-PT",
+                "Central Papua Papua Tengah","province","ID-PP")
+            ,("ID","IDN",360,"ID-RI",
+                "Riau","province","ID-SM")
+            ,("ID","IDN",360,"ID-SA",
+                "North Sulawesi Sulawesi Utara","province","ID-SL")
+            ,("ID","IDN",360,"ID-SB",
+                "West Sumatra Sumatera Barat","province","ID-SM")
+            ,("ID","IDN",360,"ID-SG",
+                "Southeast Sulawesi Sulawesi Tenggara","province","ID-SL")
             ,("ID","IDN",360,"ID-SL","Sulawesi","geographical_unit",NULL)
             ,("ID","IDN",360,"ID-SM","Sumatera","geographical_unit",NULL)
-            ,("ID","IDN",360,"ID-SN","South Sulawesi Sulawesi Selatan","province","ID-SL")
-            ,("ID","IDN",360,"ID-SR","West Sulawesi Sulawesi Barat","province","ID-SL")
-            ,("ID","IDN",360,"ID-SS","South Sumatra Sumatera Selatan","province","ID-SM")
-            ,("ID","IDN",360,"ID-ST","Central Sulawesi Sulawesi Tengah","province","ID-SL")
-            ,("ID","IDN",360,"ID-SU","North Sumatra Sumatera Utara","province","ID-SM")
+            ,("ID","IDN",360,"ID-SN",
+                "South Sulawesi Sulawesi Selatan","province","ID-SL")
+            ,("ID","IDN",360,"ID-SR",
+                "West Sulawesi Sulawesi Barat","province","ID-SL")
+            ,("ID","IDN",360,"ID-SS",
+                "South Sumatra Sumatera Selatan","province","ID-SM")
+            ,("ID","IDN",360,"ID-ST",
+                "Central Sulawesi Sulawesi Tengah","province","ID-SL")
+            ,("ID","IDN",360,"ID-SU",
+                "North Sumatra Sumatera Utara","province","ID-SM")
             ,("ID","IDN",360,"ID-YO","Yogyakarta","special_region","ID-JW")
             ,("IE","IRL",372,"IE-C","Connaught","province",NULL)
             ,("IE","IRL",372,"IE-CE","Clare","county","IE-M")
@@ -2369,21 +2876,25 @@ class sqlite3_sample_files:
             ,("IL","ISR",376,"IL-TA","Tel Aviv","district",NULL)
             ,("IL","ISR",376,"IL-Z","HaTsafon","district",NULL)
             ,("IM","IMN",833,"IM-??","Isle of Man","country",NULL)
-            ,("IN","IND",356,"IN-AN","Andaman and Nicobar Islands","union_territory",NULL)
+            ,("IN","IND",356,"IN-AN",
+                "Andaman and Nicobar Islands","union_territory",NULL)
             ,("IN","IND",356,"IN-AP","Andhra Pradesh","state",NULL)
             ,("IN","IND",356,"IN-AR","Arunāchal Pradesh","state",NULL)
             ,("IN","IND",356,"IN-AS","Assam","state",NULL)
             ,("IN","IND",356,"IN-BR","Bihār","state",NULL)
             ,("IN","IND",356,"IN-CH","Chandīgarh","union_territory",NULL)
             ,("IN","IND",356,"IN-CT","Chhattīsgarh","state",NULL)
-            ,("IN","IND",356,"IN-DH","Dādra and Nagar Haveli and Damān and Diu","union_territory",NULL)
+            ,("IN","IND",356,"IN-DH",
+                "Dādra and Nagar Haveli and Damān and Diu",
+                "union_territory",NULL)
             ,("IN","IND",356,"IN-DL","Delhi","union_territory",NULL)
             ,("IN","IND",356,"IN-GA","Goa","state",NULL)
             ,("IN","IND",356,"IN-GJ","Gujarāt","state",NULL)
             ,("IN","IND",356,"IN-HP","Himāchal Pradesh","state",NULL)
             ,("IN","IND",356,"IN-HR","Haryāna","state",NULL)
             ,("IN","IND",356,"IN-JH","Jhārkhand","state",NULL)
-            ,("IN","IND",356,"IN-JK","Jammu and Kashmīr","union_territory",NULL)
+            ,("IN","IND",356,"IN-JK",
+                "Jammu and Kashmīr","union_territory",NULL)
             ,("IN","IND",356,"IN-KA","Karnātaka","state",NULL)
             ,("IN","IND",356,"IN-KL","Kerala","state",NULL)
             ,("IN","IND",356,"IN-LA","Ladākh","union_territory",NULL)
@@ -2405,7 +2916,8 @@ class sqlite3_sample_files:
             ,("IN","IND",356,"IN-UP","Uttar Pradesh","state",NULL)
             ,("IN","IND",356,"IN-UT","Uttarākhand","state",NULL)
             ,("IN","IND",356,"IN-WB","West Bengal","state",NULL)
-            ,("IO","IOT",86,"IO-??","British Indian Ocean Territory","country",NULL)
+            ,("IO","IOT",86,"IO-??",
+                "British Indian Ocean Territory","country",NULL)
             ,("IQ","IRQ",368,"IQ-AN","Al Anbār","governorate",NULL)
             ,("IQ","IRQ",368,"IQ-AR","Arbīl","governorate","IQ-KR")
             ,("IQ","IRQ",368,"IQ-BA","Al Başrah","governorate",NULL)
@@ -2439,10 +2951,12 @@ class sqlite3_sample_files:
             ,("IR","IRN",364,"IR-11","Sīstān va Balūchestān","province",NULL)
             ,("IR","IRN",364,"IR-12","Kordestān","province",NULL)
             ,("IR","IRN",364,"IR-13","Hamadān","province",NULL)
-            ,("IR","IRN",364,"IR-14","Chahār Maḩāl va Bakhtīārī","province",NULL)
+            ,("IR","IRN",364,"IR-14",
+                "Chahār Maḩāl va Bakhtīārī","province",NULL)
             ,("IR","IRN",364,"IR-15","Lorestān","province",NULL)
             ,("IR","IRN",364,"IR-16","Īlām","province",NULL)
-            ,("IR","IRN",364,"IR-17","Kohgīlūyeh va Bowyer Aḩmad","province",NULL)
+            ,("IR","IRN",364,"IR-17",
+                "Kohgīlūyeh va Bowyer Aḩmad","province",NULL)
             ,("IR","IRN",364,"IR-18","Būshehr","province",NULL)
             ,("IR","IRN",364,"IR-19","Zanjān","province",NULL)
             ,("IR","IRN",364,"IR-20","Semnān","province",NULL)
@@ -2473,14 +2987,16 @@ class sqlite3_sample_files:
             ,("IS","ISL",352,"IS-BOL","Bolungarvíkurkaupstaður","municipality","IS-4")
             ,("IS","ISL",352,"IS-DAB","Dalabyggð","municipality","IS-3")
             ,("IS","ISL",352,"IS-DAV","Dalvíkurbyggð","municipality","IS-6")
-            ,("IS","ISL",352,"IS-EOM","Eyja- og Miklaholtshreppur","municipality","IS-3")
+            ,("IS","ISL",352,"IS-EOM",
+                "Eyja- og Miklaholtshreppur","municipality","IS-3")
             ,("IS","ISL",352,"IS-EYF","Eyjafjarðarsveit","municipality","IS-6")
             ,("IS","ISL",352,"IS-FJD","Fjarðabyggð","municipality","IS-7")
             ,("IS","ISL",352,"IS-FJL","Fjallabyggð","municipality","IS-6")
             ,("IS","ISL",352,"IS-FLA","Flóahreppur","municipality","IS-8")
             ,("IS","ISL",352,"IS-FLR","Fljótsdalshreppur","municipality","IS-7")
             ,("IS","ISL",352,"IS-GAR","Garðabær","municipality","IS-1")
-            ,("IS","ISL",352,"IS-GOG","Grímsnes- og Grafningshreppur","municipality","IS-8")
+            ,("IS","ISL",352,"IS-GOG",
+                "Grímsnes- og Grafningshreppur","municipality","IS-8")
             ,("IS","ISL",352,"IS-GRN","Grindavíkurbær","municipality","IS-2")
             ,("IS","ISL",352,"IS-GRU","Grundarfjarðarbær","municipality","IS-3")
             ,("IS","ISL",352,"IS-GRY","Grýtubakkahreppur","municipality","IS-6")
@@ -2500,7 +3016,8 @@ class sqlite3_sample_files:
             ,("IS","ISL",352,"IS-MUL","Múlaþing","municipality","IS-7")
             ,("IS","ISL",352,"IS-MYR","Mýrdalshreppur","municipality","IS-8")
             ,("IS","ISL",352,"IS-NOR","Norðurþing","municipality","IS-6")
-            ,("IS","ISL",352,"IS-RGE","Rangárþing eystra","municipality","IS-8")
+            ,("IS","ISL",352,"IS-RGE",
+                "Rangárþing eystra","municipality","IS-8")
             ,("IS","ISL",352,"IS-RGY","Rangárþing ytra","municipality","IS-8")
             ,("IS","ISL",352,"IS-RHH","Reykhólahreppur","municipality","IS-4")
             ,("IS","ISL",352,"IS-RKN","Reykjanesbær","municipality","IS-2")
@@ -2509,19 +3026,27 @@ class sqlite3_sample_files:
             ,("IS","ISL",352,"IS-SDN","Suðurnesjabær","municipality","IS-2")
             ,("IS","ISL",352,"IS-SDV","Súðavíkurhreppur","municipality","IS-4")
             ,("IS","ISL",352,"IS-SEL","Seltjarnarnesbær","municipality","IS-1")
-            ,("IS","ISL",352,"IS-SFA","Sveitarfélagið Árborg","municipality","IS-8")
-            ,("IS","ISL",352,"IS-SHF","Sveitarfélagið Hornafjörður","municipality","IS-7")
+            ,("IS","ISL",352,"IS-SFA",
+                "Sveitarfélagið Árborg","municipality","IS-8")
+            ,("IS","ISL",352,"IS-SHF",
+                "Sveitarfélagið Hornafjörður","municipality","IS-7")
             ,("IS","ISL",352,"IS-SKF","Skaftárhreppur","municipality","IS-8")
             ,("IS","ISL",352,"IS-SKG","Skagabyggð","municipality","IS-5")
             ,("IS","ISL",352,"IS-SKO","Skorradalshreppur","municipality","IS-3")
             ,("IS","ISL",352,"IS-SKR","Skagafjörður","municipality","IS-5")
             ,("IS","ISL",352,"IS-SNF","Snæfellsbær","municipality","IS-3")
-            ,("IS","ISL",352,"IS-SOG","Skeiða- og Gnúpverjahreppur","municipality","IS-8")
-            ,("IS","ISL",352,"IS-SOL","Sveitarfélagið Ölfus","municipality","IS-8")
-            ,("IS","ISL",352,"IS-SSS","Sveitarfélagið Skagaströnd","municipality","IS-5")
-            ,("IS","ISL",352,"IS-STR","Strandabyggð","municipality","IS-4")
-            ,("IS","ISL",352,"IS-STY","Stykkishólmsbær","municipality","IS-3")
-            ,("IS","ISL",352,"IS-SVG","Sveitarfélagið Vogar","municipality","IS-2")
+            ,("IS","ISL",352,"IS-SOG",
+                "Skeiða- og Gnúpverjahreppur","municipality","IS-8")
+            ,("IS","ISL",352,"IS-SOL",
+                "Sveitarfélagið Ölfus","municipality","IS-8")
+            ,("IS","ISL",352,"IS-SSS",
+                "Sveitarfélagið Skagaströnd","municipality","IS-5")
+            ,("IS","ISL",352,"IS-STR",
+                "Strandabyggð","municipality","IS-4")
+            ,("IS","ISL",352,"IS-STY",
+                "Stykkishólmsbær","municipality","IS-3")
+            ,("IS","ISL",352,"IS-SVG",
+                "Sveitarfélagið Vogar","municipality","IS-2")
             ,("IS","ISL",352,"IS-TAL","Tálknafjarðarhreppur","municipality","IS-4")
             ,("IS","ISL",352,"IS-THG","Þingeyjarsveit","municipality","IS-6")
             ,("IS","ISL",352,"IS-TJO","Tjörneshreppur","municipality","IS-6")
@@ -2531,9 +3056,12 @@ class sqlite3_sample_files:
             ,("IT","ITA",380,"IT-21","Piemonte","region",NULL)
             ,("IT","ITA",380,"IT-23","Aosta Valley","autonomous_region",NULL)
             ,("IT","ITA",380,"IT-25","Lombardia","region",NULL)
-            ,("IT","ITA",380,"IT-32","Trentino-South Tyrol","autonomous_region",NULL)
-            ,("IT","ITA",380,"IT-34","Veneto","region",NULL)
-            ,("IT","ITA",380,"IT-36","Friuli Venezia Giulia","autonomous_region",NULL)
+            ,("IT","ITA",380,"IT-32",
+                "Trentino-South Tyrol","autonomous_region",NULL)
+            ,("IT","ITA",380,"IT-34",
+                "Veneto","region",NULL)
+            ,("IT","ITA",380,"IT-36",
+                "Friuli Venezia Giulia","autonomous_region",NULL)
             ,("IT","ITA",380,"IT-42","Liguria","region",NULL)
             ,("IT","ITA",380,"IT-45","Emilia-Romagna","region",NULL)
             ,("IT","ITA",380,"IT-52","Toscana","region",NULL)
@@ -2622,7 +3150,8 @@ class sqlite3_sample_files:
             ,("IT","ITA",380,"IT-PV","Pavia","province","IT-25")
             ,("IT","ITA",380,"IT-PZ","Potenza","province","IT-77")
             ,("IT","ITA",380,"IT-RA","Ravenna","province","IT-45")
-            ,("IT","ITA",380,"IT-RC","Reggio Calabria","metropolitan_city","IT-78")
+            ,("IT","ITA",380,"IT-RC",
+                "Reggio Calabria","metropolitan_city","IT-78")
             ,("IT","ITA",380,"IT-RE","Reggio Emilia","province","IT-45")
             ,("IT","ITA",380,"IT-RG","Ragusa","free_municipal_consortia","IT-82")
             ,("IT","ITA",380,"IT-RI","Rieti","province","IT-62")
@@ -2787,7 +3316,8 @@ class sqlite3_sample_files:
             ,("KH","KHM",116,"KH-1","Banteay Mean Choăy","province",NULL)
             ,("KH","KHM",116,"KH-10","Kracheh","province",NULL)
             ,("KH","KHM",116,"KH-11","Mondol Kiri","province",NULL)
-            ,("KH","KHM",116,"KH-12","Phnom Penh","autonomous_municipality",NULL)
+            ,("KH","KHM",116,"KH-12",
+                "Phnom Penh","autonomous_municipality",NULL)
             ,("KH","KHM",116,"KH-13","Preah Vihear","province",NULL)
             ,("KH","KHM",116,"KH-14","Prey Veaeng","province",NULL)
             ,("KH","KHM",116,"KH-15","Pousaat","province",NULL)
@@ -2815,7 +3345,8 @@ class sqlite3_sample_files:
             ,("KM","COM",174,"KM-A","Anjouan","island",NULL)
             ,("KM","COM",174,"KM-G","Grande Comore","island",NULL)
             ,("KM","COM",174,"KM-M","Mohéli","island",NULL)
-            ,("KN","KNA",659,"KN-01","Christ Church Nichola Town","parish","KN-K")
+            ,("KN","KNA",659,"KN-01",
+                "Christ Church Nichola Town","parish","KN-K")
             ,("KN","KNA",659,"KN-02","Saint Anne Sandy Point","parish","KN-K")
             ,("KN","KNA",659,"KN-03","Saint George Basseterre","parish","KN-K")
             ,("KN","KNA",659,"KN-04","Saint George Gingerland","parish","KN-N")
@@ -2827,7 +3358,8 @@ class sqlite3_sample_files:
             ,("KN","KNA",659,"KN-10","Saint Paul Charlestown","parish","KN-N")
             ,("KN","KNA",659,"KN-11","Saint Peter Basseterre","parish","KN-K")
             ,("KN","KNA",659,"KN-12","Saint Thomas Lowland","parish","KN-N")
-            ,("KN","KNA",659,"KN-13","Saint Thomas Middle Island","parish","KN-K")
+            ,("KN","KNA",659,"KN-13",
+                "Saint Thomas Middle Island","parish","KN-K")
             ,("KN","KNA",659,"KN-15","Trinity Palmetto Point","parish","KN-K")
             ,("KN","KNA",659,"KN-K","Saint Kitts","state",NULL)
             ,("KN","KNA",659,"KN-N","Nevis","state",NULL)
@@ -2881,7 +3413,8 @@ class sqlite3_sample_files:
             ,("KZ","KAZ",398,"KZ-43","Qyzylorda oblysy","region",NULL)
             ,("KZ","KAZ",398,"KZ-47","Mangghystaū oblysy","region",NULL)
             ,("KZ","KAZ",398,"KZ-55","Pavlodar oblysy","region",NULL)
-            ,("KZ","KAZ",398,"KZ-59","Soltüstik Qazaqstan oblysy","region",NULL)
+            ,("KZ","KAZ",398,"KZ-59",
+                "Soltüstik Qazaqstan oblysy","region",NULL)
             ,("KZ","KAZ",398,"KZ-61","Türkistan oblysy","region",NULL)
             ,("KZ","KAZ",398,"KZ-62","Ulytaū oblysy","region",NULL)
             ,("KZ","KAZ",398,"KZ-63","Shyghys Qazaqstan oblysy","region",NULL)
@@ -2995,7 +3528,8 @@ class sqlite3_sample_files:
             ,("LS","LSO",426,"LS-J","Mokhotlong","district",NULL)
             ,("LS","LSO",426,"LS-K","Thaba-Tseka","district",NULL)
             ,("LT","LTU",440,"LT-01","Akmenė","district_municipality","SA")
-            ,("LT","LTU",440,"LT-02","Alytaus miestas","city_municipality","AL")
+            ,("LT","LTU",440,"LT-02",
+                "Alytaus miestas","city_municipality","AL")
             ,("LT","LTU",440,"LT-03","Alytus","district_municipality","AL")
             ,("LT","LTU",440,"LT-04","Anykščiai","district_municipality","UT")
             ,("LT","LTU",440,"LT-05","Birštonas","municipality","KU")
@@ -3013,7 +3547,8 @@ class sqlite3_sample_files:
             ,("LT","LTU",440,"LT-17","Kazlų Rūdos","municipality","MR")
             ,("LT","LTU",440,"LT-18","Kėdainiai","district_municipality","KU")
             ,("LT","LTU",440,"LT-19","Kelmė","district_municipality","SA")
-            ,("LT","LTU",440,"LT-20","Klaipėdos miestas","city_municipality","KL")
+            ,("LT","LTU",440,"LT-20",
+                "Klaipėdos miestas","city_municipality","KL")
             ,("LT","LTU",440,"LT-21","Klaipėda","district_municipality","KL")
             ,("LT","LTU",440,"LT-22","Kretinga","district_municipality","KL")
             ,("LT","LTU",440,"LT-23","Kupiškis","district_municipality","PN")
@@ -3024,8 +3559,10 @@ class sqlite3_sample_files:
             ,("LT","LTU",440,"LT-28","Neringa","municipality","KL")
             ,("LT","LTU",440,"LT-29","Pagėgiai","municipality","TA")
             ,("LT","LTU",440,"LT-30","Pakruojis","district_municipality","SA")
-            ,("LT","LTU",440,"LT-31","Palangos miestas","city_municipality","KL")
-            ,("LT","LTU",440,"LT-32","Panevėžio miestas","city_municipality","PN")
+            ,("LT","LTU",440,"LT-31",
+                "Palangos miestas","city_municipality","KL")
+            ,("LT","LTU",440,"LT-32",
+                "Panevėžio miestas","city_municipality","PN")
             ,("LT","LTU",440,"LT-33","Panevėžys","district_municipality","PN")
             ,("LT","LTU",440,"LT-34","Pasvalys","district_municipality","PN")
             ,("LT","LTU",440,"LT-35","Plungė","district_municipality","TE")
@@ -3036,7 +3573,8 @@ class sqlite3_sample_files:
             ,("LT","LTU",440,"LT-40","Rokiškis","district_municipality","PN")
             ,("LT","LTU",440,"LT-41","Šakiai","district_municipality","MR")
             ,("LT","LTU",440,"LT-42","Šalčininkai","district_municipality","VL")
-            ,("LT","LTU",440,"LT-43","Šiaulių miestas","city_municipality","SA")
+            ,("LT","LTU",440,"LT-43",
+                "Šiaulių miestas","city_municipality","SA")
             ,("LT","LTU",440,"LT-44","Šiauliai","district_municipality","SA")
             ,("LT","LTU",440,"LT-45","Šilalė","district_municipality","TA")
             ,("LT","LTU",440,"LT-46","Šilutė","district_municipality","KL")
@@ -3050,7 +3588,8 @@ class sqlite3_sample_files:
             ,("LT","LTU",440,"LT-54","Utena","district_municipality","UT")
             ,("LT","LTU",440,"LT-55","Varėna","district_municipality","AL")
             ,("LT","LTU",440,"LT-56","Vilkaviškis","district_municipality","MR")
-            ,("LT","LTU",440,"LT-57","Vilniaus miestas","city_municipality","VL")
+            ,("LT","LTU",440,"LT-57",
+                "Vilniaus miestas","city_municipality","VL")
             ,("LT","LTU",440,"LT-58","Vilnius","district_municipality","VL")
             ,("LT","LTU",440,"LT-59","Visaginas","municipality","UT")
             ,("LT","LTU",440,"LT-60","Zarasai","district_municipality","UT")
@@ -3109,8 +3648,10 @@ class sqlite3_sample_files:
             ,("LV","LVA",428,"LV-101","Valkas novads","municipality",NULL)
             ,("LV","LVA",428,"LV-102","Varakļānu novads","municipality",NULL)
             ,("LV","LVA",428,"LV-106","Ventspils novads","municipality",NULL)
-            ,("LV","LVA",428,"LV-111","Augšdaugavas novads","municipality",NULL)
-            ,("LV","LVA",428,"LV-112","Dienvidkurzemes Novads","municipality",NULL)
+            ,("LV","LVA",428,"LV-111",
+                "Augšdaugavas novads","municipality",NULL)
+            ,("LV","LVA",428,"LV-112",
+                "Dienvidkurzemes Novads","municipality",NULL)
             ,("LV","LVA",428,"LV-113","Valmieras Novads","municipality",NULL)
             ,("LV","LVA",428,"LV-DGV","Daugavpils","state_city",NULL)
             ,("LV","LVA",428,"LV-JEL","Jelgava","state_city",NULL)
@@ -3181,7 +3722,8 @@ class sqlite3_sample_files:
             ,("MA","MAR",504,"MA-HAO","Al Haouz","province","MA-7")
             ,("MA","MAR",504,"MA-HOC","Al Hoceïma","province","MA-1")
             ,("MA","MAR",504,"MA-IFR","Ifrane","province","MA-3")
-            ,("MA","MAR",504,"MA-INE","Inezgane-Ait Melloul","prefecture","MA-9")
+            ,("MA","MAR",504,"MA-INE",
+                "Inezgane-Ait Melloul","prefecture","MA-9")
             ,("MA","MAR",504,"MA-JDI","El Jadida","province","MA-6")
             ,("MA","MAR",504,"MA-JRA","Jerada","province","MA-2")
             ,("MA","MAR",504,"MA-KEN","Kénitra","province","MA-4")
@@ -3263,7 +3805,9 @@ class sqlite3_sample_files:
             ,("MD","MDA",498,"MD-ED","Edineț","district",NULL)
             ,("MD","MDA",498,"MD-FA","Fălești","district",NULL)
             ,("MD","MDA",498,"MD-FL","Florești","district",NULL)
-            ,("MD","MDA",498,"MD-GA","Găgăuzia, Unitatea teritorială autonomă","autonomous_territorial_unit",NULL)
+            ,("MD","MDA",498,"MD-GA",
+                "Găgăuzia, Unitatea teritorială autonomă",
+                "autonomous_territorial_unit",NULL)
             ,("MD","MDA",498,"MD-GL","Glodeni","district",NULL)
             ,("MD","MDA",498,"MD-HI","Hîncești","district",NULL)
             ,("MD","MDA",498,"MD-IA","Ialoveni","district",NULL)
@@ -3275,7 +3819,9 @@ class sqlite3_sample_files:
             ,("MD","MDA",498,"MD-RI","Rîșcani","district",NULL)
             ,("MD","MDA",498,"MD-SD","Șoldănești","district",NULL)
             ,("MD","MDA",498,"MD-SI","Sîngerei","district",NULL)
-            ,("MD","MDA",498,"MD-SN","Stînga Nistrului, unitatea teritorială din","territorial_unit",NULL)
+            ,("MD","MDA",498,"MD-SN",
+                "Stînga Nistrului, unitatea teritorială din",
+                "territorial_unit",NULL)
             ,("MD","MDA",498,"MD-SO","Soroca","district",NULL)
             ,("MD","MDA",498,"MD-ST","Strășeni","district",NULL)
             ,("MD","MDA",498,"MD-SV","Ștefan Vodă","district",NULL)
@@ -3318,7 +3864,8 @@ class sqlite3_sample_files:
             ,("MH","MHL",584,"MH-ARN","Arno","municipality","MH-T")
             ,("MH","MHL",584,"MH-AUR","Aur","municipality","MH-T")
             ,("MH","MHL",584,"MH-EBO","Ebon","municipality","MH-L")
-            ,("MH","MHL",584,"MH-ENI","Enewetak & Ujelang","municipality","MH-L")
+            ,("MH","MHL",584,"MH-ENI",
+                "Enewetak & Ujelang","municipality","MH-L")
             ,("MH","MHL",584,"MH-JAB","Jabat","municipality","MH-L")
             ,("MH","MHL",584,"MH-JAL","Jaluit","municipality","MH-L")
             ,("MH","MHL",584,"MH-KIL","Bikini & Kili","municipality","MH-L")
@@ -3354,7 +3901,8 @@ class sqlite3_sample_files:
             ,("MK","MKD",807,"MK-204","Zrnovci","municipality",NULL)
             ,("MK","MKD",807,"MK-205","Karbinci","municipality",NULL)
             ,("MK","MKD",807,"MK-206","Kočani","municipality",NULL)
-            ,("MK","MKD",807,"MK-207","Makedonska Kamenica","municipality",NULL)
+            ,("MK","MKD",807,"MK-207",
+                "Makedonska Kamenica","municipality",NULL)
             ,("MK","MKD",807,"MK-208","Pehčevo","municipality",NULL)
             ,("MK","MKD",807,"MK-209","Probištip","municipality",NULL)
             ,("MK","MKD",807,"MK-210","Češinovo-Obleševo","municipality",NULL)
@@ -3556,7 +4104,8 @@ class sqlite3_sample_files:
             ,("MT","MLT",470,"MT-68","Żurrieq","council",NULL)
             ,("MU","MUS",480,"MU-AG","Agalega Islands","dependency",NULL)
             ,("MU","MUS",480,"MU-BL","Black River","district",NULL)
-            ,("MU","MUS",480,"MU-CC","Cargados Carajos Shoals","dependency",NULL)
+            ,("MU","MUS",480,"MU-CC",
+                "Cargados Carajos Shoals","dependency",NULL)
             ,("MU","MUS",480,"MU-FL","Flacq","district",NULL)
             ,("MU","MUS",480,"MU-GP","Grand Port","district",NULL)
             ,("MU","MUS",480,"MU-MO","Moka","district",NULL)
@@ -3566,25 +4115,44 @@ class sqlite3_sample_files:
             ,("MU","MUS",480,"MU-RO","Rodrigues Island","dependency",NULL)
             ,("MU","MUS",480,"MU-RR","Rivière du Rempart","district",NULL)
             ,("MU","MUS",480,"MU-SA","Savanne","district",NULL)
-            ,("MV","MDV",462,"MV-00","South Ari Atoll","administrative_atoll",NULL)
-            ,("MV","MDV",462,"MV-01","Addu City","city",NULL)
-            ,("MV","MDV",462,"MV-02","North Ari Atoll","administrative_atoll",NULL)
-            ,("MV","MDV",462,"MV-03","Faadhippolhu","administrative_atoll",NULL)
-            ,("MV","MDV",462,"MV-04","Felidhu Atoll","administrative_atoll",NULL)
-            ,("MV","MDV",462,"MV-05","Hahdhunmathi","administrative_atoll",NULL)
-            ,("MV","MDV",462,"MV-07","North Thiladhunmathi","administrative_atoll",NULL)
-            ,("MV","MDV",462,"MV-08","Kolhumadulu","administrative_atoll",NULL)
-            ,("MV","MDV",462,"MV-12","Mulaku Atoll","administrative_atoll",NULL)
-            ,("MV","MDV",462,"MV-13","North Maalhosmadulu","administrative_atoll",NULL)
-            ,("MV","MDV",462,"MV-14","North Nilandhe Atoll","administrative_atoll",NULL)
-            ,("MV","MDV",462,"MV-17","South Nilandhe Atoll","administrative_atoll",NULL)
-            ,("MV","MDV",462,"MV-20","South Maalhosmadulu","administrative_atoll",NULL)
-            ,("MV","MDV",462,"MV-23","South Thiladhunmathi","administrative_atoll",NULL)
-            ,("MV","MDV",462,"MV-24","North Miladhunmadulu","administrative_atoll",NULL)
-            ,("MV","MDV",462,"MV-25","South Miladhunmadulu","administrative_atoll",NULL)
-            ,("MV","MDV",462,"MV-26","Male Atoll","administrative_atoll",NULL)
-            ,("MV","MDV",462,"MV-27","North Huvadhu Atoll","administrative_atoll",NULL)
-            ,("MV","MDV",462,"MV-28","South Huvadhu Atoll","administrative_atoll",NULL)
+            ,("MV","MDV",462,"MV-00",
+                "South Ari Atoll","administrative_atoll",NULL)
+            ,("MV","MDV",462,"MV-01",
+                "Addu City","city",NULL)
+            ,("MV","MDV",462,"MV-02",
+                "North Ari Atoll","administrative_atoll",NULL)
+            ,("MV","MDV",462,"MV-03",
+                "Faadhippolhu","administrative_atoll",NULL)
+            ,("MV","MDV",462,"MV-04",
+                "Felidhu Atoll","administrative_atoll",NULL)
+            ,("MV","MDV",462,"MV-05",
+                "Hahdhunmathi","administrative_atoll",NULL)
+            ,("MV","MDV",462,"MV-07",
+                "North Thiladhunmathi","administrative_atoll",NULL)
+            ,("MV","MDV",462,"MV-08",
+                "Kolhumadulu","administrative_atoll",NULL)
+            ,("MV","MDV",462,"MV-12",
+                "Mulaku Atoll","administrative_atoll",NULL)
+            ,("MV","MDV",462,"MV-13",
+                "North Maalhosmadulu","administrative_atoll",NULL)
+            ,("MV","MDV",462,"MV-14",
+                "North Nilandhe Atoll","administrative_atoll",NULL)
+            ,("MV","MDV",462,"MV-17",
+                "South Nilandhe Atoll","administrative_atoll",NULL)
+            ,("MV","MDV",462,"MV-20",
+                "South Maalhosmadulu","administrative_atoll",NULL)
+            ,("MV","MDV",462,"MV-23",
+                "South Thiladhunmathi","administrative_atoll",NULL)
+            ,("MV","MDV",462,"MV-24",
+                "North Miladhunmadulu","administrative_atoll",NULL)
+            ,("MV","MDV",462,"MV-25",
+                "South Miladhunmadulu","administrative_atoll",NULL)
+            ,("MV","MDV",462,"MV-26",
+                "Male Atoll","administrative_atoll",NULL)
+            ,("MV","MDV",462,"MV-27",
+                "North Huvadhu Atoll","administrative_atoll",NULL)
+            ,("MV","MDV",462,"MV-28",
+                "South Huvadhu Atoll","administrative_atoll",NULL)
             ,("MV","MDV",462,"MV-29","Fuvammulah","administrative_atoll",NULL)
             ,("MV","MDV",462,"MV-MLE","Male","city",NULL)
             ,("MW","MWI",454,"MW-BA","Balaka","district","MW-S")
@@ -3647,7 +4215,8 @@ class sqlite3_sample_files:
             ,("MX","MEX",484,"MX-TAB","Tabasco","state",NULL)
             ,("MX","MEX",484,"MX-TAM","Tamaulipas","state",NULL)
             ,("MX","MEX",484,"MX-TLA","Tlaxcala","state",NULL)
-            ,("MX","MEX",484,"MX-VER","Veracruz de Ignacio de la Llave","state",NULL)
+            ,("MX","MEX",484,"MX-VER",
+                "Veracruz de Ignacio de la Llave","state",NULL)
             ,("MX","MEX",484,"MX-YUC","Yucatán","state",NULL)
             ,("MX","MEX",484,"MX-ZAC","Zacatecas","state",NULL)
             ,("MY","MYS",458,"MY-01","Johor","state",NULL)
@@ -3663,9 +4232,12 @@ class sqlite3_sample_files:
             ,("MY","MYS",458,"MY-11","Terengganu","state",NULL)
             ,("MY","MYS",458,"MY-12","Sabah","state",NULL)
             ,("MY","MYS",458,"MY-13","Sarawak","state",NULL)
-            ,("MY","MYS",458,"MY-14","Wilayah Persekutuan Kuala Lumpur","federal_territory",NULL)
-            ,("MY","MYS",458,"MY-15","Wilayah Persekutuan Labuan","federal_territory",NULL)
-            ,("MY","MYS",458,"MY-16","Wilayah Persekutuan Putrajaya","federal_territory",NULL)
+            ,("MY","MYS",458,"MY-14",
+                "Wilayah Persekutuan Kuala Lumpur","federal_territory",NULL)
+            ,("MY","MYS",458,"MY-15",
+                "Wilayah Persekutuan Labuan","federal_territory",NULL)
+            ,("MY","MYS",458,"MY-16",
+                "Wilayah Persekutuan Putrajaya","federal_territory",NULL)
             ,("MZ","MOZ",508,"MZ-A","Niassa","province",NULL)
             ,("MZ","MOZ",508,"MZ-B","Manica","province",NULL)
             ,("MZ","MOZ",508,"MZ-G","Gaza","province",NULL)
@@ -3715,7 +4287,8 @@ class sqlite3_sample_files:
             ,("NG","NGA",566,"NG-ED","Edo","state",NULL)
             ,("NG","NGA",566,"NG-EK","Ekiti","state",NULL)
             ,("NG","NGA",566,"NG-EN","Enugu","state",NULL)
-            ,("NG","NGA",566,"NG-FC","Abuja Federal Capital Territory","capital_territory",NULL)
+            ,("NG","NGA",566,"NG-FC",
+                "Abuja Federal Capital Territory","capital_territory",NULL)
             ,("NG","NGA",566,"NG-GO","Gombe","state",NULL)
             ,("NG","NGA",566,"NG-IM","Imo","state",NULL)
             ,("NG","NGA",566,"NG-JI","Jigawa","state",NULL)
@@ -3738,8 +4311,10 @@ class sqlite3_sample_files:
             ,("NG","NGA",566,"NG-TA","Taraba","state",NULL)
             ,("NG","NGA",566,"NG-YO","Yobe","state",NULL)
             ,("NG","NGA",566,"NG-ZA","Zamfara","state",NULL)
-            ,("NI","NIC",558,"NI-AN","Costa Caribe Norte","autonomous_region",NULL)
-            ,("NI","NIC",558,"NI-AS","Costa Caribe Sur","autonomous_region",NULL)
+            ,("NI","NIC",558,"NI-AN",
+                "Costa Caribe Norte","autonomous_region",NULL)
+            ,("NI","NIC",558,"NI-AS",
+                "Costa Caribe Sur","autonomous_region",NULL)
             ,("NI","NIC",558,"NI-BO","Boaco","department",NULL)
             ,("NI","NIC",558,"NI-CA","Carazo","department",NULL)
             ,("NI","NIC",558,"NI-CI","Chinandega","department",NULL)
@@ -3758,7 +4333,8 @@ class sqlite3_sample_files:
             ,("NL","NLD",528,"NL-AW","Aruba","country",NULL)
             ,("NL","NLD",528,"NL-BQ1","Bonaire","special_municipality",NULL)
             ,("NL","NLD",528,"NL-BQ2","Saba","special_municipality",NULL)
-            ,("NL","NLD",528,"NL-BQ3","Sint Eustatius","special_municipality",NULL)
+            ,("NL","NLD",528,"NL-BQ3",
+                "Sint Eustatius","special_municipality",NULL)
             ,("NL","NLD",528,"NL-CW","Curaçao","country",NULL)
             ,("NL","NLD",528,"NL-DR","Drenthe","province",NULL)
             ,("NL","NLD",528,"NL-FL","Flevoland","province",NULL)
@@ -3811,7 +4387,8 @@ class sqlite3_sample_files:
             ,("NZ","NZL",554,"NZ-AUK","Auckland","region",NULL)
             ,("NZ","NZL",554,"NZ-BOP","Bay of Plenty","region",NULL)
             ,("NZ","NZL",554,"NZ-CAN","Canterbury","region",NULL)
-            ,("NZ","NZL",554,"NZ-CIT","Chatham Islands Territory","special_island_authority",NULL)
+            ,("NZ","NZL",554,"NZ-CIT",
+                "Chatham Islands Territory","special_island_authority",NULL)
             ,("NZ","NZL",554,"NZ-GIS","Gisborne","region",NULL)
             ,("NZ","NZL",554,"NZ-HKB","Hawke's Bay","region",NULL)
             ,("NZ","NZL",554,"NZ-MBH","Marlborough","region",NULL)
@@ -3865,7 +4442,8 @@ class sqlite3_sample_files:
             ,("PE","PER",604,"PE-LAL","La Libertad","region",NULL)
             ,("PE","PER",604,"PE-LAM","Lambayeque","region",NULL)
             ,("PE","PER",604,"PE-LIM","Lima","region",NULL)
-            ,("PE","PER",604,"PE-LMA","Municipalidad Metropolitana de Lima","municipality",NULL)
+            ,("PE","PER",604,"PE-LMA",
+                "Municipalidad Metropolitana de Lima","municipality",NULL)
             ,("PE","PER",604,"PE-LOR","Loreto","region",NULL)
             ,("PE","PER",604,"PE-MDD","Madre de Dios","region",NULL)
             ,("PE","PER",604,"PE-MOQ","Moquegua","region",NULL)
@@ -3878,27 +4456,42 @@ class sqlite3_sample_files:
             ,("PE","PER",604,"PE-UCA","Ucayali","region",NULL)
             ,("PF","PYF",258,"PF-??","French Polynesia","country",NULL)
             ,("PG","PNG",598,"PG-CPK","Simbu Province Chimbu","province",NULL)
-            ,("PG","PNG",598,"PG-CPM","Central Province Central","province",NULL)
-            ,("PG","PNG",598,"PG-EBR","East New Britain Province East New Britain","province",NULL)
-            ,("PG","PNG",598,"PG-EHG","Eastern Highlands Province Eastern Highlands","province",NULL)
+            ,("PG","PNG",598,"PG-CPM",
+                "Central Province Central","province",NULL)
+            ,("PG","PNG",598,"PG-EBR",
+                "East New Britain Province East New Britain","province",NULL)
+            ,("PG","PNG",598,"PG-EHG",
+                "Eastern Highlands Province Eastern Highlands","province",NULL)
             ,("PG","PNG",598,"PG-EPW","Enga Province Enga","province",NULL)
-            ,("PG","PNG",598,"PG-ESW","East Sepik Province East Sepik","province",NULL)
+            ,("PG","PNG",598,"PG-ESW",
+                "East Sepik Province East Sepik","province",NULL)
             ,("PG","PNG",598,"PG-GPK","Gulf Province Gulf","province",NULL)
             ,("PG","PNG",598,"PG-HLA","Hela Province Hela","province",NULL)
             ,("PG","PNG",598,"PG-JWK","Jiwaka Province Jiwaka","province",NULL)
-            ,("PG","PNG",598,"PG-MBA","Milne Bay Province Milne Bay","province",NULL)
+            ,("PG","PNG",598,"PG-MBA",
+                "Milne Bay Province Milne Bay","province",NULL)
             ,("PG","PNG",598,"PG-MPL","Morobe Province Morobe","province",NULL)
             ,("PG","PNG",598,"PG-MPM","Madang Province Madang","province",NULL)
             ,("PG","PNG",598,"PG-MRL","Manus Province Manus","province",NULL)
-            ,("PG","PNG",598,"PG-NCD","National Capital District","district",NULL)
-            ,("PG","PNG",598,"PG-NIK","New Ireland Province New Ireland","province",NULL)
-            ,("PG","PNG",598,"PG-NPP","Oro Province Northern","province",NULL)
-            ,("PG","PNG",598,"PG-NSB","Bougainville Bougainville","autonomous_region",NULL)
-            ,("PG","PNG",598,"PG-SAN","Sandaun Province West Sepik","province",NULL)
-            ,("PG","PNG",598,"PG-SHM","Southern Highlands Province Southern Highlands","province",NULL)
-            ,("PG","PNG",598,"PG-WBK","West New Britain Province West New Britain","province",NULL)
-            ,("PG","PNG",598,"PG-WHM","Western Highlands Province Western Highlands","province",NULL)
-            ,("PG","PNG",598,"PG-WPD","Fly River Province Western","province",NULL)
+            ,("PG","PNG",598,"PG-NCD",
+                "National Capital District","district",NULL)
+            ,("PG","PNG",598,"PG-NIK",
+                "New Ireland Province New Ireland","province",NULL)
+            ,("PG","PNG",598,"PG-NPP",
+                "Oro Province Northern","province",NULL)
+            ,("PG","PNG",598,"PG-NSB",
+                "Bougainville Bougainville","autonomous_region",NULL)
+            ,("PG","PNG",598,"PG-SAN",
+                "Sandaun Province West Sepik","province",NULL)
+            ,("PG","PNG",598,"PG-SHM",
+                "Southern Highlands Province Southern Highlands",
+                "province",NULL)
+            ,("PG","PNG",598,"PG-WBK",
+                "West New Britain Province West New Britain","province",NULL)
+            ,("PG","PNG",598,"PG-WHM",
+                "Western Highlands Province Western Highlands","province",NULL)
+            ,("PG","PNG",598,"PG-WPD",
+                "Fly River Province Western","province",NULL)
             ,("PH","PHL",608,"PH-00","National Capital Region","region",NULL)
             ,("PH","PHL",608,"PH-01","Ilocos","region",NULL)
             ,("PH","PHL",608,"PH-02","Cagayan Valley","region",NULL)
@@ -3912,8 +4505,10 @@ class sqlite3_sample_files:
             ,("PH","PHL",608,"PH-11","Davao","region",NULL)
             ,("PH","PHL",608,"PH-12","Soccsksargen","region",NULL)
             ,("PH","PHL",608,"PH-13","Caraga","region",NULL)
-            ,("PH","PHL",608,"PH-14","Autonomous Region in Muslim Mindanao","region",NULL)
-            ,("PH","PHL",608,"PH-15","Cordillera Administrative Region","region",NULL)
+            ,("PH","PHL",608,"PH-14",
+                "Autonomous Region in Muslim Mindanao","region",NULL)
+            ,("PH","PHL",608,"PH-15",
+                "Cordillera Administrative Region","region",NULL)
             ,("PH","PHL",608,"PH-40","Calabarzon","region",NULL)
             ,("PH","PHL",608,"PH-41","Mimaropa","region",NULL)
             ,("PH","PHL",608,"PH-ABR","Abra","province","PH-15")
@@ -4000,7 +4595,8 @@ class sqlite3_sample_files:
             ,("PK","PAK",586,"PK-BA","Balochistan","province",NULL)
             ,("PK","PAK",586,"PK-GB","Gilgit-Baltistan","pakistan_administered_area",NULL)
             ,("PK","PAK",586,"PK-IS","Islamabad","federal_capital_territory",NULL)
-            ,("PK","PAK",586,"PK-JK","Azad Jammu and Kashmir","pakistan_administered_area",NULL)
+            ,("PK","PAK",586,"PK-JK",
+                "Azad Jammu and Kashmir","pakistan_administered_area",NULL)
             ,("PK","PAK",586,"PK-KP","Khyber Pakhtunkhwa","province",NULL)
             ,("PK","PAK",586,"PK-PB","Punjab","province",NULL)
             ,("PK","PAK",586,"PK-SD","Sindh","province",NULL)
@@ -4020,7 +4616,8 @@ class sqlite3_sample_files:
             ,("PL","POL",616,"PL-28","Warmińsko-mazurskie","voivodeship",NULL)
             ,("PL","POL",616,"PL-30","Wielkopolskie","voivodeship",NULL)
             ,("PL","POL",616,"PL-32","Zachodniopomorskie","voivodeship",NULL)
-            ,("PM","SPM",666,"PM-??","Saint Pierre and Miquelon","country",NULL)
+            ,("PM","SPM",666,"PM-??",
+                "Saint Pierre and Miquelon","country",NULL)
             ,("PN","PCN",612,"PN-??","Pitcairn Islands","country",NULL)
             ,("PR","PRI",630,"PR-??","Puerto Rico","country",NULL)
             ,("PS","PSE",275,"PS-BTH","Bethlehem","governorate",NULL)
@@ -4029,7 +4626,8 @@ class sqlite3_sample_files:
             ,("PS","PSE",275,"PS-HBN","Hebron","governorate",NULL)
             ,("PS","PSE",275,"PS-JEM","Jerusalem","governorate",NULL)
             ,("PS","PSE",275,"PS-JEN","Jenin","governorate",NULL)
-            ,("PS","PSE",275,"PS-JRH","Jericho and Al Aghwar","governorate",NULL)
+            ,("PS","PSE",275,"PS-JRH",
+                "Jericho and Al Aghwar","governorate",NULL)
             ,("PS","PSE",275,"PS-KYS","Khan Yunis","governorate",NULL)
             ,("PS","PSE",275,"PS-NBS","Nablus","governorate",NULL)
             ,("PS","PSE",275,"PS-NGZ","North Gaza","governorate",NULL)
@@ -4057,8 +4655,10 @@ class sqlite3_sample_files:
             ,("PT","PRT",620,"PT-16","Viana do Castelo","district",NULL)
             ,("PT","PRT",620,"PT-17","Vila Real","district",NULL)
             ,("PT","PRT",620,"PT-18","Viseu","district",NULL)
-            ,("PT","PRT",620,"PT-20","Região Autónoma dos Açores","autonomous_region",NULL)
-            ,("PT","PRT",620,"PT-30","Região Autónoma da Madeira","autonomous_region",NULL)
+            ,("PT","PRT",620,"PT-20",
+                "Região Autónoma dos Açores","autonomous_region",NULL)
+            ,("PT","PRT",620,"PT-30",
+                "Região Autónoma da Madeira","autonomous_region",NULL)
             ,("PW","PLW",585,"PW-002","Aimeliik","state",NULL)
             ,("PW","PLW",585,"PW-004","Airai","state",NULL)
             ,("PW","PLW",585,"PW-010","Angaur","state",NULL)
@@ -4075,26 +4675,46 @@ class sqlite3_sample_files:
             ,("PW","PLW",585,"PW-228","Ngiwal","state",NULL)
             ,("PW","PLW",585,"PW-350","Peleliu","state",NULL)
             ,("PW","PLW",585,"PW-370","Sonsorol","state",NULL)
-            ,("PY","PRY",600,"PY-1","Departamento de Concepción Concepción","department",NULL)
-            ,("PY","PRY",600,"PY-10","Departamento de Alto Paraná Alto Paraná","department",NULL)
-            ,("PY","PRY",600,"PY-11","Departamento Central Central","department",NULL)
-            ,("PY","PRY",600,"PY-12","Departamento de Ñeembucú Ñeembucú","department",NULL)
-            ,("PY","PRY",600,"PY-13","Departamento de Amambay Amambay","department",NULL)
-            ,("PY","PRY",600,"PY-14","Departamento de Canindeyú Canindeyú","department",NULL)
-            ,("PY","PRY",600,"PY-15","Departamento de Presidente Hayes Presidente Hayes","department",NULL)
-            ,("PY","PRY",600,"PY-16","Departamento de Alto Paraguay Alto Paraguay","department",NULL)
-            ,("PY","PRY",600,"PY-19","Departamento de Boquerón Boquerón","department",NULL)
-            ,("PY","PRY",600,"PY-2","Departamento de San Pedro San Pedro","department",NULL)
-            ,("PY","PRY",600,"PY-3","Departamento de Cordillera Cordillera","department",NULL)
-            ,("PY","PRY",600,"PY-4","Departamento de Guairá Guairá","department",NULL)
-            ,("PY","PRY",600,"PY-5","Departamento de Caaguazú Caaguazú","department",NULL)
-            ,("PY","PRY",600,"PY-6","Departamento de Caazapá Caazapá","department",NULL)
-            ,("PY","PRY",600,"PY-7","Departamento de Itapúa Itapúa","department",NULL)
-            ,("PY","PRY",600,"PY-8","Departamento de Misiones Misiones","department",NULL)
-            ,("PY","PRY",600,"PY-9","Departamento de Paraguarí Paraguarí","department",NULL)
+            ,("PY","PRY",600,"PY-1",
+                "Departamento de Concepción Concepción","department",NULL)
+            ,("PY","PRY",600,"PY-10",
+                "Departamento de Alto Paraná Alto Paraná","department",NULL)
+            ,("PY","PRY",600,"PY-11",
+                "Departamento Central Central","department",NULL)
+            ,("PY","PRY",600,"PY-12",
+                "Departamento de Ñeembucú Ñeembucú","department",NULL)
+            ,("PY","PRY",600,"PY-13",
+                "Departamento de Amambay Amambay","department",NULL)
+            ,("PY","PRY",600,"PY-14",
+                "Departamento de Canindeyú Canindeyú","department",NULL)
+            ,("PY","PRY",600,"PY-15",
+                "Departamento de Presidente Hayes Presidente Hayes",
+                "department",NULL)
+            ,("PY","PRY",600,"PY-16",
+                "Departamento de Alto Paraguay Alto Paraguay",
+                "department",NULL)
+            ,("PY","PRY",600,"PY-19",
+                "Departamento de Boquerón Boquerón","department",NULL)
+            ,("PY","PRY",600,"PY-2",
+                "Departamento de San Pedro San Pedro","department",NULL)
+            ,("PY","PRY",600,"PY-3",
+                "Departamento de Cordillera Cordillera","department",NULL)
+            ,("PY","PRY",600,"PY-4",
+                "Departamento de Guairá Guairá","department",NULL)
+            ,("PY","PRY",600,"PY-5",
+                "Departamento de Caaguazú Caaguazú","department",NULL)
+            ,("PY","PRY",600,"PY-6",
+                "Departamento de Caazapá Caazapá","department",NULL)
+            ,("PY","PRY",600,"PY-7",
+                "Departamento de Itapúa Itapúa","department",NULL)
+            ,("PY","PRY",600,"PY-8",
+                "Departamento de Misiones Misiones","department",NULL)
+            ,("PY","PRY",600,"PY-9",
+                "Departamento de Paraguarí Paraguarí","department",NULL)
             ,("PY","PRY",600,"PY-ASU","Asunción Asunción","capital",NULL)
             ,("QA","QAT",634,"QA-DA","Ad Dawḩah","municipality",NULL)
-            ,("QA","QAT",634,"QA-KH","Al Khawr wa adh Dhakhīrah","municipality",NULL)
+            ,("QA","QAT",634,"QA-KH",
+                "Al Khawr wa adh Dhakhīrah","municipality",NULL)
             ,("QA","QAT",634,"QA-MS","Ash Shamāl","municipality",NULL)
             ,("QA","QAT",634,"QA-RA","Ar Rayyān","municipality",NULL)
             ,("QA","QAT",634,"QA-SH","Ash Shīḩānīyah","municipality",NULL)
@@ -4146,9 +4766,12 @@ class sqlite3_sample_files:
             ,("RO","ROU",642,"RO-VS","Vaslui","department",NULL)
             ,("RS","SRB",688,"RS-00","Beograd","city",NULL)
             ,("RS","SRB",688,"RS-01","Severnobački okrug","district","RS-VO")
-            ,("RS","SRB",688,"RS-02","Srednjebanatski okrug","district","RS-VO")
-            ,("RS","SRB",688,"RS-03","Severnobanatski okrug","district","RS-VO")
-            ,("RS","SRB",688,"RS-04","Južnobanatski okrug","district","RS-VO")
+            ,("RS","SRB",688,"RS-02",
+                "Srednjebanatski okrug","district","RS-VO")
+            ,("RS","SRB",688,"RS-03",
+                "Severnobanatski okrug","district","RS-VO")
+            ,("RS","SRB",688,"RS-04",
+                "Južnobanatski okrug","district","RS-VO")
             ,("RS","SRB",688,"RS-05","Zapadnobački okrug","district","RS-VO")
             ,("RS","SRB",688,"RS-06","Južnobački okrug","district","RS-VO")
             ,("RS","SRB",688,"RS-07","Sremski okrug","district","RS-VO")
@@ -4172,93 +4795,166 @@ class sqlite3_sample_files:
             ,("RS","SRB",688,"RS-25","Kosovski okrug","district","RS-KM")
             ,("RS","SRB",688,"RS-26","Pećki okrug","district","RS-KM")
             ,("RS","SRB",688,"RS-27","Prizrenski okrug","district","RS-KM")
-            ,("RS","SRB",688,"RS-28","Kosovsko-Mitrovački okrug","district","RS-KM")
-            ,("RS","SRB",688,"RS-29","Kosovsko-Pomoravski okrug","district","RS-KM")
-            ,("RS","SRB",688,"RS-KM","Kosovo-Metohija","autonomous_province",NULL)
-            ,("RS","SRB",688,"RS-VO","Vojvodina","autonomous_province",NULL)
-            ,("RU","RUS",643,"RU-AD","Adygeya, Respublika","republic",NULL)
-            ,("RU","RUS",643,"RU-AL","Altay, Respublika","republic",NULL)
-            ,("RU","RUS",643,"RU-ALT","Altayskiy kray","administrative_territory",NULL)
-            ,("RU","RUS",643,"RU-AMU","Amurskaya oblast","administrative_region",NULL)
-            ,("RU","RUS",643,"RU-ARK","Arkhangel'skaya oblast","administrative_region",NULL)
-            ,("RU","RUS",643,"RU-AST","Astrakhanskaya oblast","administrative_region",NULL)
-            ,("RU","RUS",643,"RU-BA","Bashkortostan, Respublika","republic",NULL)
-            ,("RU","RUS",643,"RU-BEL","Belgorodskaya oblast","administrative_region",NULL)
-            ,("RU","RUS",643,"RU-BRY","Bryanskaya oblast","administrative_region",NULL)
+            ,("RS","SRB",688,"RS-28",
+                "Kosovsko-Mitrovački okrug","district","RS-KM")
+            ,("RS","SRB",688,"RS-29",
+                "Kosovsko-Pomoravski okrug","district","RS-KM")
+            ,("RS","SRB",688,"RS-KM",
+                "Kosovo-Metohija","autonomous_province",NULL)
+            ,("RS","SRB",688,"RS-VO",
+                "Vojvodina","autonomous_province",NULL)
+            ,("RU","RUS",643,"RU-AD",
+                "Adygeya, Respublika","republic",NULL)
+            ,("RU","RUS",643,"RU-AL",
+                "Altay, Respublika","republic",NULL)
+            ,("RU","RUS",643,"RU-ALT",
+                "Altayskiy kray","administrative_territory",NULL)
+            ,("RU","RUS",643,"RU-AMU",
+                "Amurskaya oblast","administrative_region",NULL)
+            ,("RU","RUS",643,"RU-ARK",
+                "Arkhangel'skaya oblast","administrative_region",NULL)
+            ,("RU","RUS",643,"RU-AST",
+                "Astrakhanskaya oblast","administrative_region",NULL)
+            ,("RU","RUS",643,"RU-BA",
+                "Bashkortostan, Respublika","republic",NULL)
+            ,("RU","RUS",643,"RU-BEL",
+                "Belgorodskaya oblast","administrative_region",NULL)
+            ,("RU","RUS",643,"RU-BRY",
+                "Bryanskaya oblast","administrative_region",NULL)
             ,("RU","RUS",643,"RU-BU","Buryatiya, Respublika","republic",NULL)
             ,("RU","RUS",643,"RU-CE","Chechenskaya Respublika","republic",NULL)
-            ,("RU","RUS",643,"RU-CHE","Chelyabinskaya oblast","administrative_region",NULL)
-            ,("RU","RUS",643,"RU-CHU","Chukotskiy avtonomnyy okrug","autonomous_district",NULL)
+            ,("RU","RUS",643,"RU-CHE",
+                "Chelyabinskaya oblast","administrative_region",NULL)
+            ,("RU","RUS",643,"RU-CHU",
+                "Chukotskiy avtonomnyy okrug","autonomous_district",NULL)
             ,("RU","RUS",643,"RU-CU","Chuvashskaya Respublika","republic",NULL)
             ,("RU","RUS",643,"RU-DA","Dagestan, Respublika","republic",NULL)
             ,("RU","RUS",643,"RU-IN","Ingushetiya, Respublika","republic",NULL)
-            ,("RU","RUS",643,"RU-IRK","Irkutskaya oblast","administrative_region",NULL)
-            ,("RU","RUS",643,"RU-IVA","Ivanovskaya oblast","administrative_region",NULL)
-            ,("RU","RUS",643,"RU-KAM","Kamchatskiy kray","administrative_territory",NULL)
-            ,("RU","RUS",643,"RU-KB","Kabardino-Balkarskaya Respublika","republic",NULL)
-            ,("RU","RUS",643,"RU-KC","Karachayevo-Cherkesskaya Respublika","republic",NULL)
-            ,("RU","RUS",643,"RU-KDA","Krasnodarskiy kray","administrative_territory",NULL)
-            ,("RU","RUS",643,"RU-KEM","Kemerovskaya oblast","administrative_region",NULL)
-            ,("RU","RUS",643,"RU-KGD","Kaliningradskaya oblast","administrative_region",NULL)
-            ,("RU","RUS",643,"RU-KGN","Kurganskaya oblast","administrative_region",NULL)
-            ,("RU","RUS",643,"RU-KHA","Khabarovskiy kray","administrative_territory",NULL)
-            ,("RU","RUS",643,"RU-KHM","Khanty-Mansiyskiy avtonomnyy okrug","autonomous_district",NULL)
-            ,("RU","RUS",643,"RU-KIR","Kirovskaya oblast","administrative_region",NULL)
+            ,("RU","RUS",643,"RU-IRK",
+                "Irkutskaya oblast","administrative_region",NULL)
+            ,("RU","RUS",643,"RU-IVA",
+                "Ivanovskaya oblast","administrative_region",NULL)
+            ,("RU","RUS",643,"RU-KAM",
+                "Kamchatskiy kray","administrative_territory",NULL)
+            ,("RU","RUS",643,"RU-KB",
+                "Kabardino-Balkarskaya Respublika","republic",NULL)
+            ,("RU","RUS",643,"RU-KC",
+                "Karachayevo-Cherkesskaya Respublika","republic",NULL)
+            ,("RU","RUS",643,"RU-KDA",
+                "Krasnodarskiy kray","administrative_territory",NULL)
+            ,("RU","RUS",643,"RU-KEM",
+                "Kemerovskaya oblast","administrative_region",NULL)
+            ,("RU","RUS",643,"RU-KGD",
+                "Kaliningradskaya oblast","administrative_region",NULL)
+            ,("RU","RUS",643,"RU-KGN",
+                "Kurganskaya oblast","administrative_region",NULL)
+            ,("RU","RUS",643,"RU-KHA",
+                "Khabarovskiy kray","administrative_territory",NULL)
+            ,("RU","RUS",643,"RU-KHM",
+                "Khanty-Mansiyskiy avtonomnyy okrug",
+                "autonomous_district",NULL)
+            ,("RU","RUS",643,"RU-KIR",
+                "Kirovskaya oblast","administrative_region",NULL)
             ,("RU","RUS",643,"RU-KK","Khakasiya, Respublika","republic",NULL)
             ,("RU","RUS",643,"RU-KL","Kalmykiya, Respublika","republic",NULL)
-            ,("RU","RUS",643,"RU-KLU","Kaluzhskaya oblast","administrative_region",NULL)
+            ,("RU","RUS",643,"RU-KLU",
+                "Kaluzhskaya oblast","administrative_region",NULL)
             ,("RU","RUS",643,"RU-KO","Komi, Respublika","republic",NULL)
-            ,("RU","RUS",643,"RU-KOS","Kostromskaya oblast","administrative_region",NULL)
+            ,("RU","RUS",643,"RU-KOS",
+                "Kostromskaya oblast","administrative_region",NULL)
             ,("RU","RUS",643,"RU-KR","Kareliya, Respublika","republic",NULL)
-            ,("RU","RUS",643,"RU-KRS","Kurskaya oblast","administrative_region",NULL)
-            ,("RU","RUS",643,"RU-KYA","Krasnoyarskiy kray","administrative_territory",NULL)
-            ,("RU","RUS",643,"RU-LEN","Leningradskaya oblast","administrative_region",NULL)
-            ,("RU","RUS",643,"RU-LIP","Lipetskaya oblast","administrative_region",NULL)
-            ,("RU","RUS",643,"RU-MAG","Magadanskaya oblast","administrative_region",NULL)
+            ,("RU","RUS",643,"RU-KRS",
+                "Kurskaya oblast","administrative_region",NULL)
+            ,("RU","RUS",643,"RU-KYA",
+                "Krasnoyarskiy kray","administrative_territory",NULL)
+            ,("RU","RUS",643,"RU-LEN",
+                "Leningradskaya oblast","administrative_region",NULL)
+            ,("RU","RUS",643,"RU-LIP",
+                "Lipetskaya oblast","administrative_region",NULL)
+            ,("RU","RUS",643,"RU-MAG",
+                "Magadanskaya oblast","administrative_region",NULL)
             ,("RU","RUS",643,"RU-ME","Mariy El, Respublika","republic",NULL)
             ,("RU","RUS",643,"RU-MO","Mordoviya, Respublika","republic",NULL)
-            ,("RU","RUS",643,"RU-MOS","Moskovskaya oblast","administrative_region",NULL)
-            ,("RU","RUS",643,"RU-MOW","Moskva","autonomous_city",NULL)
-            ,("RU","RUS",643,"RU-MUR","Murmanskaya oblast","administrative_region",NULL)
-            ,("RU","RUS",643,"RU-NEN","Nenetskiy avtonomnyy okrug","autonomous_district",NULL)
-            ,("RU","RUS",643,"RU-NGR","Novgorodskaya oblast","administrative_region",NULL)
-            ,("RU","RUS",643,"RU-NIZ","Nizhegorodskaya oblast","administrative_region",NULL)
-            ,("RU","RUS",643,"RU-NVS","Novosibirskaya oblast","administrative_region",NULL)
-            ,("RU","RUS",643,"RU-OMS","Omskaya oblast","administrative_region",NULL)
-            ,("RU","RUS",643,"RU-ORE","Orenburgskaya oblast","administrative_region",NULL)
-            ,("RU","RUS",643,"RU-ORL","Orlovskaya oblast","administrative_region",NULL)
-            ,("RU","RUS",643,"RU-PER","Permskiy kray","administrative_territory",NULL)
-            ,("RU","RUS",643,"RU-PNZ","Penzenskaya oblast","administrative_region",NULL)
-            ,("RU","RUS",643,"RU-PRI","Primorskiy kray","administrative_territory",NULL)
-            ,("RU","RUS",643,"RU-PSK","Pskovskaya oblast","administrative_region",NULL)
-            ,("RU","RUS",643,"RU-ROS","Rostovskaya oblast","administrative_region",NULL)
-            ,("RU","RUS",643,"RU-RYA","Ryazanskaya oblast","administrative_region",NULL)
+            ,("RU","RUS",643,"RU-MOS",
+                "Moskovskaya oblast","administrative_region",NULL)
+            ,("RU","RUS",643,"RU-MOW",
+                "Moskva","autonomous_city",NULL)
+            ,("RU","RUS",643,"RU-MUR",
+                "Murmanskaya oblast","administrative_region",NULL)
+            ,("RU","RUS",643,"RU-NEN",
+                "Nenetskiy avtonomnyy okrug","autonomous_district",NULL)
+            ,("RU","RUS",643,"RU-NGR",
+                "Novgorodskaya oblast","administrative_region",NULL)
+            ,("RU","RUS",643,"RU-NIZ",
+                "Nizhegorodskaya oblast","administrative_region",NULL)
+            ,("RU","RUS",643,"RU-NVS",
+                "Novosibirskaya oblast","administrative_region",NULL)
+            ,("RU","RUS",643,"RU-OMS",
+                "Omskaya oblast","administrative_region",NULL)
+            ,("RU","RUS",643,"RU-ORE",
+                "Orenburgskaya oblast","administrative_region",NULL)
+            ,("RU","RUS",643,"RU-ORL",
+                "Orlovskaya oblast","administrative_region",NULL)
+            ,("RU","RUS",643,"RU-PER",
+                "Permskiy kray","administrative_territory",NULL)
+            ,("RU","RUS",643,"RU-PNZ",
+                "Penzenskaya oblast","administrative_region",NULL)
+            ,("RU","RUS",643,"RU-PRI",
+                "Primorskiy kray","administrative_territory",NULL)
+            ,("RU","RUS",643,"RU-PSK",
+                "Pskovskaya oblast","administrative_region",NULL)
+            ,("RU","RUS",643,"RU-ROS",
+                "Rostovskaya oblast","administrative_region",NULL)
+            ,("RU","RUS",643,"RU-RYA",
+                "Ryazanskaya oblast","administrative_region",NULL)
             ,("RU","RUS",643,"RU-SA","Saha, Respublika","republic",NULL)
-            ,("RU","RUS",643,"RU-SAK","Sakhalinskaya oblast","administrative_region",NULL)
-            ,("RU","RUS",643,"RU-SAM","Samarskaya oblast","administrative_region",NULL)
-            ,("RU","RUS",643,"RU-SAR","Saratovskaya oblast","administrative_region",NULL)
-            ,("RU","RUS",643,"RU-SE","Severnaya Osetiya, Respublika","republic",NULL)
-            ,("RU","RUS",643,"RU-SMO","Smolenskaya oblast","administrative_region",NULL)
-            ,("RU","RUS",643,"RU-SPE","Sankt-Peterburg","autonomous_city",NULL)
-            ,("RU","RUS",643,"RU-STA","Stavropol'skiy kray","administrative_territory",NULL)
-            ,("RU","RUS",643,"RU-SVE","Sverdlovskaya oblast","administrative_region",NULL)
+            ,("RU","RUS",643,"RU-SAK",
+                "Sakhalinskaya oblast","administrative_region",NULL)
+            ,("RU","RUS",643,"RU-SAM",
+                "Samarskaya oblast","administrative_region",NULL)
+            ,("RU","RUS",643,"RU-SAR",
+                "Saratovskaya oblast","administrative_region",NULL)
+            ,("RU","RUS",643,"RU-SE",
+                "Severnaya Osetiya, Respublika","republic",NULL)
+            ,("RU","RUS",643,"RU-SMO",
+                "Smolenskaya oblast","administrative_region",NULL)
+            ,("RU","RUS",643,"RU-SPE",
+                "Sankt-Peterburg","autonomous_city",NULL)
+            ,("RU","RUS",643,"RU-STA",
+                "Stavropol'skiy kray","administrative_territory",NULL)
+            ,("RU","RUS",643,"RU-SVE",
+                "Sverdlovskaya oblast","administrative_region",NULL)
             ,("RU","RUS",643,"RU-TA","Tatarstan, Respublika","republic",NULL)
-            ,("RU","RUS",643,"RU-TAM","Tambovskaya oblast","administrative_region",NULL)
-            ,("RU","RUS",643,"RU-TOM","Tomskaya oblast","administrative_region",NULL)
-            ,("RU","RUS",643,"RU-TUL","Tul'skaya oblast","administrative_region",NULL)
-            ,("RU","RUS",643,"RU-TVE","Tverskaya oblast","administrative_region",NULL)
+            ,("RU","RUS",643,"RU-TAM",
+                "Tambovskaya oblast","administrative_region",NULL)
+            ,("RU","RUS",643,"RU-TOM",
+                "Tomskaya oblast","administrative_region",NULL)
+            ,("RU","RUS",643,"RU-TUL",
+                "Tul'skaya oblast","administrative_region",NULL)
+            ,("RU","RUS",643,"RU-TVE",
+                "Tverskaya oblast","administrative_region",NULL)
             ,("RU","RUS",643,"RU-TY","Tyva, Respublika","republic",NULL)
-            ,("RU","RUS",643,"RU-TYU","Tyumenskaya oblast'","administrative_region",NULL)
+            ,("RU","RUS",643,"RU-TYU",
+                "Tyumenskaya oblast'","administrative_region",NULL)
             ,("RU","RUS",643,"RU-UD","Udmurtskaya Respublika","republic",NULL)
-            ,("RU","RUS",643,"RU-ULY","Ul'yanovskaya oblast'","administrative_region",NULL)
-            ,("RU","RUS",643,"RU-VGG","Volgogradskaya oblast'","administrative_region",NULL)
-            ,("RU","RUS",643,"RU-VLA","Vladimirskaya oblast'","administrative_region",NULL)
-            ,("RU","RUS",643,"RU-VLG","Vologodskaya oblast'","administrative_region",NULL)
-            ,("RU","RUS",643,"RU-VOR","Voronezhskaya oblast'","administrative_region",NULL)
-            ,("RU","RUS",643,"RU-YAN","Yamalo-Nenetskiy avtonomnyy okrug","autonomous_district",NULL)
-            ,("RU","RUS",643,"RU-YAR","Yaroslavskaya oblast'","administrative_region",NULL)
-            ,("RU","RUS",643,"RU-YEV","Yevreyskaya avtonomnaya oblast'","autonomous_region",NULL)
-            ,("RU","RUS",643,"RU-ZAB","Zabaykal'skiy kray","administrative_territory",NULL)
+            ,("RU","RUS",643,"RU-ULY",
+                "Ul'yanovskaya oblast'","administrative_region",NULL)
+            ,("RU","RUS",643,"RU-VGG",
+                "Volgogradskaya oblast'","administrative_region",NULL)
+            ,("RU","RUS",643,"RU-VLA",
+                "Vladimirskaya oblast'","administrative_region",NULL)
+            ,("RU","RUS",643,"RU-VLG",
+                "Vologodskaya oblast'","administrative_region",NULL)
+            ,("RU","RUS",643,"RU-VOR",
+                "Voronezhskaya oblast'","administrative_region",NULL)
+            ,("RU","RUS",643,"RU-YAN",
+                "Yamalo-Nenetskiy avtonomnyy okrug","autonomous_district",NULL)
+            ,("RU","RUS",643,"RU-YAR",
+                "Yaroslavskaya oblast'","administrative_region",NULL)
+            ,("RU","RUS",643,"RU-YEV",
+                "Yevreyskaya avtonomnaya oblast'","autonomous_region",NULL)
+            ,("RU","RUS",643,"RU-ZAB",
+                "Zabaykal'skiy kray","administrative_territory",NULL)
             ,("RW","RWA",646,"RW-01","City of Kigali","city",NULL)
             ,("RW","RWA",646,"RW-02","Eastern","province",NULL)
             ,("RW","RWA",646,"RW-03","Northern","province",NULL)
@@ -4279,7 +4975,8 @@ class sqlite3_sample_files:
             ,("SA","SAU",682,"SA-14","'Asīr","region",NULL)
             ,("SB","SLB",90,"SB-CE","Central","province",NULL)
             ,("SB","SLB",90,"SB-CH","Choiseul","province",NULL)
-            ,("SB","SLB",90,"SB-CT","Capital Territory","capital_territory",NULL)
+            ,("SB","SLB",90,"SB-CT",
+                "Capital Territory","capital_territory",NULL)
             ,("SB","SLB",90,"SB-GU","Guadalcanal","province",NULL)
             ,("SB","SLB",90,"SB-IS","Isabel","province",NULL)
             ,("SB","SLB",90,"SB-MK","Makira-Ulawa","province",NULL)
@@ -4372,7 +5069,8 @@ class sqlite3_sample_files:
             ,("SI","SVN",705,"SI-009","Brežice","municipality",NULL)
             ,("SI","SVN",705,"SI-010","Tišina","municipality",NULL)
             ,("SI","SVN",705,"SI-011","Celje","urban_municipality",NULL)
-            ,("SI","SVN",705,"SI-012","Cerklje na Gorenjskem","municipality",NULL)
+            ,("SI","SVN",705,"SI-012",
+                "Cerklje na Gorenjskem","municipality",NULL)
             ,("SI","SVN",705,"SI-013","Cerknica","municipality",NULL)
             ,("SI","SVN",705,"SI-014","Cerkno","municipality",NULL)
             ,("SI","SVN",705,"SI-015","Črenšovci","municipality",NULL)
@@ -4381,13 +5079,15 @@ class sqlite3_sample_files:
             ,("SI","SVN",705,"SI-018","Destrnik","municipality",NULL)
             ,("SI","SVN",705,"SI-019","Divača","municipality",NULL)
             ,("SI","SVN",705,"SI-020","Dobrepolje","municipality",NULL)
-            ,("SI","SVN",705,"SI-021","Dobrova-Polhov Gradec","municipality",NULL)
+            ,("SI","SVN",705,"SI-021",
+                "Dobrova-Polhov Gradec","municipality",NULL)
             ,("SI","SVN",705,"SI-022","Dol pri Ljubljani","municipality",NULL)
             ,("SI","SVN",705,"SI-023","Domžale","municipality",NULL)
             ,("SI","SVN",705,"SI-024","Dornava","municipality",NULL)
             ,("SI","SVN",705,"SI-025","Dravograd","municipality",NULL)
             ,("SI","SVN",705,"SI-026","Duplek","municipality",NULL)
-            ,("SI","SVN",705,"SI-027","Gorenja vas-Poljane","municipality",NULL)
+            ,("SI","SVN",705,"SI-027",
+                "Gorenja vas-Poljane","municipality",NULL)
             ,("SI","SVN",705,"SI-028","Gorišnica","municipality",NULL)
             ,("SI","SVN",705,"SI-029","Gornja Radgona","municipality",NULL)
             ,("SI","SVN",705,"SI-030","Gornji Grad","municipality",NULL)
@@ -4440,7 +5140,8 @@ class sqlite3_sample_files:
             ,("SI","SVN",705,"SI-077","Moravče","municipality",NULL)
             ,("SI","SVN",705,"SI-078","Moravske Toplice","municipality",NULL)
             ,("SI","SVN",705,"SI-079","Mozirje","municipality",NULL)
-            ,("SI","SVN",705,"SI-080","Murska Sobota","urban_municipality",NULL)
+            ,("SI","SVN",705,"SI-080",
+                "Murska Sobota","urban_municipality",NULL)
             ,("SI","SVN",705,"SI-081","Muta","municipality",NULL)
             ,("SI","SVN",705,"SI-082","Naklo","municipality",NULL)
             ,("SI","SVN",705,"SI-083","Nazarje","municipality",NULL)
@@ -4472,11 +5173,13 @@ class sqlite3_sample_files:
             ,("SI","SVN",705,"SI-109","Semič","municipality",NULL)
             ,("SI","SVN",705,"SI-110","Sevnica","municipality",NULL)
             ,("SI","SVN",705,"SI-111","Sežana","municipality",NULL)
-            ,("SI","SVN",705,"SI-112","Slovenj Gradec","urban_municipality",NULL)
+            ,("SI","SVN",705,"SI-112",
+                "Slovenj Gradec","urban_municipality",NULL)
             ,("SI","SVN",705,"SI-113","Slovenska Bistrica","municipality",NULL)
             ,("SI","SVN",705,"SI-114","Slovenske Konjice","municipality",NULL)
             ,("SI","SVN",705,"SI-115","Starše","municipality",NULL)
-            ,("SI","SVN",705,"SI-116","Sveti Jurij ob Ščavnici","municipality",NULL)
+            ,("SI","SVN",705,"SI-116",
+                "Sveti Jurij ob Ščavnici","municipality",NULL)
             ,("SI","SVN",705,"SI-117","Šenčur","municipality",NULL)
             ,("SI","SVN",705,"SI-118","Šentilj","municipality",NULL)
             ,("SI","SVN",705,"SI-119","Šentjernej","municipality",NULL)
@@ -4528,7 +5231,8 @@ class sqlite3_sample_files:
             ,("SI","SVN",705,"SI-166","Križevci","municipality",NULL)
             ,("SI","SVN",705,"SI-167","Lovrenc na Pohorju","municipality",NULL)
             ,("SI","SVN",705,"SI-168","Markovci","municipality",NULL)
-            ,("SI","SVN",705,"SI-169","Miklavž na Dravskem polju","municipality",NULL)
+            ,("SI","SVN",705,"SI-169",
+                "Miklavž na Dravskem polju","municipality",NULL)
             ,("SI","SVN",705,"SI-170","Mirna Peč","municipality",NULL)
             ,("SI","SVN",705,"SI-171","Oplotnica","municipality",NULL)
             ,("SI","SVN",705,"SI-172","Podlehnik","municipality",NULL)
@@ -4541,7 +5245,8 @@ class sqlite3_sample_files:
             ,("SI","SVN",705,"SI-179","Sodražica","municipality",NULL)
             ,("SI","SVN",705,"SI-180","Solčava","municipality",NULL)
             ,("SI","SVN",705,"SI-181","Sveta Ana","municipality",NULL)
-            ,("SI","SVN",705,"SI-182","Sveti Andraž v Slovenskih goricah","municipality",NULL)
+            ,("SI","SVN",705,"SI-182",
+                "Sveti Andraž v Slovenskih goricah","municipality",NULL)
             ,("SI","SVN",705,"SI-183","Šempeter-Vrtojba","municipality",NULL)
             ,("SI","SVN",705,"SI-184","Tabor","municipality",NULL)
             ,("SI","SVN",705,"SI-185","Trnovska Vas","municipality",NULL)
@@ -4556,20 +5261,23 @@ class sqlite3_sample_files:
             ,("SI","SVN",705,"SI-194","Šmartno pri Litiji","municipality",NULL)
             ,("SI","SVN",705,"SI-195","Apače","municipality",NULL)
             ,("SI","SVN",705,"SI-196","Cirkulane","municipality",NULL)
-            ,("SI","SVN",705,"SI-197","Kostanjevica na Krki","municipality",NULL)
+            ,("SI","SVN",705,"SI-197",
+                "Kostanjevica na Krki","municipality",NULL)
             ,("SI","SVN",705,"SI-198","Makole","municipality",NULL)
             ,("SI","SVN",705,"SI-199","Mokronog-Trebelno","municipality",NULL)
             ,("SI","SVN",705,"SI-200","Poljčane","municipality",NULL)
             ,("SI","SVN",705,"SI-201","Renče-Vogrsko","municipality",NULL)
             ,("SI","SVN",705,"SI-202","Središče ob Dravi","municipality",NULL)
             ,("SI","SVN",705,"SI-203","Straža","municipality",NULL)
-            ,("SI","SVN",705,"SI-204","Sveta Trojica v Slovenskih goricah","municipality",NULL)
+            ,("SI","SVN",705,"SI-204",
+                "Sveta Trojica v Slovenskih goricah","municipality",NULL)
             ,("SI","SVN",705,"SI-205","Sveti Tomaž","municipality",NULL)
             ,("SI","SVN",705,"SI-206","Šmarješke Toplice","municipality",NULL)
             ,("SI","SVN",705,"SI-207","Gorje","municipality",NULL)
             ,("SI","SVN",705,"SI-208","Log-Dragomer","municipality",NULL)
             ,("SI","SVN",705,"SI-209","Rečica ob Savinji","municipality",NULL)
-            ,("SI","SVN",705,"SI-210","Sveti Jurij v Slovenskih goricah","municipality",NULL)
+            ,("SI","SVN",705,"SI-210",
+                "Sveti Jurij v Slovenskih goricah","municipality",NULL)
             ,("SI","SVN",705,"SI-211","Šentrupert","municipality",NULL)
             ,("SI","SVN",705,"SI-212","Mirna","municipality",NULL)
             ,("SI","SVN",705,"SI-213","Ankaran","municipality",NULL)
@@ -4618,16 +5326,21 @@ class sqlite3_sample_files:
             ,("SO","SOM",706,"SO-GA","Galguduud","administrative_region",NULL)
             ,("SO","SOM",706,"SO-GE","Gedo","administrative_region",NULL)
             ,("SO","SOM",706,"SO-HI","Hiiraan","administrative_region",NULL)
-            ,("SO","SOM",706,"SO-JD","Jubbada Dhexe","administrative_region",NULL)
-            ,("SO","SOM",706,"SO-JH","Jubbada Hoose","administrative_region",NULL)
+            ,("SO","SOM",706,"SO-JD",
+                "Jubbada Dhexe","administrative_region",NULL)
+            ,("SO","SOM",706,"SO-JH",
+                "Jubbada Hoose","administrative_region",NULL)
             ,("SO","SOM",706,"SO-MU","Mudug","administrative_region",NULL)
             ,("SO","SOM",706,"SO-NU","Nugaal","administrative_region",NULL)
             ,("SO","SOM",706,"SO-SA","Sanaag","administrative_region",NULL)
-            ,("SO","SOM",706,"SO-SD","Shabeellaha Dhexe","administrative_region",NULL)
-            ,("SO","SOM",706,"SO-SH","Shabeellaha Hoose","administrative_region",NULL)
+            ,("SO","SOM",706,"SO-SD",
+                "Shabeellaha Dhexe","administrative_region",NULL)
+            ,("SO","SOM",706,"SO-SH",
+                "Shabeellaha Hoose","administrative_region",NULL)
             ,("SO","SOM",706,"SO-SO","Sool","administrative_region",NULL)
             ,("SO","SOM",706,"SO-TO","Togdheer","administrative_region",NULL)
-            ,("SO","SOM",706,"SO-WO","Woqooyi Galbeed","administrative_region",NULL)
+            ,("SO","SOM",706,"SO-WO",
+                "Woqooyi Galbeed","administrative_region",NULL)
             ,("SR","SUR",740,"SR-BR","Brokopondo","district",NULL)
             ,("SR","SUR",740,"SR-CM","Commewijne","district",NULL)
             ,("SR","SUR",740,"SR-CR","Coronie","district",NULL)
@@ -4712,12 +5425,15 @@ class sqlite3_sample_files:
             ,("TD","TCD",148,"TD-TA","Tānjīlī","province",NULL)
             ,("TD","TCD",148,"TD-TI","Tibastī","province",NULL)
             ,("TD","TCD",148,"TD-WF","Wādī Fīrā'","province",NULL)
-            ,("TF","ATF",260,"TF-??","French Southern and Antarctic Lands","country",NULL)
-            ,("TH","THA",764,"TH-10","Krung Thep Maha Nakhon","metropolitan_administration",NULL)
+            ,("TF","ATF",260,"TF-??",
+                "French Southern and Antarctic Lands","country",NULL)
+            ,("TH","THA",764,"TH-10",
+                "Krung Thep Maha Nakhon","metropolitan_administration",NULL)
             ,("TH","THA",764,"TH-11","Samut Prakan","province",NULL)
             ,("TH","THA",764,"TH-12","Nonthaburi","province",NULL)
             ,("TH","THA",764,"TH-13","Pathum Thani","province",NULL)
-            ,("TH","THA",764,"TH-14","Phra Nakhon Si Ayutthaya","province",NULL)
+            ,("TH","THA",764,"TH-14",
+                "Phra Nakhon Si Ayutthaya","province",NULL)
             ,("TH","THA",764,"TH-15","Ang Thong","province",NULL)
             ,("TH","THA",764,"TH-16","Lop Buri","province",NULL)
             ,("TH","THA",764,"TH-17","Sing Buri","province",NULL)
@@ -4792,9 +5508,12 @@ class sqlite3_sample_files:
             ,("TH","THA",764,"TH-96","Narathiwat","province",NULL)
             ,("TH","THA",764,"TH-S","Phatthaya","special_administrative_city",NULL)
             ,("TJ","TJK",762,"TJ-DU","Dushanbe","capital_territory",NULL)
-            ,("TJ","TJK",762,"TJ-GB","Kŭhistoni Badakhshon","autonomous_region",NULL)
+            ,("TJ","TJK",762,"TJ-GB",
+                "Kŭhistoni Badakhshon","autonomous_region",NULL)
             ,("TJ","TJK",762,"TJ-KT","Khatlon","region",NULL)
-            ,("TJ","TJK",762,"TJ-RA","nohiyahoi tobei jumhurí","district_under_republic_administration",NULL)
+            ,("TJ","TJK",762,"TJ-RA",
+                "nohiyahoi tobei jumhurí",
+                "district_under_republic_administration",NULL)
             ,("TJ","TJK",762,"TJ-SU","Sughd","region",NULL)
             ,("TK","TKL",772,"TK-??","Tokelau","country",NULL)
             ,("TL","TLS",626,"TL-AL","Aileu","municipality",NULL)
@@ -4808,7 +5527,8 @@ class sqlite3_sample_files:
             ,("TL","TLS",626,"TL-LI","Liquiça","municipality",NULL)
             ,("TL","TLS",626,"TL-MF","Manufahi","municipality",NULL)
             ,("TL","TLS",626,"TL-MT","Manatuto","municipality",NULL)
-            ,("TL","TLS",626,"TL-OE","Oé-Cusse Ambeno","special_administrative_region",NULL)
+            ,("TL","TLS",626,"TL-OE",
+                "Oé-Cusse Ambeno","special_administrative_region",NULL)
             ,("TL","TLS",626,"TL-VI","Viqueque","municipality",NULL)
             ,("TM","TKM",795,"TM-A","Ahal","region",NULL)
             ,("TM","TKM",795,"TM-B","Balkan","region",NULL)
@@ -5015,7 +5735,8 @@ class sqlite3_sample_files:
             ,("UA","UKR",804,"UA-32","Kyivska oblast","region",NULL)
             ,("UA","UKR",804,"UA-35","Kirovohradska oblast","region",NULL)
             ,("UA","UKR",804,"UA-40","Sevastopol","city",NULL)
-            ,("UA","UKR",804,"UA-43","Avtonomna Respublika Krym","republic",NULL)
+            ,("UA","UKR",804,"UA-43",
+                "Avtonomna Respublika Krym","republic",NULL)
             ,("UA","UKR",804,"UA-46","Lvivska oblast","region",NULL)
             ,("UA","UKR",804,"UA-48","Mykolaivska oblast","region",NULL)
             ,("UA","UKR",804,"UA-51","Odeska oblast","region",NULL)
@@ -5204,7 +5925,8 @@ class sqlite3_sample_files:
             ,("US","USA",840,"US-MI","Michigan","state",NULL)
             ,("US","USA",840,"US-MN","Minnesota","state",NULL)
             ,("US","USA",840,"US-MO","Missouri","state",NULL)
-            ,("US","USA",840,"US-MP","Northern Mariana Islands","outlying_area",NULL)
+            ,("US","USA",840,"US-MP",
+                "Northern Mariana Islands","outlying_area",NULL)
             ,("US","USA",840,"US-MS","Mississippi","state",NULL)
             ,("US","USA",840,"US-MT","Montana","state",NULL)
             ,("US","USA",840,"US-NC","North Carolina","state",NULL)
@@ -5225,10 +5947,12 @@ class sqlite3_sample_files:
             ,("US","USA",840,"US-SD","South Dakota","state",NULL)
             ,("US","USA",840,"US-TN","Tennessee","state",NULL)
             ,("US","USA",840,"US-TX","Texas","state",NULL)
-            ,("US","USA",840,"US-UM","United States Minor Outlying Islands","outlying_area",NULL)
+            ,("US","USA",840,"US-UM",
+                "United States Minor Outlying Islands","outlying_area",NULL)
             ,("US","USA",840,"US-UT","Utah","state",NULL)
             ,("US","USA",840,"US-VA","Virginia","state",NULL)
-            ,("US","USA",840,"US-VI","Virgin Islands, U.S.","outlying_area",NULL)
+            ,("US","USA",840,"US-VI",
+                "Virgin Islands, U.S.","outlying_area",NULL)
             ,("US","USA",840,"US-VT","Vermont","state",NULL)
             ,("US","USA",840,"US-WA","Washington","state",NULL)
             ,("US","USA",840,"US-WI","Wisconsin","state",NULL)
@@ -5260,7 +5984,8 @@ class sqlite3_sample_files:
             ,("UZ","UZB",860,"UZ-NG","Namangan","region",NULL)
             ,("UZ","UZB",860,"UZ-NW","Navoiy","region",NULL)
             ,("UZ","UZB",860,"UZ-QA","Qashqadaryo","region",NULL)
-            ,("UZ","UZB",860,"UZ-QR","Qoraqalpog'iston Respublikasi","republic",NULL)
+            ,("UZ","UZB",860,"UZ-QR",
+                "Qoraqalpog'iston Respublikasi","republic",NULL)
             ,("UZ","UZB",860,"UZ-SA","Samarqand","region",NULL)
             ,("UZ","UZB",860,"UZ-SI","Sirdaryo","region",NULL)
             ,("UZ","UZB",860,"UZ-SU","Surxondaryo","region",NULL)
@@ -5295,12 +6020,14 @@ class sqlite3_sample_files:
             ,("VE","VEN",862,"VE-T","Trujillo","state",NULL)
             ,("VE","VEN",862,"VE-U","Yaracuy","state",NULL)
             ,("VE","VEN",862,"VE-V","Zulia","state",NULL)
-            ,("VE","VEN",862,"VE-W","Dependencias Federales","federal_dependency",NULL)
+            ,("VE","VEN",862,"VE-W",
+                "Dependencias Federales","federal_dependency",NULL)
             ,("VE","VEN",862,"VE-X","La Guaira","state",NULL)
             ,("VE","VEN",862,"VE-Y","Delta Amacuro","state",NULL)
             ,("VE","VEN",862,"VE-Z","Amazonas","state",NULL)
             ,("VG","VGB",92,"VG-??","British Virgin Islands","country",NULL)
-            ,("VI","VIR",850,"VI-??","United States Virgin Islands","country",NULL)
+            ,("VI","VIR",850,"VI-??",
+                "United States Virgin Islands","country",NULL)
             ,("VN","VNM",704,"VN-01","Lai Châu","province",NULL)
             ,("VN","VNM",704,"VN-02","Lào Cai","province",NULL)
             ,("VN","VNM",704,"VN-03","Hà Giang","province",NULL)
@@ -5442,7 +6169,8 @@ class sqlite3_sample_files:
 
     def iso_timezones() -> str:
         """
-        Returns a SQL INSERT script that inserts a list of timezones, and their coresponding ISO country.
+        Returns a SQL INSERT script that inserts a list of timezones,
+        and their coresponding ISO country.
         Data sourced from https://gist.github.com/pamelafox/986163
 
         Parameters
@@ -5451,7 +6179,8 @@ class sqlite3_sample_files:
 
         Returns
         ----------
-        A SQLite3 script that creates a a SQL INSERT script that inserts a list of timezones, and their coresponding ISO country
+        A SQLite3 script that creates a a SQL INSERT script that inserts
+        a list of timezones, and their coresponding ISO country
 
         """
 
@@ -5796,7 +6525,8 @@ class sqlite3_sample_files:
 
     def leagues_sql_file() -> str:
         """
-        Returns a SQLite3 script that creates a table to hold football league information.
+        Returns a SQLite3 script that creates
+        a table to hold football league information.
 
         Parameters
         ----------
@@ -5804,97 +6534,154 @@ class sqlite3_sample_files:
 
         Returns
         ----------
-        A SQLite3 script that creates a table to hold football league information.
+        A SQLite3 script that creates a table
+        to hold football league information.
         """
 
         sql_script = """
         CREATE TABLE "fb_leagues" (
-            "league_id"	                            TEXT UNIQUE,
-            "league_long_name"	                    TEXT NOT NULL,
-            "league_short_name"	                    TEXT NOT NULL,
-            "league_sport_type"	                    TEXT NOT NULL,
-            "league_default_sex"	                TEXT NOT NULL,
-            "league_default_gender"	                TEXT NOT NULL,
-            "league_notes"	                        TEXT,
-            "field_length"	                        INTEGER NOT NULL DEFAULT 100,
-            "downs"	                                INTEGER NOT NULL DEFAULT 4,
-            "first_down_yards"	                    INTEGER NOT NULL DEFAULT 10,
-            "end_zone_length"	                    INTEGER NOT NULL DEFAULT 10,
-            "kickoff_yardline"	                    INTEGER NOT NULL DEFAULT 35,
-            "safety_kick_yardline"	                INTEGER NOT NULL DEFAULT 20,
-            "kickoff_touchback_yardline"	        INTEGER NOT NULL DEFAULT 75,
-            "punt_touchback_yardline"	            INTEGER NOT NULL DEFAULT 80,
-            "normal_touchback_yardline"	            INTEGER NOT NULL DEFAULT 80,
-            "kansas_ot_yardline"	                INTEGER NOT NULL DEFAULT 25,
-            "pat_yardline"	                        INTEGER NOT NULL DEFAULT 3,
-            "1PC_yardline"	                        INTEGER NOT NULL DEFAULT 3,
-            "2PC_yardline"	                        INTEGER NOT NULL DEFAULT 3,
-            "3PC_yardline"	                        INTEGER NOT NULL DEFAULT 10,
-            "quarters"	                            INTEGER NOT NULL DEFAULT 4,
-            "timeouts_per_half"	                    INTEGER NOT NULL DEFAULT 3,
-            "ot_period_seconds"	                    INTEGER NOT NULL DEFAULT 900,
-            "game_seconds"	                        INTEGER NOT NULL DEFAULT 3600,
-            "half_seconds"	                        INTEGER NOT NULL DEFAULT 1800,
-            "quarter_seconds"	                    INTEGER NOT NULL DEFAULT 900,
-            "ot_periods"	                        INTEGER NOT NULL DEFAULT 1,
-            "ot_periods_until_shootout"	            INTEGER NOT NULL DEFAULT -1,
-            "min_xfl_ot_periods"	                INTEGER NOT NULL DEFAULT -1,
-            "set_xfl_ot_periods"	                INTEGER NOT NULL DEFAULT -1,
-            "touchdown_points"	                    INTEGER NOT NULL DEFAULT 6,
-            "field_goal_points"	                    INTEGER NOT NULL DEFAULT 3,
-            "safety_points"	                        INTEGER NOT NULL DEFAULT 2,
-            "pat_points"	                        INTEGER NOT NULL DEFAULT 1,
-            "pat_defense"	                        INTEGER NOT NULL DEFAULT 2,
-            "pat_safety"	                        INTEGER NOT NULL DEFAULT 1,
-            "players_on_field"	                    INTEGER NOT NULL DEFAULT 11,
-            "preseason_overtime_enabled"	        INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
-            "reg_season_ot_enabled"	                INTEGER NOT NULL DEFAULT 1 COLLATE BINARY,
-            "postseason_ot_enabled"	                INTEGER NOT NULL DEFAULT 1 COLLATE BINARY,
-            "preseason_sudden_death_ot"	            INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
-            "reg_season_sudden_death_ot"	        INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
-            "postseason_sudden_death_ot"	        INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
-            "preseason_mod_sudden_death_ot"	        INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
-            "reg_season_mod_sudden_death_ot"	    INTEGER NOT NULL DEFAULT 1 COLLATE BINARY,
-            "postseason_mod_sudden_death_ot"	    INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
-            "preseason_super_modified_ot"	        INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
-            "reg_season_super_modified_ot"	        INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
-            "postseason_super_modified_ot"	        INTEGER NOT NULL DEFAULT 1 COLLATE BINARY,
-            "preseason_kansas_ot"	                INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
-            "reg_season_kansas_ot"	                INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
-            "postseason_kansas_ot"	                INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
-            "preseason_ncaa_ot"	                    INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
-            "reg_season_ncaa_ot"	                INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
-            "postseason_ncaa_ot"	                INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
-            "preseason_xfl_ot"	                    INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
-            "reg_season_xfl_ot"	                    INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
-            "postseason_xfl_ot"	                    INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
-            "preseason_full_period_ot"	            INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
-            "reg_season_full_period_ot"	            INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
-            "postseason_full_period_ot"	            INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
-            "two_forward_passes"	                INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
-            "spikes_are_team_stats"	                INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
-            "sacks_are_rushes"	                    INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
-            "kneeldowns_are_team_stats"	            INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
-            "kickoff_fc_always_goes_to_touchback"	INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
-            "kickoffs_enabled"	                    INTEGER NOT NULL DEFAULT 1 COLLATE BINARY,
-            "use_xfl_kickoff"	                    INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
-            "drop_kick_enabled"	                    INTEGER NOT NULL DEFAULT 1 COLLATE BINARY,
-            "drop_kick_bonus_point"	                INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
-            "fg_adds_ez_length"	                    INTEGER NOT NULL DEFAULT 1 COLLATE BINARY,
-            "long_fg_bonus_point"	                INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
-            "xp_is_a_fg"	                        INTEGER NOT NULL DEFAULT 1 COLLATE BINARY,
-            "rouges_enabled"	                    INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
-            "punting_enabled"	                    INTEGER NOT NULL DEFAULT 1 COLLATE BINARY,
-            "onside_punts_enabled"	                INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
-            "fair_catch_enabled"	                INTEGER NOT NULL DEFAULT 1 COLLATE BINARY,
+            "league_id"  TEXT UNIQUE,
+            "league_long_name"  TEXT NOT NULL,
+            "league_short_name"  TEXT NOT NULL,
+            "league_sport_type"  TEXT NOT NULL,
+            "league_default_sex"  TEXT NOT NULL,
+            "league_default_gender"  TEXT NOT NULL,
+            "league_notes"  TEXT,
+            "field_length"  INTEGER NOT NULL DEFAULT 100,
+            "downs"  INTEGER NOT NULL DEFAULT 4,
+            "first_down_yards"  INTEGER NOT NULL DEFAULT 10,
+            "end_zone_length"  INTEGER NOT NULL DEFAULT 10,
+            "kickoff_yardline"  INTEGER NOT NULL DEFAULT 35,
+            "safety_kick_yardline"  INTEGER NOT NULL DEFAULT 20,
+            "kickoff_touchback_yardline"	INTEGER NOT NULL DEFAULT 75,
+            "punt_touchback_yardline"   INTEGER NOT NULL DEFAULT 80,
+            "normal_touchback_yardline"   INTEGER NOT NULL DEFAULT 80,
+            "kansas_ot_yardline"  INTEGER NOT NULL DEFAULT 25,
+            "pat_yardline"  INTEGER NOT NULL DEFAULT 3,
+            "1PC_yardline"  INTEGER NOT NULL DEFAULT 3,
+            "2PC_yardline"  INTEGER NOT NULL DEFAULT 3,
+            "3PC_yardline"  INTEGER NOT NULL DEFAULT 10,
+            "quarters"  INTEGER NOT NULL DEFAULT 4,
+            "timeouts_per_half"  INTEGER NOT NULL DEFAULT 3,
+            "ot_period_seconds"  INTEGER NOT NULL DEFAULT 900,
+            "game_seconds"  INTEGER NOT NULL DEFAULT 3600,
+            "half_seconds"  INTEGER NOT NULL DEFAULT 1800,
+            "quarter_seconds"  INTEGER NOT NULL DEFAULT 900,
+            "ot_periods"  INTEGER NOT NULL DEFAULT 1,
+            "ot_periods_until_shootout"   INTEGER NOT NULL DEFAULT -1,
+            "min_xfl_ot_periods"  INTEGER NOT NULL DEFAULT -1,
+            "set_xfl_ot_periods"  INTEGER NOT NULL DEFAULT -1,
+            "touchdown_points"  INTEGER NOT NULL DEFAULT 6,
+            "field_goal_points"  INTEGER NOT NULL DEFAULT 3,
+            "safety_points"  INTEGER NOT NULL DEFAULT 2,
+            "pat_points"  INTEGER NOT NULL DEFAULT 1,
+            "pat_defense"  INTEGER NOT NULL DEFAULT 2,
+            "pat_safety"  INTEGER NOT NULL DEFAULT 1,
+            "players_on_field"  INTEGER NOT NULL DEFAULT 11,
+            "preseason_overtime_enabled"
+            INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
+            "reg_season_ot_enabled"
+            INTEGER NOT NULL DEFAULT 1 COLLATE BINARY,
+            "postseason_ot_enabled"
+            INTEGER NOT NULL DEFAULT 1 COLLATE BINARY,
+            "preseason_sudden_death_ot"
+            INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
+            "reg_season_sudden_death_ot"
+            INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
+            "postseason_sudden_death_ot"
+            INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
+            "preseason_mod_sudden_death_ot"
+            INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
+            "reg_season_mod_sudden_death_ot"
+            INTEGER NOT NULL DEFAULT 1 COLLATE BINARY,
+            "postseason_mod_sudden_death_ot"
+            INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
+            "preseason_super_modified_ot"
+            INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
+            "reg_season_super_modified_ot"
+            INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
+            "postseason_super_modified_ot"
+            INTEGER NOT NULL DEFAULT 1 COLLATE BINARY,
+            "preseason_kansas_ot"
+            INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
+            "reg_season_kansas_ot"
+            INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
+            "postseason_kansas_ot"
+            INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
+            "preseason_ncaa_ot"
+            INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
+            "reg_season_ncaa_ot"
+            INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
+            "postseason_ncaa_ot"
+            INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
+            "preseason_xfl_ot"
+            INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
+            "reg_season_xfl_ot"
+            INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
+            "postseason_xfl_ot"
+            INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
+            "preseason_full_period_ot"
+            INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
+            "reg_season_full_period_ot"
+            INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
+            "postseason_full_period_ot"
+            INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
+            "two_forward_passes"
+            INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
+            "spikes_are_team_stats"
+            INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
+            "sacks_are_rushes"
+            INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
+            "kneeldowns_are_team_stats"
+            INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
+            "kickoff_fc_always_goes_to_touchback"
+            INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
+            "kickoffs_enabled"
+            INTEGER NOT NULL DEFAULT 1 COLLATE BINARY,
+            "use_xfl_kickoff"
+            INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
+            "drop_kick_enabled"
+            INTEGER NOT NULL DEFAULT 1 COLLATE BINARY,
+            "drop_kick_bonus_point"
+            INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
+            "fg_adds_ez_length"
+            INTEGER NOT NULL DEFAULT 1 COLLATE BINARY,
+            "long_fg_bonus_point"
+            INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
+            "xp_is_a_fg"
+            INTEGER NOT NULL DEFAULT 1 COLLATE BINARY,
+            "rouges_enabled"
+            INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
+            "punting_enabled"
+            INTEGER NOT NULL DEFAULT 1 COLLATE BINARY,
+            "onside_punts_enabled"
+            INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
+            "fair_catch_enabled"
+            INTEGER NOT NULL DEFAULT 1 COLLATE BINARY,
             CONSTRAINT "pk_league_id" PRIMARY KEY("league_id")
         );
 
         CREATE UNIQUE INDEX idx_leagues_id
         ON fb_leagues (league_id);
 
-        INSERT INTO "fb_leagues" ("league_id","league_short_name","league_long_name","league_notes","league_sport_type","league_default_sex","league_default_gender")
-        VALUES ("DEFL", "DEFL", "DEfault Football League","The default football league for this application.","NFL","M","Male");
+        INSERT INTO "fb_leagues" (
+            "league_id",
+            "league_short_name",
+            "league_long_name",
+            "league_notes",
+            "league_sport_type",
+            "league_default_sex",
+            "league_default_gender"
+        )
+        VALUES (
+            "DEFL",
+            "DEFL",
+            "DEfault Football League",
+            "The default football league for this application.",
+            "NFL",
+            "M",
+            "Male"
+        );
 
         """
         return sql_script.replace("        ", "")
@@ -5910,7 +6697,8 @@ class sqlite3_sample_files:
 
         Returns
         ----------
-        A SQLite3 script that creates a table that holds data for various league's seasons.
+        A SQLite3 script that creates a table that holds data
+        for various league's seasons.
 
         """
 
@@ -5919,77 +6707,92 @@ class sqlite3_sample_files:
             "season"                                INT NOT NULL,
             "league_id"                             TEXT NOT NULL,
             "season_notes"                          TEXT,
-            "field_length"	                        INTEGER NOT NULL DEFAULT 100,
-            "downs"	                                INTEGER NOT NULL DEFAULT 4,
-            "first_down_yards"	                    INTEGER NOT NULL DEFAULT 10,
-            "end_zone_length"	                    INTEGER NOT NULL DEFAULT 10,
-            "kickoff_yardline"	                    INTEGER NOT NULL DEFAULT 35,
-            "safety_kick_yardline"	                INTEGER NOT NULL DEFAULT 20,
-            "kickoff_touchback_yardline"	        INTEGER NOT NULL DEFAULT 75,
-            "punt_touchback_yardline"	            INTEGER NOT NULL DEFAULT 80,
-            "normal_touchback_yardline"	            INTEGER NOT NULL DEFAULT 80,
-            "kansas_ot_yardline"	                INTEGER NOT NULL DEFAULT 25,
-            "pat_yardline"	                        INTEGER NOT NULL DEFAULT 3,
-            "1PC_yardline"	                        INTEGER NOT NULL DEFAULT 3,
-            "2PC_yardline"	                        INTEGER NOT NULL DEFAULT 3,
-            "3PC_yardline"	                        INTEGER NOT NULL DEFAULT 10,
-            "quarters"	                            INTEGER NOT NULL DEFAULT 4,
-            "timeouts_per_half"	                    INTEGER NOT NULL DEFAULT 3,
-            "ot_period_seconds"	                    INTEGER NOT NULL DEFAULT 900,
-            "game_seconds"	                        INTEGER NOT NULL DEFAULT 3600,
-            "half_seconds"	                        INTEGER NOT NULL DEFAULT 1800,
-            "quarter_seconds"	                    INTEGER NOT NULL DEFAULT 900,
-            "ot_periods"	                        INTEGER NOT NULL DEFAULT 1,
-            "ot_periods_until_shootout"	            INTEGER NOT NULL DEFAULT -1,
-            "min_xfl_ot_periods"	                INTEGER NOT NULL DEFAULT -1,
-            "set_xfl_ot_periods"	                INTEGER NOT NULL DEFAULT -1,
-            "touchdown_points"	                    INTEGER NOT NULL DEFAULT 6,
-            "field_goal_points"	                    INTEGER NOT NULL DEFAULT 3,
-            "safety_points"	                        INTEGER NOT NULL DEFAULT 2,
-            "pat_points"	                        INTEGER NOT NULL DEFAULT 1,
-            "pat_defense"	                        INTEGER NOT NULL DEFAULT 2,
-            "pat_safety"	                        INTEGER NOT NULL DEFAULT 1,
-            "players_on_field"	                    INTEGER NOT NULL DEFAULT 11,
-            "preseason_overtime_enabled"	        INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
-            "reg_season_ot_enabled"	                INTEGER NOT NULL DEFAULT 1 COLLATE BINARY,
-            "postseason_ot_enabled"	                INTEGER NOT NULL DEFAULT 1 COLLATE BINARY,
-            "preseason_sudden_death_ot"	            INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
-            "reg_season_sudden_death_ot"	        INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
-            "postseason_sudden_death_ot"	        INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
-            "preseason_mod_sudden_death_ot"	        INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
-            "reg_season_mod_sudden_death_ot"	    INTEGER NOT NULL DEFAULT 1 COLLATE BINARY,
-            "postseason_mod_sudden_death_ot"	    INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
-            "preseason_super_modified_ot"	        INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
-            "reg_season_super_modified_ot"	        INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
-            "postseason_super_modified_ot"	        INTEGER NOT NULL DEFAULT 1 COLLATE BINARY,
-            "preseason_kansas_ot"	                INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
-            "reg_season_kansas_ot"	                INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
-            "postseason_kansas_ot"	                INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
-            "preseason_ncaa_ot"	                    INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
-            "reg_season_ncaa_ot"	                INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
-            "postseason_ncaa_ot"	                INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
-            "preseason_xfl_ot"	                    INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
-            "reg_season_xfl_ot"	                    INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
-            "postseason_xfl_ot"	                    INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
-            "preseason_full_period_ot"	            INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
-            "reg_season_full_period_ot"	            INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
-            "postseason_full_period_ot"	            INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
-            "two_forward_passes"	                INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
-            "spikes_are_team_stats"	                INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
-            "sacks_are_rushes"	                    INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
-            "kneeldowns_are_team_stats"	            INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
-            "kickoff_fc_always_goes_to_touchback"	INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
-            "kickoffs_enabled"	                    INTEGER NOT NULL DEFAULT 1 COLLATE BINARY,
-            "use_xfl_kickoff"	                    INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
-            "drop_kick_enabled"	                    INTEGER NOT NULL DEFAULT 1 COLLATE BINARY,
-            "drop_kick_bonus_point"	                INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
-            "fg_adds_ez_length"	                    INTEGER NOT NULL DEFAULT 1 COLLATE BINARY,
-            "long_fg_bonus_point"	                INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
-            "xp_is_a_fg"	                        INTEGER NOT NULL DEFAULT 1 COLLATE BINARY,
-            "rouges_enabled"	                    INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
-            "punting_enabled"	                    INTEGER NOT NULL DEFAULT 1 COLLATE BINARY,
-            "onside_punts_enabled"	                INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
-            "fair_catch_enabled"	                INTEGER NOT NULL DEFAULT 1 COLLATE BINARY,
+            "field_length"          INTEGER NOT NULL DEFAULT 100,
+            "downs"                  INTEGER NOT NULL DEFAULT 4,
+            "first_down_yards"      INTEGER NOT NULL DEFAULT 10,
+            "end_zone_length"      INTEGER NOT NULL DEFAULT 10,
+            "kickoff_yardline"      INTEGER NOT NULL DEFAULT 35,
+            "safety_kick_yardline"  INTEGER NOT NULL DEFAULT 20,
+            "kickoff_touchback_yardline"  INTEGER NOT NULL DEFAULT 75,
+            "punt_touchback_yardline"      INTEGER NOT NULL DEFAULT 80,
+            "normal_touchback_yardline"      INTEGER NOT NULL DEFAULT 80,
+            "kansas_ot_yardline"  INTEGER NOT NULL DEFAULT 25,
+            "pat_yardline"          INTEGER NOT NULL DEFAULT 3,
+            "1PC_yardline"          INTEGER NOT NULL DEFAULT 3,
+            "2PC_yardline"          INTEGER NOT NULL DEFAULT 3,
+            "3PC_yardline"          INTEGER NOT NULL DEFAULT 10,
+            "quarters"              INTEGER NOT NULL DEFAULT 4,
+            "timeouts_per_half"      INTEGER NOT NULL DEFAULT 3,
+            "ot_period_seconds"      INTEGER NOT NULL DEFAULT 900,
+            "game_seconds"          INTEGER NOT NULL DEFAULT 3600,
+            "half_seconds"          INTEGER NOT NULL DEFAULT 1800,
+            "quarter_seconds"      INTEGER NOT NULL DEFAULT 900,
+            "ot_periods"          INTEGER NOT NULL DEFAULT 1,
+            "ot_periods_until_shootout"      INTEGER NOT NULL DEFAULT -1,
+            "min_xfl_ot_periods"  INTEGER NOT NULL DEFAULT -1,
+            "set_xfl_ot_periods"  INTEGER NOT NULL DEFAULT -1,
+            "touchdown_points"      INTEGER NOT NULL DEFAULT 6,
+            "field_goal_points"      INTEGER NOT NULL DEFAULT 3,
+            "safety_points"          INTEGER NOT NULL DEFAULT 2,
+            "pat_points"          INTEGER NOT NULL DEFAULT 1,
+            "pat_defense"          INTEGER NOT NULL DEFAULT 2,
+            "pat_safety"          INTEGER NOT NULL DEFAULT 1,
+            "players_on_field"      INTEGER NOT NULL DEFAULT 11,
+            "preseason_overtime_enabled"
+                INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
+            "reg_season_ot_enabled"  INTEGER NOT NULL DEFAULT 1 COLLATE BINARY,
+            "postseason_ot_enabled"  INTEGER NOT NULL DEFAULT 1 COLLATE BINARY,
+            "preseason_sudden_death_ot"
+                INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
+            "reg_season_sudden_death_ot"
+                INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
+            "postseason_sudden_death_ot"
+                INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
+            "preseason_mod_sudden_death_ot"
+                INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
+            "reg_season_mod_sudden_death_ot"
+                INTEGER NOT NULL DEFAULT 1 COLLATE BINARY,
+            "postseason_mod_sudden_death_ot"
+                INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
+            "preseason_super_modified_ot"
+                INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
+            "reg_season_super_modified_ot"
+                INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
+            "postseason_super_modified_ot"
+                INTEGER NOT NULL DEFAULT 1 COLLATE BINARY,
+            "preseason_kansas_ot"  INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
+            "reg_season_kansas_ot"  INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
+            "postseason_kansas_ot"  INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
+            "preseason_ncaa_ot"      INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
+            "reg_season_ncaa_ot"  INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
+            "postseason_ncaa_ot"  INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
+            "preseason_xfl_ot"      INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
+            "reg_season_xfl_ot"      INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
+            "postseason_xfl_ot"      INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
+            "preseason_full_period_ot"
+                INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
+            "reg_season_full_period_ot"
+                INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
+            "postseason_full_period_ot"
+                INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
+            "two_forward_passes"  INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
+            "spikes_are_team_stats"  INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
+            "sacks_are_rushes"      INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
+            "kneeldowns_are_team_stats"
+                INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
+            "kickoff_fc_always_goes_to_touchback"
+                INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
+            "kickoffs_enabled"      INTEGER NOT NULL DEFAULT 1 COLLATE BINARY,
+            "use_xfl_kickoff"      INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
+            "drop_kick_enabled"      INTEGER NOT NULL DEFAULT 1 COLLATE BINARY,
+            "drop_kick_bonus_point"  INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
+            "fg_adds_ez_length"      INTEGER NOT NULL DEFAULT 1 COLLATE BINARY,
+            "long_fg_bonus_point"  INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
+            "xp_is_a_fg"          INTEGER NOT NULL DEFAULT 1 COLLATE BINARY,
+            "rouges_enabled"      INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
+            "punting_enabled"      INTEGER NOT NULL DEFAULT 1 COLLATE BINARY,
+            "onside_punts_enabled"  INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
+            "fair_catch_enabled"  INTEGER NOT NULL DEFAULT 1 COLLATE BINARY,
             FOREIGN KEY ("league_id")
                 REFERENCES "fb_leagues" ("league_id")
                     ON DELETE CASCADE
@@ -6012,7 +6815,8 @@ class sqlite3_sample_files:
 
     def teams_sql_file() -> str:
         """
-        Returns a SQLite3 script that creates a table that holds data for various teams.
+        Returns a SQLite3 script that creates a table that holds data
+        for various teams.
         In this app, teams are exclusive to specific teams.
 
         Parameters
@@ -6021,7 +6825,8 @@ class sqlite3_sample_files:
 
         Returns
         ----------
-        A SQLite3 script that creates a table that holds data for various teams.
+        A SQLite3 script that creates a table that holds data
+        for various teams.
 
         """
 
@@ -6030,13 +6835,22 @@ class sqlite3_sample_files:
             "season"                INT NOT NULL,
             "league_id"             TEXT NOT NULL,
             "team_id"               TEXT NOT NULL,
-            "pfr_team_id"           TEXT, -- Pro Football Reference Team ID (NFL)
-            "pfr_fran_id"           TEXT, -- Pro Football Reference Franchise ID (NFL)
-            "sr_team_id"            TEXT, -- Sports Reference Team ID (CFB)
-            "ncaa_old_team_id"      INT, -- NCAA Team ID (stats.ncaa.org team ID)
-            "ncaa_team_id"          INT, -- NCAA Team ID (Newer Genius Sports system, not compatible with the stats.ncaa.org site)
-            "stats_crew_team_id"    TEXT, -- Stats Crew Team ID (Various, https://www.statscrew.com/)
-            "footballdb_team_id"    TEXT, -- Football Database Team ID (https://www.footballdb.com/)
+            -- Pro Football Reference Team ID (NFL)
+            "pfr_team_id"           TEXT,
+            -- Pro Football Reference Franchise ID (NFL)
+            "pfr_fran_id"           TEXT,
+            -- Sports Reference Team ID (CFB)
+            "sr_team_id"            TEXT,
+            -- NCAA Team ID (stats.ncaa.org team ID)
+            "ncaa_old_team_id"      INT,
+            -- NCAA Team ID
+            -- (Newer Genius Sports system,
+            -- not compatible with the stats.ncaa.org site)
+            "ncaa_team_id"          INT,
+            -- Stats Crew Team ID (Various, https://www.statscrew.com/)
+            "stats_crew_team_id"    TEXT,
+            -- Football Database Team ID (https://www.footballdb.com/)
+            "footballdb_team_id"    TEXT,
             "team_abv"              TEXT NOT NULL,
             "team_name"             TEXT NOT NULL,
             "team_location"         TEXT NOT NULL,
@@ -6058,9 +6872,20 @@ class sqlite3_sample_files:
         CREATE UNIQUE INDEX idx_teams_id
         ON fb_teams ("season", "league_id","team_id");
 
-        INSERT INTO "fb_teams" ("season","league_id","team_id","team_abv","team_name","team_location","team_nickname")
-        VALUES (2019,"DEFL","UGF","UGF","UGF Pandas","University of Georgia-Fairborn","Pandas"),
-            (2019,"DEFL","DVSU","DVSU","DVSU Dingos","Death Valley State University","Dingos")
+        INSERT INTO "fb_teams" (
+            "season",
+            "league_id",
+            "team_id",
+            "team_abv",
+            "team_name",
+            "team_location",
+            "team_nickname"
+        )
+        VALUES
+            (2019,"DEFL","UGF","UGF",
+                "UGF Pandas","University of Georgia-Fairborn","Pandas"),
+            (2019,"DEFL","DVSU","DVSU",
+                "DVSU Dingos","Death Valley State University","Dingos")
 
         """
         return sql_script.replace("        ", "")
@@ -6078,7 +6903,8 @@ class sqlite3_sample_files:
 
         Returns
         ----------
-        A SQLite3 script that creates a table that holds data for various teams.
+        A SQLite3 script that creates a table that holds data
+        for various teams.
 
         """
 
@@ -6088,18 +6914,40 @@ class sqlite3_sample_files:
             "league_id"                 TEXT NOT NULL,
             "team_id"                   TEXT NOT NULL,
             "player_id"                 INTEGER PRIMARY KEY AUTOINCREMENT,
-            "position"                  TEXT NOT NULL, -- Won't be set by a user.
-            "depth_chart_position"      TEXT NOT NULL, -- TEXT so a player can be identified by "00", "01", "1A", or "1O"/"1D"
-            "jersey_number"             TEXT NOT NULL, 
+            -- Won't be set by a user.
+            "position"                  TEXT NOT NULL,
+            -- TEXT so a player can be identified by
+            -- "00", "01", "1A", or "1O"/"1D"
+            "depth_chart_position"      TEXT NOT NULL,
+            "jersey_number"             TEXT NOT NULL,
             "status"                    TEXT NOT NULL,
-            "player_full_name"          TEXT NOT NULL, 
-            "player_football_name"      TEXT, -- Defaults to the value of "player_first_name", but can be set to a differient value (for example, Boomer Esiason, who's birth name is Norman Esiason, you can have his "player_first_name" == "Norman" and his "player_football_name" == "Boomer"). 
+            "player_full_name"          TEXT NOT NULL,
+            /*
+            Defaults to the value of "player_first_name",
+            but can be set to a differient value
+            (for example, Boomer Esiason,
+            who's birth name is Norman Esiason,
+            you can have his "player_first_name" == "Norman"
+            and his "player_football_name" == "Boomer").
+            */
+            "player_football_name"      TEXT,
             "player_first_name"         TEXT NOT NULL,
-            "player_last_name"          TEXT NOT NULL, 
-            "player_bday"               TEXT, -- SQLite has no internal date/datetime datatype. Birthdays will be stored as "YYYY-MM-DD".
+            "player_last_name"          TEXT NOT NULL,
+            -- SQLite has no internal date/datetime datatype.
+            -- Birthdays will be stored as "YYYY-MM-DD".
+            "player_bday"               TEXT,
             "height"                    INT, -- Player height, in inches.
-            "height_ft"                 INT, -- Calculated before data is inserted, this and "height_in" combine to show the player's height.
-            "height_in"                 INT, -- For example, if a player is 5'10", "height_ft" will be set to `5`, and "height_in" will be set to `10`, and "height" will be `70`.
+            /*
+            Calculated before data is inserted,
+            this and "height_in" combine to show the player's height.
+
+            For example, if a player is 5'10",
+            "height_ft" will be set to `5`,
+            "height_in" will be set to `10`,
+            and "height" will be `70`.
+            */
+            "height_ft"                 INT,
+            "height_in"                 INT,
             "weight"                    INT, -- Player weight, in lbs.
             "college"                   TEXT,
             "gsis_id"                   TEXT,-- NFL GSIS Player ID.
@@ -6107,8 +6955,10 @@ class sqlite3_sample_files:
             "sportradar_id"             TEXT,-- Sportradar Player ID.
             "yahoo_id"                  INT, -- Yahoo Sports Player ID.
             "rotowire_id"               INT, -- Rotowire Player ID.
-            "pff_id"                    INT, -- Pro Football Focus (PFF) Player ID.
-            "pfr_id"                    TEXT,-- Pro Football Reference Player ID.
+            -- Pro Football Focus (PFF) Player ID.
+            "pff_id"                    INT,
+            -- Pro Football Reference Player ID.
+            "pfr_id"                    TEXT,
             "fantasy_data_id"           INT,
             "sleeper_id"                INT,
             "esb_id"                    TEXT,
@@ -6116,12 +6966,14 @@ class sqlite3_sample_files:
             "years_exp"                 INT NOT NULL,
             "headshot_url"              TEXT,
             "headshot_image"            BLOB,
-            "ngs_position"              TEXT,-- Only here for nflverse compatability.
-            "status_description_abbr"   TEXT,-- Here for nflverse compatability. 
-            /* Can have the following values, and is explained in detail here: 
+            -- Only here for nflverse compatability.
+            "ngs_position"              TEXT,
+            -- Here for nflverse compatability.
+            "status_description_abbr"   TEXT,
+            /* Can have the following values, and is explained in detail here:
             https://www.the33rdteam.com/category/analysis/how-and-why-the-practice-squad-works/
                 -- "A01": Active player.
-                -- "E02": Ex/Comm. Perm. 
+                -- "E02": Ex/Comm. Perm.
                 -- "P01": Practice Squad Player.
                 -- "P02": Practice Squad Player, Injured.
                 -- "P03": International Practice Squad Player.
@@ -6131,19 +6983,25 @@ class sqlite3_sample_files:
                 -- "R02": Reserve/Retired.
                 -- "R03": Reserve/Did Not Report.
                 -- "R04": Reserve/Physically Unable to Perform (PUP).
-                -- "R05": Reserve/Non-Football Injury (Designation for injuries outside of NFL games/practices).
+                -- "R05": Reserve/Non-Football Injury
+                    (Designation for injuries outside of NFL games/practices).
                 -- "R06": Reserve/Left Squad.
-                -- "R23": Reserve/Future (If a player has this designation, they are not eligable for games in this season).
+                -- "R23": Reserve/Future
+                    (If a player has this designation,
+                    they are not eligable for games in this season).
                 -- "R27": Reserve/Non-Football Illness.
                 -- "R30": Reserve/Commissioner Suspension, 1 year.
                 -- "R33": Reserve/Club Suspension.
-                -- "R40": Reserve/Suspension, less than 1 year. 
+                -- "R40": Reserve/Suspension, less than 1 year.
                 -- "R47": Reserve/Non-Football Injury, Designated For Return.
                 -- "R48": Reserve/Injured, Designated For Return.
                 -- "W03": Waived, no recall.
             */
-            "entry_year"                INT, -- Year this player finished college, and/or started playing professionally.
-            "rookie_year"               INT, -- Year this player started playing in this league.
+            -- Year this player finished college,
+            -- and/or started playing professionally.
+            "entry_year"                INT,
+            -- Year this player started playing in this league.
+            "rookie_year"               INT,
             FOREIGN KEY ("league_id")
                 REFERENCES "fb_leagues" ("league_id")
                     ON DELETE CASCADE
@@ -6156,140 +7014,419 @@ class sqlite3_sample_files:
         );
 
         CREATE UNIQUE INDEX idx_rosters_id
-        ON "fb_rosters" ("season","league_id","team_id","jersey_number","player_full_name");
+        ON "fb_rosters" (
+            "season",
+            "league_id",
+            "team_id",
+            "jersey_number",
+            "player_full_name"
+        );
 
-        INSERT INTO fb_rosters
-            (season,"league_id","team_id","player_id",position,"depth_chart_position","jersey_number",status,"player_full_name","player_football_name","player_first_name","player_last_name","player_bday",height,"height_ft","height_in",weight,college,"gsis_id","espn_id","sportradar_id","yahoo_id","rotowire_id","pff_id","pfr_id","fantasy_data_id","sleeper_id","esb_id","smart_id","years_exp","headshot_url","headshot_image","ngs_position","status_description_abbr","entry_year","rookie_year")
-        VALUES  
-            (2019,'DEFL','UGF',1,'QB','QB',4,'Active','Will Horton','Will','Will','Horton','09/06/1997',73,6,1,242,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','UGF',2,'QB','QB',16,'Active','Howard Cooke','Howard','Howard','Cooke','09/20/1990',75,6,3,255,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','UGF',3,'QB','QB',5,'Active','Rodney Calhoun','Rodney','Rodney','Calhoun','07/30/2000',75,6,3,216,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','UGF',4,'RB','RB',7,'Active','BJ Hale','BJ','BJ','Hale','04/25/1998',73,6,1,229,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','UGF',5,'RB','RB',2,'Active','Ryan Dingle','Ryan','Ryan','Dingle','08/07/2001',71,5,11,190,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','UGF',6,'RB','RB',42,'Active','Rob Minton','Rob','Rob','Minton','08/27/1995',67,5,7,189,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','UGF',7,'RB','FB',40,'Active','Tom Adamo','Tom','Tom','Adamo','02/08/1991',73,6,1,232,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','UGF',8,'RB','FB',39,'Active','Jason Eaton','Jason','Jason','Eaton','08/06/2003',72,6,0,236,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','UGF',9,'RB','RB',11,'Active','Elliot Denman','Elliot','Elliot','Denman','08/19/1992',73,6,1,180,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','UGF',10,'WR','WR',12,'Active','Neghan Stance','Neghan','Neghan','Stance','06/25/1992',74,6,2,209,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','UGF',11,'WR','WR',88,'Active','Torren Engle','Torren','Torren','Engle','09/30/1992',72,6,0,175,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','UGF',12,'WR','WR',84,'Active','Vance McMahon','Vance','Vance','McMahon','10/04/1998',72,6,0,185,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','UGF',13,'WR','WR',6,'Active','Jake Nelson','Jake','Jake','Nelson','06/27/1999',71,5,11,165,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','UGF',14,'TE','TE',18,'Active','Tez Triplett','Tez','Tez','Triplett','10/24/1993',76,6,4,233,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','UGF',15,'TE','TE',80,'Active','Nick Riley','Nick','Nick','Riley','09/06/1991',75,6,3,219,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','UGF',16,'TE','TE',90,'Active','Ernest Hunter','Ernest','Ernest','Hunter','10/24/2003',75,6,3,231,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','UGF',17,'OL','LT',77,'Active','Eric Robinson','Eric','Eric','Robinson','01/07/1999',78,6,6,312,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','UGF',18,'OL','OT',71,'Active','Bryce Bass','Bryce','Bryce','Bass','11/22/2004',73,6,1,258,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','UGF',19,'OL','RT',55,'Active','Emmitt Rich','Emmitt','Emmitt','Rich','07/29/2004',75,6,3,303,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','UGF',20,'OL','OT',64,'Active','Tyson James','Tyson','Tyson','James','01/31/1991',75,6,3,287,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','UGF',21,'OL','RG',57,'Active','Brent Tanner','Brent','Brent','Tanner','05/31/2003',75,6,3,281,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','UGF',22,'OL','OG',63,'Active','D.D. Henderson','D.D.','D.D.','Henderson','11/04/1996',72,6,0,297,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','UGF',23,'OL','LG',72,'Active','J.T. Milton','J.T.','J.T.','Milton','03/20/2001',75,6,3,279,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','UGF',24,'OL','OG',59,'Active','Adam Huber','Adam','Adam','Huber','03/09/2004',73,6,1,300,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','UGF',25,'OL','C',61,'Active','Bubba Eldridge','Bubba','Bubba','Eldridge','11/22/1999',76,6,4,305,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','UGF',26,'OL','C',54,'Active','Shaud Bates','Shaud','Shaud','Bates','10/20/2002',70,5,10,284,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','UGF',27,'DL','LDE',89,'Active','LeRoy Singleton','LeRoy','LeRoy','Singleton','08/02/1996',76,6,4,249,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','UGF',28,'DL','RDE',91,'Active','Jakari McClelland','Jakari','Jakari','McClelland','08/20/2003',72,6,0,248,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','UGF',29,'DL','DE',95,'Active','Eric Jennings','Eric','Eric','Jennings','07/01/1992',75,6,3,250,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','UGF',30,'DL','DE',66,'Active','Harrison Hodges','Harrison','Harrison','Hodges','05/17/1991',76,6,4,250,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','UGF',31,'DL','NT',87,'Active','Leigh Manley','Leigh','Leigh','Manley','06/13/2003',72,6,0,280,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','UGF',32,'DL','DT',98,'Active','D.D. Nixon','D.D.','D.D.','Nixon','04/07/1994',77,6,5,273,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','UGF',33,'DL','DT',96,'Active','Eli Griffith','Eli','Eli','Griffith','10/25/1994',75,6,3,279,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','UGF',34,'DL','DT',67,'Active','J.T. Benton','J.T.','J.T.','Benton','01/16/2005',73,6,1,243,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','UGF',35,'DL','NG',92,'Active','Mike Dailey','Mike','Mike','Dailey','03/30/1992',73,6,1,287,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','UGF',36,'DL','DT',78,'Active','Gabriel Johnson','Gabriel','Gabriel','Johnson','01/07/1995',70,5,10,248,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','UGF',37,'LB','ROLB',45,'Active','Harry Bridges','Harry','Harry','Bridges','12/30/2004',74,6,2,220,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','UGF',38,'LB','LOLB',50,'Active','Tyler Ruff','Tyler','Tyler','Ruff','08/28/1993',73,6,1,227,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','UGF',39,'LB','EDGE',99,'Active','Ira Riley','Ira','Ira','Riley','04/16/1992',74,6,2,238,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','UGF',40,'LB','OLB',49,'Active','Donta Erickson','Donta','Donta','Erickson','02/23/1996',72,6,0,220,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','UGF',41,'LB','ILB',52,'Active','Eric Tyson','Eric','Eric','Tyson','09/08/2001',72,6,0,235,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','UGF',42,'LB','MLB',51,'Active','Elgin Landry','Elgin','Elgin','Landry','07/15/2003',72,6,0,231,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','UGF',43,'DB','RCB',37,'Active','Andrew Dale','Andrew','Andrew','Dale','04/07/1994',75,6,3,200,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','UGF',44,'DB','LCB',19,'Active','Avery Thompson','Avery','Avery','Thompson','10/13/2004',70,5,10,185,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','UGF',45,'DB','SCB',1,'Active','Casey Eaton','Casey','Casey','Eaton','11/16/1990',74,6,2,195,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','UGF',46,'DB','CB',46,'Active','Derek Lindsey','Derek','Derek','Lindsey','04/12/1997',68,5,8,175,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','UGF',47,'DB','CB',28,'Active','Kareem Huffman','Kareem','Kareem','Huffman','07/16/1991',68,5,8,177,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','UGF',48,'DB','CB',24,'Active','Jimmie Ricks','Jimmie','Jimmie','Ricks','03/12/1997',67,5,7,160,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','UGF',49,'DB','FS',26,'Active','Benny Preston','Benny','Benny','Preston','01/04/1994',73,6,1,180,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','UGF',50,'DB','SAF',23,'Active','Keenan Manning','Keenan','Keenan','Manning','11/25/1992',73,6,1,185,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','UGF',51,'DB','SS',34,'Active','Buck Poole','Buck','Buck','Poole','01/04/2002',71,5,11,188,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','UGF',52,'DB','SAF',48,'Active','Kendal Huber','Kendal','Kendal','Huber','04/10/1991',70,5,10,189,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','UGF',53,'SPEC','K',38,'Active','Andy Francis','Andy','Andy','Francis','05/17/2005',73,6,1,170,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','UGF',54,'SPEC','K',62,'Active','Rex Johnson','Rex','Rex','Johnson','05/27/2001',73,6,1,175,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','UGF',55,'SPEC','P',69,'Active','Jacob Rigdon','Jacob','Jacob','Rigdon','03/08/2003',72,6,0,180,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','UGF',56,'SPEC','P',65,'Active','Stephen Washington','Stephen','Stephen','Washington','03/15/2004',75,6,3,185,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','UGF',57,'SPEC','LS',14,'Active','Logjammer D''Baggagecling','Logjammer','Logjammer','D''Baggagecling','12/08/2001',72,6,0,180,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','UGF',58,'SPEC','LS',56,'Active','Triple Parakeet-Shoes','Triple','Triple','Parakeet-Shoes','07/26/2000',72,6,0,181,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','DVSU',59,'QB','QB',19,'Active','Micheal Wilson','Micheal','Micheal','Wilson','10/23/1999',74,6,2,206,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','DVSU',60,'QB','QB',18,'Active','Antwon Goodwin','Antwon','Antwon','Goodwin','10/01/1998',74,6,2,198,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','DVSU',61,'QB','QB',1,'Active','JT Martinez','JT','JT','Martinez','03/30/1992',73,6,1,200,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','DVSU',62,'QB','QB',5,'Active','Travis Wood','Travis','Travis','Wood','06/24/1998',76,6,4,219,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','DVSU',63,'RB','RB',21,'Active','Matt Morrow','Matt','Matt','Morrow','09/06/1992',70,5,10,199,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','DVSU',64,'RB','RB',2,'Active','Zach Thompson','Zach','Zach','Thompson','05/29/1999',70,5,10,196,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','DVSU',65,'RB','RB',30,'Active','Jamie James','Jamie','Jamie','James','07/01/1995',70,5,10,204,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','DVSU',66,'RB','RB',41,'Active','Terence Wall','Terence','Terence','Wall','10/27/1992',70,5,10,210,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','DVSU',67,'RB','RB',12,'Active','Tre Eaton','Tre','Tre','Eaton','11/17/1991',68,5,8,190,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','DVSU',68,'RB','FB',49,'Active','Perry Samuels','Perry','Perry','Samuels','07/15/2001',74,6,2,225,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','DVSU',69,'RB','FB',29,'Active','Chip Godsey','Chip','Chip','Godsey','12/12/2001',76,6,4,215,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','DVSU',70,'RB','FB',25,'Active','Kellen West','Kellen','Kellen','West','03/11/1997',71,5,11,200,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','DVSU',71,'WR','WR',3,'Active','Seth McKenna','Seth','Seth','McKenna','11/20/2003',67,5,7,170,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','DVSU',72,'WR','WR',80,'Active','Richard Boulder','Richard','Richard','Boulder','12/11/2004',71,5,11,180,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','DVSU',73,'WR','WR',85,'Active','Brady Millar','Brady','Brady','Millar','11/09/1993',74,6,2,220,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','DVSU',74,'WR','WR',47,'Active','Alex King','Alex','Alex','King','02/23/1994',74,6,2,220,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','DVSU',75,'WR','WR',84,'Active','Jacob Hill','Jacob','Jacob','Hill','11/20/2000',73,6,1,196,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','DVSU',76,'WR','WR',34,'Active','Estman Gorman','Estman','Estman','Gorman','01/11/1992',72,6,0,175,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','DVSU',77,'TE','TE',81,'Active','Grankie Gandy','Grankie','Grankie','Gandy','05/03/2001',74,6,2,236,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','DVSU',78,'TE','TE',86,'Active','Bernard Gill','Bernard','Bernard','Gill','04/12/1991',71,5,11,191,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','DVSU',79,'OL','LT',72,'Active','Patrick Boulware','Patrick','Patrick','Boulware','11/15/1995',78,6,6,270,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','DVSU',80,'OL','RT',52,'Active','Benji Odom','Benji','Benji','Odom','02/29/1996',78,6,6,264,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','DVSU',81,'OL','OT',68,'Active','Deshon Haley','Deshon','Deshon','Haley','06/13/1991',78,6,6,287,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','DVSU',82,'OL','OT',75,'Active','C.J. Rozner','C.J.','C.J.','Rozner','08/09/1996',78,6,6,278,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','DVSU',83,'OL','OT',70,'Active','Bobby Giles','Bobby','Bobby','Giles','02/11/2004',77,6,5,287,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','DVSU',84,'OL','OT',64,'Active','Davon Snyder','Davon','Davon','Snyder','08/11/1993',75,6,3,239,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','DVSU',85,'OL','RG',78,'Active','Jermaine Hodges','Jermaine','Jermaine','Hodges','02/18/2004',75,6,3,261,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','DVSU',86,'OL','LG',62,'Active','Aaron White','Aaron','Aaron','White','02/21/1997',76,6,4,317,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','DVSU',87,'OL','OG',67,'Active','Errick Humphrey','Errick','Errick','Humphrey','03/29/1991',76,6,4,306,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','DVSU',88,'OL','OG',58,'Active','Blake Klein','Blake','Blake','Klein','09/19/2001',78,6,6,255,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','DVSU',89,'OL','C',63,'Active','Matt Hampton','Matt','Matt','Hampton','05/13/1995',74,6,2,240,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','DVSU',90,'OL','C',71,'Active','Reshard Boone','Reshard','Reshard','Boone','09/28/1999',73,6,1,265,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','DVSU',91,'DL','LDE',92,'Active','Brylan Down','Brylan','Brylan','Down','11/30/2004',74,6,2,228,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','DVSU',92,'DL','RDE',93,'Active','Dom Atamo','Dom','Dom','Atamo','08/27/2001',74,6,2,235,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','DVSU',93,'DL','DE',99,'Active','Nolan Poole','Nolan','Nolan','Poole','01/07/2003',75,6,3,259,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','DVSU',94,'DL','DE',96,'Active','Del Smith','Del','Del','Smith','01/03/1998',78,6,6,250,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','DVSU',95,'DL','DE',48,'Active','Wesley Stamps','Wesley','Wesley','Stamps','10/30/2001',76,6,4,243,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','DVSU',96,'DL','DT',95,'Active','Joe Walker','Joe','Joe','Walker','09/06/1999',74,6,2,238,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','DVSU',97,'DL','DT',91,'Active','Sammy Sam','Sammy','Sammy','Sam','01/03/2001',75,6,3,260,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','DVSU',98,'DL','DT',65,'Active','Nathan McKee','Nathan','Nathan','McKee','03/04/1999',76,6,4,253,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','DVSU',99,'DL','DT',61,'Active','Doug Campers','Doug','Doug','Campers','08/18/1994',74,6,2,253,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','DVSU',100,'LB','OLB',73,'Active','Neil Krause','Neil','Neil','Krause','04/25/1992',73,6,1,195,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','DVSU',101,'LB','OLB',56,'Active','Oliver McIntyre','Oliver','Oliver','McIntyre','04/23/1999',72,6,0,206,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','DVSU',102,'LB','EDGE',98,'Active','Johnnie Barr','Johnnie','Johnnie','Barr','10/17/1994',72,6,0,211,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','DVSU',103,'LB','EDGE',94,'Active','Abdul Young','Abdul','Abdul','Young','05/05/1994',73,6,1,222,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','DVSU',104,'LB','LB',45,'Active','Samuel Schneider','Samuel','Samuel','Schneider','10/17/1990',73,6,1,214,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','DVSU',105,'LB','MLB',55,'Active','DD Rodgers','DD','DD','Rodgers','07/08/2002',74,6,2,217,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','DVSU',106,'LB','ILB',55,'Active','Will Hughes','Will','Will','Hughes','03/23/1999',74,6,2,220,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','DVSU',107,'LB','ILB',43,'Active','Cooper Stevenson','Cooper','Cooper','Stevenson','02/04/2001',73,6,1,213,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','DVSU',108,'LB','LB',87,'Active','Grant Eaton','Grant','Grant','Eaton','11/03/1991',73,6,1,225,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','DVSU',109,'DB','LCB',24,'Active','Bill Dingle','Bill','Bill','Dingle','12/08/2001',69,5,9,180,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','DVSU',110,'DB','RCB',39,'Active','Jeremy Jimmy','Jeremy','Jeremy','Jimmy','11/22/2000',72,6,0,180,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','DVSU',111,'DB','NCB',4,'Active','DeAngelo Woodard','DeAngelo','DeAngelo','Woodard','06/02/1994',72,6,0,185,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','DVSU',112,'DB','DCB',46,'Active','Lemarcus Parsons','Lemarcus','Lemarcus','Parsons','09/09/1997',71,5,11,175,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','DVSU',113,'DB','FS',36,'Active','Jesse Shelton','Jesse','Jesse','Shelton','08/25/2004',74,6,2,190,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','DVSU',114,'DB','SAF',23,'Active','Chris Hickmon','Chris','Chris','Hickmon','01/23/1998',74,6,2,199,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','DVSU',115,'DB','SS',31,'Active','Timothy Dickens','Timothy','Timothy','Dickens','08/24/1996',74,6,2,194,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','DVSU',116,'DB','SAF',26,'Active','LaShaun Gutierrez','LaShaun','LaShaun','Gutierrez','08/26/1995',71,5,11,191,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','DVSU',117,'SPEC','K',17,'Active','Justin Powell','Justin','Justin','Powell','01/04/1999',70,5,10,209,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','DVSU',118,'SPEC','P',69,'Active','Rob Butler','Rob','Rob','Butler','11/12/2002',73,6,1,195,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','DVSU',119,'SPEC','LS',79,'Active','Velociraptor Maloish','Velociraptor','Scoish','Maloish','11/25/1999',0,NULL,NULL,NULL,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','DVSU',120,'SPEC','LS',83,'Active','Aristokles Prabhu','Aristokles','Aristokles','Prabhu','03/18/2005',0,NULL,NULL,NULL,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','DVSU',121,'SPEC','K',15,'Active','Legume Druprix','Legume','Legume','Druprix','03/22/1997',72,6,0,191,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019)
-            ,(2019,'DEFL','DVSU',122,'SPEC','P',20,'Active','Creme De La Creme','Creme','Creme','De La Creme','04/15/2003',0,NULL,NULL,NULL,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,NULL,2019,2019);
+        INSERT INTO fb_rosters(
+            "season",
+            "league_id",
+            "team_id",
+            "player_id",
+            "position",
+            "depth_chart_position",
+            "jersey_number",
+            "status",
+            "player_full_name",
+            "player_football_name",
+            "player_first_name",
+            "player_last_name",
+            "player_bday",
+            "height",
+            "height_ft",
+            "height_in",
+            "weight",
+            "college",
+            "years_exp",
+            "entry_year",
+            "rookie_year"
+        )
+        VALUES
+            (2019,'DEFL','UGF',1,'QB','QB',4,'Active',
+                'Will Horton','Will','Will','Horton','9/6/1997',
+                73,6,1,242,'UGF',0,2019,2019)
+            ,(2019,'DEFL','UGF',2,'QB','QB',16,'Active',
+                'Howard Cooke','Howard','Howard','Cooke','9/20/1990',
+                75,6,3,255,'UGF',0,2019,2019)
+            ,(2019,'DEFL','UGF',3,'QB','QB',5,'Active',
+                'Rodney Calhoun','Rodney','Rodney','Calhoun','7/30/2000',
+                75,6,3,216,'UGF',0,2019,2019)
+            ,(2019,'DEFL','UGF',4,'RB','RB',7,'Active',
+                'BJ Hale','BJ','BJ','Hale','4/25/1998'
+                ,73,6,1,229,'UGF',0,2019,2019)
+            ,(2019,'DEFL','UGF',5,'RB','RB',2,'Active',
+                'Ryan Dingle','Ryan','Ryan','Dingle','8/7/2001',
+                71,5,11,190,'UGF',0,2019,2019)
+            ,(2019,'DEFL','UGF',6,'RB','RB',42,'Active',
+                'Rob Minton','Rob','Rob','Minton','8/27/1995',
+                67,5,7,189,'UGF',0,2019,2019)
+            ,(2019,'DEFL','UGF',7,'RB','FB',40,'Active',
+                'Tom Adamo','Tom','Tom','Adamo','2/8/1991',
+                73,6,1,232,'UGF',0,2019,2019)
+            ,(2019,'DEFL','UGF',8,'RB','FB',39,'Active',
+                'Jason Eaton','Jason','Jason','Eaton','8/6/2003',
+                72,6,0,236,'UGF',0,2019,2019)
+            ,(2019,'DEFL','UGF',9,'RB','RB',11,'Active',
+                'Elliot Denman','Elliot','Elliot','Denman','8/19/1992',
+                73,6,1,180,'UGF',0,2019,2019)
+            ,(2019,'DEFL','UGF',10,'WR','WR',12,'Active',
+                'Neghan Stance','Neghan','Neghan','Stance','6/25/1992',
+                74,6,2,209,'UGF',0,2019,2019)
+            ,(2019,'DEFL','UGF',11,'WR','WR',88,'Active',
+                'Torren Engle','Torren','Torren','Engle','9/30/1992',
+                72,6,0,175,'UGF',0,2019,2019)
+            ,(2019,'DEFL','UGF',12,'WR','WR',84,'Active',
+                'Vance McMahon','Vance','Vance','McMahon','10/4/1998',
+                72,6,0,185,'UGF',0,2019,2019)
+            ,(2019,'DEFL','UGF',13,'WR','WR',6,'Active',
+                'Jake Nelson','Jake','Jake','Nelson','6/27/1999',
+                71,5,11,165,'UGF',0,2019,2019)
+            ,(2019,'DEFL','UGF',14,'TE','TE',18,'Active',
+                'Tez Triplett','Tez','Tez','Triplett','10/24/1993',
+                76,6,4,233,'UGF',0,2019,2019)
+            ,(2019,'DEFL','UGF',15,'TE','TE',80,'Active',
+                'Nick Riley','Nick','Nick','Riley','9/6/1991',
+                75,6,3,219,'UGF',0,2019,2019)
+            ,(2019,'DEFL','UGF',16,'TE','TE',90,'Active',
+                'Ernest Hunter','Ernest','Ernest','Hunter','10/24/2003',
+                75,6,3,231,'UGF',0,2019,2019)
+            ,(2019,'DEFL','UGF',17,'OL','LT',77,'Active',
+                'Eric Robinson','Eric','Eric','Robinson','1/7/1999',
+                78,6,6,312,'UGF',0,2019,2019)
+            ,(2019,'DEFL','UGF',18,'OL','OT',71,'Active',
+                'Bryce Bass','Bryce','Bryce','Bass','11/22/2004',
+                73,6,1,258,'UGF',0,2019,2019)
+            ,(2019,'DEFL','UGF',19,'OL','RT',55,'Active',
+                'Emmitt Rich','Emmitt','Emmitt','Rich','7/29/2004',
+                75,6,3,303,'UGF',0,2019,2019)
+            ,(2019,'DEFL','UGF',20,'OL','OT',64,'Active',
+                'Tyson James','Tyson','Tyson','James','1/31/1991',
+                75,6,3,287,'UGF',0,2019,2019)
+            ,(2019,'DEFL','UGF',21,'OL','RG',57,'Active',
+                'Brent Tanner','Brent','Brent','Tanner','5/31/2003',
+                75,6,3,281,'UGF',0,2019,2019)
+            ,(2019,'DEFL','UGF',22,'OL','OG',63,'Active',
+                'D.D. Henderson','D.D.','D.D.','Henderson','11/4/1996',
+                72,6,0,297,'UGF',0,2019,2019)
+            ,(2019,'DEFL','UGF',23,'OL','LG',72,'Active',
+                'J.T. Milton','J.T.','J.T.','Milton','3/20/2001',
+                75,6,3,279,'UGF',0,2019,2019)
+            ,(2019,'DEFL','UGF',24,'OL','OG',59,'Active',
+                'Adam Huber','Adam','Adam','Huber','3/9/2004',
+                73,6,1,300,'UGF',0,2019,2019)
+            ,(2019,'DEFL','UGF',25,'OL','C',61,'Active',
+                'Bubba Eldridge','Bubba','Bubba','Eldridge','11/22/1999',
+                76,6,4,305,'UGF',0,2019,2019)
+            ,(2019,'DEFL','UGF',26,'OL','C',54,'Active',
+                'Shaud Bates','Shaud','Shaud','Bates','10/20/2002',
+                70,5,10,284,'UGF',0,2019,2019)
+            ,(2019,'DEFL','UGF',27,'DL','LDE',89,'Active',
+                'LeRoy Singleton','LeRoy','LeRoy','Singleton','8/2/1996',
+                76,6,4,249,'UGF',0,2019,2019)
+            ,(2019,'DEFL','UGF',28,'DL','RDE',91,'Active',
+                'Jakari McClelland','Jakari','Jakari','McClelland','8/20/2003',
+                72,6,0,248,'UGF',0,2019,2019)
+            ,(2019,'DEFL','UGF',29,'DL','DE',95,'Active',
+                'Eric Jennings','Eric','Eric','Jennings','7/1/1992',
+                75,6,3,250,'UGF',0,2019,2019)
+            ,(2019,'DEFL','UGF',30,'DL','DE',66,'Active',
+                'Harrison Hodges','Harrison','Harrison','Hodges','5/17/1991',
+                76,6,4,250,'UGF',0,2019,2019)
+            ,(2019,'DEFL','UGF',31,'DL','NT',87,'Active',
+                'Leigh Manley','Leigh','Leigh','Manley','6/13/2003',
+                72,6,0,280,'UGF',0,2019,2019)
+            ,(2019,'DEFL','UGF',32,'DL','DT',98,'Active',
+                'D.D. Nixon','D.D.','D.D.','Nixon','4/7/1994',
+                77,6,5,273,'UGF',0,2019,2019)
+            ,(2019,'DEFL','UGF',33,'DL','DT',96,'Active',
+                'Eli Griffith','Eli','Eli','Griffith','10/25/1994',
+                75,6,3,279,'UGF',0,2019,2019)
+            ,(2019,'DEFL','UGF',34,'DL','DT',67,'Active',
+                'J.T. Benton','J.T.','J.T.','Benton','1/16/2005',
+                73,6,1,243,'UGF',0,2019,2019)
+            ,(2019,'DEFL','UGF',35,'DL','NG',92,'Active',
+                'Mike Dailey','Mike','Mike','Dailey','3/30/1992',
+                73,6,1,287,'UGF',0,2019,2019)
+            ,(2019,'DEFL','UGF',36,'DL','DT',78,'Active',
+                'Gabriel Johnson','Gabriel','Gabriel','Johnson','1/7/1995',
+                70,5,10,248,'UGF',0,2019,2019)
+            ,(2019,'DEFL','UGF',37,'LB','ROLB',45,'Active',
+                'Harry Bridges','Harry','Harry','Bridges','12/30/2004',
+                74,6,2,220,'UGF',0,2019,2019)
+            ,(2019,'DEFL','UGF',38,'LB','LOLB',50,'Active',
+                'Tyler Ruff','Tyler','Tyler','Ruff','8/28/1993',
+                73,6,1,227,'UGF',0,2019,2019)
+            ,(2019,'DEFL','UGF',39,'LB','EDGE',99,'Active',
+                'Ira Riley','Ira','Ira','Riley','4/16/1992',
+                74,6,2,238,'UGF',0,2019,2019)
+            ,(2019,'DEFL','UGF',40,'LB','OLB',49,'Active',
+                'Donta Erickson','Donta','Donta','Erickson','2/23/1996',
+                72,6,0,220,'UGF',0,2019,2019)
+            ,(2019,'DEFL','UGF',41,'LB','ILB',52,'Active',
+                'Eric Tyson','Eric','Eric','Tyson','9/8/2001',
+                72,6,0,235,'UGF',0,2019,2019)
+            ,(2019,'DEFL','UGF',42,'LB','MLB',51,'Active',
+                'Elgin Landry','Elgin','Elgin','Landry','7/15/2003',
+                72,6,0,231,'UGF',0,2019,2019)
+            ,(2019,'DEFL','UGF',43,'DB','RCB',37,'Active',
+                'Andrew Dale','Andrew','Andrew','Dale','4/7/1994',
+                75,6,3,200,'UGF',0,2019,2019)
+            ,(2019,'DEFL','UGF',44,'DB','LCB',19,'Active',
+                'Avery Thompson','Avery','Avery','Thompson','10/13/2004',
+                70,5,10,185,'UGF',0,2019,2019)
+            ,(2019,'DEFL','UGF',45,'DB','SCB',1,'Active',
+                'Casey Eaton','Casey','Casey','Eaton','11/16/1990',
+                74,6,2,195,'UGF',0,2019,2019)
+            ,(2019,'DEFL','UGF',46,'DB','CB',46,'Active',
+                'Derek Lindsey','Derek','Derek','Lindsey','4/12/1997',
+                68,5,8,175,'UGF',0,2019,2019)
+            ,(2019,'DEFL','UGF',47,'DB','CB',28,'Active',
+                'Kareem Huffman','Kareem','Kareem','Huffman','7/16/1991',
+                68,5,8,177,'UGF',0,2019,2019)
+            ,(2019,'DEFL','UGF',48,'DB','CB',24,'Active',
+                'Jimmie Ricks','Jimmie','Jimmie','Ricks','3/12/1997',
+                67,5,7,160,'UGF',0,2019,2019)
+            ,(2019,'DEFL','UGF',49,'DB','FS',26,'Active',
+                'Benny Preston','Benny','Benny','Preston','1/4/1994',
+                73,6,1,180,'UGF',0,2019,2019)
+            ,(2019,'DEFL','UGF',50,'DB','SAF',23,'Active',
+                'Keenan Manning','Keenan','Keenan','Manning','11/25/1992',
+                73,6,1,185,'UGF',0,2019,2019)
+            ,(2019,'DEFL','UGF',51,'DB','SS',34,'Active',
+                'Buck Poole','Buck','Buck','Poole','1/4/2002',
+                71,5,11,188,'UGF',0,2019,2019)
+            ,(2019,'DEFL','UGF',52,'DB','SAF',48,'Active',
+                'Kendal Huber','Kendal','Kendal','Huber','4/10/1991',
+                70,5,10,189,'UGF',0,2019,2019)
+            ,(2019,'DEFL','UGF',53,'SPEC','K',38,'Active',
+                'Andy Francis','Andy','Andy','Francis','5/17/2005',
+                73,6,1,170,'UGF',0,2019,2019)
+            ,(2019,'DEFL','UGF',54,'SPEC','K',62,'Active',
+                'Rex Johnson','Rex','Rex','Johnson','5/27/2001',
+                73,6,1,175,'UGF',0,2019,2019)
+            ,(2019,'DEFL','UGF',55,'SPEC','P',69,'Active',
+                'Jacob Rigdon','Jacob','Jacob','Rigdon','3/8/2003',
+                72,6,0,180,'UGF',0,2019,2019)
+            ,(2019,'DEFL','UGF',56,'SPEC','P',65,'Active',
+                'Stephen Washington',
+                'Stephen','Stephen','Washington','3/15/2004',
+                75,6,3,185,'UGF',0,2019,2019)
+            ,(2019,'DEFL','UGF',57,'SPEC','LS',14,'Active',
+                'Logjammer Baggagecling',
+                'Logjammer','Logjammer','Baggagecling',
+                '12/8/2001',72,6,0,180,'UGF',0,2019,2019)
+            ,(2019,'DEFL','UGF',58,'SPEC','LS',56,'Active',
+                'Triple Parakeet-Shoes',
+                'Triple','Triple','Parakeet-Shoes','7/26/2000',
+                72,6,0,181,'UGF',0,2019,2019)
+            ,(2019,'DEFL','DVSU',59,'QB','QB',19,'Active',
+                'Micheal Wilson','Micheal','Micheal','Wilson','10/23/1999',
+                74,6,2,206,'DVSU',0,2019,2019)
+            ,(2019,'DEFL','DVSU',60,'QB','QB',18,'Active',
+                'Antwon Goodwin','Antwon','Antwon','Goodwin','10/1/1998',
+                74,6,2,198,'DVSU',0,2019,2019)
+            ,(2019,'DEFL','DVSU',61,'QB','QB',1,'Active',
+                'JT Martinez','JT','JT','Martinez','3/30/1992',
+                73,6,1,200,'DVSU',0,2019,2019)
+            ,(2019,'DEFL','DVSU',62,'QB','QB',5,'Active',
+                'Travis Wood','Travis','Travis','Wood','6/24/1998',
+                76,6,4,219,'DVSU',0,2019,2019)
+            ,(2019,'DEFL','DVSU',63,'RB','RB',21,'Active',
+                'Matt Morrow','Matt','Matt','Morrow','9/6/1992',
+                70,5,10,199,'DVSU',0,2019,2019)
+            ,(2019,'DEFL','DVSU',64,'RB','RB',2,'Active',
+                'Zach Thompson','Zach','Zach','Thompson','5/29/1999',
+                70,5,10,196,'DVSU',0,2019,2019)
+            ,(2019,'DEFL','DVSU',65,'RB','RB',30,'Active',
+                'Jamie James','Jamie','Jamie','James','7/1/1995',
+                70,5,10,204,'DVSU',0,2019,2019)
+            ,(2019,'DEFL','DVSU',66,'RB','RB',41,'Active',
+                'Terence Wall','Terence','Terence','Wall','10/27/1992',
+                70,5,10,210,'DVSU',0,2019,2019)
+            ,(2019,'DEFL','DVSU',67,'RB','RB',12,'Active',
+                'Tre Eaton','Tre','Tre','Eaton','11/17/1991',
+                68,5,8,190,'DVSU',0,2019,2019)
+            ,(2019,'DEFL','DVSU',68,'RB','FB',49,'Active',
+                'Perry Samuels','Perry','Perry','Samuels','7/15/2001',
+                74,6,2,225,'DVSU',0,2019,2019)
+            ,(2019,'DEFL','DVSU',69,'RB','FB',29,'Active',
+                'Chip Godsey','Chip','Chip','Godsey','12/12/2001',
+                76,6,4,215,'DVSU',0,2019,2019)
+            ,(2019,'DEFL','DVSU',70,'RB','FB',25,'Active',
+                'Kellen West','Kellen','Kellen','West','3/11/1997',
+                71,5,11,200,'DVSU',0,2019,2019)
+            ,(2019,'DEFL','DVSU',71,'WR','WR',3,'Active',
+                'Seth McKenna','Seth','Seth','McKenna','11/20/2003',
+                67,5,7,170,'DVSU',0,2019,2019)
+            ,(2019,'DEFL','DVSU',72,'WR','WR',80,'Active',
+                'Richard Boulder','Richard','Richard','Boulder','12/11/2004',
+                71,5,11,180,'DVSU',0,2019,2019)
+            ,(2019,'DEFL','DVSU',73,'WR','WR',85,'Active',
+                'Brady Millar','Brady','Brady','Millar','11/9/1993',
+                74,6,2,220,'DVSU',0,2019,2019)
+            ,(2019,'DEFL','DVSU',74,'WR','WR',47,'Active',
+                'Alex King','Alex','Alex','King','2/23/1994',
+                74,6,2,220,'DVSU',0,2019,2019)
+            ,(2019,'DEFL','DVSU',75,'WR','WR',84,'Active',
+                'Jacob Hill','Jacob','Jacob','Hill','11/20/2000',
+                73,6,1,196,'DVSU',0,2019,2019)
+            ,(2019,'DEFL','DVSU',76,'WR','WR',34,'Active',
+                'Estman Gorman','Estman','Estman','Gorman','1/11/1992',
+                72,6,0,175,'DVSU',0,2019,2019)
+            ,(2019,'DEFL','DVSU',77,'TE','TE',81,'Active',
+                'Grankie Gandy','Grankie','Grankie','Gandy','5/3/2001',
+                74,6,2,236,'DVSU',0,2019,2019)
+            ,(2019,'DEFL','DVSU',78,'TE','TE',86,'Active',
+                'Bernard Gill','Bernard','Bernard','Gill','4/12/1991',
+                71,5,11,191,'DVSU',0,2019,2019)
+            ,(2019,'DEFL','DVSU',79,'OL','LT',72,'Active',
+                'Patrick Boulware','Patrick','Patrick','Boulware','11/15/1995',
+                78,6,6,270,'DVSU',0,2019,2019)
+            ,(2019,'DEFL','DVSU',80,'OL','RT',52,'Active',
+                'Benji Odom','Benji','Benji','Odom','2/29/1996',
+                78,6,6,264,'DVSU',0,2019,2019)
+            ,(2019,'DEFL','DVSU',81,'OL','OT',68,'Active',
+                'Deshon Haley','Deshon','Deshon','Haley','6/13/1991',
+                78,6,6,287,'DVSU',0,2019,2019)
+            ,(2019,'DEFL','DVSU',82,'OL','OT',75,'Active',
+                'C.J. Rozner','C.J.','C.J.','Rozner','8/9/1996',
+                78,6,6,278,'DVSU',0,2019,2019)
+            ,(2019,'DEFL','DVSU',83,'OL','OT',70,'Active',
+                'Bobby Giles','Bobby','Bobby','Giles','2/11/2004',
+                77,6,5,287,'DVSU',0,2019,2019)
+            ,(2019,'DEFL','DVSU',84,'OL','OT',64,'Active',
+                'Davon Snyder','Davon','Davon','Snyder','8/11/1993',
+                75,6,3,239,'DVSU',0,2019,2019)
+            ,(2019,'DEFL','DVSU',85,'OL','RG',78,'Active',
+                'Jermaine Hodges','Jermaine','Jermaine','Hodges','2/18/2004',
+                75,6,3,261,'DVSU',0,2019,2019)
+            ,(2019,'DEFL','DVSU',86,'OL','LG',62,'Active',
+                'Aaron White','Aaron','Aaron','White','2/21/1997',
+                76,6,4,317,'DVSU',0,2019,2019)
+            ,(2019,'DEFL','DVSU',87,'OL','OG',67,'Active',
+                'Errick Humphrey','Errick','Errick','Humphrey','3/29/1991',
+                76,6,4,306,'DVSU',0,2019,2019)
+            ,(2019,'DEFL','DVSU',88,'OL','OG',58,'Active',
+                'Blake Klein','Blake','Blake','Klein','9/19/2001',
+                78,6,6,255,'DVSU',0,2019,2019)
+            ,(2019,'DEFL','DVSU',89,'OL','C',63,'Active',
+                'Matt Hampton','Matt','Matt','Hampton','5/13/1995',
+                74,6,2,240,'DVSU',0,2019,2019)
+            ,(2019,'DEFL','DVSU',90,'OL','C',71,'Active',
+                'Reshard Boone','Reshard','Reshard','Boone','9/28/1999',
+                73,6,1,265,'DVSU',0,2019,2019)
+            ,(2019,'DEFL','DVSU',91,'DL','LDE',92,'Active',
+                'Brylan Down','Brylan','Brylan','Down','11/30/2004',
+                74,6,2,228,'DVSU',0,2019,2019)
+            ,(2019,'DEFL','DVSU',92,'DL','RDE',93,'Active',
+                'Dom Atamo','Dom','Dom','Atamo','8/27/2001',
+                74,6,2,235,'DVSU',0,2019,2019)
+            ,(2019,'DEFL','DVSU',93,'DL','DE',99,'Active',
+                'Nolan Poole','Nolan','Nolan','Poole','1/7/2003',
+                75,6,3,259,'DVSU',0,2019,2019)
+            ,(2019,'DEFL','DVSU',94,'DL','DE',96,'Active',
+                'Del Smith','Del','Del','Smith','1/3/1998',
+                78,6,6,250,'DVSU',0,2019,2019)
+            ,(2019,'DEFL','DVSU',95,'DL','DE',48,'Active',
+                'Wesley Stamps','Wesley','Wesley','Stamps','10/30/2001',
+                76,6,4,243,'DVSU',0,2019,2019)
+            ,(2019,'DEFL','DVSU',96,'DL','DT',95,'Active',
+                'Joe Walker','Joe','Joe','Walker','9/6/1999',
+                74,6,2,238,'DVSU',0,2019,2019)
+            ,(2019,'DEFL','DVSU',97,'DL','DT',91,'Active',
+                'Sammy Sam','Sammy','Sammy','Sam','1/3/2001',
+                75,6,3,260,'DVSU',0,2019,2019)
+            ,(2019,'DEFL','DVSU',98,'DL','DT',65,'Active',
+                'Nathan McKee','Nathan','Nathan','McKee','3/4/1999',
+                76,6,4,253,'DVSU',0,2019,2019)
+            ,(2019,'DEFL','DVSU',99,'DL','DT',61,'Active',
+                'Doug Campers','Doug','Doug','Campers','8/18/1994',
+                74,6,2,253,'DVSU',0,2019,2019)
+            ,(2019,'DEFL','DVSU',100,'LB','OLB',73,'Active',
+                'Neil Krause','Neil','Neil','Krause','4/25/1992',
+                73,6,1,195,'DVSU',0,2019,2019)
+            ,(2019,'DEFL','DVSU',101,'LB','OLB',56,'Active',
+                'Oliver McIntyre','Oliver','Oliver','McIntyre','4/23/1999',
+                72,6,0,206,'DVSU',0,2019,2019)
+            ,(2019,'DEFL','DVSU',102,'LB','EDGE',98,'Active',
+                'Johnnie Barr','Johnnie','Johnnie','Barr','10/17/1994',
+                72,6,0,211,'DVSU',0,2019,2019)
+            ,(2019,'DEFL','DVSU',103,'LB','EDGE',94,'Active',
+                'Abdul Young','Abdul','Abdul','Young','5/5/1994',
+                73,6,1,222,'DVSU',0,2019,2019)
+            ,(2019,'DEFL','DVSU',104,'LB','LB',45,'Active',
+                'Samuel Schneider','Samuel','Samuel','Schneider','10/17/1990',
+                73,6,1,214,'DVSU',0,2019,2019)
+            ,(2019,'DEFL','DVSU',105,'LB','MLB',55,'Active',
+                'DD Rodgers','DD','DD','Rodgers','7/8/2002',
+                74,6,2,217,'DVSU',0,2019,2019)
+            ,(2019,'DEFL','DVSU',106,'LB','ILB',55,'Active',
+                'Will Hughes','Will','Will','Hughes','3/23/1999',
+                74,6,2,220,'DVSU',0,2019,2019)
+            ,(2019,'DEFL','DVSU',107,'LB','ILB',43,'Active',
+                'Cooper Stevenson','Cooper','Cooper','Stevenson','2/4/2001',
+                73,6,1,213,'DVSU',0,2019,2019)
+            ,(2019,'DEFL','DVSU',108,'LB','LB',87,'Active',
+                'Grant Eaton','Grant','Grant','Eaton','11/3/1991',
+                73,6,1,225,'DVSU',0,2019,2019)
+            ,(2019,'DEFL','DVSU',109,'DB','LCB',24,'Active',
+                'Bill Dingle','Bill','Bill','Dingle','12/8/2001',
+                69,5,9,180,'DVSU',0,2019,2019)
+            ,(2019,'DEFL','DVSU',110,'DB','RCB',39,'Active',
+                'Jeremy Jimmy','Jeremy','Jeremy','Jimmy','11/22/2000',
+                72,6,0,180,'DVSU',0,2019,2019)
+            ,(2019,'DEFL','DVSU',111,'DB','NCB',4,'Active',
+                'DeAngelo Woodard','DeAngelo','DeAngelo','Woodard','6/2/1994',
+                72,6,0,185,'DVSU',0,2019,2019)
+            ,(2019,'DEFL','DVSU',112,'DB','DCB',46,'Active',
+                'Lemarcus Parsons','Lemarcus','Lemarcus','Parsons','9/9/1997',
+                71,5,11,175,'DVSU',0,2019,2019)
+            ,(2019,'DEFL','DVSU',113,'DB','FS',36,'Active',
+                'Jesse Shelton','Jesse','Jesse','Shelton','8/25/2004',
+                74,6,2,190,'DVSU',0,2019,2019)
+            ,(2019,'DEFL','DVSU',114,'DB','SAF',23,'Active',
+                'Chris Hickmon','Chris','Chris','Hickmon','1/23/1998',
+                74,6,2,199,'DVSU',0,2019,2019)
+            ,(2019,'DEFL','DVSU',115,'DB','SS',31,'Active',
+                'Timothy Dickens','Timothy','Timothy','Dickens','8/24/1996',
+                74,6,2,194,'DVSU',0,2019,2019)
+            ,(2019,'DEFL','DVSU',116,'DB','SAF',26,'Active',
+                'LaShaun Gutierrez',
+                'LaShaun','LaShaun','Gutierrez','8/26/1995',
+                71,5,11,191,'DVSU',0,2019,2019)
+            ,(2019,'DEFL','DVSU',117,'SPEC','K',17,'Active',
+                'Justin Powell','Justin','Justin','Powell','1/4/1999',
+                70,5,10,209,'DVSU',0,2019,2019)
+            ,(2019,'DEFL','DVSU',118,'SPEC','P',69,'Active',
+                'Rob Butler','Rob','Rob','Butler','11/12/2002',
+                73,6,1,195,'DVSU',0,2019,2019)
+            ,(2019,'DEFL','DVSU',119,'SPEC','LS',79,'Active',
+                'Velociraptor Maloish',
+                'Velociraptor','Scoish','Maloish','11/25/1999',
+                0,NULL,NULL,NULL,'DVSU',0,2019,2019)
+            ,(2019,'DEFL','DVSU',120,'SPEC','LS',83,'Active',
+                'Aristokles Prabhu',
+                'Aristokles','Aristokles','Prabhu','3/18/2005',
+                0,NULL,NULL,NULL,'DVSU',0,2019,2019)
+            ,(2019,'DEFL','DVSU',121,'SPEC','K',15,'Active',
+                'Legume Druprix','Legume','Legume','Druprix','3/22/1997',
+                72,6,0,191,'DVSU',0,2019,2019)
+            ,(2019,'DEFL','DVSU',122,'SPEC','P',20,'Active',
+                'Creme De La Creme','Creme','Creme','De La Creme','4/15/2003',
+                0,NULL,NULL,NULL,'DVSU',0,2019,2019
+            );
 
         """
         return sql_script.replace("        ", "")
 
     def stadiums_sql_file() -> str:
         """
-        Returns a SQLite3 script that generates a SQLite3 table that houses stadium information.
+        Returns a SQLite3 script that generates a SQLite3 table
+        that houses stadium information.
 
         Parameters
         ----------
@@ -6297,14 +7434,17 @@ class sqlite3_sample_files:
 
         Returns
         ----------
-        A SQLite3 script that creates a table that holds data for various teams.
+        A SQLite3 script that creates a table that holds data
+        for various teams.
 
         """
 
         sql_script = """
         CREATE TABLE IF NOT EXISTS "fb_stadiums"(
             "stadium_id"            INTEGER PRIMARY KEY AUTOINCREMENT,
-            "team_id"               TEXT NOT NULL, -- Set to `???` if the stadium has no designated home team for some reason.
+            -- Set to `???` if the stadium has no
+            -- designated home team for some reason.
+            "team_id"               TEXT NOT NULL,
             "pfr_stadium_id"        TEXT,
             "stadium_name"          TEXT NOT NULL,
             "stadium_capacity"      INT NOT NULL,
@@ -6312,7 +7452,9 @@ class sqlite3_sample_files:
             "stadium_state"         TEXT NOT NULL, -- ISO 3166-2 Code
             "stadium_nation"        TEXT NOT NULL, -- ISO 3 Letter code
             "is_dome"               BOOLEAN DEFAULT FALSE NOT NULL,
-            "is_retractable_roof"   BOOLEAN DEFAULT FALSE NOT NULL, -- If a stadium has a retractable roof, this and "is_dome" are set to TRUE.
+            -- If a stadium has a retractable roof,
+            -- this and "is_dome" are set to TRUE.
+            "is_retractable_roof"   BOOLEAN DEFAULT FALSE NOT NULL,
             "stadium_plus_code"     TEXT,
             "stadium_elevation_ft"  INT,
             "stadium_elevation_m"   INT,
@@ -6324,9 +7466,24 @@ class sqlite3_sample_files:
         CREATE UNIQUE INDEX idx_stadiums_id
         ON "fb_stadiums" ("stadium_id","team_id");
 
-        INSERT INTO fb_stadiums(stadium_id,team_id,pfr_stadium_id,stadium_name,stadium_capacity,stadium_city,stadium_state,stadium_nation,is_dome,is_retractable_roof,stadium_timezone) VALUES
-            (1,'UGF',NULL,'Adamo Dome',50000,'Fairborn','US-GA','USA',TRUE,FALSE,'America/Phoenix')
-            ,(2,'DVSU',NULL,'Death Valley Stadium',10000,'Death Valley','US-NV','USA',FALSE,FALSE,'America/New_York');
+        INSERT INTO fb_stadiums(
+            stadium_id,
+            team_id,
+            pfr_stadium_id,
+            stadium_name,
+            stadium_capacity,
+            stadium_city,
+            stadium_state,
+            stadium_nation,
+            is_dome,
+            is_retractable_roof,
+            stadium_timezone
+        )
+        VALUES
+            (1,'UGF',NULL,'Adamo Dome',50000,
+                'Fairborn','US-GA','USA',TRUE,FALSE,'America/Phoenix')
+            ,(2,'DVSU',NULL,'Death Valley Stadium',10000,
+                'Death Valley','US-NV','USA',FALSE,FALSE,'America/New_York');
 
         """
         return sql_script.replace("        ", "")
@@ -6354,18 +7511,38 @@ class sqlite3_sample_files:
             'league_id'                 TEXT NOT NULL,
             'team_id'                   TEXT NOT NULL,
             'team_abv'                  TEXT NOT NULL,
-            'position'                  TEXT NOT NULL, -- Won't be set by a user.
+            -- Won't be set by a user.
+            'position'                  TEXT NOT NULL,
             'depth_chart_position'      TEXT NOT NULL,
-            'jersey_number'             TEXT NOT NULL, -- TEXT so a player can be identified by '00', '01', '1A', or '1O'/'1D'
+            -- TEXT so a player can be identified by
+            -- '00', '01', '1A', or '1O'/'1D'
+            'jersey_number'             TEXT NOT NULL,
             'status'                    TEXT NOT NULL,
             'player_full_name'          TEXT NOT NULL,
-            'player_football_name'      TEXT,-- Defaults to the value of 'player_first_name', but can be set to a differient value (for example, Boomer Esiason, who's birth name is Norman Esiason, can have his 'player_first_name' == 'Norman', and his 'player_football_name' == 'Boomer'). 
+            /*
+            Defaults to the value of 'player_first_name',
+            but can be set to a differient value
+            (for example, Boomer Esiason, who's birth name is Norman Esiason,
+            can have his 'player_first_name' == 'Norman',
+            and his 'player_football_name' == 'Boomer').
+            */
+            'player_football_name'      TEXT,
             'player_first_name'         TEXT NOT NULL,
             'player_last_name'          TEXT NOT NULL,
-            'player_bday'               TEXT,-- SQLite has no internal date/datetime datatype. Birthdays will be stored as 'YYYY-MM-DD'.
+            -- SQLite has no internal date/datetime datatype.
+            -- Birthdays will be stored as 'YYYY-MM-DD'.
+            'player_bday'               TEXT,
             'height'                    INT, -- Player height, in inches
-            'height_ft'                 INT, -- Calculated before data is inserted, this and 'height_in' combine to show the player's height.
-            'height_in'                 INT, -- For example, if a player is 5'10', 'height_ft' will be set to `5`, 'height_in' will be set to `10`, and 'height' will be `70`.
+            /*
+            Calculated before data is inserted,
+            this and 'height_in' combine to show the player's height.
+            For example, if a player is 5'10',
+            'height_ft' will be set to `5`,
+            'height_in' will be set to `10`,
+            and 'height' will be `70`.
+            */
+            'height_ft'                 INT,
+            'height_in'                 INT,
             'weight'                    INT, -- Player weight, in lbs.
             'college'                   TEXT,
             'gsis_id'                   TEXT,-- NFL GSIS Player ID.
@@ -6373,20 +7550,34 @@ class sqlite3_sample_files:
             'sportradar_id'             TEXT,-- Sportradar Player ID.
             'yahoo_id'                  INT, -- Yahoo Sports Player ID.
             'rotowire_id'               INT, -- Rotowire Player ID.
-            'pff_id'                    INT, -- Pro Football Focus (PFF) Player ID.
-            'pfr_id'                    TEXT,-- Pro Football Reference Player ID.
+            -- Pro Football Focus (PFF) Player ID.
+            'pff_id'                    INT,
+            -- Pro Football Reference Player ID.
+            'pfr_id'                    TEXT,
             'fantasy_data_id'           INT,
             'sleeper_id'                INT,
             'years_exp'                 INT NOT NULL,
-            'headshot_url'              TEXT,-- Letting users modify this is a bad idea. Only here for nflverse compatability. Users can modify 'headshot_image' instead.
+            -- Letting users modify this is potentially a bad idea.
+            -- Only here for nflverse compatability.
+            'headshot_url'              TEXT,
             'headshot_image'            BLOB,
-            'ngs_position'              TEXT,-- Only here for nflverse compatability.
+            -- Only here for nflverse compatability.
+            'ngs_position'              TEXT,
             'week'                      INT NOT NULL,
-            'game_type'                 TEXT NOT NULL, -- can be 'PRE', 'REG', or 'POST'. Optionally, postseason games can be represented by 'WC' (wild card), 'DIV' (divisional round), 'CON' (confrence championship), or 'SB' (Super Bowl)
-            'status_description_abbr'   TEXT, -- Here for nflverse compatability. 
-            /* Can have the following values, and is explained in detail here: https://www.the33rdteam.com/category/analysis/how-and-why-the-practice-squad-works/
+            -- can be 'PRE', 'REG', or 'POST'.
+            -- Optionally, postseason games can be represented by
+            -- > 'WC' (wild card)
+            -- > 'DIV' (divisional round)
+            -- > 'CON' (confrence championship)
+            -- > 'SB' (Super Bowl)
+            'game_type'                 TEXT NOT NULL,
+            -- Here for nflverse compatability.
+            'status_description_abbr'   TEXT,
+            /*
+            Can have the following values, and is explained in detail here:
+            https://www.the33rdteam.com/category/analysis/how-and-why-the-practice-squad-works/
                 -- 'A01': Active player.
-                -- 'E02': Ex/Comm. Perm. 
+                -- 'E02': Ex/Comm. Perm.
                 -- 'P01': Practice Squad Player.
                 -- 'P02': Practice Squad Player, Injured.
                 -- 'P03': International Practice Squad Player.
@@ -6396,9 +7587,12 @@ class sqlite3_sample_files:
                 -- 'R02': Reserve/Retired.
                 -- 'R03': Reserve/Did Not Report.
                 -- 'R04': Reserve/Physically Unable to Perform (PUP).
-                -- 'R05': Reserve/Non-Football Injury (Designation for injuries outside of NFL games/practices).
+                -- 'R05': Reserve/Non-Football Injury
+                    (Designation for injuries outside of NFL games/practices).
                 -- 'R06': Reserve/Left Squad.
-                -- 'R23': Reserve/Future (If a player has this designation, they are not eligable for games in this season).
+                -- 'R23': Reserve/Future
+                    (If a player has this designation,
+                    they are not eligable for games in this season).
                 -- 'R27': Reserve/Non-Football Illness.
                 -- 'R30': Reserve/Commissioner Suspension, 1 year.
                 -- 'R33': Reserve/Club Suspension.
@@ -6409,140 +7603,421 @@ class sqlite3_sample_files:
             */
             'esb_id'                    TEXT,
             'smart_id'                  TEXT,
-            'entry_year'                INT, -- Year this player finished college, and/or started playing professionally.
-            'rookie_year'               INT -- Year this player started playing in this league.
+            -- Year this player finished college,
+            -- and/or started playing professionally.
+            'entry_year'                INT,
+            -- Year this player started playing in this league.
+            'rookie_year'               INT
 
         );
 
         CREATE UNIQUE INDEX idx_weekly_rosters_id
-        ON 'fb_weekly_rosters' ('season','league_id','team_id','jersey_number','player_full_name','week','game_type');
+        ON 'fb_weekly_rosters' (
+            'season',
+            'league_id',
+            'team_id',
+            'jersey_number',
+            'player_full_name',
+            'week',
+            'game_type'
+        );
 
 
-        INSERT INTO fb_weekly_rosters(
-            'season','game_id','league_id','team_id','team_abv','position','depth_chart_position','jersey_number','status','player_full_name','player_football_name','player_first_name','player_last_name','player_bday','height','height_ft','height_in','weight','college','gsis_id','espn_id','sportradar_id','yahoo_id','rotowire_id','pff_id','pfr_id','fantasy_data_id','sleeper_id','years_exp','headshot_url','headshot_image','ngs_position','week','game_type','status_description_abbr','esb_id','smart_id','entry_year','rookie_year') 
-        VALUES
-            (2019, 1,'DEFL','UGF','UGF','QB','QB',4,'Active','Will Horton','Will','Will','Horton','09/06/1997',73,6,1,242,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,1,'DEFL','UGF','UGF','QB','QB',16,'Active','Howard Cooke','Howard','Howard','Cooke','09/20/1990',75,6,3,255,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,1,'DEFL','UGF','UGF','QB','QB',5,'Active','Rodney Calhoun','Rodney','Rodney','Calhoun','07/30/2000',75,6,3,216,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,1,'DEFL','UGF','UGF','RB','RB',7,'Active','BJ Hale','BJ','Brian','Hale','04/25/1998',73,6,1,229,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,1,'DEFL','UGF','UGF','RB','RB',2,'Active','Ryan Dingle','Ryan','Ryan','Dingle','08/07/2001',71,5,11,190,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,1,'DEFL','UGF','UGF','RB','RB',42,'Active','Rob Minton','Rob','Rob','Minton','08/27/1995',67,5,7,189,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,1,'DEFL','UGF','UGF','RB','FB',40,'Active','Tom Adamo','Tom','Tom','Adamo','02/08/1991',73,6,1,232,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,1,'DEFL','UGF','UGF','RB','FB',39,'Active','Jason Eaton','Jason','Jason','Eaton','08/06/2003',72,6,0,236,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,1,'DEFL','UGF','UGF','WR','WR',11,'Active','Elliot Denman','Elliot','Elliot','Denman','08/19/1992',73,6,1,180,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,1,'DEFL','UGF','UGF','WR','WR',12,'Active','Neghan Stance','Neghan','Neghan','Stance','06/25/1992',74,6,2,209,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,1,'DEFL','UGF','UGF','WR','WR',88,'Active','Torren Engle','Torren','Torren','Engle','09/30/1992',72,6,0,175,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,1,'DEFL','UGF','UGF','WR','WR',84,'Active','Vance McMahon','Vance','Vance','McMahon','10/04/1998',72,6,0,185,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,1,'DEFL','UGF','UGF','WR','WR',6,'Active','Jake Nelson','Jake','Jake','Nelson','06/27/1999',71,5,11,165,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,1,'DEFL','UGF','UGF','TE','TE',18,'Active','Tez Triplett','Tez','Tez','Triplett','10/24/1993',76,6,4,233,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,1,'DEFL','UGF','UGF','TE','TE',80,'Active','Nick Riley','Nick','Nick','Riley','09/06/1991',75,6,3,219,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,1,'DEFL','UGF','UGF','TE','TE',90,'Active','Ernest Hunter','Ernest','Ernest','Hunter','10/24/2003',75,6,3,231,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,1,'DEFL','UGF','UGF','OL','LT',77,'Active','Eric Robinson','Eric','Eric','Robinson','01/07/1999',78,6,6,312,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,1,'DEFL','UGF','UGF','OL','OT',71,'Active','Bryce Bass','Bryce','Bryce','Bass','11/22/2004',73,6,1,258,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,1,'DEFL','UGF','UGF','OL','RT',55,'Active','Emmitt Rich','Emmitt','Emmitt','Rich','07/29/2004',75,6,3,303,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,1,'DEFL','UGF','UGF','OL','OT',64,'Active','Tyson James','Tyson','Tyson','James','01/31/1991',75,6,3,287,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,1,'DEFL','UGF','UGF','OL','RG',57,'Active','Brent Tanner','Brent','Brent','Tanner','05/31/2003',75,6,3,281,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,1,'DEFL','UGF','UGF','OL','OG',63,'Active','D.D. Henderson','D.D.','Dave','Henderson','11/04/1996',72,6,0,297,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,1,'DEFL','UGF','UGF','OL','LG',72,'Active','J.T. Milton','J.T.','Jeff','Milton','03/20/2001',75,6,3,279,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,1,'DEFL','UGF','UGF','OL','OG',59,'Active','Adam Huber','Adam','Adam','Huber','03/09/2004',73,6,1,300,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,1,'DEFL','UGF','UGF','OL','C',61,'Active','Bubba Eldridge','Bubba','Bubba','Eldridge','11/22/1999',76,6,4,305,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,1,'DEFL','UGF','UGF','OL','C',54,'Active','Shaud Bates','Shaud','Shaud','Bates','10/20/2002',70,5,10,284,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,1,'DEFL','UGF','UGF','DL','LDE',89,'Active','LeRoy Singleton','LeRoy','LeRoy','Singleton','08/02/1996',76,6,4,249,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,1,'DEFL','UGF','UGF','DL','RDE',91,'Active','Jakari McClelland','Jakari','Jakari','McClelland','08/20/2003',72,6,0,248,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,1,'DEFL','UGF','UGF','DL','DE',95,'Active','Eric Jennings','Eric','Eric','Jennings','07/01/1992',75,6,3,250,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,1,'DEFL','UGF','UGF','DL','DE',66,'Active','Harrison Hodges','Harrison','Harrison','Hodges','05/17/1991',76,6,4,250,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,1,'DEFL','UGF','UGF','DL','NT',87,'Active','Leigh Manley','Leigh','Leigh','Manley','06/13/2003',72,6,0,280,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,1,'DEFL','UGF','UGF','DL','DT',98,'Active','D.D. Nixon','D.D.','Dent','Nixon','04/07/1994',77,6,5,273,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,1,'DEFL','UGF','UGF','DL','DT',96,'Active','Eli Griffith','Eli','Eli','Griffith','10/25/1994',75,6,3,279,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,1,'DEFL','UGF','UGF','DL','DT',67,'Active','J.T. Benton','J.T.','John','Benton','01/16/2005',73,6,1,243,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,1,'DEFL','UGF','UGF','DL','NG',92,'Active','Mike Dailey','Mike','Mike','Dailey','03/30/1992',73,6,1,287,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,1,'DEFL','UGF','UGF','DL','DT',78,'Active','Gabriel Johnson','Gabriel','Gabriel','Johnson','01/07/1995',70,5,10,248,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,1,'DEFL','UGF','UGF','LB','ROLB',45,'Active','Harry Bridges','Harry','Harry','Bridges','12/30/2004',74,6,2,220,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,1,'DEFL','UGF','UGF','LB','LOLB',50,'Active','Tyler Ruff','Tyler','Tyler','Ruff','08/28/1993',73,6,1,227,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,1,'DEFL','UGF','UGF','LB','EDGE',99,'Active','Ira Riley','Ira','Ira','Riley','04/16/1992',74,6,2,238,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,1,'DEFL','UGF','UGF','LB','OLB',49,'Active','Donta Erickson','Donta','Donta','Erickson','02/23/1996',72,6,0,220,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,1,'DEFL','UGF','UGF','LB','ILB',52,'Active','Eric Tyson','Eric','Eric','Tyson','09/08/2001',72,6,0,235,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,1,'DEFL','UGF','UGF','LB','MLB',51,'Active','Elgin Landry','Elgin','Elgin','Landry','07/15/2003',72,6,0,231,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,1,'DEFL','UGF','UGF','DB','RCB',37,'Active','Andrew Dale','Andrew','Andrew','Dale','04/07/1994',75,6,3,200,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,1,'DEFL','UGF','UGF','DB','LCB',19,'Active','Avery Thompson','Avery','Avery','Thompson','10/13/2004',70,5,10,185,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,1,'DEFL','UGF','UGF','DB','SCB',1,'Active','Casey Eaton','Casey','Casey','Eaton','11/16/1990',74,6,2,195,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,1,'DEFL','UGF','UGF','DB','CB',46,'Active','Derek Lindsey','Derek','Derek','Lindsey','04/12/1997',68,5,8,175,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,1,'DEFL','UGF','UGF','DB','CB',28,'Active','Kareem Huffman','Kareem','Kareem','Huffman','07/16/1991',68,5,8,177,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,1,'DEFL','UGF','UGF','DB','CB',24,'Active','Jimmie Ricks','Jimmie','Jimmie','Ricks','03/12/1997',67,5,7,160,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,1,'DEFL','UGF','UGF','DB','FS',26,'Active','Benny Preston','Benny','Benny','Preston','01/04/1994',73,6,1,180,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,1,'DEFL','UGF','UGF','DB','SAF',23,'Active','Keenan Manning','Keenan','Keenan','Manning','11/25/1992',73,6,1,185,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,1,'DEFL','UGF','UGF','DB','SS',34,'Active','Buck Poole','Buck','Buck','Poole','01/04/2002',71,5,11,188,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,1,'DEFL','UGF','UGF','DB','SAF',48,'Active','Kendal Huber','Kendal','Kendal','Huber','04/10/1991',70,5,10,189,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,1,'DEFL','UGF','UGF','SPEC','K',38,'Active','Andy Francis','Andy','Andy','Francis','05/17/2005',73,6,1,170,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,1,'DEFL','UGF','UGF','SPEC','K',62,'Active','Rex Johnson','Rex','Rex','Johnson','05/27/2001',73,6,1,175,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,1,'DEFL','UGF','UGF','SPEC','P',69,'Active','Jacob Rigdon','Jacob','Jacob','Rigdon','03/08/2003',72,6,0,180,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,1,'DEFL','UGF','UGF','SPEC','P',65,'Active','Stephen Washington','Stephen','Stephen','Washington','03/15/2004',75,6,3,185,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,1,'DEFL','UGF','UGF','SPEC','LS',14,'Active','Logjammer D''Baggagecling','Logjammer','Logjammer','D''Baggagecling','12/08/2001',72,6,0,180,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,1,'DEFL','UGF','UGF','SPEC','LS',56,'Active','Triple Parakeet-Shoes','Triple','Triple','Parakeet-Shoes','07/26/2000',72,6,0,181,'UGF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,1,'DEFL','DVSU','DVSU','QB','QB',19,'Active','Micheal Wilson','Micheal','Micheal','Wilson','10/23/1999',74,6,2,206,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,1,'DEFL','DVSU','DVSU','QB','QB',18,'Active','Antwon Goodwin','Antwon','Antwon','Goodwin','10/01/1998',74,6,2,198,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,1,'DEFL','DVSU','DVSU','QB','QB',1,'Active','JT Martinez','JT','John','Martinez','03/30/1992',73,6,1,200,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,1,'DEFL','DVSU','DVSU','QB','QB',5,'Active','Travis Wood','Travis','Travis','Wood','06/24/1998',76,6,4,219,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,1,'DEFL','DVSU','DVSU','RB','RB',21,'Active','Matt Morrow','Matt','Matt','Morrow','09/06/1992',70,5,10,199,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,1,'DEFL','DVSU','DVSU','RB','RB',2,'Active','Zach Thompson','Zach','Zach','Thompson','05/29/1999',70,5,10,196,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,1,'DEFL','DVSU','DVSU','RB','RB',30,'Active','Jamie James','Jamie','Jamie','James','07/01/1995',70,5,10,204,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,1,'DEFL','DVSU','DVSU','RB','RB',41,'Active','Terence Wall','Terence','Terence','Wall','10/27/1992',70,5,10,210,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,1,'DEFL','DVSU','DVSU','RB','RB',12,'Active','Tre Eaton','Tre','Tre','Eaton','11/17/1991',68,5,8,190,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,1,'DEFL','DVSU','DVSU','RB','FB',49,'Active','Perry Samuels','Perry','Perry','Samuels','07/15/2001',74,6,2,225,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,1,'DEFL','DVSU','DVSU','RB','FB',29,'Active','Chip Godsey','Chip','Chip','Godsey','12/12/2001',76,6,4,215,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,1,'DEFL','DVSU','DVSU','RB','FB',25,'Active','Kellen West','Kellen','Kellen','West','03/11/1997',71,5,11,200,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,1,'DEFL','DVSU','DVSU','WR','WR',3,'Active','Seth McKenna','Seth','Seth','McKenna','11/20/2003',67,5,7,170,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,1,'DEFL','DVSU','DVSU','WR','WR',80,'Active','Richard Boulder','Richard','Richard','Boulder','12/11/2004',71,5,11,180,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,1,'DEFL','DVSU','DVSU','WR','WR',85,'Active','Brady Millar','Brady','Brady','Millar','11/09/1993',74,6,2,220,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,1,'DEFL','DVSU','DVSU','WR','WR',47,'Active','Alex King','Alex','Alex','King','02/23/1994',74,6,2,220,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,1,'DEFL','DVSU','DVSU','WR','WR',84,'Active','Jacob Hill','Jacob','Jacob','Hill','11/20/2000',73,6,1,196,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,1,'DEFL','DVSU','DVSU','WR','WR',34,'Active','Estman Gorman','Estman','Estman','Gorman','01/11/1992',72,6,0,175,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,1,'DEFL','DVSU','DVSU','TE','TE',81,'Active','Grankie Gandy','Grankie','Grankie','Gandy','05/03/2001',74,6,2,236,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,1,'DEFL','DVSU','DVSU','TE','TE',86,'Active','Bernard Gill','Bernard','Bernard','Gill','04/12/1991',71,5,11,191,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,1,'DEFL','DVSU','DVSU','OL','LT',72,'Active','Patrick Boulware','Patrick','Patrick','Boulware','11/15/1995',78,6,6,270,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,1,'DEFL','DVSU','DVSU','OL','RT',52,'Active','Benji Odom','Benji','Benji','Odom','02/29/1996',78,6,6,264,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,1,'DEFL','DVSU','DVSU','OL','OT',68,'Active','Deshon Haley','Deshon','Deshon','Haley','06/13/1991',78,6,6,287,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,1,'DEFL','DVSU','DVSU','OL','OT',75,'Active','C.J. Rozner','C.J.','Chris','Rozner','08/09/1996',78,6,6,278,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,1,'DEFL','DVSU','DVSU','OL','OT',70,'Active','Bobby Giles','Bobby','Bobby','Giles','02/11/2004',77,6,5,287,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,1,'DEFL','DVSU','DVSU','OL','OT',64,'Active','Davon Snyder','Davon','Davon','Snyder','08/11/1993',75,6,3,239,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,1,'DEFL','DVSU','DVSU','OL','RG',78,'Active','Jermaine Hodges','Jermaine','Jermaine','Hodges','02/18/2004',75,6,3,261,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,1,'DEFL','DVSU','DVSU','OL','LG',62,'Active','Aaron White','Aaron','Aaron','White','02/21/1997',76,6,4,317,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,1,'DEFL','DVSU','DVSU','OL','OG',67,'Active','Errick Humphrey','Errick','Errick','Humphrey','03/29/1991',76,6,4,306,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,1,'DEFL','DVSU','DVSU','OL','OG',58,'Active','Blake Klein','Blake','Blake','Klein','09/19/2001',78,6,6,255,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,1,'DEFL','DVSU','DVSU','OL','C',63,'Active','Matt Hampton','Matt','Matt','Hampton','05/13/1995',74,6,2,240,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,1,'DEFL','DVSU','DVSU','OL','C',71,'Active','Reshard Boone','Reshard','Reshard','Boone','09/28/1999',73,6,1,265,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,1,'DEFL','DVSU','DVSU','DL','LDE',92,'Active','Brylan Down','Brylan','Brylan','Down','11/30/2004',74,6,2,228,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,1,'DEFL','DVSU','DVSU','DL','RDE',93,'Active','Dom Atamo','Dom','Dom','Atamo','08/27/2001',74,6,2,235,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,1,'DEFL','DVSU','DVSU','DL','DE',99,'Active','Nolan Poole','Nolan','Nolan','Poole','01/07/2003',75,6,3,259,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,1,'DEFL','DVSU','DVSU','DL','DE',96,'Active','Del Smith','Del','Del','Smith','01/03/1998',78,6,6,250,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,1,'DEFL','DVSU','DVSU','DL','DE',48,'Active','Wesley Stamps','Wesley','Wesley','Stamps','10/30/2001',76,6,4,243,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,1,'DEFL','DVSU','DVSU','DL','DT',95,'Active','Joe Walker','Joe','Joe','Walker','09/06/1999',74,6,2,238,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,1,'DEFL','DVSU','DVSU','DL','DT',91,'Active','Sammy Sam','Sammy','Sammy','Sam','01/03/2001',75,6,3,260,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,1,'DEFL','DVSU','DVSU','DL','DT',65,'Active','Nathan McKee','Nathan','Nathan','McKee','03/04/1999',76,6,4,253,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,1,'DEFL','DVSU','DVSU','DL','DT',61,'Active','Doug Campers','Doug','Doug','Campers','08/18/1994',74,6,2,253,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,1,'DEFL','DVSU','DVSU','LB','OLB',73,'Active','Neil Krause','Neil','Neil','Krause','04/25/1992',73,6,1,195,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,1,'DEFL','DVSU','DVSU','LB','OLB',56,'Active','Oliver McIntyre','Oliver','Oliver','McIntyre','04/23/1999',72,6,0,206,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,1,'DEFL','DVSU','DVSU','LB','EDGE',98,'Active','Johnnie Barr','Johnnie','Johnnie','Barr','10/17/1994',72,6,0,211,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,1,'DEFL','DVSU','DVSU','LB','EDGE',94,'Active','Abdul Young','Abdul','Abdul','Young','05/05/1994',73,6,1,222,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,1,'DEFL','DVSU','DVSU','LB','LB',45,'Active','Samuel Schneider','Samuel','Samuel','Schneider','10/17/1990',73,6,1,214,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,1,'DEFL','DVSU','DVSU','LB','MLB',55,'Active','DD Rodgers','DD','DD','Rodgers','07/08/2002',74,6,2,217,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,1,'DEFL','DVSU','DVSU','LB','ILB',55,'Active','Will Hughes','Will','Will','Hughes','03/23/1999',74,6,2,220,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,1,'DEFL','DVSU','DVSU','LB','ILB',43,'Active','Cooper Stevenson','Cooper','Cooper','Stevenson','02/04/2001',73,6,1,213,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,1,'DEFL','DVSU','DVSU','LB','LB',87,'Active','Grant Eaton','Grant','Grant','Eaton','11/03/1991',73,6,1,225,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,1,'DEFL','DVSU','DVSU','DB','LCB',24,'Active','Bill Dingle','Bill','Bill','Dingle','12/08/2001',69,5,9,180,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,1,'DEFL','DVSU','DVSU','DB','RCB',39,'Active','Jeremy Jimmy','Jeremy','Jeremy','Jimmy','11/22/2000',72,6,0,180,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,1,'DEFL','DVSU','DVSU','DB','NCB',4,'Active','DeAngelo Woodard','DeAngelo','DeAngelo','Woodard','06/02/1994',72,6,0,185,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,1,'DEFL','DVSU','DVSU','DB','DCB',46,'Active','Lemarcus Parsons','Lemarcus','Lemarcus','Parsons','09/09/1997',71,5,11,175,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,1,'DEFL','DVSU','DVSU','DB','FS',36,'Active','Jesse Shelton','Jesse','Jesse','Shelton','08/25/2004',74,6,2,190,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,1,'DEFL','DVSU','DVSU','DB','SAF',23,'Active','Chris Hickmon','Chris','Chris','Hickmon','01/23/1998',74,6,2,199,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,1,'DEFL','DVSU','DVSU','DB','SS',31,'Active','Timothy Dickens','Timothy','Timothy','Dickens','08/24/1996',74,6,2,194,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,1,'DEFL','DVSU','DVSU','DB','SAF',26,'Active','LaShaun Gutierrez','LaShaun','LaShaun','Gutierrez','08/26/1995',71,5,11,191,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,1,'DEFL','DVSU','DVSU','SPEC','K',17,'Active','Justin Powell','Justin','Justin','Powell','01/04/1999',70,5,10,209,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,1,'DEFL','DVSU','DVSU','SPEC','P',69,'Active','Rob Butler','Rob','Rob','Butler','11/12/2002',73,6,1,195,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,1,'DEFL','DVSU','DVSU','SPEC','LS',79,'Active','Velociraptor Maloish','Velociraptor','Scoish','Maloish','11/25/1999',0,NULL,NULL,NULL,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,1,'DEFL','DVSU','DVSU','SPEC','LS',83,'Active','Aristokles Prabhu','Aristokles','Aristokles','Prabhu','03/18/2005',0,NULL,NULL,NULL,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,1,'DEFL','DVSU','DVSU','SPEC','K',15,'Active','Legume Druprix','Legume','Legume','Druprix','03/22/1997',72,6,0,191,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019)
-            ,(2019,1,'DEFL','DVSU','DVSU','SPEC','P',20,'Active','Creme De La Creme','Creme','Creme','De La Creme','04/15/2003',0,NULL,NULL,NULL,'DVSU',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL,1,'REG',NULL,NULL,NULL,2019,2019);
+    INSERT_INTO fb_weekly_rosters (
+        "season",
+        "game_id",
+        "league_id",
+        "team_id",
+        "team_abv",
+        "position",
+        "depth_chart_position",
+        "jersey_number",
+        "status",
+        "player_full_name",
+        "player_football_name",
+        "player_first_name",
+        "player_last_name",
+        "player_bday",
+        "height",
+        "height_ft",
+        "height_in",
+        "weight",
+        "college",
+        "years_exp",
+        "week",
+        "game_type",
+        "entry_year",
+        "rookie_year"
+    )
+    VALUES
+        (2019,1,'DEFL','UGF','UGF','QB','QB',4,'Active',
+            'Will Horton','Will','Will','Horton','9/6/1997',
+            73,6,1,242,'UGF',0,1,'REG',2019,2019)
+        ,(2019,1,'DEFL','UGF','UGF','QB','QB',16,'Active',
+            'Howard Cooke','Howard','Howard','Cooke','9/20/1990',
+            75,6,3,255,'UGF',0,1,'REG',2019,2019)
+        ,(2019,1,'DEFL','UGF','UGF','QB','QB',5,'Active',
+            'Rodney Calhoun','Rodney','Rodney','Calhoun','7/30/2000',
+            75,6,3,216,'UGF',0,1,'REG',2019,2019)
+        ,(2019,1,'DEFL','UGF','UGF','RB','RB',7,'Active',
+            'BJ Hale','BJ','Brian','Hale','4/25/1998',
+            73,6,1,229,'UGF',0,1,'REG',2019,2019)
+        ,(2019,1,'DEFL','UGF','UGF','RB','RB',2,'Active',
+            'Ryan Dingle','Ryan','Ryan','Dingle','8/7/2001',
+            71,5,11,190,'UGF',0,1,'REG',2019,2019)
+        ,(2019,1,'DEFL','UGF','UGF','RB','RB',42,'Active',
+            'Rob Minton','Rob','Rob','Minton','8/27/1995',
+            67,5,7,189,'UGF',0,1,'REG',2019,2019)
+        ,(2019,1,'DEFL','UGF','UGF','RB','FB',40,'Active',
+            'Tom Adamo','Tom','Tom','Adamo','2/8/1991',
+            73,6,1,232,'UGF',0,1,'REG',2019,2019)
+        ,(2019,1,'DEFL','UGF','UGF','RB','FB',39,'Active',
+            'Jason Eaton','Jason','Jason','Eaton','8/6/2003',
+            72,6,0,236,'UGF',0,1,'REG',2019,2019)
+        ,(2019,1,'DEFL','UGF','UGF','WR','WR',11,'Active',
+            'Elliot Denman','Elliot','Elliot','Denman','8/19/1992',
+            73,6,1,180,'UGF',0,1,'REG',2019,2019)
+        ,(2019,1,'DEFL','UGF','UGF','WR','WR',12,'Active',
+            'Neghan Stance','Neghan','Neghan','Stance','6/25/1992',
+            74,6,2,209,'UGF',0,1,'REG',2019,2019)
+        ,(2019,1,'DEFL','UGF','UGF','WR','WR',88,'Active',
+            'Torren Engle','Torren','Torren','Engle','9/30/1992',
+            72,6,0,175,'UGF',0,1,'REG',2019,2019)
+        ,(2019,1,'DEFL','UGF','UGF','WR','WR',84,'Active',
+            'Vance McMahon','Vance','Vance','McMahon','10/4/1998',
+            72,6,0,185,'UGF',0,1,'REG',2019,2019)
+        ,(2019,1,'DEFL','UGF','UGF','WR','WR',6,'Active',
+            'Jake Nelson','Jake','Jake','Nelson','6/27/1999',
+            71,5,11,165,'UGF',0,1,'REG',2019,2019)
+        ,(2019,1,'DEFL','UGF','UGF','TE','TE',18,'Active',
+            'Tez Triplett','Tez','Tez','Triplett','10/24/1993',
+            76,6,4,233,'UGF',0,1,'REG',2019,2019)
+        ,(2019,1,'DEFL','UGF','UGF','TE','TE',80,'Active',
+            'Nick Riley','Nick','Nick','Riley','9/6/1991',
+            75,6,3,219,'UGF',0,1,'REG',2019,2019)
+        ,(2019,1,'DEFL','UGF','UGF','TE','TE',90,'Active',
+            'Ernest Hunter','Ernest','Ernest','Hunter','10/24/2003',
+            75,6,3,231,'UGF',0,1,'REG',2019,2019)
+        ,(2019,1,'DEFL','UGF','UGF','OL','LT',77,'Active',
+            'Eric Robinson','Eric','Eric','Robinson','1/7/1999',
+            78,6,6,312,'UGF',0,1,'REG',2019,2019)
+        ,(2019,1,'DEFL','UGF','UGF','OL','OT',71,'Active',
+            'Bryce Bass','Bryce','Bryce','Bass','11/22/2004',
+            73,6,1,258,'UGF',0,1,'REG',2019,2019)
+        ,(2019,1,'DEFL','UGF','UGF','OL','RT',55,'Active',
+            'Emmitt Rich','Emmitt','Emmitt','Rich','7/29/2004',
+            75,6,3,303,'UGF',0,1,'REG',2019,2019)
+        ,(2019,1,'DEFL','UGF','UGF','OL','OT',64,'Active',
+            'Tyson James','Tyson','Tyson','James','1/31/1991',
+            75,6,3,287,'UGF',0,1,'REG',2019,2019)
+        ,(2019,1,'DEFL','UGF','UGF','OL','RG',57,'Active',
+            'Brent Tanner','Brent','Brent','Tanner','5/31/2003',
+            75,6,3,281,'UGF',0,1,'REG',2019,2019)
+        ,(2019,1,'DEFL','UGF','UGF','OL','OG',63,'Active',
+            'D.D. Henderson','D.D.','Dave','Henderson','11/4/1996',
+            72,6,0,297,'UGF',0,1,'REG',2019,2019)
+        ,(2019,1,'DEFL','UGF','UGF','OL','LG',72,'Active',
+            'J.T. Milton','J.T.','Jeff','Milton','3/20/2001',
+            75,6,3,279,'UGF',0,1,'REG',2019,2019)
+        ,(2019,1,'DEFL','UGF','UGF','OL','OG',59,'Active',
+            'Adam Huber','Adam','Adam','Huber','3/9/2004',
+            73,6,1,300,'UGF',0,1,'REG',2019,2019)
+        ,(2019,1,'DEFL','UGF','UGF','OL','C',61,'Active',
+            'Bubba Eldridge','Bubba','Bubba','Eldridge','11/22/1999',
+            76,6,4,305,'UGF',0,1,'REG',2019,2019)
+        ,(2019,1,'DEFL','UGF','UGF','OL','C',54,'Active',
+            'Shaud Bates','Shaud','Shaud','Bates','10/20/2002',
+            70,5,10,284,'UGF',0,1,'REG',2019,2019)
+        ,(2019,1,'DEFL','UGF','UGF','DL','LDE',89,'Active',
+            'LeRoy Singleton','LeRoy','LeRoy','Singleton','8/2/1996',
+            76,6,4,249,'UGF',0,1,'REG',2019,2019)
+        ,(2019,1,'DEFL','UGF','UGF','DL','RDE',91,'Active',
+            'Jakari McClelland','Jakari','Jakari','McClelland','8/20/2003',
+            72,6,0,248,'UGF',0,1,'REG',2019,2019)
+        ,(2019,1,'DEFL','UGF','UGF','DL','DE',95,'Active',
+            'Eric Jennings','Eric','Eric','Jennings','7/1/1992',
+            75,6,3,250,'UGF',0,1,'REG',2019,2019)
+        ,(2019,1,'DEFL','UGF','UGF','DL','DE',66,'Active',
+            'Harrison Hodges','Harrison','Harrison','Hodges','5/17/1991',
+            76,6,4,250,'UGF',0,1,'REG',2019,2019)
+        ,(2019,1,'DEFL','UGF','UGF','DL','NT',87,'Active',
+            'Leigh Manley','Leigh','Leigh','Manley','6/13/2003',
+            72,6,0,280,'UGF',0,1,'REG',2019,2019)
+        ,(2019,1,'DEFL','UGF','UGF','DL','DT',98,'Active',
+            'D.D. Nixon','D.D.','Dent','Nixon','4/7/1994',
+            77,6,5,273,'UGF',0,1,'REG',2019,2019)
+        ,(2019,1,'DEFL','UGF','UGF','DL','DT',96,'Active',
+            'Eli Griffith','Eli','Eli','Griffith','10/25/1994',
+            75,6,3,279,'UGF',0,1,'REG',2019,2019)
+        ,(2019,1,'DEFL','UGF','UGF','DL','DT',67,'Active',
+            'J.T. Benton','J.T.','John','Benton','1/16/2005',
+            73,6,1,243,'UGF',0,1,'REG',2019,2019)
+        ,(2019,1,'DEFL','UGF','UGF','DL','NG',92,'Active',
+            'Mike Dailey','Mike','Mike','Dailey','3/30/1992',
+            73,6,1,287,'UGF',0,1,'REG',2019,2019)
+        ,(2019,1,'DEFL','UGF','UGF','DL','DT',78,'Active',
+            'Gabriel Johnson','Gabriel','Gabriel','Johnson','1/7/1995',
+            70,5,10,248,'UGF',0,1,'REG',2019,2019)
+        ,(2019,1,'DEFL','UGF','UGF','LB','ROLB',45,'Active',
+            'Harry Bridges','Harry','Harry','Bridges','12/30/2004',
+            74,6,2,220,'UGF',0,1,'REG',2019,2019)
+        ,(2019,1,'DEFL','UGF','UGF','LB','LOLB',50,'Active',
+            'Tyler Ruff','Tyler','Tyler','Ruff','8/28/1993',
+            73,6,1,227,'UGF',0,1,'REG',2019,2019)
+        ,(2019,1,'DEFL','UGF','UGF','LB','EDGE',99,'Active',
+            'Ira Riley','Ira','Ira','Riley','4/16/1992',
+            74,6,2,238,'UGF',0,1,'REG',2019,2019)
+        ,(2019,1,'DEFL','UGF','UGF','LB','OLB',49,'Active',
+            'Donta Erickson','Donta','Donta','Erickson','2/23/1996',
+            72,6,0,220,'UGF',0,1,'REG',2019,2019)
+        ,(2019,1,'DEFL','UGF','UGF','LB','ILB',52,'Active',
+            'Eric Tyson','Eric','Eric','Tyson','9/8/2001',
+            72,6,0,235,'UGF',0,1,'REG',2019,2019)
+        ,(2019,1,'DEFL','UGF','UGF','LB','MLB',51,'Active',
+            'Elgin Landry','Elgin','Elgin','Landry','7/15/2003',
+            72,6,0,231,'UGF',0,1,'REG',2019,2019)
+        ,(2019,1,'DEFL','UGF','UGF','DB','RCB',37,'Active',
+            'Andrew Dale','Andrew','Andrew','Dale','4/7/1994',
+            75,6,3,200,'UGF',0,1,'REG',2019,2019)
+        ,(2019,1,'DEFL','UGF','UGF','DB','LCB',19,'Active',
+            'Avery Thompson','Avery','Avery','Thompson','10/13/2004',
+            70,5,10,185,'UGF',0,1,'REG',2019,2019)
+        ,(2019,1,'DEFL','UGF','UGF','DB','SCB',1,'Active',
+            'Casey Eaton','Casey','Casey','Eaton','11/16/1990',
+            74,6,2,195,'UGF',0,1,'REG',2019,2019)
+        ,(2019,1,'DEFL','UGF','UGF','DB','CB',46,'Active',
+            'Derek Lindsey','Derek','Derek','Lindsey','4/12/1997',
+            68,5,8,175,'UGF',0,1,'REG',2019,2019)
+        ,(2019,1,'DEFL','UGF','UGF','DB','CB',28,'Active',
+            'Kareem Huffman','Kareem','Kareem','Huffman','7/16/1991',
+            68,5,8,177,'UGF',0,1,'REG',2019,2019)
+        ,(2019,1,'DEFL','UGF','UGF','DB','CB',24,'Active',
+            'Jimmie Ricks','Jimmie','Jimmie','Ricks','3/12/1997',
+            67,5,7,160,'UGF',0,1,'REG',2019,2019)
+        ,(2019,1,'DEFL','UGF','UGF','DB','FS',26,'Active',
+            'Benny Preston','Benny','Benny','Preston','1/4/1994',
+            73,6,1,180,'UGF',0,1,'REG',2019,2019)
+        ,(2019,1,'DEFL','UGF','UGF','DB','SAF',23,'Active',
+            'Keenan Manning','Keenan','Keenan','Manning','11/25/1992',
+            73,6,1,185,'UGF',0,1,'REG',2019,2019)
+        ,(2019,1,'DEFL','UGF','UGF','DB','SS',34,'Active',
+            'Buck Poole','Buck','Buck','Poole','1/4/2002',
+            71,5,11,188,'UGF',0,1,'REG',2019,2019)
+        ,(2019,1,'DEFL','UGF','UGF','DB','SAF',48,'Active',
+            'Kendal Huber','Kendal','Kendal','Huber','4/10/1991',
+            70,5,10,189,'UGF',0,1,'REG',2019,2019)
+        ,(2019,1,'DEFL','UGF','UGF','SPEC','K',38,'Active',
+            'Andy Francis','Andy','Andy','Francis','5/17/2005',
+            73,6,1,170,'UGF',0,1,'REG',2019,2019)
+        ,(2019,1,'DEFL','UGF','UGF','SPEC','K',62,'Active',
+            'Rex Johnson','Rex','Rex','Johnson','5/27/2001',
+            73,6,1,175,'UGF',0,1,'REG',2019,2019)
+        ,(2019,1,'DEFL','UGF','UGF','SPEC','P',69,'Active',
+            'Jacob Rigdon','Jacob','Jacob','Rigdon','3/8/2003',
+            72,6,0,180,'UGF',0,1,'REG',2019,2019)
+        ,(2019,1,'DEFL','UGF','UGF','SPEC','P',65,'Active',
+            'Stephen Washington','Stephen','Stephen','Washington','3/15/2004',
+            75,6,3,185,'UGF',0,1,'REG',2019,2019)
+        ,(2019,1,'DEFL','UGF','UGF','SPEC','LS',14,'Active',
+            'Logjammer D''Baggagecling','Logjammer','Logjammer','Baggagecling',
+            '12/8/2001',72,6,0,180,'UGF',0,1,'REG',2019,2019)
+        ,(2019,1,'DEFL','UGF','UGF','SPEC','LS',56,'Active',
+            'Triple Parakeet-Shoes',
+            'Triple','Triple','Parakeet-Shoes','7/26/2000',
+            72,6,0,181,'UGF',0,1,'REG',2019,2019)
+        ,(2019,1,'DEFL','DVSU','DVSU','QB','QB',19,'Active',
+            'Micheal Wilson','Micheal','Micheal','Wilson','10/23/1999',
+            74,6,2,206,'DVSU',0,1,'REG',2019,2019)
+        ,(2019,1,'DEFL','DVSU','DVSU','QB','QB',18,'Active',
+            'Antwon Goodwin','Antwon','Antwon','Goodwin','10/1/1998',
+            74,6,2,198,'DVSU',0,1,'REG',2019,2019)
+        ,(2019,1,'DEFL','DVSU','DVSU','QB','QB',1,'Active',
+            'JT Martinez','JT','John','Martinez','3/30/1992',
+            73,6,1,200,'DVSU',0,1,'REG',2019,2019)
+        ,(2019,1,'DEFL','DVSU','DVSU','QB','QB',5,'Active',
+            'Travis Wood','Travis','Travis','Wood','6/24/1998',
+            76,6,4,219,'DVSU',0,1,'REG',2019,2019)
+        ,(2019,1,'DEFL','DVSU','DVSU','RB','RB',21,'Active',
+            'Matt Morrow','Matt','Matt','Morrow','9/6/1992',
+            70,5,10,199,'DVSU',0,1,'REG',2019,2019)
+        ,(2019,1,'DEFL','DVSU','DVSU','RB','RB',2,'Active',
+            'Zach Thompson','Zach','Zach','Thompson','5/29/1999',
+            70,5,10,196,'DVSU',0,1,'REG',2019,2019)
+        ,(2019,1,'DEFL','DVSU','DVSU','RB','RB',30,'Active',
+            'Jamie James','Jamie','Jamie','James','7/1/1995',
+            70,5,10,204,'DVSU',0,1,'REG',2019,2019)
+        ,(2019,1,'DEFL','DVSU','DVSU','RB','RB',41,'Active',
+            'Terence Wall','Terence','Terence','Wall','10/27/1992',
+            70,5,10,210,'DVSU',0,1,'REG',2019,2019)
+        ,(2019,1,'DEFL','DVSU','DVSU','RB','RB',12,'Active',
+            'Tre Eaton','Tre','Tre','Eaton','11/17/1991',
+            68,5,8,190,'DVSU',0,1,'REG',2019,2019)
+        ,(2019,1,'DEFL','DVSU','DVSU','RB','FB',49,'Active',
+            'Perry Samuels','Perry','Perry','Samuels','7/15/2001',
+            74,6,2,225,'DVSU',0,1,'REG',2019,2019)
+        ,(2019,1,'DEFL','DVSU','DVSU','RB','FB',29,'Active',
+            'Chip Godsey','Chip','Chip','Godsey','12/12/2001',
+            76,6,4,215,'DVSU',0,1,'REG',2019,2019)
+        ,(2019,1,'DEFL','DVSU','DVSU','RB','FB',25,'Active',
+            'Kellen West','Kellen','Kellen','West','3/11/1997',
+            71,5,11,200,'DVSU',0,1,'REG',2019,2019)
+        ,(2019,1,'DEFL','DVSU','DVSU','WR','WR',3,'Active',
+            'Seth McKenna','Seth','Seth','McKenna','11/20/2003',
+            67,5,7,170,'DVSU',0,1,'REG',2019,2019)
+        ,(2019,1,'DEFL','DVSU','DVSU','WR','WR',80,'Active',
+            'Richard Boulder','Richard','Richard','Boulder','12/11/2004',
+            71,5,11,180,'DVSU',0,1,'REG',2019,2019)
+        ,(2019,1,'DEFL','DVSU','DVSU','WR','WR',85,'Active',
+            'Brady Millar','Brady','Brady','Millar','11/9/1993',
+            74,6,2,220,'DVSU',0,1,'REG',2019,2019)
+        ,(2019,1,'DEFL','DVSU','DVSU','WR','WR',47,'Active',
+            'Alex King','Alex','Alex','King','2/23/1994',
+            74,6,2,220,'DVSU',0,1,'REG',2019,2019)
+        ,(2019,1,'DEFL','DVSU','DVSU','WR','WR',84,'Active',
+            'Jacob Hill','Jacob','Jacob','Hill','11/20/2000',
+            73,6,1,196,'DVSU',0,1,'REG',2019,2019)
+        ,(2019,1,'DEFL','DVSU','DVSU','WR','WR',34,'Active',
+            'Estman Gorman','Estman','Estman','Gorman','1/11/1992',
+            72,6,0,175,'DVSU',0,1,'REG',2019,2019)
+        ,(2019,1,'DEFL','DVSU','DVSU','TE','TE',81,'Active',
+            'Grankie Gandy','Grankie','Grankie','Gandy','5/3/2001',
+            74,6,2,236,'DVSU',0,1,'REG',2019,2019)
+        ,(2019,1,'DEFL','DVSU','DVSU','TE','TE',86,'Active',
+            'Bernard Gill','Bernard','Bernard','Gill','4/12/1991',
+            71,5,11,191,'DVSU',0,1,'REG',2019,2019)
+        ,(2019,1,'DEFL','DVSU','DVSU','OL','LT',72,'Active',
+            'Patrick Boulware','Patrick','Patrick','Boulware','11/15/1995',
+            78,6,6,270,'DVSU',0,1,'REG',2019,2019)
+        ,(2019,1,'DEFL','DVSU','DVSU','OL','RT',52,'Active',
+            'Benji Odom','Benji','Benji','Odom','2/29/1996',
+            78,6,6,264,'DVSU',0,1,'REG',2019,2019)
+        ,(2019,1,'DEFL','DVSU','DVSU','OL','OT',68,'Active',
+            'Deshon Haley','Deshon','Deshon','Haley','6/13/1991',
+            78,6,6,287,'DVSU',0,1,'REG',2019,2019)
+        ,(2019,1,'DEFL','DVSU','DVSU','OL','OT',75,'Active',
+            'C.J. Rozner','C.J.','Chris','Rozner','8/9/1996',
+            78,6,6,278,'DVSU',0,1,'REG',2019,2019)
+        ,(2019,1,'DEFL','DVSU','DVSU','OL','OT',70,'Active',
+            'Bobby Giles','Bobby','Bobby','Giles','2/11/2004',
+            77,6,5,287,'DVSU',0,1,'REG',2019,2019)
+        ,(2019,1,'DEFL','DVSU','DVSU','OL','OT',64,'Active',
+            'Davon Snyder','Davon','Davon','Snyder','8/11/1993',
+            75,6,3,239,'DVSU',0,1,'REG',2019,2019)
+        ,(2019,1,'DEFL','DVSU','DVSU','OL','RG',78,'Active',
+            'Jermaine Hodges','Jermaine','Jermaine','Hodges','2/18/2004',
+            75,6,3,261,'DVSU',0,1,'REG',2019,2019)
+        ,(2019,1,'DEFL','DVSU','DVSU','OL','LG',62,'Active',
+            'Aaron White','Aaron','Aaron','White','2/21/1997',
+            76,6,4,317,'DVSU',0,1,'REG',2019,2019)
+        ,(2019,1,'DEFL','DVSU','DVSU','OL','OG',67,'Active',
+            'Errick Humphrey','Errick','Errick','Humphrey','3/29/1991',
+            76,6,4,306,'DVSU',0,1,'REG',2019,2019)
+        ,(2019,1,'DEFL','DVSU','DVSU','OL','OG',58,'Active',
+            'Blake Klein','Blake','Blake','Klein','9/19/2001',
+            78,6,6,255,'DVSU',0,1,'REG',2019,2019)
+        ,(2019,1,'DEFL','DVSU','DVSU','OL','C',63,'Active',
+            'Matt Hampton','Matt','Matt','Hampton','5/13/1995',
+            74,6,2,240,'DVSU',0,1,'REG',2019,2019)
+        ,(2019,1,'DEFL','DVSU','DVSU','OL','C',71,'Active',
+            'Reshard Boone','Reshard','Reshard','Boone','9/28/1999',
+            73,6,1,265,'DVSU',0,1,'REG',2019,2019)
+        ,(2019,1,'DEFL','DVSU','DVSU','DL','LDE',92,'Active',
+            'Brylan Down','Brylan','Brylan','Down','11/30/2004',
+            74,6,2,228,'DVSU',0,1,'REG',2019,2019)
+        ,(2019,1,'DEFL','DVSU','DVSU','DL','RDE',93,'Active',
+            'Dom Atamo','Dom','Dom','Atamo','8/27/2001',
+            74,6,2,235,'DVSU',0,1,'REG',2019,2019)
+        ,(2019,1,'DEFL','DVSU','DVSU','DL','DE',99,'Active',
+            'Nolan Poole','Nolan','Nolan','Poole','1/7/2003',
+            75,6,3,259,'DVSU',0,1,'REG',2019,2019)
+        ,(2019,1,'DEFL','DVSU','DVSU','DL','DE',96,'Active',
+            'Del Smith','Del','Del','Smith','1/3/1998',
+            78,6,6,250,'DVSU',0,1,'REG',2019,2019)
+        ,(2019,1,'DEFL','DVSU','DVSU','DL','DE',48,'Active',
+            'Wesley Stamps','Wesley','Wesley','Stamps','10/30/2001',
+            76,6,4,243,'DVSU',0,1,'REG',2019,2019)
+        ,(2019,1,'DEFL','DVSU','DVSU','DL','DT',95,'Active',
+            'Joe Walker','Joe','Joe','Walker','9/6/1999',
+            74,6,2,238,'DVSU',0,1,'REG',2019,2019)
+        ,(2019,1,'DEFL','DVSU','DVSU','DL','DT',91,'Active',
+            'Sammy Sam','Sammy','Sammy','Sam','1/3/2001',
+            75,6,3,260,'DVSU',0,1,'REG',2019,2019)
+        ,(2019,1,'DEFL','DVSU','DVSU','DL','DT',65,'Active',
+            'Nathan McKee','Nathan','Nathan','McKee','3/4/1999',
+            76,6,4,253,'DVSU',0,1,'REG',2019,2019)
+        ,(2019,1,'DEFL','DVSU','DVSU','DL','DT',61,'Active',
+            'Doug Campers','Doug','Doug','Campers','8/18/1994',
+            74,6,2,253,'DVSU',0,1,'REG',2019,2019)
+        ,(2019,1,'DEFL','DVSU','DVSU','LB','OLB',73,'Active',
+            'Neil Krause','Neil','Neil','Krause','4/25/1992',
+            73,6,1,195,'DVSU',0,1,'REG',2019,2019)
+        ,(2019,1,'DEFL','DVSU','DVSU','LB','OLB',56,'Active',
+            'Oliver McIntyre','Oliver','Oliver','McIntyre','4/23/1999',
+            72,6,0,206,'DVSU',0,1,'REG',2019,2019)
+        ,(2019,1,'DEFL','DVSU','DVSU','LB','EDGE',98,'Active',
+            'Johnnie Barr','Johnnie','Johnnie','Barr','10/17/1994',
+            72,6,0,211,'DVSU',0,1,'REG',2019,2019)
+        ,(2019,1,'DEFL','DVSU','DVSU','LB','EDGE',94,'Active',
+            'Abdul Young','Abdul','Abdul','Young','5/5/1994',
+            73,6,1,222,'DVSU',0,1,'REG',2019,2019)
+        ,(2019,1,'DEFL','DVSU','DVSU','LB','LB',45,'Active',
+            'Samuel Schneider','Samuel','Samuel','Schneider','10/17/1990',
+            73,6,1,214,'DVSU',0,1,'REG',2019,2019)
+        ,(2019,1,'DEFL','DVSU','DVSU','LB','MLB',55,'Active',
+            'DD Rodgers','DD','DD','Rodgers','7/8/2002',
+            74,6,2,217,'DVSU',0,1,'REG',2019,2019)
+        ,(2019,1,'DEFL','DVSU','DVSU','LB','ILB',55,'Active',
+            'Will Hughes','Will','Will','Hughes','3/23/1999',
+            74,6,2,220,'DVSU',0,1,'REG',2019,2019)
+        ,(2019,1,'DEFL','DVSU','DVSU','LB','ILB',43,'Active',
+            'Cooper Stevenson','Cooper','Cooper','Stevenson','2/4/2001',
+            73,6,1,213,'DVSU',0,1,'REG',2019,2019)
+        ,(2019,1,'DEFL','DVSU','DVSU','LB','LB',87,'Active',
+            'Grant Eaton','Grant','Grant','Eaton','11/3/1991',
+            73,6,1,225,'DVSU',0,1,'REG',2019,2019)
+        ,(2019,1,'DEFL','DVSU','DVSU','DB','LCB',24,'Active',
+            'Bill Dingle','Bill','Bill','Dingle','12/8/2001',
+            69,5,9,180,'DVSU',0,1,'REG',2019,2019)
+        ,(2019,1,'DEFL','DVSU','DVSU','DB','RCB',39,'Active',
+            'Jeremy Jimmy','Jeremy','Jeremy','Jimmy','11/22/2000',
+            72,6,0,180,'DVSU',0,1,'REG',2019,2019)
+        ,(2019,1,'DEFL','DVSU','DVSU','DB','NCB',4,'Active',
+            'DeAngelo Woodard','DeAngelo','DeAngelo','Woodard','6/2/1994',
+            72,6,0,185,'DVSU',0,1,'REG',2019,2019)
+        ,(2019,1,'DEFL','DVSU','DVSU','DB','DCB',46,'Active',
+            'Lemarcus Parsons','Lemarcus','Lemarcus','Parsons','9/9/1997',
+            71,5,11,175,'DVSU',0,1,'REG',2019,2019)
+        ,(2019,1,'DEFL','DVSU','DVSU','DB','FS',36,'Active',
+            'Jesse Shelton','Jesse','Jesse','Shelton','8/25/2004',
+            74,6,2,190,'DVSU',0,1,'REG',2019,2019)
+        ,(2019,1,'DEFL','DVSU','DVSU','DB','SAF',23,'Active',
+            'Chris Hickmon','Chris','Chris','Hickmon','1/23/1998',
+            74,6,2,199,'DVSU',0,1,'REG',2019,2019)
+        ,(2019,1,'DEFL','DVSU','DVSU','DB','SS',31,'Active',
+            'Timothy Dickens','Timothy','Timothy','Dickens','8/24/1996',
+            74,6,2,194,'DVSU',0,1,'REG',2019,2019)
+        ,(2019,1,'DEFL','DVSU','DVSU','DB','SAF',26,'Active',
+            'LaShaun Gutierrez','LaShaun','LaShaun','Gutierrez','8/26/1995',
+            71,5,11,191,'DVSU',0,1,'REG',2019,2019)
+        ,(2019,1,'DEFL','DVSU','DVSU','SPEC','K',17,'Active',
+            'Justin Powell','Justin','Justin','Powell','1/4/1999',
+            70,5,10,209,'DVSU',0,1,'REG',2019,2019)
+        ,(2019,1,'DEFL','DVSU','DVSU','SPEC','P',69,'Active',
+            'Rob Butler','Rob','Rob','Butler','11/12/2002',
+            73,6,1,195,'DVSU',0,1,'REG',2019,2019)
+        ,(2019,1,'DEFL','DVSU','DVSU','SPEC','LS',79,'Active',
+            'Velociraptor Maloish',
+            'Velociraptor','Scoish','Maloish','11/25/1999',
+            0,NULL,NULL,NULL,'DVSU',0,1,'REG',2019,2019)
+        ,(2019,1,'DEFL','DVSU','DVSU','SPEC','LS',83,'Active',
+            'Aristokles Prabhu','Aristokles','Aristokles','Prabhu','3/18/2005',
+            0,NULL,NULL,NULL,'DVSU',0,1,'REG',2019,2019)
+        ,(2019,1,'DEFL','DVSU','DVSU','SPEC','K',15,'Active',
+            'Legume Druprix','Legume','Legume','Druprix','3/22/1997',
+            72,6,0,191,'DVSU',0,1,'REG',2019,2019)
+        ,(2019,1,'DEFL','DVSU','DVSU','SPEC','P',20,'Active',
+            'Creme De La Creme','Creme','Creme','De La Creme','4/15/2003',
+            0,NULL,NULL,NULL,'DVSU',0,1,'REG',2019,2019);
 
         """
         return sql_script.replace("        ", "")
@@ -6571,14 +8046,31 @@ class sqlite3_sample_files:
             "game_id"               INT NOT NULL,
             "week"                  INT NOT NULL,
             "game_type"             TEXT NOT NULL,
-            "depth_team"            INT NOT NULL, -- Indicates where this player is on the depth chart for this specific position. For example, the starting QB will have a "depth_team" of `1`, QB2 will have a "depth_team" of `2`, and QB3 will have a "depth_team" of `3`. 
+            /*
+            Indicates where this player is on the depth chart
+            for this specific position.
+            For example, the starting QB will have a "depth_team" of `1`,
+            QB2 will have a "depth_team" of `2`,
+            and QB3 will have a "depth_team" of `3`.
+            */
+            "depth_team"            INT NOT NULL,
             "player_id"             INT NOT NULL,
-            "player_jersey_number"  TEXT NOT NULL, -- TEXT so a player can be identified by "00", "01", "1A", or "1O"/"1D"
+            -- TEXT so a player can be identified by
+            -- "00", "01", "1A", or "1O"/"1D"
+            "player_jersey_number"  TEXT NOT NULL,
             "player_last_name"      TEXT NOT NULL,
             "player_first_name"     TEXT NOT NULL,
-            "player_football_name"  TEXT NOT NULL, -- Defaults to the value of "player_first_name", but can be set to a differient value (for example, Boomer Esiason, who's birth name is Norman Esiason, can have his "player_first_name" == "Norman", and his "player_football_name" == "Boomer").
+            /*
+            Defaults to the value of "player_first_name",
+            but can be set to a differient value
+            (for example, Boomer Esiason, who's birth name is Norman Esiason,
+            can have his "player_first_name" == "Norman",
+            and his "player_football_name" == "Boomer").
+            */
+            "player_football_name"  TEXT NOT NULL,
             "player_full_name"      TEXT NOT NULL,
-            "formation"             TEXT NOT NULL, -- Will be set to "offense", "defense", or "special_teams".
+            -- Will be set to "offense", "defense", or "special_teams".
+            "formation"             TEXT NOT NULL,
             "player_position"       TEXT NOT NULL,
             "player_depth_position" TEXT NOT NULL,
             "gsis_id"               TEXT,-- NFL GSIS Player ID.
@@ -6603,69 +8095,212 @@ class sqlite3_sample_files:
         );
 
         CREATE UNIQUE INDEX idx_depth_charts_id
-        ON "fb_depth_charts" ("season","league_id","team_id","player_full_name","week","game_type","player_depth_position","depth_team");
+        ON "fb_depth_charts" (
+            "season",
+            "league_id",
+            "team_id",
+            "player_full_name",
+            "week",
+            "game_type",
+            "player_depth_position",
+            "depth_team"
+        );
 
-        INSERT INTO fb_depth_charts
-            (season,"league_id","team_abv","game_id",week,"game_type","depth_team","player_id","player_jersey_number","player_last_name","player_first_name","player_football_name","player_full_name",formation,"player_position","player_depth_position","gsis_id","espn_id","sportradar_id","yahoo_id","rotowire_id","pff_id","pfr_id","fantasy_data_id","sleeper_id","esb_id","smart_id")
+
+        INSERT INTO fb_depth_charts (
+            "season",
+            "league_id",
+            "team_abv",
+            "game_id",
+            "week",
+            "game_type",
+            "depth_team",
+            "player_id",
+            "player_jersey_number",
+            "player_last_name",
+            "player_first_name",
+            "player_football_name",
+            "player_full_name",
+            "formation",
+            "player_position",
+            "player_depth_position"
+        )
         VALUES
-            (2019,'DEFL','UGF',1,1,'REG',1,1,4,'Horton','Will','Will','Horton','offense','QB','QB',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL)
-            ,(2019,'DEFL','UGF',1,1,'REG',2,2,16,'Cooke','Howard','Howard','Howard Cooke','offense','QB','QB',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL)
-            ,(2019,'DEFL','UGF',1,1,'REG',3,3,5,'Calhoun','Rodney','Rod','Rod Calhoun','offense','QB','QB',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL)
-            ,(2019,'DEFL','UGF',1,1,'REG',1,4,7,'Active','BJ Hale','BJ','BJ','Hale','RB','RB',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL)
-            ,(2019,'DEFL','UGF',1,1,'REG',2,5,2,'Active','Ryan Dingle','Ryan','Ryan','Dingle','RB','RB',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL)
-            ,(2019,'DEFL','UGF',1,1,'REG',3,6,42,'Active','Rob Minton','Rob','Rob','Minton','RB','RB',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL)
-            ,(2019,'DEFL','UGF',1,1,'REG',1,7,40,'Active','Tom Adamo','Tom','Tom','Adamo','RB','FB',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL)
-            ,(2019,'DEFL','UGF',1,1,'REG',2,8,39,'Active','Jason Eaton','Jason','Jason','Eaton','RB','FB',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL)
-            ,(2019,'DEFL','UGF',1,1,'REG',1,9,11,'Active','Elliot Denman','Elliot','Elliot','Denman','WR','WR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL)
-            ,(2019,'DEFL','UGF',1,1,'REG',2,10,12,'Active','Neghan Stance','Neghan','Neghan','Stance','WR','WR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL)
-            ,(2019,'DEFL','UGF',1,1,'REG',3,11,88,'Active','Torren Engle','Torren','Torren','Engle','WR','WR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL)
-            ,(2019,'DEFL','UGF',1,1,'REG',4,12,84,'Active','Vance McMahon','Vance','Vance','McMahon','WR','WR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL)
-            ,(2019,'DEFL','UGF',1,1,'REG',5,13,6,'Active','Jake Nelson','Jake','Jake','Nelson','WR','WR',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL)
-            ,(2019,'DEFL','UGF',1,1,'REG',1,14,18,'Active','Tez Triplett','Tez','Tez','Triplett','TE','TE',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL)
-            ,(2019,'DEFL','UGF',1,1,'REG',2,15,80,'Active','Nick Riley','Nick','Nick','Riley','TE','TE',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL)
-            ,(2019,'DEFL','UGF',1,1,'REG',3,16,90,'Active','Ernest Hunter','Ernest','Ernest','Hunter','TE','TE',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL)
-            ,(2019,'DEFL','UGF',1,1,'REG',1,17,77,'Active','Eric Robinson','Eric','Eric','Robinson','OL','LT',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL)
-            ,(2019,'DEFL','UGF',1,1,'REG',2,18,71,'Active','Bryce Bass','Bryce','Bryce','Bass','OL','LT',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL)
-            ,(2019,'DEFL','UGF',1,1,'REG',1,19,55,'Active','Emmitt Rich','Emmitt','Emmitt','Rich','OL','RT',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL)
-            ,(2019,'DEFL','UGF',1,1,'REG',2,20,64,'Active','Tyson James','Tyson','Tyson','James','OL','RT',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL)
-            ,(2019,'DEFL','UGF',1,1,'REG',1,21,57,'Active','Brent Tanner','Brent','Brent','Tanner','OL','RG',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL)
-            ,(2019,'DEFL','UGF',1,1,'REG',2,22,63,'Active','D.D. Henderson','D.D.','D.D.','Henderson','OL','RG',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL)
-            ,(2019,'DEFL','UGF',1,1,'REG',1,23,72,'Active','J.T. Milton','J.T.','J.T.','Milton','OL','LG',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL)
-            ,(2019,'DEFL','UGF',1,1,'REG',2,24,59,'Active','Adam Huber','Adam','Adam','Huber','OL','LG',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL)
-            ,(2019,'DEFL','UGF',1,1,'REG',1,25,61,'Active','Bubba Eldridge','Bubba','Bubba','Eldridge','OL','C',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL)
-            ,(2019,'DEFL','UGF',1,1,'REG',2,26,54,'Active','Shaud Bates','Shaud','Shaud','Bates','OL','C',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL)
-            ,(2019,'DEFL','UGF',1,1,'REG',1,27,89,'Active','LeRoy Singleton','LeRoy','LeRoy','Singleton','DL','LDE',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL)
-            ,(2019,'DEFL','UGF',1,1,'REG',1,28,91,'Active','Jakari McClelland','Jakari','Jakari','McClelland','DL','RDE',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL)
-            ,(2019,'DEFL','UGF',1,1,'REG',2,29,95,'Active','Eric Jennings','Eric','Eric','Jennings','DL','LDE',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL)
-            ,(2019,'DEFL','UGF',1,1,'REG',2,30,66,'Active','Harrison Hodges','Harrison','Harrison','Hodges','DL','RDE',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL)
-            ,(2019,'DEFL','UGF',1,1,'REG',1,31,87,'Active','Leigh Manley','Leigh','Leigh','Manley','DL','NT',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL)
-            ,(2019,'DEFL','UGF',1,1,'REG',1,32,98,'Active','D.D. Nixon','D.D.','D.D.','Nixon','DL','DT',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL)
-            ,(2019,'DEFL','UGF',1,1,'REG',2,33,96,'Active','Eli Griffith','Eli','Eli','Griffith','DL','DT',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL)
-            ,(2019,'DEFL','UGF',1,1,'REG',3,34,67,'Active','J.T. Benton','J.T.','J.T.','Benton','DL','DT',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL)
-            ,(2019,'DEFL','UGF',1,1,'REG',2,35,92,'Active','Mike Dailey','Mike','Mike','Dailey','DL','NT',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL)
-            ,(2019,'DEFL','UGF',1,1,'REG',4,36,78,'Active','Gabriel Johnson','Gabriel','Gabriel','Johnson','DL','DT',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL)
-            ,(2019,'DEFL','UGF',1,1,'REG',1,37,45,'Active','Harry Bridges','Harry','Harry','Bridges','LB','ROLB',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL)
-            ,(2019,'DEFL','UGF',1,1,'REG',1,38,50,'Active','Tyler Ruff','Tyler','Tyler','Ruff','LB','LOLB',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL)
-            ,(2019,'DEFL','UGF',1,1,'REG',2,39,99,'Active','Ira Riley','Ira','Ira','Riley','LB','ROLB',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL)
-            ,(2019,'DEFL','UGF',1,1,'REG',2,40,49,'Active','Donta Erickson','Donta','Donta','Erickson','LB','LOLB',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL)
-            ,(2019,'DEFL','UGF',1,1,'REG',1,41,52,'Active','Eric Tyson','Eric','Eric','Tyson','LB','ILB',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL)
-            ,(2019,'DEFL','UGF',1,1,'REG',2,42,51,'Active','Elgin Landry','Elgin','Elgin','Landry','LB','ILB',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL)
-            ,(2019,'DEFL','UGF',1,1,'REG',1,43,37,'Active','Andrew Dale','Andrew','Andrew','Dale','DB','RCB',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL)
-            ,(2019,'DEFL','UGF',1,1,'REG',1,44,19,'Active','Avery Thompson','Avery','Avery','Thompson','DB','LCB',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL)
-            ,(2019,'DEFL','UGF',1,1,'REG',2,45,1,'Active','Casey Eaton','Casey','Casey','Eaton','DB','SCB',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL)
-            ,(2019,'DEFL','UGF',1,1,'REG',2,46,46,'Active','Derek Lindsey','Derek','Derek','Lindsey','DB','CB',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL)
-            ,(2019,'DEFL','UGF',1,1,'REG',3,47,28,'Active','Kareem Huffman','Kareem','Kareem','Huffman','DB','CB',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL)
-            ,(2019,'DEFL','UGF',1,1,'REG',3,48,24,'Active','Jimmie Ricks','Jimmie','Jimmie','Ricks','DB','CB',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL)
-            ,(2019,'DEFL','UGF',1,1,'REG',1,49,26,'Active','Benny Preston','Benny','Benny','Preston','DB','FS',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL)
-            ,(2019,'DEFL','UGF',1,1,'REG',2,50,23,'Active','Keenan Manning','Keenan','Keenan','Manning','DB','SAF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL)
-            ,(2019,'DEFL','UGF',1,1,'REG',1,51,34,'Active','Buck Poole','Buck','Buck','Poole','DB','SS',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL)
-            ,(2019,'DEFL','UGF',1,1,'REG',2,52,48,'Active','Kendal Huber','Kendal','Kendal','Huber','DB','SAF',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL)
-            ,(2019,'DEFL','UGF',1,1,'REG',1,53,38,'Active','Andy Francis','Andy','Andy','Francis','SPEC','K',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL)
-            ,(2019,'DEFL','UGF',1,1,'REG',2,54,62,'Active','Rex Johnson','Rex','Rex','Johnson','SPEC','K',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL)
-            ,(2019,'DEFL','UGF',1,1,'REG',1,55,69,'Active','Jacob Rigdon','Jacob','Jacob','Rigdon','SPEC','P',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL)
-            ,(2019,'DEFL','UGF',1,1,'REG',2,56,65,'Active','Stephen Washington','Stephen','Stephen','Washington','SPEC','P',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL)
-            ,(2019,'DEFL','UGF',1,1,'REG',1,57,14,'Active','Logjammer D''Baggagecling','Logjammer','Logjammer','D''Baggagecling','SPEC','LS',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL)
-            ,(2019,'DEFL','UGF',1,1,'REG',2,58,56,'Active','Triple Parakeet-Shoes','Triple','Triple','Parakeet-Shoes','SPEC','LS',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+             (2019,'DEFL','UGF',1,1,'REG',1,
+                1,4,'Horton','Will','Will','Will Horton',
+                'offense','QB','QB')
+            ,(2019,'DEFL','UGF',1,1,'REG',2,
+                2,16,'Cooke','Howard','Howard','Howard Cooke',
+                'offense','QB','QB')
+            ,(2019,'DEFL','UGF',1,1,'REG',3,
+                3,5,'Calhoun','Rod','Rodney','Rodney Calhoun',
+                'offense','QB','QB')
+            ,(2019,'DEFL','UGF',1,1,'REG',1,
+                4,7,'Hale','BJ','BJ','BJ Hale',
+                'offense','RB','RB')
+            ,(2019,'DEFL','UGF',1,1,'REG',2,
+                5,2,'Dingle','Ryan','Ryan','Ryan Dingle',
+                'offense','RB','RB')
+            ,(2019,'DEFL','UGF',1,1,'REG',3,
+                6,42,'Minton','Rob','Rob','Rob Minton',
+                'offense','RB','RB')
+            ,(2019,'DEFL','UGF',1,1,'REG',1,
+                7,40,'Adamo','Tom','Tom','Tom Adamo',
+                'offense','RB','FB')
+            ,(2019,'DEFL','UGF',1,1,'REG',2,
+                8,39,'Eaton','Jason','Jason','Jason Eaton',
+                'offense','RB','FB')
+            ,(2019,'DEFL','UGF',1,1,'REG',1,
+                9,11,'Denman','Elliot','Elliot','Elliot Denman',
+                'offense','WR','WR')
+            ,(2019,'DEFL','UGF',1,1,'REG',2,
+                10,12,'Stance','Neghan','Neghan','Neghan Stance',
+                'offense','WR','WR')
+            ,(2019,'DEFL','UGF',1,1,'REG',3,
+                11,88,'Engle','Torren','Torren','Torren Engle',
+                'offense','WR','WR')
+            ,(2019,'DEFL','UGF',1,1,'REG',4,
+                12,84,'McMahon','Vance','Vance','Vance McMahon',
+                'offense','WR','WR')
+            ,(2019,'DEFL','UGF',1,1,'REG',5,
+                13,6,'Nelson','Jake','Jake','Jake Nelson',
+                'offense','WR','WR')
+            ,(2019,'DEFL','UGF',1,1,'REG',1,
+                14,18,'Triplett','Tez','Tez','Tez Triplett',
+                'offense','TE','TE')
+            ,(2019,'DEFL','UGF',1,1,'REG',2,
+                15,80,'Riley','Nick','Nick','Nick Riley',
+                'offense','TE','TE')
+            ,(2019,'DEFL','UGF',1,1,'REG',3,
+                16,90,'Hunter','Ernest','Ernest','Ernest Hunter',
+                'offense','TE','TE')
+            ,(2019,'DEFL','UGF',1,1,'REG',1,
+                17,77,'Robinson','Eric','Eric','Eric Robinson',
+                'offense','OL','LT')
+            ,(2019,'DEFL','UGF',1,1,'REG',2,
+                18,71,'Bass','Bryce','Bryce','Bryce Bass',
+                'offense','OL','LT')
+            ,(2019,'DEFL','UGF',1,1,'REG',1,
+                19,55,'Rich','Emmitt','Emmitt','Emmitt Rich',
+                'offense','OL','RT')
+            ,(2019,'DEFL','UGF',1,1,'REG',2,
+                20,64,'James','Tyson','Tyson','Tyson James',
+                'offense','OL','RT')
+            ,(2019,'DEFL','UGF',1,1,'REG',1,
+                21,57,'Tanner','Brent','Brent','Brent Tanner',
+                'offense','OL','RG')
+            ,(2019,'DEFL','UGF',1,1,'REG',2,
+                22,63,'Henderson','Dave','D.D.','D.D. Henderson',
+                'offense','OL','RG')
+            ,(2019,'DEFL','UGF',1,1,'REG',1,
+                23,72,'Milton','James','J.T.','J.T. Milton',
+                'offense','OL','LG')
+            ,(2019,'DEFL','UGF',1,1,'REG',2,
+                24,59,'Huber','Adam','Adam','Adam Huber',
+                'offense','OL','LG')
+            ,(2019,'DEFL','UGF',1,1,'REG',1,
+                25,61,'Eldridge','Bubba','Bubba','Bubba Eldridge',
+                'offense','OL','C')
+            ,(2019,'DEFL','UGF',1,1,'REG',2,
+                26,54,'Bates','Shaud','Shaud','Shaud Bates',
+                'offense','OL','C')
+            ,(2019,'DEFL','UGF',1,1,'REG',1,
+                27,89,'Singleton','LeRoy','LeRoy','LeRoy Singleton',
+                'defense','DL','LDE')
+            ,(2019,'DEFL','UGF',1,1,'REG',1,
+                28,91,'Clelland','Jakari','Jakari','Jakari Clelland',
+                'defense','DL','RDE')
+            ,(2019,'DEFL','UGF',1,1,'REG',2,
+                29,95,'Jennings','Eric','Eric','Eric Jennings',
+                'defense','DL','LDE')
+            ,(2019,'DEFL','UGF',1,1,'REG',2,
+                30,66,'Hodges','Harrison','Harrison','Harrison Hodges',
+                'defense','DL','RDE')
+            ,(2019,'DEFL','UGF',1,1,'REG',1,
+                31,87,'Manley','Leigh','Leigh','Leigh Manley',
+                'defense','DL','NT')
+            ,(2019,'DEFL','UGF',1,1,'REG',1,
+                32,98,'Nixon','Dan','D.D.','D.D. Nixon',
+                'defense','DL','DT')
+            ,(2019,'DEFL','UGF',1,1,'REG',2,
+                33,96,'Griffith','Eli','Eli','Eli Griffith',
+                'defense','DL','DT')
+            ,(2019,'DEFL','UGF',1,1,'REG',3,
+                34,67,'Benton','Jimmie','J.T.','J.T. Benton',
+                'defense','DL','DT')
+            ,(2019,'DEFL','UGF',1,1,'REG',2,
+                35,92,'Dailey','Mike','Mike','Mike Dailey',
+                'defense','DL','NT')
+            ,(2019,'DEFL','UGF',1,1,'REG',4,
+                36,78,'Johnson','Gabriel','Gabriel','Gabriel Johnson',
+                'defense','DL','DT')
+            ,(2019,'DEFL','UGF',1,1,'REG',1,
+                37,45,'Bridges','Harry','Harry','Harry Bridges',
+                'defense','LB','ROLB')
+            ,(2019,'DEFL','UGF',1,1,'REG',1,
+                38,50,'Ruff','Tyler','Tyler','Tyler Ruff',
+                'defense','LB','LOLB')
+            ,(2019,'DEFL','UGF',1,1,'REG',2,
+                39,99,'Riley','Ira','Ira','Ira Riley',
+                'defense','LB','ROLB')
+            ,(2019,'DEFL','UGF',1,1,'REG',2,
+                40,49,'Erickson','Donta','Donta','Donta Erickson',
+                'defense','LB','LOLB')
+            ,(2019,'DEFL','UGF',1,1,'REG',1,
+                41,52,'Tyson','Eric','Eric','Eric Tyson',
+                'defense','LB','ILB')
+            ,(2019,'DEFL','UGF',1,1,'REG',2,
+                42,51,'Landry','Elgin','Elgin','Elgin Landry',
+                'defense','LB','ILB')
+            ,(2019,'DEFL','UGF',1,1,'REG',1,
+                43,37,'Dale','Andrew','Andrew','Andrew Dale',
+                'defense','DB','RCB')
+            ,(2019,'DEFL','UGF',1,1,'REG',1,
+                44,19,'Thompson','Avery','Avery','Avery Thompson',
+                'defense','DB','LCB')
+            ,(2019,'DEFL','UGF',1,1,'REG',2,
+                45,1,'Eaton','Casey','Casey','Casey Eaton',
+                'defense','DB','SCB')
+            ,(2019,'DEFL','UGF',1,1,'REG',2,
+                46,46,'Lindsey','Derek','Derek','Derek Lindsey',
+                'defense','DB','CB')
+            ,(2019,'DEFL','UGF',1,1,'REG',3,
+                47,28,'Huffman','Kareem','Kareem','Kareem Huffman',
+                'defense','DB','CB')
+            ,(2019,'DEFL','UGF',1,1,'REG',3,
+                48,24,'Ricks','Jimmie','Jimmie','Jimmie Ricks',
+                'defense','DB','CB')
+            ,(2019,'DEFL','UGF',1,1,'REG',1,
+                49,26,'Preston','Benny','Benny','Benny Preston',
+                'defense','DB','FS')
+            ,(2019,'DEFL','UGF',1,1,'REG',2,
+                50,23,'Manning','Keenan','Keenan','Keenan Manning',
+                'defense','DB','SAF')
+            ,(2019,'DEFL','UGF',1,1,'REG',1,
+                51,34,'Poole','Buck','Buck','Buck Poole',
+                'defense','DB','SS')
+            ,(2019,'DEFL','UGF',1,1,'REG',2,
+                52,48,'Huber','Kendal','Kendal','Kendal Huber',
+                'defense','DB','SAF')
+            ,(2019,'DEFL','UGF',1,1,'REG',1,
+                53,38,'Francis','Andy','Andy','Andy Francis',
+                'special_teams','SPEC','K')
+            ,(2019,'DEFL','UGF',1,1,'REG',2,
+                54,62,'Johnson','Rex','Rex','Rex Johnson',
+                'special_teams','SPEC','K')
+            ,(2019,'DEFL','UGF',1,1,'REG',1,
+                55,69,'Rigdon','Jacob','Jacob','Jacob Rigdon',
+                'special_teams','SPEC','P')
+            ,(2019,'DEFL','UGF',1,1,'REG',2,
+                56,65,'Washington','Stephen','Stephen','Stephen Washington',
+                'special_teams','SPEC','P')
+            ,(2019,'DEFL','UGF',1,1,'REG',1,57,14,
+                'Baggagecling','Ba-jain','Logjammer','Logjammer Baggagecling',
+                'special_teams','SPEC','LS')
+            ,(2019,'DEFL','UGF',1,1,'REG',2,
+                58,56,'Shoes','Triple','Triple','Triple Shoes',
+                'special_teams','SPEC','LS');
+
         """
         return sql_script.replace("        ", "")
 
@@ -6692,14 +8327,25 @@ class sqlite3_sample_files:
             "season"                INT NOT NULL,
             "game_id"               INTEGER PRIMARY KEY AUTOINCREMENT,
             "league_id"             TEXT NOT NULL,
-            "game_status"           TEXT NOT NULL, -- Can be "finished", "in_progress", "delayed", or "not_started"
-            "nflverse_game_id"      TEXT NOT NULL, -- Formatted as "[season]_[week]_[away_team_abv]_[home_team_abv]", can either be generated, or specified by a user.
-            "game_type"             TEXT NOT NULL, -- can be "PRE", "REG", or "POST". Optionally, postseason games can be represented by "WC" (wild card), "DIV" (divisional round), "CON" (confrence championship), or "SB" (Super Bowl)
+            -- Can be "finished", "in_progress", "delayed", or "not_started"
+            "game_status"           TEXT NOT NULL,
+            -- Formatted as "[season]_[week]_[away_team_abv]_[home_team_abv]".
+            "nflverse_game_id"      TEXT NOT NULL,
+            -- Can be "PRE", "REG", or "POST".
+            -- Optionally, postseason games can be represented by
+            -- > "WC" (wild card)
+            -- > "DIV" (divisional round)
+            -- > "CON" (confrence championship)
+            -- > "SB" (Super Bowl)
+            "game_type"             TEXT NOT NULL,
             "week"                  INT NOT NULL,
-            "game_day"              TEXT NOT NULL, -- Dates will be stored as "YYYY-MM-DD".
-            "game_time"             TEXT NOT NULL, -- Formatted as "HH:MM:SS", in 24-hour time.
-            "game_time_zone"        TEXT NOT NULL, 
-            "game_datetime_utc"     TEXT NOT NULL, -- Stored as "YYYY-MM-DDTHH:MM:SS", 
+            -- Dates will be stored as "YYYY-MM-DD".
+            "game_day"              TEXT NOT NULL,
+            -- Formatted as "HH:MM:SS", in 24-hour time.
+            "game_time"             TEXT NOT NULL,
+            "game_time_zone"        TEXT NOT NULL,
+            -- Stored as "YYYY-MM-DDTHH:MM:SS"
+            "game_datetime_utc"     TEXT NOT NULL,
             "game_day_of_week"      TEXT NOT NULL, -- Like "Monday" or "Sunday"
             "away_team_abv"         TEXT NOT NULL,
             "away_team_score"       INT DEFAULT 0 NOT NULL,
@@ -6717,16 +8363,26 @@ class sqlite3_sample_files:
             "is_neutral_site_game"  BOOLEAN DEFAULT FALSE NOT NULL,
             "is_overtime_game"      BOOLEAN DEFAULT FALSE NOT NULL,
             "is_divisional_game"    BOOLEAN DEFAULT FALSE NOT NULL,
-            "game_roof"             TEXT NOT NULL, -- Can be one of the following categories: 
             /*
-            -- "dome": Means the game is played in a stadium with a covered roof, but the roof cannot be opened up to see the sky.
-            -- "outdoors": Means the stadium lacks a roof to cover the stadium in any capacity.
-            -- "closed": Means the game is played in a stadium with a covered roof, and the roof is CLOSED for this game.
-            -- "open": Means the game is played in a stadium with a covered roof, and the roof is OPEN for this game.
+            Can be one of the following categories:
+            -- "dome": Means the game is played in a stadium with
+                a covered roof, but the roof cannot
+                be opened up to see the sky.
+            -- "outdoors": Means the stadium lacks
+                a roof to cover the stadium in any capacity.
+            -- "closed": Means the game is played in
+                a stadium with a covered roof,
+                and the roof is CLOSED for this game.
+            -- "open": Means the game is played in
+                a stadium with a covered roof,
+                and the roof is OPEN for this game.
             */
-            "surface" STR DEFAULT "grass" NOT NULL, -- Playing surface used in this game. 
-            -- Can be  one of the following categories (although a user can specify additional field surface types): 
+            "game_roof"             TEXT NOT NULL,
             /*
+            Playing surface used in this game.
+            Can be  one of the following categories
+            (although a user could specify additional field surface types):
+
             -- "a_turf"
             -- "astroplay"
             -- "astroturf"
@@ -6736,22 +8392,66 @@ class sqlite3_sample_files:
             -- "matrixturf"
             -- "sportturf"
             */
+            "surface" STR DEFAULT "grass" NOT NULL,
             "temp_f"                DOUBLE, -- Temperature, in Fahrenheit (°F)
             "temp_c"                DOUBLE, -- Temperature, in Celsius (°C)
-            "wind"                  INT, -- Wind Speed, in MPH unless otherwise specified.
+            -- Wind Speed, in MPH unless otherwise specified.
+            "wind"                  INT,
             "away_coach_name"       TEXT NOT NULL,
             "home_coach_name"       TEXT NOT NULL,
             "stadium_ID"            INT NOT NULL,
             "stadium_name"          TEXT NOT NULL,
             "pfr_stadium_id"        TEXT,
-            FOREIGN KEY ("stadium_id") REFERENCES "fb_stadiums" ("stadium_id") ON DELETE NO ACTION ON UPDATE NO ACTION
+            FOREIGN KEY ("stadium_id") REFERENCES "fb_stadiums" ("stadium_id")
+                ON DELETE NO ACTION
+                ON UPDATE NO ACTION
         );
 
         CREATE UNIQUE INDEX idx_schedule_id
         ON "fb_schedule" ("game_id","away_team_abv","home_team_abv");
-        
-        INSERT INTO fb_schedule(season,league_id,game_status,nflverse_game_id,game_type,week,game_day,game_time,game_time_zone,game_datetime_utc,game_day_of_week,away_team_abv,home_team_abv,game_roof,surface,away_coach_name,home_coach_name,stadium_name,stadium_id) 
-        VALUES (2019,'DEFL','finished','2019_1_DVSU_UGF','REG',1,'08/01/2019','12:00','EST','2019-08-01T07:00:00','Thursday','DVSU','UGF','dome','fieldturf','Bob Gyles','Caden Ernest','Adamo Dome',1);
+
+        INSERT INTO fb_schedule(
+            "season",
+            "league_id",
+            "game_status",
+            "nflverse_game_id",
+            "game_type",
+            "week",
+            "game_day",
+            "game_time",
+            "game_time_zone",
+            "game_datetime_utc",
+            "game_day_of_week",
+            "away_team_abv",
+            "home_team_abv",
+            "game_roof",
+            "surface",
+            "away_coach_name",
+            "home_coach_name",
+            "stadium_name",
+            "stadium_id"
+        )
+        VALUES (
+            2019,
+            'DEFL',
+            'finished',
+            '2019_1_DVSU_UGF',
+            'REG',
+            1,
+            '08/01/2019',
+            '12:00',
+            'EST',
+            '2019-08-01T07:00:00',
+            'Thursday',
+            'DVSU',
+            'UGF',
+            'dome',
+            'fieldturf',
+            'Bob Gyles',
+            'Caden Ernest',
+            'Adamo Dome',
+            1
+        );
 
         """
         return sql_script.replace("        ", "")
@@ -6793,10 +8493,23 @@ class sqlite3_sample_files:
         CREATE UNIQUE INDEX idx_betting_id
         ON "fb_betting" ("game_id","betting_book");
 
-        INSERT INTO fb_betting(game_id,betting_book,over_under_open,over_under_close,home_spread_open,home_spread_close,away_spread_open,away_spread_close,away_moneyline_open,away_moneyline_close,home_moneyline_open,home_moneyline_close) 
-            VALUES (1,'bettingisforlosers.com',50,30.5,-8,-3,8,3,-150,-150,1000,1000);
-        INSERT INTO fb_betting(game_id,betting_book,over_under_open,over_under_close,home_spread_open,home_spread_close,away_spread_open,away_spread_close,away_moneyline_open,away_moneyline_close,home_moneyline_open,home_moneyline_close) 
-            VALUES (1,'onlysuckersbet.com',30.5,32,-21,-5,21,5,-1000,-1000,500,500);
+        INSERT INTO fb_betting(
+            game_id,
+            betting_book,
+            over_under_open,
+            over_under_close,
+            home_spread_open,
+            home_spread_close,
+            away_spread_open,
+            away_spread_close,
+            away_moneyline_open,
+            away_moneyline_close,
+            home_moneyline_open,
+            home_moneyline_close
+        )
+        VALUES
+            (1,'bettingisforlosers.com',50,30.5,-8,-3,8,3,-150,-150,1000,1000),
+            (1,'onlysuckersbet.com',30.5,32,-21,-5,21,5,-1000,-1000,500,500);
 
         """
         return sql_script.replace("        ", "")
@@ -6819,35 +8532,83 @@ class sqlite3_sample_files:
         sql_script = """
         CREATE TABLE IF NOT EXISTS "fb_game_refs"(
             "game_id"           INT NOT NULL,
-            "ref_num"           INT, -- If unkown (rare, but can theoretically happen), just set this to `0` or NULL.
+            -- If unkown (rare, but can theoretically happen),
+            -- just set this to `0` or NULL.
+            "ref_num"           INT,
             "ref_position_abv"  TEXT NOT NULL, -- Can be the following values:
             /*
-            -- "R": Referee. Responsible for the general supervision of the game and has the final authority on all rulings.
-            -- "U": Umpire. Stands behind the defensive line and linebackers, observing the blocks by the offensive line and defenders trying to ward off those blocks, looking for holding or illegal blocks.
-            -- "DJ": Down Judge. Stands at one end of the line of scrimmage (usually the side opposite the press box, always with the chain crew), looking for possible offsides, encroachment and other fouls before the snap.
+            -- "R": Referee. Responsible for the general supervision
+                of the game and has the final authority on all rulings.
+            -- "U": Umpire. Stands behind the defensive line and linebackers,
+                observing the blocks by the offensive line and defenders
+                trying to ward off those blocks,
+                looking for holding or illegal blocks.
+            -- "DJ": Down Judge. Stands at one end of the line of scrimmage
+                (usually the side opposite the press box,
+                always with the chain crew), looking for possible offsides,
+                encroachment and other fouls before the snap.
             -- "HL": Head Linesman. Same job as Down Judge.
-            -- "LJ": Line Judge. Assists the head linesman/down judge at the other end of the line of scrimmage, looking for possible offsides, encroachment and other fouls before the snap.
-            -- "FJ": Field judge. Works downfield behind the defensive secondary on the same sideline as the line judge. The field judge makes decisions near the sideline on his or her side of the field, judging the action of nearby running backs, receivers and defenders.
+            -- "LJ": Line Judge. Assists the head linesman/down judge
+                at the other end of the line of scrimmage,
+                looking for possible offsides,
+                encroachment and other fouls before the snap.
+            -- "FJ": Field judge. Works downfield behind the defensive
+                secondary on the same sideline as the line judge.
+                The field judge makes decisions near the sideline on
+                his or her side of the field, judging the action
+                of nearby running backs, receivers and defenders.
             -- "BU": Back Umpire. Same job as field judge.
-            -- "SJ": Side judge. Works downfield behind the defensive secondary on the same sideline as the head linesman or down judge.
-            -- "BJ": Back judge. Stands deep behind the defensive secondary in the middle of the field, judging the action of nearby running backs, receivers (primarily the tight ends) and nearby defenders.
-            -- "C": Center judge. Positioned beside the referee in the offensive backfield adjacent to the referee, positioned equivalent to the umpire.
+            -- "SJ": Side judge. Works downfield behind the
+                defensive secondary on the same sideline
+                as the head linesman or down judge.
+            -- "BJ": Back judge. Stands deep behind the defensive secondary
+                in the middle of the field, judging the action of nearby
+                running backs, receivers (primarily the tight ends),
+                and nearby defenders.
+            -- "C": Center judge. Positioned beside the referee
+                in the offensive backfield adjacent to the referee,
+                positioned equivalent to the umpire.
 
             Other, atypical ref positions:
-            -- "BS": Ball Spotter. Used in XFL 2.0/3.0, exactly what it sounds, and the ball spotter wears a red cap. Also serves as the kickoff holder if the ball keeps falling off before a successful kickoff.
-            -- "SK": Sky Judge. Used in leagues such as the defunct Alliance of American Football (AAF). Effectively, a sky judge is a referee that is stationed off the field, but has the power of calling penalties and making corrections to the play after the play is over.
-            -- "C8": CFL 8th Official. Briefly experimented with by the CFL in 2018, but never used post 2018. This official lined up in the offensive backfield, and whose sole responsibility was judging helmet contact on the quarterback.
-            -- "DE": Deep Judge. Experimented from the NFL between the 2010 and 2011 pre-seasons. The primary responsibility for this new position is the action of receivers, and it allowed the NFL to adjust coverage after the umpire was moved to the offensive backfield.
-            -- "U2": Second Umpire. Abandoned idea by the NFL, but was experimented in pre-season games between 2015 and 2019. Their responsibilities were to focus on center pre-snap and offensive guards and tackles.
-            -- "MJ": Middle Judge. Experimented by the NFL between the 2015 and 2019. Main responsibilities were to look for holding near the line of scrimmage.
-            -- "UK": Unknown. Only use if you know the official was officiating this game, but don't know what his position was for this game.
-            
-            
-            source: https://operations.nfl.com/officiating/the-officials/officials-responsibilities-positions/
-            source: https://en.wikipedia.org/wiki/Official_(gridiron_football)
+            -- "BS": Ball Spotter. Used in XFL 2.0/3.0,
+                exactly what it sounds, and the ball spotter wears a red cap.
+                Also serves as the kickoff holder if the ball
+                keeps falling off before a successful kickoff.
+            -- "SK": Sky Judge. Used in leagues such as
+                the defunct Alliance of American Football (AAF).
+                Effectively, a sky judge is a referee that is stationed
+                off the field, but has the power of calling penalties
+                and making corrections to the play after the play is over.
+            -- "C8": CFL 8th Official.
+                Briefly experimented with by the CFL in 2018,
+                but never used post 2018.
+                This official lined up in the offensive backfield,
+                and whose sole responsibility was
+                judging helmet contact on the quarterback.
+            -- "DE": Deep Judge.
+                Experimented from the NFL between the 2010
+                and 2011 pre-seasons. The primary responsibility for
+                this new position is the action of receivers,
+                and it allowed the NFL to adjust coverage after
+                the umpire was moved to the offensive backfield.
+            -- "U2": Second Umpire. Abandoned idea by the NFL,
+                but was experimented in pre-season games between
+                2015 and 2019. Their responsibilities were to
+                focus on center pre-snap and offensive guards and tackles.
+            -- "MJ": Middle Judge. Experimented by the NFL between
+                the 2015 and 2019. Main responsibilities were to
+                look for holding near the line of scrimmage.
+            -- "UK": Unknown. Only use if you know the official
+                was officiating this game,
+                but don't know what his position was for this game.
+
+            sources:
+            https://operations.nfl.com/officiating/the-officials/officials-responsibilities-positions/
+            https://en.wikipedia.org/wiki/Official_(gridiron_football)
             */
             "ref_position_name" TEXT NOT NULL,
-            "ref_full_name"     TEXT NOT NULL, -- ["ref_full_name"] = ["ref_first_name"] + " " + ["ref_last_name"]
+            -- ["ref_full_name"] = ["ref_first_name"] + " " + ["ref_last_name"]
+            "ref_full_name"     TEXT NOT NULL,
             "ref_first_name"    TEXT NOT NULL,
             "ref_last_name"     TEXT NOT NULL,
             FOREIGN KEY ("game_id")
@@ -6856,26 +8617,31 @@ class sqlite3_sample_files:
                     ON UPDATE NO ACTION
         );
 
-        INSERT INTO fb_game_refs ("game_id", "ref_num", "ref_position_abv", "ref_position_name", "ref_full_name", "ref_first_name", "ref_last_name")
-            VALUES (1, 11, 'R', 'Referee', 'Cyril Apolinar', 'Cyril', 'Apolinar');
-        INSERT INTO fb_game_refs ("game_id", "ref_num", "ref_position_abv", "ref_position_name", "ref_full_name", "ref_first_name", "ref_last_name")
-            VALUES (1, 22, 'U', 'Umpire', 'Aya Stanimir', 'Aya', 'Stanimir');
-        INSERT INTO fb_game_refs ("game_id", "ref_num", "ref_position_abv", "ref_position_name", "ref_full_name", "ref_first_name", "ref_last_name")
-            VALUES (1, 33, 'DJ', 'Down Judge', 'Shaka Catharine', 'Shaka', 'Catharine');
-        INSERT INTO fb_game_refs ("game_id", "ref_num", "ref_position_abv", "ref_position_name", "ref_full_name", "ref_first_name", "ref_last_name")
-            VALUES (1, 44, 'HL', 'Head Linesman', 'Natsuki Europa', 'Natsuki', 'Europa');
-        INSERT INTO fb_game_refs ("game_id", "ref_num", "ref_position_abv", "ref_position_name", "ref_full_name", "ref_first_name", "ref_last_name")
-            VALUES (1, 55, 'LJ', 'Line Judge', 'Petre Nikostratos', 'Petre', 'Nikostratos');
-        INSERT INTO fb_game_refs ("game_id", "ref_num", "ref_position_abv", "ref_position_name", "ref_full_name", "ref_first_name", "ref_last_name")
-            VALUES (1, 61, 'FJ', 'Field judge', 'Shamil Prashant', 'Shamil', 'Prashant');
-        INSERT INTO fb_game_refs ("game_id", "ref_num", "ref_position_abv", "ref_position_name", "ref_full_name", "ref_first_name", "ref_last_name")
-            VALUES (1, 77, 'BU', 'Back Umpire', 'Deneb Sneewittchen', 'Deneb', 'Sneewittchen');
-        INSERT INTO fb_game_refs ("game_id", "ref_num", "ref_position_abv", "ref_position_name", "ref_full_name", "ref_first_name", "ref_last_name")
-            VALUES (1, 88, 'SJ', 'Side judge', 'Bricius Nirmal', 'Bricius', 'Nirmal');
-        INSERT INTO fb_game_refs ("game_id", "ref_num", "ref_position_abv", "ref_position_name", "ref_full_name", "ref_first_name", "ref_last_name")
-            VALUES (1, 99, 'BJ', 'Back judge', 'Arevik Elliot', 'Arevik', 'Elliot');
-        INSERT INTO fb_game_refs ("game_id", "ref_num", "ref_position_abv", "ref_position_name", "ref_full_name", "ref_first_name", "ref_last_name")
-            VALUES (1, 101, 'C', 'Center judge', 'Ruslan Hadija', 'Ruslan', 'Hadija');
+        INSERT INTO fb_game_refs (
+            "game_id",
+            "ref_num",
+            "ref_position_abv",
+            "ref_position_name",
+            "ref_full_name",
+            "ref_first_name",
+            "ref_last_name"
+        )
+        VALUES
+            (1, 11, 'R', 'Referee', 'Cyril Apolinar', 'Cyril', 'Apolinar'),
+            (1, 22, 'U', 'Umpire', 'Aya Stanimir', 'Aya', 'Stanimir'),
+            (1, 33, 'DJ', 'Down Judge',
+                'Shaka Catharine', 'Shaka', 'Catharine'),
+            (1, 44, 'HL', 'Head Linesman',
+                'Natsuki Europa', 'Natsuki', 'Europa'),
+            (1, 55, 'LJ', 'Line Judge',
+                'Petre Nikostratos', 'Petre', 'Nikostratos'),
+            (1, 61, 'FJ', 'Field judge',
+                'Shamil Prashant', 'Shamil', 'Prashant'),
+            (1, 77, 'BU', 'Back Umpire',
+                'Deneb Sneewittchen', 'Deneb', 'Sneewittchen'),
+            (1, 88, 'SJ', 'Side judge', 'Bricius Nirmal', 'Bricius', 'Nirmal'),
+            (1, 99, 'BJ', 'Back judge', 'Arevik Elliot', 'Arevik', 'Elliot'),
+            (1, 101, 'C', 'Center judge', 'Ruslan Hadija', 'Ruslan', 'Hadija');
         """
         return sql_script.replace("        ", "")
 
@@ -6896,7 +8662,7 @@ class sqlite3_sample_files:
 
         sql_script = """
         CREATE TABLE IF NOT EXISTS "fb_pbp" (
-            "game_id"	    INT NOT NULL,
+            "game_id"     INT NOT NULL,
             "game_json_str"	TEXT NOT NULL,
             FOREIGN KEY(game_id) REFERENCES  fb_schedule(game_id)
         );
@@ -6918,7 +8684,7 @@ def create_app_sqlite3_db(custom_dir: str = None):
             #     system(f"attrib +h {home_dir}/.sdv_pbp")
         except FileExistsError:
             logging.info(f"{custom_dir}/.sdv_pbp/ already exists.")
-            
+
         sql_file = f"{custom_dir}/.sdv_pbp/sdv_pbp_py.sqlite"
 
     else:

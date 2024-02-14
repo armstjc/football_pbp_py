@@ -4,7 +4,7 @@
 # File Name: ./core/database/create_sdv_pbp_db.py
 # Purpose: Loads in data used by this application,
 #           and rebuilds tables if data is lost/corrupted.
-####################################################################################################
+###############################################################################
 
 import logging
 import sqlite3
@@ -12,7 +12,8 @@ from os.path import expanduser
 
 import polars as pl
 
-from core.database.create_db_elements import create_app_sqlite3_db, sqlite3_sample_files
+from core.database.create_db_elements import (
+    create_app_sqlite3_db, sqlite3_sample_files)
 
 # class verify_db_integrity:
 #     """ """
@@ -25,7 +26,9 @@ from core.database.create_db_elements import create_app_sqlite3_db, sqlite3_samp
 class sqlite3_load_data:
     """ """
 
-    def load_iso_nations(con: sqlite3.Connection, cur: sqlite3.Cursor) -> pl.DataFrame:
+    def load_iso_nations(
+            con: sqlite3.Connection,
+            cur: sqlite3.Cursor) -> pl.DataFrame:
         """ """
         try:
             df = pl.read_database(
@@ -47,7 +50,8 @@ class sqlite3_load_data:
             )
         except sqlite3.OperationalError as e:
             logging.warning(
-                "A SQLite3 Operational Error has been raised. " + f"Reason: {e}"
+                "A SQLite3 Operational Error has been raised. " +
+                f"Reason: {e}"
             )
             cur.executescript(sqlite3_sample_files.iso_nations())
             con.commit()
@@ -80,7 +84,9 @@ class sqlite3_load_data:
             )
         return df
 
-    def load_iso_states(con: sqlite3.Connection, cur: sqlite3.Cursor) -> pl.DataFrame:
+    def load_iso_states(
+            con: sqlite3.Connection,
+            cur: sqlite3.Cursor) -> pl.DataFrame:
         """ """
         try:
             df = pl.read_database(
@@ -98,7 +104,8 @@ class sqlite3_load_data:
             )
         except sqlite3.OperationalError as e:
             logging.warning(
-                "A SQLite3 Operational Error has been raised. " + f"Reason: {e}"
+                "A SQLite3 Operational Error has been raised. " +
+                f"Reason: {e}"
             )
             cur.executescript(sqlite3_sample_files.iso_3166_2_states())
             con.commit()
@@ -144,7 +151,8 @@ class sqlite3_load_data:
             )
         except sqlite3.OperationalError as e:
             logging.warning(
-                "A SQLite3 Operational Error has been raised. " + f"Reason: {e}"
+                "A SQLite3 Operational Error has been raised. " +
+                f"Reason: {e}"
             )
             cur.executescript(sqlite3_sample_files.iso_timezones())
             con.commit()
@@ -167,7 +175,9 @@ class sqlite3_load_data:
             )
         return df
 
-    def load_leagues(con: sqlite3.Connection, cur: sqlite3.Cursor) -> pl.DataFrame:
+    def load_leagues(
+            con: sqlite3.Connection,
+            cur: sqlite3.Cursor) -> pl.DataFrame:
         """ """
         try:
             df = pl.read_database(
@@ -256,7 +266,8 @@ class sqlite3_load_data:
             )
         except sqlite3.OperationalError as e:
             logging.warning(
-                "A SQLite3 Operational Error has been raised. " + f"Reason: {e}"
+                "A SQLite3 Operational Error has been raised. " +
+                f"Reason: {e}"
             )
             cur.executescript(sqlite3_sample_files.leagues_sql_file())
             con.commit()
@@ -355,7 +366,9 @@ class sqlite3_load_data:
             )
         return df
 
-    def load_seasons(con: sqlite3.Connection, cur: sqlite3.Cursor) -> pl.DataFrame:
+    def load_seasons(
+            con: sqlite3.Connection,
+            cur: sqlite3.Cursor) -> pl.DataFrame:
         """ """
         try:
             df = pl.read_database(
@@ -440,7 +453,8 @@ class sqlite3_load_data:
             )
         except sqlite3.OperationalError as e:
             logging.warning(
-                "A SQLite3 Operational Error has been raised. " + f"Reason: {e}"
+                "A SQLite3 Operational Error has been raised. " +
+                f"Reason: {e}"
             )
             cur.executescript(sqlite3_sample_files.seasons_sql_file())
             con.commit()
@@ -535,7 +549,9 @@ class sqlite3_load_data:
             )
         return df
 
-    def load_fb_teams(con: sqlite3.Connection, cur: sqlite3.Cursor) -> pl.DataFrame:
+    def load_fb_teams(
+            con: sqlite3.Connection,
+            cur: sqlite3.Cursor) -> pl.DataFrame:
         """ """
         try:
             df = pl.read_database(
@@ -568,7 +584,8 @@ class sqlite3_load_data:
             )
         except sqlite3.OperationalError as e:
             logging.warning(
-                "A SQLite3 Operational Error has been raised. " + f"Reason: {e}"
+                "A SQLite3 Operational Error has been raised. " +
+                f"Reason: {e}"
             )
             cur.executescript(sqlite3_sample_files.teams_sql_file())
             con.commit()
@@ -606,11 +623,14 @@ class sqlite3_load_data:
 
         if len(df) < 1:
             logging.error(
-                "[sqlite3].[dbo].[fb_teams] has no data. " + "Recreating datbase table."
+                "[sqlite3].[dbo].[fb_teams] has no data. " +
+                "Recreating datbase table."
             )
         return df
 
-    def load_fb_rosters(con: sqlite3.Connection, cur: sqlite3.Cursor) -> pl.DataFrame:
+    def load_fb_rosters(
+            con: sqlite3.Connection,
+            cur: sqlite3.Cursor) -> pl.DataFrame:
         """ """
         try:
             df = pl.read_database(
@@ -661,7 +681,8 @@ class sqlite3_load_data:
 
         except sqlite3.OperationalError as e:
             logging.warning(
-                "A SQLite3 Operational Error has been raised. " + f"Reason: {e}"
+                "A SQLite3 Operational Error has been raised. " +
+                f"Reason: {e}"
             )
             cur.executescript(sqlite3_sample_files.rosters_sql_file())
             con.commit()
@@ -722,7 +743,9 @@ class sqlite3_load_data:
             )
         return df
 
-    def load_fb_stadiums(con: sqlite3.Connection, cur: sqlite3.Cursor) -> pl.DataFrame:
+    def load_fb_stadiums(
+            con: sqlite3.Connection,
+            cur: sqlite3.Cursor) -> pl.DataFrame:
         """ """
         try:
             df = pl.read_database(
@@ -749,7 +772,8 @@ class sqlite3_load_data:
             )
         except sqlite3.OperationalError as e:
             logging.warning(
-                "A SQLite3 Operational Error has been raised. " + f"Reason: {e}"
+                "A SQLite3 Operational Error has been raised. " +
+                f"Reason: {e}"
             )
             cur.executescript(sqlite3_sample_files.stadiums_sql_file())
             con.commit()
@@ -840,7 +864,8 @@ class sqlite3_load_data:
             )
         except sqlite3.OperationalError as e:
             logging.warning(
-                "A SQLite3 Operational Error has been raised. " + f"Reason: {e}"
+                "A SQLite3 Operational Error has been raised. " +
+                f"Reason: {e}"
             )
             cur.executescript(sqlite3_sample_files.weekly_rosters_sql_file())
             con.commit()
@@ -942,7 +967,8 @@ class sqlite3_load_data:
             )
         except sqlite3.OperationalError as e:
             logging.warning(
-                "A SQLite3 Operational Error has been raised. " + f"Reason: {e}"
+                "A SQLite3 Operational Error has been raised. " +
+                f"Reason: {e}"
             )
             cur.executescript(sqlite3_sample_files.depth_chart_sql_file())
             con.commit()
@@ -991,7 +1017,9 @@ class sqlite3_load_data:
             )
         return df
 
-    def load_fb_schedule(con: sqlite3.Connection, cur: sqlite3.Cursor) -> pl.DataFrame:
+    def load_fb_schedule(
+            con: sqlite3.Connection,
+            cur: sqlite3.Cursor) -> pl.DataFrame:
         """ """
         try:
             df = pl.read_database(
@@ -1042,7 +1070,8 @@ class sqlite3_load_data:
             )
         except sqlite3.OperationalError as e:
             logging.warning(
-                "A SQLite3 Operational Error has been raised. " + f"Reason: {e}"
+                "A SQLite3 Operational Error has been raised. " +
+                f"Reason: {e}"
             )
             cur.executescript(sqlite3_sample_files.schedule_sql_file())
             con.commit()
@@ -1105,7 +1134,9 @@ class sqlite3_load_data:
             )
         return df
 
-    def load_fb_game_refs(con: sqlite3.Connection, cur: sqlite3.Cursor) -> pl.DataFrame:
+    def load_fb_game_refs(
+            con: sqlite3.Connection,
+            cur: sqlite3.Cursor) -> pl.DataFrame:
         """ """
         try:
             df = pl.read_database(
@@ -1123,7 +1154,8 @@ class sqlite3_load_data:
             )
         except sqlite3.OperationalError as e:
             logging.warning(
-                "A SQLite3 Operational Error has been raised. " + f"Reason: {e}"
+                "A SQLite3 Operational Error has been raised. " +
+                f"Reason: {e}"
             )
             cur.executescript(sqlite3_sample_files.game_refs_sql_file())
             con.commit()
@@ -1152,24 +1184,29 @@ class sqlite3_load_data:
             )
         return df
 
-    def load_fb_pbp(con: sqlite3.Connection, cur: sqlite3.Cursor) -> pl.DataFrame:
+    def load_fb_pbp(
+            con: sqlite3.Connection,
+            cur: sqlite3.Cursor) -> pl.DataFrame:
         """ """
         try:
             df = pl.read_database(
                 query="SELECT * FROM fb_pbp",
                 connection=cur,
-                schema_overrides={"game_id": pl.UInt64, "game_json_str": pl.String},
+                schema_overrides={"game_id": pl.UInt64,
+                                  "game_json_str": pl.String},
             )
         except sqlite3.OperationalError as e:
             logging.warning(
-                "A SQLite3 Operational Error has been raised. " + f"Reason: {e}"
+                "A SQLite3 Operational Error has been raised. " +
+                f"Reason: {e}"
             )
             cur.executescript(sqlite3_sample_files.game_pbp_sql_file())
             con.commit()
             df = pl.read_database(
                 query="SELECT * FROM fb_pbp",
                 connection=cur,
-                schema_overrides={"game_id": pl.UInt64, "game_json_str": pl.String},
+                schema_overrides={"game_id": pl.UInt64,
+                                  "game_json_str": pl.String},
             )
 
         except Exception as e:
@@ -1179,7 +1216,8 @@ class sqlite3_load_data:
         # print(df)
         if len(df) < 1:
             logging.error(
-                "[sqlite3].[dbo].[fb_pbp] has no data. " + "Recreating datbase table."
+                "[sqlite3].[dbo].[fb_pbp] has no data. " +
+                "Recreating datbase table."
             )
         return df
 

@@ -3,7 +3,7 @@
 # Authors: Joseph Armstrong (armstrongjoseph08@gmail.com)
 # file: `./core/pbp_engine/game.py`
 # Purpose: Code for generating game data for the PBP JSON format.
-################################################################################
+###############################################################################
 
 
 def get_initial_game_file():
@@ -59,15 +59,19 @@ def get_initial_game_file():
             # and from 2021-Present,
             # this value would be `2` if it's an NCAA football game.
             "ot_periods_until_shootout": -1,
-            # - "min_xfl_ot_periods": determines the minimum number of OT rounds
-            #   that have to be played in an XFL OT before a winner is determined.
+            # - "min_xfl_ot_periods":
+            #   determines the minimum number of OT rounds
+            #   that have to be played in an XFL OT before
+            #   a winner is determined.
             #   For the 2020 version of the XFL, this should be set to `5`,
             #   and for the 2023 version, this should be set to `3`.
-            # - "set_xfl_ot_periods": If after first 3/5 OT rounds there isn't a winner,
+            # - "set_xfl_ot_periods":
+            #   If after first 3/5 OT rounds there isn't a winner,
             #   this is the number of OT periods that have to be played to
             #   attempt to determine a victor.
             # If for any reason, an ot period isn't played
-            # (because Team A scored on both rounds, and Team B failed to score in both rounds),
+            # (because Team A scored on both rounds,
+            # and Team B failed to score in both rounds),
             # the user running this app should just manually end the game.
             "min_xfl_ot_periods": -1,
             "set_xfl_ot_periods": -1,
@@ -76,12 +80,15 @@ def get_initial_game_file():
             "safety_points": 2,
             "pat_points": 1,
             "pat_defense": 2,
-            # AKA: the thing that allows the 6-1 scorigami Jon Bios warned us about.
+            # AKA: the thing that allows the 6-1 scorigami
+            #   that Jon Bios warned us about.
             "pat_safety": 1,
             # Refers to the maximum number of players that are allowed
             # on the field during the play.
             "players_on_field": 11,
-            ## OT rules
+
+            # OT rules
+
             # If set to `False`, and the game is tied after 4 quarters,
             # the game ends in a tie.
             # If set to `True`, "sudden_death_ot", "modified_sudden_death_ot",
@@ -93,8 +100,10 @@ def get_initial_game_file():
             "sudden_death_ot": False,
             # - Used in the NFL in the playoffs from 2010 to 2021,
             #   and in the regular season from 2012 to present.
-            # - If set to `True`, the following rules are applied to a game that goes to OT:
-            #   § If the team starting with the ball scores a touchdown, the game is over.
+            # - If set to `True`,
+            #   the following rules are applied to a game that goes to OT:
+            #   § If the team starting with the ball scores a touchdown,
+            #       the game is over.
             #   § If a team scores a safety, the game ends.
             #   § If the team starting with the ball scores (Team A),
             #       but doesn't score a touchdown or a safety,
@@ -122,7 +131,8 @@ def get_initial_game_file():
             # - If one team at the end of the OT period
             #   has more points scored in that OT period,
             #   that team wins the game.
-            # - If both teams score the same amount of points in that OT period,
+            # - If both teams score the same
+            #   amount of points in that OT period,
             #   or both teams fail to score, start another OT period.
             # - If a team scores either a safety or a touchdown on defense,
             #   that team wins the game.
@@ -144,7 +154,9 @@ def get_initial_game_file():
             "xfl_ot_rule": False,
             # Seen in the now defunct World Football League (WFL)
             "full_period_ot": False,
-            ## General rules
+
+            # General rules
+
             # In the 2020 version of the XFL,
             # you could throw the ball twice forwards.
             "two_forward_passes": False,
@@ -157,7 +169,8 @@ def get_initial_game_file():
             # a kickoff that's fair caught outside of the endzone,
             # but is caught within the touchback line (25 yard line),
             # is automatically sent to the touchback line for kickoffs,
-            # unless the fair catch is done beyond the touchback line for kickoffs.
+            # unless the fair catch is done
+            # beyond the touchback line for kickoffs.
             "kickoff_fair_catch_always_goes_to_touchback": False,
             # Done in the Alliance of American Football (AAF),
             # this was a league that did away with kickoffs,
@@ -165,9 +178,10 @@ def get_initial_game_file():
             # advocating for the complete
             # removal of the kickoff from football.
             "kickoffs_enabled": True,
-            # XFL and the European League of Football (ELF) use a unique approach to
-            # kickoffs, where both the kicking team and kick return team are lined up
-            # within 5 yards.
+            # XFL and the European League of Football (ELF)
+            # use a unique approach to kickoffs,
+            # where both the kicking team and kick return team
+            # are lined up within 5 yards.
             "use_xfl_kickoff": False,
             "drop_kick_enabled": True,
             # In some arena leagues, a drop kick gives you an extra point.
@@ -260,7 +274,9 @@ def get_initial_game_file():
             "stadium_plus_code": None,  # Google's Plus code system
             "stadium_elevation_ft": None,
             "stadium_elevation_m": None,
-            "stadium_timezone": None,  # Timezone of this stadium, formatted as a string, like "America/Phoenix" or "America/New_York"
+            # Timezone of this stadium, formatted as a string,
+            # like "America/Phoenix" or "America/New_York"
+            "stadium_timezone": None,
             # Latitude and Longitude of a given stadium (if available).
             # For example, Paycor Stadium (formerly Paul Brown Stadium)
             # would have a latitude of 39.09554

@@ -3,7 +3,7 @@
 # Authors: Joseph Armstrong (armstrongjoseph08@gmail.com)
 # file: `./core/settings/sqlite3_connectors.py`
 # Purpose: Core code for the settings of this application.
-################################################################################
+###############################################################################
 import logging
 import sqlite3
 from os.path import expanduser
@@ -11,9 +11,9 @@ from os.path import expanduser
 from core.database.create_db_elements import create_app_sqlite3_db
 
 
-def initialize_sqlite3_connectors(custom_dir:str=None):
+def initialize_sqlite3_connectors(custom_dir: str = None):
     """
-    
+    asdf
     """
     home_dir = expanduser("~")
     sql_dir = ""

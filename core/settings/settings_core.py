@@ -3,12 +3,12 @@
 # Authors: Joseph Armstrong (armstrongjoseph08@gmail.com)
 # file: `./core/settings/settings_core.py`
 # Purpose: Core code for the settings of this application.
-################################################################################
+###############################################################################
 import json
 import logging
 from os import makedirs, mkdir
 from os.path import exists, expanduser
-
+from core.other.embeded import embeded_elements
 from core.time import get_utc_and_local_time
 
 
@@ -343,16 +343,19 @@ class app_settings:
             pass
         else:
             logging.warning(
-                f"{home_dir} doesn't exist. Attempting to create the directory."
+                f"{home_dir} doesn't exist. " +
+                "Attempting to create the directory."
             )
             try:
                 makedirs(home_dir)
             except Exception as e:
                 logging.critical(f"An unhandled exception has occured {e}")
                 raise NotADirectoryError(
-                    "A directory for housing application data could not be made at \n"
+                    "A directory for housing application " +
+                    "data could not be made at \n"
                     + home_dir
-                    + ".\nThis is a critical error, and the application must shut down.\n"
+                    + ".\nThis is a critical error, " +
+                    "and the application must shut down.\n"
                     + "Full exception: "
                     + e
                 )
@@ -360,11 +363,11 @@ class app_settings:
         now_formated, utc_time_formated = get_utc_and_local_time()
         # print()
         default_settings = {
-            "app_version": "0.0.1",
+            "app_version": embeded_elements.app_version(),
             # Could be a feature in the future where someone could
             # chart out a historical game, and be able upload the
             # game's JSON file directly through GitHub.
-            "app_theme":"DarkBlue",
+            "app_theme": "DarkBlue",
             "user_identity": {
                 "internet_identity": "Anonymous_Person",
                 "first_name": None,
@@ -385,17 +388,18 @@ class app_settings:
             "debug_log_to_file": False,
             "show_menubar": True,
             "defaults": {
-                "default_league": "DEFL", 
+                "default_league": "DEFL",
                 "default_season": 2019,
-                "default_team":"-ALL-",
-                "default_week":1
+                "default_team": "-ALL-",
+                "default_week": 1
             },
         }
         return default_settings
 
     def load_settings() -> dict:
         """
-        Loads the settings for this app, and re-creates the settings file if it doesn't exist.
+        Loads the settings for this app,
+        and re-creates the settings file if it doesn't exist.
         """
         home_dir = expanduser("~")
 
@@ -437,16 +441,19 @@ class app_settings:
             pass
         else:
             logging.warning(
-                f"{home_dir} doesn't exist. Attempting to create the directory."
+                f"{home_dir} doesn't exist. " +
+                "Attempting to create the directory."
             )
             try:
                 makedirs(home_dir)
             except Exception as e:
                 logging.critical(f"An unhandled exception has occured {e}")
                 raise NotADirectoryError(
-                    "A directory for housing application data could not be made at \n"
+                    "A directory for housing application " +
+                    "data could not be made at \n"
                     + home_dir
-                    + ".\nThis is a critical error, and the application must shut down.\n"
+                    + ".\nThis is a critical error, " +
+                    "and the application must shut down.\n"
                     + "Full exception: "
                     + e
                 )

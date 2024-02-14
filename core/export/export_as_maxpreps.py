@@ -2,9 +2,9 @@
 # Last Updated: 02/11/2024 11:50 AM EST
 # Authors: Joseph Armstrong (armstrongjoseph08@gmail.com)
 # file: `./core/export/export_as_maxpreps.py`
-# Purpose: Tenative code for exporting a game in a format that works with 
+# Purpose: Tenative code for exporting a game in a format that works with
 #           MaxPreps.
-################################################################################
+###############################################################################
 
 
 def export_as_maxpreps():
@@ -73,4 +73,8 @@ def export_as_maxpreps():
         "Safeties",
         "TotalPoints",
     ]
-    raise NotImplementedError("This function has yet to be implemented in this version")
+
+    print(columns[0])
+    raise NotImplementedError(
+        "This function has yet to be implemented in this version"
+    )
