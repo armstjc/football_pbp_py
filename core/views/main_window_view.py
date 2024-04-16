@@ -1,19 +1,22 @@
-# Creation Date: 01/27/2024 12:00 PM EDT
-# Last Updated: 02/11/2024 11:50 AM EST
+"""
+# Creation Date: 01/27/2024 12:00 PM EST
+# Last Updated: 04/15/2024 10:25 AM EDT
 # Authors: Joseph Armstrong (armstrongjoseph08@gmail.com)
-# file: `./main_window.py`
+# file: `./core/views/main_window_view.py`
 # Purpose: Main startup window for this application.
-###############################################################################
+"""
 
 from os.path import expanduser
+# from threading import Thread
 
 import polars as pl
-import PySimpleGUI as sg
 
-from core.database.load_db_elements import sqlite3_load_data
+import PySimpleGUI as sg
+from core.database.load_db_elements import SqliteLoadData
 from core.database.sqlite3_connectors import initialize_sqlite3_connectors
-from core.settings.settings_core import app_settings
-from core.other.embeded import embeded_elements
+from core.other.embedded import EmbeddedElements
+from core.settings.settings_core import AppSettings
+from core.views.settings_view import SettingsWindow
 
 
 class main_window:
@@ -28,7 +31,7 @@ class main_window:
     sql_engine_type = "sqlite3"
     app_theme = "DarkBlue"
     home_dir = expanduser("~")
-    default_data_directory = f"{home_dir}/.sdv_pbp/"
+    default_data_directory = f"{home_dir}/.sdv_pbp_fb/"
 
     # polars dataframes
     iso_nations_df = None
@@ -43,13 +46,16 @@ class main_window:
 
     shown_schedule_df = None
 
+    # Settings
+    app_settings = AppSettings()
+
     # Leagues
     leagues_list = [None]
     default_league = None
 
     # Seasons
     league_seasons = [None]
-    defalt_season = None
+    default_season = None
 
     # Weeks
     league_weeks = [None]
@@ -63,34 +69,35 @@ class main_window:
         self.app_startup()
 
     def app_startup(self):
-        # Load in settings file
-        self.settings_dict = app_settings.load_settings()
+        """
+        """
 
         # Set app defaults
+        self.load_settings()
         self.set_settings()
         # Get SQLite3 connections
         self.sqlite3_con, self.sqlite3_cur = initialize_sqlite3_connectors()
 
         # Load dataframes
-        self.iso_nations_df = sqlite3_load_data.load_iso_nations(
+        self.iso_nations_df = SqliteLoadData.load_iso_nations(
+            con=self.sqlite3_con, cur=self.sqlite3_cur
+        )
+        self.iso_states_df = SqliteLoadData.load_iso_states(
             self.sqlite3_con, self.sqlite3_cur
         )
-        self.iso_states_df = sqlite3_load_data.load_iso_states(
+        self.iso_timezones_df = SqliteLoadData.load_iso_timezones(
             self.sqlite3_con, self.sqlite3_cur
         )
-        self.iso_timezones_df = sqlite3_load_data.load_iso_timezones(
+        self.fb_leagues_df = SqliteLoadData.load_leagues(
             self.sqlite3_con, self.sqlite3_cur
         )
-        self.fb_leagues_df = sqlite3_load_data.load_leagues(
+        self.fb_seasons_df = SqliteLoadData.load_seasons(
             self.sqlite3_con, self.sqlite3_cur
         )
-        self.fb_seasons_df = sqlite3_load_data.load_seasons(
+        self.fb_stadiums_df = SqliteLoadData.load_fb_stadiums(
             self.sqlite3_con, self.sqlite3_cur
         )
-        self.fb_stadiums_df = sqlite3_load_data.load_fb_stadiums(
-            self.sqlite3_con, self.sqlite3_cur
-        )
-        self.fb_game_refs = sqlite3_load_data.load_fb_game_refs(
+        self.fb_game_refs = SqliteLoadData.load_fb_game_refs(
             self.sqlite3_con, self.sqlite3_cur
         )
 
@@ -102,19 +109,25 @@ class main_window:
 
         self.shown_schedule_df = self.fb_schedule_df.filter(
             (pl.col("league_id") == self.default_league)
-            & (pl.col("season") == self.defalt_season)
+            & (pl.col("season") == self.default_season)
         )
         self.clean_shown_schedule_df()
         self.refresh_league_teams(
-            lg_abv=self.default_league, lg_season=self.defalt_season
+            lg_abv=self.default_league, lg_season=self.default_season
         )
         self.main()
+
+    def load_settings(self) -> None:
+        # Load in settings file
+        self.settings_dict = self.app_settings.load_settings()
+        self.set_settings()
 
     # Data Manipulation
     def set_settings(self) -> None:
         """ """
+
         self.default_league = self.settings_dict["defaults"]["default_league"]
-        self.defalt_season = self.settings_dict["defaults"]["default_season"]
+        self.default_season = self.settings_dict["defaults"]["default_season"]
         self.default_team = self.settings_dict["defaults"]["default_team"]
         self.app_theme = self.settings_dict["app_theme"]
 
@@ -145,7 +158,7 @@ class main_window:
         self.clean_shown_schedule_df()
 
     def refresh_league_weeks(self):
-        self.fb_schedule_df = sqlite3_load_data.load_fb_schedule(
+        self.fb_schedule_df = SqliteLoadData.load_fb_schedule(
             self.sqlite3_con, self.sqlite3_cur
         )
         self.league_weeks = self.fb_schedule_df["week"].to_list()
@@ -154,7 +167,7 @@ class main_window:
 
     def refresh_league_teams(self, lg_abv: str, lg_season: int):
         """ """
-        self.fb_teams_df = sqlite3_load_data.load_fb_teams(
+        self.fb_teams_df = SqliteLoadData.load_fb_teams(
             self.sqlite3_con, self.sqlite3_cur
         )
         temp_league_teams = self.fb_teams_df.filter(
@@ -172,7 +185,7 @@ class main_window:
                 "File",
                 [
                     "New Game",
-                    "Load Game",
+                    # "Load Game",
                     "Import Game",
                     "---",
                     "Print Game",
@@ -195,10 +208,22 @@ class main_window:
                     "New Player"
                 ]
             ],
-            ["test", ["stets"]],
+            # [
+            #     "test",
+            #     [
+            #         "stets"
+            #     ]
+            # ],
+            [
+                "Settings",
+                [
+                    "App Settings",
+                    "---"
+                ]
+            ],
             [
                 "Help",
-                ["Documentation (Local)", "Docuemntation (Web)", "About"],
+                ["Documentation (Local)", "Documentation (Web)", "About"],
             ],
         ]
 
@@ -212,8 +237,12 @@ class main_window:
                     enable_events=True,
                     key="-LEAGUE_ABV_COMBO-",
                 ),
-                sg.Button("League Settings",
-                          key="-LG_SETTINGS-", size=(15, 1)),
+                sg.Button(
+                    "League Settings",
+                    key="-LG_SETTINGS-",
+                    tooltip="Settings/rules for the selected league.",
+                    size=(15, 1)
+                ),
                 # sg.Push(),
                 # sg.Button("test")
             ],
@@ -221,13 +250,16 @@ class main_window:
                 sg.Text("Season:\t"),
                 sg.Combo(
                     values=self.league_seasons,
-                    default_value=self.defalt_season,
+                    default_value=self.default_season,
                     size=(10, 1),
                     enable_events=True,
                     key="-LEAGUE_SEASON_COMBO-",
                 ),
-                sg.Button("Season Settings",
-                          key="-SEA_SETTINGS-", size=(15, 1)),
+                sg.Button(
+                    "Season Settings",
+                    key="-SEA_SETTINGS-",
+                    size=(15, 1)
+                ),
             ],
             [
                 sg.Text("Team:\t"),
@@ -239,8 +271,11 @@ class main_window:
                     enable_events=True,
                     key="-TEAM_SEASON_COMBO-",
                 ),
-                sg.Button("Team Settings",
-                          key="-TEAM_SETTINGS-", size=(15, 1)),
+                sg.Button(
+                    "Team Settings",
+                    key="-TEAM_SETTINGS-",
+                    size=(15, 1)
+                ),
             ],
             [
                 sg.Text("Week:\t"),
@@ -252,13 +287,7 @@ class main_window:
                     key="-WEEK_SEASON_COMBO-",
                 ),
             ],
-            [
-                sg.Button(
-                    "New Game",
-                    key="-NEW_GAME_BUTTON-",
-                    expand_x=True
-                )
-            ],
+            [sg.Button("New Game", key="-NEW_GAME_BUTTON-", expand_x=True)],
             [
                 sg.Button(
                     "Import Game",
@@ -320,13 +349,18 @@ class main_window:
 
         sg.theme(self.app_theme)
         window = sg.Window(
-            icon=embeded_elements.desktop_icon(),
+            icon=EmbeddedElements.desktop_icon(),
             title="The SDV Football PBP App",
             size=(1280, 720),
             layout=layout,
             resizable=True,
+            finalize=True
+        )
+        window.set_min_size(
+            size=(1280, 720)
         )
 
+        # window.TKroot.minsize(1024,600)
         keep_open = True
         while keep_open:
             event, values = window.read(timeout=1000)
@@ -344,14 +378,14 @@ class main_window:
             match event:
                 # File Menu
                 case "About":
-                    print(embeded_elements.app_version())
+                    print(EmbeddedElements.app_version())
                 case "Exit":
                     keep_open = False
                 # File
                 case "New Game":
                     print(event)
-                case "Load Game":
-                    print(event)
+                # case "Load Game":
+                #     print(event)
                 case "Import Game":
                     print(event)
                 case "Print Game":
@@ -377,10 +411,13 @@ class main_window:
                     print(event)
                 case "New Player":
                     print(event)
+                # Settings
+                case "App Settings":
+                    SettingsWindow()
                 # Help
                 case "Documentation (Local)":
                     print(event)
-                case "Docuemntation (Web)":
+                case "Documentation (Web)":
                     print(event)
                 # Window Button events
                 case "-LEAGUE_ABV_COMBO-":

@@ -1,4 +1,4 @@
 ### Required
-PySimpleGUI>=4.60.5
+#PySimpleGUI==4.60.5
 tzlocal>=5.2
 polars>=0.20.6

@@ -1,9 +1,12 @@
-# Creation Date: 02/03/2024 02:54 PM EST
-# Last Updated: 02/11/2024 11:50 AM EST
-# Author: Joseph Armstrong (armstrongjoseph08@gmail.com)
-# File Name: ./core/database/create_sdv_pbp_db.py
-# Purpose: Loads in data used by this application,
-#           and rebuilds tables if data is lost/corrupted.
+"""
+- Creation Date: 02/03/2024 02:54 PM EST
+- Last Updated: 02/11/2024 11:50 AM EST
+- Author: Joseph Armstrong (armstrongjoseph08@gmail.com)
+- File Name: ./core/database/create_sdv_pbp_db.py
+- Purpose: Loads in data used by this application,
+-   and rebuilds tables if data is lost/corrupted.
+"""
+
 ###############################################################################
 
 import logging
@@ -13,7 +16,9 @@ from os.path import expanduser
 import polars as pl
 
 from core.database.create_db_elements import (
-    create_app_sqlite3_db, sqlite3_sample_files)
+    create_app_sqlite3_db,
+    SqliteSampleFiles
+)
 
 # class verify_db_integrity:
 #     """ """
@@ -23,12 +28,12 @@ from core.database.create_db_elements import (
 #             self.validate_sqlite3_tables()
 
 
-class sqlite3_load_data:
+class SqliteLoadData:
     """ """
 
     def load_iso_nations(
-            con: sqlite3.Connection,
-            cur: sqlite3.Cursor) -> pl.DataFrame:
+        con: sqlite3.Connection, cur: sqlite3.Cursor
+    ) -> pl.DataFrame:
         """ """
         try:
             df = pl.read_database(
@@ -50,10 +55,9 @@ class sqlite3_load_data:
             )
         except sqlite3.OperationalError as e:
             logging.warning(
-                "A SQLite3 Operational Error has been raised. " +
-                f"Reason: {e}"
+                f"A SQLite3 Operational Error has been raised. Reason {e}"
             )
-            cur.executescript(sqlite3_sample_files.iso_nations())
+            cur.executescript(SqliteSampleFiles.iso_nations())
             con.commit()
 
             df = pl.read_database(
@@ -74,19 +78,19 @@ class sqlite3_load_data:
                 },
             )
         except Exception as e:
-            logging.critical(f"An unhandled exception has occured: {e}")
+            logging.critical("An unhandled exception has occurred: %e", e)
             raise e
 
         if len(df) < 1:
             logging.error(
                 "[sqlite3].[dbo].[iso_nations] has no data. "
-                + "Recreating datbase table."
+                + "Recreating database table."
             )
         return df
 
     def load_iso_states(
-            con: sqlite3.Connection,
-            cur: sqlite3.Cursor) -> pl.DataFrame:
+        con: sqlite3.Connection, cur: sqlite3.Cursor
+    ) -> pl.DataFrame:
         """ """
         try:
             df = pl.read_database(
@@ -102,14 +106,11 @@ class sqlite3_load_data:
                     "subdivision_parent": pl.String,
                 },
             )
-        except sqlite3.OperationalError as e:
-            logging.warning(
-                "A SQLite3 Operational Error has been raised. " +
-                f"Reason: {e}"
-            )
-            cur.executescript(sqlite3_sample_files.iso_3166_2_states())
+        except sqlite3.OperationalError:
+            logging.warning("A SQLite3 Operational Error has been raised. ")
+            cur.executescript(SqliteSampleFiles.iso_3166_2_states())
             con.commit()
-            cur.executescript(sqlite3_sample_files.iso_3166_2_data())
+            cur.executescript(SqliteSampleFiles.iso_3166_2_data())
             con.commit()
             df = pl.read_database(
                 query="SELECT * FROM iso_3166_2",
@@ -125,14 +126,14 @@ class sqlite3_load_data:
                 },
             )
         except Exception as e:
-            logging.critical(f"An unhandled exception has occured: {e}")
+            logging.critical("An unhandled exception has occurred: %e", e)
             raise e
 
         if len(df) < 1:
             # If for any reason
             logging.error(
                 "[sqlite3].[dbo].[iso_3166_2] has no data. "
-                + "Recreating datbase table."
+                + "Recreating database table."
             )
         return df
 
@@ -149,12 +150,11 @@ class sqlite3_load_data:
                     "nation_iso_alpha_2": pl.String,
                 },
             )
-        except sqlite3.OperationalError as e:
+        except sqlite3.OperationalError:
             logging.warning(
-                "A SQLite3 Operational Error has been raised. " +
-                f"Reason: {e}"
+                "A SQLite3 Operational Error has been raised. "
             )
-            cur.executescript(sqlite3_sample_files.iso_timezones())
+            cur.executescript(SqliteSampleFiles.iso_timezones())
             con.commit()
             df = pl.read_database(
                 query="SELECT * FROM iso_timezones",
@@ -165,19 +165,20 @@ class sqlite3_load_data:
                 },
             )
         except Exception as e:
-            logging.critical(f"An unhandled exception has occured: {e}")
+            logging.critical("An unhandled exception has occurred: %e", e)
             raise e
 
         if len(df) < 1:
             logging.error(
                 "[sqlite3].[dbo].[iso_timezones] has no data. "
-                + "Recreating datbase table."
+                + "Recreating database table."
             )
         return df
 
     def load_leagues(
             con: sqlite3.Connection,
-            cur: sqlite3.Cursor) -> pl.DataFrame:
+            cur: sqlite3.Cursor
+    ) -> pl.DataFrame:
         """ """
         try:
             df = pl.read_database(
@@ -269,7 +270,7 @@ class sqlite3_load_data:
                 "A SQLite3 Operational Error has been raised. " +
                 f"Reason: {e}"
             )
-            cur.executescript(sqlite3_sample_files.leagues_sql_file())
+            cur.executescript(SqliteSampleFiles.leagues_sql_file())
             con.commit()
             df = pl.read_database(
                 query="SELECT * FROM fb_leagues",
@@ -356,19 +357,20 @@ class sqlite3_load_data:
                 },
             )
         except Exception as e:
-            logging.critical(f"An unhandled exception has occured: {e}")
+            logging.critical(f"An unhandled exception has occurred: {e}")
             raise e
 
         if len(df) < 1:
             logging.error(
                 "[sqlite3].[dbo].[fb_leagues] has no data. "
-                + "Recreating datbase table."
+                + "Recreating database table."
             )
         return df
 
     def load_seasons(
             con: sqlite3.Connection,
-            cur: sqlite3.Cursor) -> pl.DataFrame:
+            cur: sqlite3.Cursor
+    ) -> pl.DataFrame:
         """ """
         try:
             df = pl.read_database(
@@ -456,7 +458,7 @@ class sqlite3_load_data:
                 "A SQLite3 Operational Error has been raised. " +
                 f"Reason: {e}"
             )
-            cur.executescript(sqlite3_sample_files.seasons_sql_file())
+            cur.executescript(SqliteSampleFiles.seasons_sql_file())
             con.commit()
             df = pl.read_database(
                 query="SELECT * FROM fb_seasons",
@@ -539,19 +541,20 @@ class sqlite3_load_data:
                 },
             )
         except Exception as e:
-            logging.critical(f"An unhandled exception has occured: {e}")
+            logging.critical(f"An unhandled exception has occurred: {e}")
             raise e
 
         if len(df) < 1:
             logging.error(
                 "[sqlite3].[dbo].[fb_seasons] has no data. "
-                + "Recreating datbase table."
+                + "Recreating database table."
             )
         return df
 
     def load_fb_teams(
             con: sqlite3.Connection,
-            cur: sqlite3.Cursor) -> pl.DataFrame:
+            cur: sqlite3.Cursor
+    ) -> pl.DataFrame:
         """ """
         try:
             df = pl.read_database(
@@ -574,7 +577,7 @@ class sqlite3_load_data:
                     "team_nickname": pl.String,
                     "team_city": pl.String,
                     "team_state": pl.String,
-                    "team_confrence": pl.String,
+                    "team_conference": pl.String,
                     "team_division": pl.String,
                     "team_head_coach": pl.String,
                     "team_oc": pl.String,
@@ -587,7 +590,7 @@ class sqlite3_load_data:
                 "A SQLite3 Operational Error has been raised. " +
                 f"Reason: {e}"
             )
-            cur.executescript(sqlite3_sample_files.teams_sql_file())
+            cur.executescript(SqliteSampleFiles.teams_sql_file())
             con.commit()
             df = pl.read_database(
                 query="SELECT * FROM fb_teams",
@@ -609,7 +612,7 @@ class sqlite3_load_data:
                     "team_nickname": pl.String,
                     "team_city": pl.String,
                     "team_state": pl.String,
-                    "team_confrence": pl.String,
+                    "team_conference": pl.String,
                     "team_division": pl.String,
                     "team_head_coach": pl.String,
                     "team_oc": pl.String,
@@ -618,19 +621,20 @@ class sqlite3_load_data:
                 },
             )
         except Exception as e:
-            logging.critical(f"An unhandled exception has occured: {e}")
+            logging.critical(f"An unhandled exception has occurred: {e}")
             raise e
 
         if len(df) < 1:
             logging.error(
                 "[sqlite3].[dbo].[fb_teams] has no data. " +
-                "Recreating datbase table."
+                "Recreating database table."
             )
         return df
 
     def load_fb_rosters(
             con: sqlite3.Connection,
-            cur: sqlite3.Cursor) -> pl.DataFrame:
+            cur: sqlite3.Cursor
+    ) -> pl.DataFrame:
         """ """
         try:
             df = pl.read_database(
@@ -684,7 +688,7 @@ class sqlite3_load_data:
                 "A SQLite3 Operational Error has been raised. " +
                 f"Reason: {e}"
             )
-            cur.executescript(sqlite3_sample_files.rosters_sql_file())
+            cur.executescript(SqliteSampleFiles.rosters_sql_file())
             con.commit()
             df = pl.read_database(
                 query="SELECT * FROM fb_rosters",
@@ -733,19 +737,20 @@ class sqlite3_load_data:
             )
 
         except Exception as e:
-            logging.critical(f"An unhandled exception has occured: {e}")
+            logging.critical(f"An unhandled exception has occurred: {e}")
             raise e
 
         if len(df) < 1:
             logging.error(
                 "[sqlite3].[dbo].[fb_rosters] has no data. "
-                + "Recreating datbase table."
+                + "Recreating database table."
             )
         return df
 
     def load_fb_stadiums(
             con: sqlite3.Connection,
-            cur: sqlite3.Cursor) -> pl.DataFrame:
+            cur: sqlite3.Cursor
+    ) -> pl.DataFrame:
         """ """
         try:
             df = pl.read_database(
@@ -775,7 +780,7 @@ class sqlite3_load_data:
                 "A SQLite3 Operational Error has been raised. " +
                 f"Reason: {e}"
             )
-            cur.executescript(sqlite3_sample_files.stadiums_sql_file())
+            cur.executescript(SqliteSampleFiles.stadiums_sql_file())
             con.commit()
             df = pl.read_database(
                 query="SELECT * FROM fb_stadiums",
@@ -800,14 +805,14 @@ class sqlite3_load_data:
                 },
             )
         except Exception as e:
-            logging.critical(f"An unhandled exception has occured: {e}")
+            logging.critical(f"An unhandled exception has occurred: {e}")
             raise e
 
         # print(df)
         if len(df) < 1:
             logging.error(
                 "[sqlite3].[dbo].[fb_stadiums] has no data. "
-                + "Recreating datbase table."
+                + "Recreating database table."
             )
         return df
 
@@ -867,7 +872,7 @@ class sqlite3_load_data:
                 "A SQLite3 Operational Error has been raised. " +
                 f"Reason: {e}"
             )
-            cur.executescript(sqlite3_sample_files.weekly_rosters_sql_file())
+            cur.executescript(SqliteSampleFiles.weekly_rosters_sql_file())
             con.commit()
             df = pl.read_database(
                 query="SELECT * FROM fb_weekly_rosters",
@@ -916,14 +921,14 @@ class sqlite3_load_data:
                 },
             )
         except Exception as e:
-            logging.critical(f"An unhandled exception has occured: {e}")
+            logging.critical(f"An unhandled exception has occurred: {e}")
             raise e
 
         # print(df)
         if len(df) < 1:
             logging.error(
                 "[sqlite3].[dbo].[fb_weekly_rosters] has no data. "
-                + "Recreating datbase table."
+                + "Recreating database table."
             )
         return df
 
@@ -970,7 +975,7 @@ class sqlite3_load_data:
                 "A SQLite3 Operational Error has been raised. " +
                 f"Reason: {e}"
             )
-            cur.executescript(sqlite3_sample_files.depth_chart_sql_file())
+            cur.executescript(SqliteSampleFiles.depth_chart_sql_file())
             con.commit()
             df = pl.read_database(
                 query="SELECT * FROM fb_depth_charts",
@@ -1006,20 +1011,21 @@ class sqlite3_load_data:
                 },
             )
         except Exception as e:
-            logging.critical(f"An unhandled exception has occured: {e}")
+            logging.critical(f"An unhandled exception has occurred: {e}")
             raise e
 
         # print(df)
         if len(df) < 1:
             logging.error(
                 "[sqlite3].[dbo].[fb_weekly_rosters] has no data. "
-                + "Recreating datbase table."
+                + "Recreating database table."
             )
         return df
 
     def load_fb_schedule(
             con: sqlite3.Connection,
-            cur: sqlite3.Cursor) -> pl.DataFrame:
+            cur: sqlite3.Cursor
+    ) -> pl.DataFrame:
         """ """
         try:
             df = pl.read_database(
@@ -1073,7 +1079,7 @@ class sqlite3_load_data:
                 "A SQLite3 Operational Error has been raised. " +
                 f"Reason: {e}"
             )
-            cur.executescript(sqlite3_sample_files.schedule_sql_file())
+            cur.executescript(SqliteSampleFiles.schedule_sql_file())
             con.commit()
             df = pl.read_database(
                 query="SELECT * FROM fb_schedule",
@@ -1123,20 +1129,21 @@ class sqlite3_load_data:
             )
 
         except Exception as e:
-            logging.critical(f"An unhandled exception has occured: {e}")
+            logging.critical(f"An unhandled exception has occurred: {e}")
             raise e
 
         # print(df)
         if len(df) < 1:
             logging.error(
                 "[sqlite3].[dbo].[fb_weekly_rosters] has no data. "
-                + "Recreating datbase table."
+                + "Recreating database table."
             )
         return df
 
     def load_fb_game_refs(
             con: sqlite3.Connection,
-            cur: sqlite3.Cursor) -> pl.DataFrame:
+            cur: sqlite3.Cursor
+    ) -> pl.DataFrame:
         """ """
         try:
             df = pl.read_database(
@@ -1157,7 +1164,7 @@ class sqlite3_load_data:
                 "A SQLite3 Operational Error has been raised. " +
                 f"Reason: {e}"
             )
-            cur.executescript(sqlite3_sample_files.game_refs_sql_file())
+            cur.executescript(SqliteSampleFiles.game_refs_sql_file())
             con.commit()
             df = pl.read_database(
                 query="SELECT * FROM fb_game_refs",
@@ -1173,51 +1180,56 @@ class sqlite3_load_data:
                 },
             )
         except Exception as e:
-            logging.critical(f"An unhandled exception has occured: {e}")
+            logging.critical(f"An unhandled exception has occurred: {e}")
             raise e
 
         # print(df)
         if len(df) < 1:
             logging.error(
                 "[sqlite3].[dbo].[fb_weekly_rosters] has no data. "
-                + "Recreating datbase table."
+                + "Recreating database table."
             )
         return df
 
     def load_fb_pbp(
             con: sqlite3.Connection,
-            cur: sqlite3.Cursor) -> pl.DataFrame:
+            cur: sqlite3.Cursor
+    ) -> pl.DataFrame:
         """ """
         try:
             df = pl.read_database(
                 query="SELECT * FROM fb_pbp",
                 connection=cur,
-                schema_overrides={"game_id": pl.UInt64,
-                                  "game_json_str": pl.String},
+                schema_overrides={
+                    "game_id": pl.UInt64,
+                    "game_json_str": pl.String
+                },
             )
         except sqlite3.OperationalError as e:
             logging.warning(
                 "A SQLite3 Operational Error has been raised. " +
                 f"Reason: {e}"
             )
-            cur.executescript(sqlite3_sample_files.game_pbp_sql_file())
+            cur.executescript(SqliteSampleFiles.game_pbp_sql_file())
             con.commit()
             df = pl.read_database(
                 query="SELECT * FROM fb_pbp",
                 connection=cur,
-                schema_overrides={"game_id": pl.UInt64,
-                                  "game_json_str": pl.String},
+                schema_overrides={
+                    "game_id": pl.UInt64,
+                    "game_json_str": pl.String
+                },
             )
 
         except Exception as e:
-            logging.critical(f"An unhandled exception has occured: {e}")
+            logging.critical(f"An unhandled exception has occurred: {e}")
             raise e
 
         # print(df)
         if len(df) < 1:
             logging.error(
                 "[sqlite3].[dbo].[fb_pbp] has no data. " +
-                "Recreating datbase table."
+                "Recreating database table."
             )
         return df
 
@@ -1231,27 +1243,27 @@ def test_sqlite3_load(custom_dir: str = None):
         sql_dir = home_dir
 
     try:
-        con = sqlite3.connect(f"{sql_dir}/.sdv_pbp/sdv_pbp_py.sqlite")
+        con = sqlite3.connect(f"{sql_dir}/.sdv_pbp_fb/sdv_pbp_py.sqlite")
         cur = con.cursor()
     except sqlite3.OperationalError as e:
         create_app_sqlite3_db(custom_dir)
         logging.warning(
             "A SQLite3 Operational Error has been raised. " + f"Reason: {e}"
         )
-        con = sqlite3.connect(f"{sql_dir}/.sdv_pbp/sdv_pbp_py.sqlite")
+        con = sqlite3.connect(f"{sql_dir}/.sdv_pbp_fb/sdv_pbp_py.sqlite")
         cur = con.cursor()
 
-    print(sqlite3_load_data.load_iso_nations(con, cur))
-    print(sqlite3_load_data.load_iso_states(con, cur))
-    print(sqlite3_load_data.load_iso_timezones(con, cur))
-    print(sqlite3_load_data.load_leagues(con, cur))
-    print(sqlite3_load_data.load_seasons(con, cur))
-    print(sqlite3_load_data.load_fb_teams(con, cur))
-    print(sqlite3_load_data.load_fb_stadiums(con, cur))
-    print(sqlite3_load_data.load_fb_depth_charts(con, cur))
-    print(sqlite3_load_data.load_fb_schedule(con, cur))
-    print(sqlite3_load_data.load_fb_game_refs(con, cur))
-    print(sqlite3_load_data.load_fb_pbp(con, cur))
+    print(SqliteLoadData.load_iso_nations(con, cur))
+    print(SqliteLoadData.load_iso_states(con, cur))
+    print(SqliteLoadData.load_iso_timezones(con, cur))
+    print(SqliteLoadData.load_leagues(con, cur))
+    print(SqliteLoadData.load_seasons(con, cur))
+    print(SqliteLoadData.load_fb_teams(con, cur))
+    print(SqliteLoadData.load_fb_stadiums(con, cur))
+    print(SqliteLoadData.load_fb_depth_charts(con, cur))
+    print(SqliteLoadData.load_fb_schedule(con, cur))
+    print(SqliteLoadData.load_fb_game_refs(con, cur))
+    print(SqliteLoadData.load_fb_pbp(con, cur))
 
 
 if __name__ == "__main__":

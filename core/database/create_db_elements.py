@@ -1,8 +1,10 @@
-# Creation Date: 08/16/2023 07:28 PM EST
-# Last Updated: 02/11/2024 11:50 AM EST
-# Author: Joseph Armstrong (armstrongjoseph08@gmail.com)
-# File Name: ./core/database/create_sdv_pbp_db.py
-# Purpose: Creates a database that can be used for this application.
+"""
+- Creation Date: 08/16/2023 07:28 PM EST
+- Last Updated: 04/15/2024 10:25 AM EDT
+- Author: Joseph Armstrong (armstrongjoseph08@gmail.com)
+- File Name: ./core/database/create_sdv_pbp_db.py
+- Purpose: Creates a database that can be used for this application.
+"""
 ###############################################################################
 
 import logging
@@ -13,7 +15,7 @@ from sqlite3 import connect as sqlite_connect
 # import zoneinfo
 
 
-class sqlite3_sample_files:
+class SqliteSampleFiles:
     """
     Houses the base SQL scripts for this application
     to use for building out SQLite3 databases.
@@ -6857,7 +6859,7 @@ class sqlite3_sample_files:
             "team_nickname"         TEXT NOT NULL,
             "team_city"             TEXT,
             "team_state"            TEXT,
-            "team_confrence"        TEXT,
+            "team_conference"        TEXT,
             "team_division"         TEXT,
             "team_head_coach"       TEXT,
             "team_oc"               TEXT,
@@ -7568,7 +7570,7 @@ class sqlite3_sample_files:
             -- Optionally, postseason games can be represented by
             -- > 'WC' (wild card)
             -- > 'DIV' (divisional round)
-            -- > 'CON' (confrence championship)
+            -- > 'CON' (conference championship)
             -- > 'SB' (Super Bowl)
             'game_type'                 TEXT NOT NULL,
             -- Here for nflverse compatability.
@@ -8335,7 +8337,7 @@ class sqlite3_sample_files:
             -- Optionally, postseason games can be represented by
             -- > "WC" (wild card)
             -- > "DIV" (divisional round)
-            -- > "CON" (confrence championship)
+            -- > "CON" (conference championship)
             -- > "SB" (Super Bowl)
             "game_type"             TEXT NOT NULL,
             "week"                  INT NOT NULL,
@@ -8672,80 +8674,80 @@ class sqlite3_sample_files:
 
 def create_app_sqlite3_db(custom_dir: str = None):
     """ """
-    # print(sqlite3_sample_files.leagues_sql_file())
+    # print(SqliteSampleFiles.leagues_sql_file())
 
     sql_file = ""
     if custom_dir is not None:
-        custom_dir
+        # custom_dir
         try:
-            makedirs(f"{custom_dir}/.sdv_pbp/")
+            makedirs(f"{custom_dir}/.sdv_pbp_fb/")
 
             # if platform.system() == "Windows":
-            #     system(f"attrib +h {home_dir}/.sdv_pbp")
+            #     system(f"attrib +h {home_dir}/.sdv_pbp_fb")
         except FileExistsError:
-            logging.info(f"{custom_dir}/.sdv_pbp/ already exists.")
+            logging.info("%s/.sdv_pbp_fb/ already exists.", custom_dir)
 
-        sql_file = f"{custom_dir}/.sdv_pbp/sdv_pbp_py.sqlite"
+        sql_file = f"{custom_dir}/.sdv_pbp_fb/sdv_pbp_py.sqlite"
 
     else:
         home_dir = expanduser("~")
         try:
-            makedirs(f"{home_dir}/.sdv_pbp/")
+            makedirs(f"{home_dir}/.sdv_pbp_fb/")
 
             # if platform.system() == "Windows":
-            #     system(f"attrib +h {home_dir}/.sdv_pbp")
+            #     system(f"attrib +h {home_dir}/.sdv_pbp_fb")
         except FileExistsError:
-            logging.info(f"{home_dir}/.sdv_pbp/ already exists.")
-        sql_file = f"{home_dir}/.sdv_pbp/sdv_pbp_py.sqlite"
+            logging.info("%s/.sdv_pbp_fb/ already exists.", custom_dir)
+        sql_file = f"{home_dir}/.sdv_pbp_fb/sdv_pbp_py.sqlite"
 
     del custom_dir
 
     con = sqlite_connect(sql_file)
     cur = con.cursor()
 
-    cur.executescript(sqlite3_sample_files.iso_nations())
+    cur.executescript(SqliteSampleFiles.iso_nations())
     con.commit()
 
-    cur.executescript(sqlite3_sample_files.iso_timezones())
+    cur.executescript(SqliteSampleFiles.iso_timezones())
     con.commit()
 
-    cur.executescript(sqlite3_sample_files.iso_3166_2_states())
+    cur.executescript(SqliteSampleFiles.iso_3166_2_states())
     con.commit()
 
-    cur.executescript(sqlite3_sample_files.iso_3166_2_data())
+    cur.executescript(SqliteSampleFiles.iso_3166_2_data())
     con.commit()
 
-    cur.executescript(sqlite3_sample_files.leagues_sql_file())
+    cur.executescript(SqliteSampleFiles.leagues_sql_file())
     con.commit()
 
-    cur.executescript(sqlite3_sample_files.seasons_sql_file())
+    cur.executescript(SqliteSampleFiles.seasons_sql_file())
     con.commit()
 
-    cur.executescript(sqlite3_sample_files.teams_sql_file())
+    cur.executescript(SqliteSampleFiles.teams_sql_file())
     con.commit()
 
-    cur.executescript(sqlite3_sample_files.rosters_sql_file())
+    cur.executescript(SqliteSampleFiles.rosters_sql_file())
     con.commit()
 
-    cur.executescript(sqlite3_sample_files.stadiums_sql_file())
+    cur.executescript(SqliteSampleFiles.stadiums_sql_file())
     con.commit()
 
-    cur.executescript(sqlite3_sample_files.weekly_rosters_sql_file())
+    cur.executescript(SqliteSampleFiles.weekly_rosters_sql_file())
     con.commit()
 
-    cur.executescript(sqlite3_sample_files.depth_chart_sql_file())
+    cur.executescript(SqliteSampleFiles.depth_chart_sql_file())
     con.commit()
 
-    cur.executescript(sqlite3_sample_files.schedule_sql_file())
+    cur.executescript(SqliteSampleFiles.schedule_sql_file())
     con.commit()
 
-    # cur.executescript(sqlite3_sample_files.game_betting_sql_file())
+    # cur.executescript(SqliteSampleFiles.game_betting_sql_file())
     # con.commit()
 
-    cur.executescript(sqlite3_sample_files.game_refs_sql_file())
+    cur.executescript(SqliteSampleFiles.game_refs_sql_file())
     con.commit()
 
-    cur.executescript(sqlite3_sample_files.game_pbp_sql_file())
+    cur.executescript(SqliteSampleFiles.game_pbp_sql_file())
     con.commit()
 
 

@@ -1,9 +1,11 @@
+"""
 # Creation Date: 01/14/2024 4:14 PM EDT
-# Last Updated: 02/11/2024 11:50 AM EST
+# Last Updated: 04/15/2024 10:25 AM EDT
 # Authors: Joseph Armstrong (armstrongjoseph08@gmail.com)
 # file: `./core/pbp_engine/game.py`
 # Purpose: Code for generating game data for the PBP JSON format.
 ###############################################################################
+"""
 
 
 def get_initial_game_file():
@@ -13,7 +15,8 @@ def get_initial_game_file():
         "format_standard": {
             "format_name": "sdv_football_pbp",
             "version": "0.1",
-            "notes": "WARNING: Indev version. Expect file format changes",
+            "notes": "WARNING: In development version. " +
+            "Expect file format changes",
         },
         "statistician": {
             "internet_identity": "Unknown_Person",
@@ -30,7 +33,7 @@ def get_initial_game_file():
             "end_zone_length": 10,
             "kickoff_yardline": 35,
             "safety_kick_yardline": 20,
-            "kickoff_toucback_yardline": 75,
+            "kickoff_touchback_yardline": 75,
             "punt_touchback_yardline": 80,
             "normal_touchback_yardline": 80,
             # if a league/game uses a kansas-like OT,
@@ -111,7 +114,7 @@ def get_initial_game_file():
             #       by scoring the exact amount of points as Team A,
             #       or win the game by scoring more points than Team A
             #       did in their first possession.
-            #       If Team A scores on their first posession,
+            #       If Team A scores on their first possession,
             #       and they have more points than Team B did
             #       after their first possession in OT, Team A wins.
             #   § If Team A fails to score on their first possession,
@@ -127,7 +130,7 @@ def get_initial_game_file():
             "super_modified_sudden_death_ot": False,
             # Overtime rules used by the NCAA from 1995-2020,
             # and by many high school football leagues.
-            # - In each OT period, both teams get one possesion each.
+            # - In each OT period, both teams get one possession each.
             # - If one team at the end of the OT period
             #   has more points scored in that OT period,
             #   that team wins the game.
@@ -150,7 +153,7 @@ def get_initial_game_file():
             # teams alternate 2 point conversions until one team either
             # A. has an advantage in the first 5 plays, or
             # B. both teams convert the same number of 2 point conversions,
-            #   so whoever bilnks (scores a 2pc and stops the opponent) wins.
+            #   so whoever blinks (scores a 2pc and stops the opponent) wins.
             "xfl_ot_rule": False,
             # Seen in the now defunct World Football League (WFL)
             "full_period_ot": False,
@@ -161,11 +164,11 @@ def get_initial_game_file():
             # you could throw the ball twice forwards.
             "two_forward_passes": False,
             "spikes_are_team_stats": False,
-            # in the CFB and simliar leauges,
+            # in the CFB and similar leagues,
             # a sack is always a  rush.
             "sacks_are_rushes": False,
             "kneeldowns_are_team_stats": False,
-            # In Collge football starting in 2018, and in the NFL in 2023,
+            # In College football starting in 2018, and in the NFL in 2023,
             # a kickoff that's fair caught outside of the endzone,
             # but is caught within the touchback line (25 yard line),
             # is automatically sent to the touchback line for kickoffs,
@@ -187,12 +190,12 @@ def get_initial_game_file():
             # In some arena leagues, a drop kick gives you an extra point.
             "drop_kick_bonus_point": False,
             "field_goal_adds_end_zone_length": True,
-            # Seen in some arena leauges,
+            # Seen in some arena leagues,
             # where a 50+ yard FG is a 4 point score,
             # instead of a 3 point score.
             "long_fg_bonus_point": False,
             # Unless you're a weird league like the XFL,
-            # you can kick the ball for a successfull extra point.
+            # you can kick the ball for a successful extra point.
             "xp_is_a_fg": True,
             "rouges_enabled": False,  # Seen in Canadian football
             "punting_enabled": True,
@@ -227,7 +230,7 @@ def get_initial_game_file():
             "is_neutral_site_game": False,
             "is_overtime_game": False,
             "is_divisional_game": False,
-            "game_roof": "otdoors",  # Can also be "dome", "closed", or "open"
+            "game_roof": "outdoors",  # Can also be "dome", "closed", or "open"
             "surface": "grass",
             "temp_f": None,
             "temp_c": None,
@@ -290,23 +293,23 @@ def get_initial_game_file():
             #     "ref_num": 11,
             #     "ref_position_abv": "R",
             #     "ref_position_name": "Referee",
-            #     "ref_full_name": "Cyril Apolinar",
+            #     "ref_full_name": "Cyril Aeolian",
             #     "ref_first_name": "Cyril",
-            #     "ref_last_name": "Apolinar",
+            #     "ref_last_name": "Aeolian",
             # },
             # {
             #     "ref_num": 22,
             #     "ref_position_abv": "U",
             #     "ref_position_name": "Umpire",
-            #     "ref_full_name": "Aya Stanimir",
+            #     "ref_full_name": "Aya Stainer",
             #     "ref_first_name": "Aya",
-            #     "ref_last_name": "Stanimir",
+            #     "ref_last_name": "Stainer",
             # },
         ],
         "betting_lines": [
             # This is how this section will look like:
             # {
-            #     "betting_book": "dontbetongames.you.idiot",
+            #     "betting_book": "dont-bet-on-games.you.idiot",
             #     "over_under_open": 50,
             #     "over_under_close": 30.5,
             #     "home_spread_open": -8,
@@ -334,7 +337,7 @@ def get_initial_game_file():
             "team_nickname": None,
             "team_city": None,
             "team_state": None,
-            "team_confrence": None,
+            "team_conference": None,
             "team_division": None,
             "team_head_coach": None,
             "team_oc": None,
@@ -357,7 +360,7 @@ def get_initial_game_file():
             "team_nickname": None,
             "team_city": None,
             "team_state": None,
-            "team_confrence": None,
+            "team_conference": None,
             "team_division": None,
             "team_head_coach": None,
             "team_oc": None,

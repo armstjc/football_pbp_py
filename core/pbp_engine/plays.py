@@ -1,13 +1,17 @@
+"""
 # Creation Date: 01/14/2024 4:14 PM EDT
-# Last Updated: 02/11/2024 11:50 AM EST
+# Last Updated: 04/15/2024 10:25 AM EDT
 # Authors: Joseph Armstrong (armstrongjoseph08@gmail.com)
 # file: `./core/pbp_engine/plays.py`
 # Purpose: Code for generating plays, and their objects.
 ###############################################################################
+"""
 
 
-class plays:
-    def pass_play():
+class Plays:
+    """
+    """
+    def pass_play(self):
         """
         Data structure for a passing play.
         """
@@ -84,7 +88,7 @@ class plays:
                 # If a player commits a penalty,
                 # this is how this section will look like:
                 # {
-                #     # Auto incriments by 1 during the game.
+                #     # Auto increments by 1 during the game.
                 #     "penalty_num":0,
                 #     # ID for this specific penalty
                 #     "penalty_id":None,
@@ -112,7 +116,7 @@ class plays:
                 #     "player_num": None,
                 #     "player_full_name": None,
                 #     "player_football_name": None,
-                #     # String, identiying the suspected injury
+                #     # String, identifying the suspected injury
                 #     "type_of_injury":None
                 # }
             ],
@@ -122,7 +126,7 @@ class plays:
             "pass_caught_at_yardline": None,
             # If the pass is caught,
             # this is the yardline where
-            # the reciver was first touched by a defender.
+            # the receiver was first touched by a defender.
             "first_contact_yardline": None,
             "passer": {
                 "player_id": None,
@@ -144,7 +148,7 @@ class plays:
             "is_throw_away": False,
             "is_catchable_ball": False,
             "is_contested_ball": False,
-            # Reciver physically pulls away the ball on a catch,
+            # Receiver physically pulls away the ball on a catch,
             "is_created_reception": False,
             "is_drop": False,
             "is_touchdown": False,
@@ -212,7 +216,7 @@ class plays:
                 #     "player_football_name":None,
                 #     "is_defensive_fumble_recovery":False,
                 #     "fumble_recovered_at":None,
-                #     "retunred_to":None,
+                #     "returned_to":None,
                 #     "return_yards":0,
                 #     "player_fumbled":False,
                 #     "player_lost_fumble":False,
@@ -240,7 +244,7 @@ class plays:
 
         return passing_play
 
-    def rush_play():
+    def rush_play(self):
         """
         Data structure for a rushing play.
         """
@@ -386,7 +390,7 @@ class plays:
                 #     "player_football_name":None,
                 #     "is_defensive_fumble_recovery":False,
                 #     "fumble_recovered_at":None,
-                #     "retunred_to":None,
+                #     "returned_to":None,
                 #     "return_yards":0,
                 #     "player_fumbled":False,
                 #     "player_lost_fumble":False,
@@ -414,7 +418,7 @@ class plays:
 
         return rushing_play
 
-    def punt_play():
+    def punt_play(self):
         """
         Data structure for a punt play.
         """
@@ -502,8 +506,8 @@ class plays:
                 # "player_num":None,
                 # "player_full_name":None,
                 # "player_football_name":None,
-                # "return_start_yarline":0,
-                # "return_end_yarline":0,
+                # "return_start_yardline":0,
+                # "return_end_yardline":0,
                 # "is_return_td":False,
                 # "is_muffed_punt":False,
             },
@@ -569,7 +573,7 @@ class plays:
                 #     "player_football_name":None,
                 #     "is_defensive_fumble_recovery":False,
                 #     "fumble_recovered_at":None,
-                #     "retunred_to":None,
+                #     "returned_to":None,
                 #     "return_yards":0,
                 #     "player_fumbled":False,
                 #     "player_lost_fumble":False,
@@ -597,7 +601,7 @@ class plays:
 
         return punt_play
 
-    def field_goal_play():
+    def field_goal_play(self):
         """
         Data structure for a FG play.
         """
@@ -694,8 +698,8 @@ class plays:
                 # "player_num":None,
                 # "player_full_name":None,
                 # "player_football_name":None,
-                # "return_start_yarline":0,
-                # "return_end_yarline":0,
+                # "return_start_yardline":0,
+                # "return_end_yardline":0,
                 # "is_return_td":False,
                 # "is_muffed_punt":False,
             },
@@ -761,7 +765,7 @@ class plays:
                 #     "player_football_name":None,
                 #     "is_defensive_fumble_recovery":False,
                 #     "fumble_recovered_at":None,
-                #     "retunred_to":None,
+                #     "returned_to":None,
                 #     "return_yards":0,
                 #     "player_fumbled":False,
                 #     "player_lost_fumble":False,
@@ -789,7 +793,7 @@ class plays:
 
         return fg_play
 
-    def extra_point_play():
+    def extra_point_play(self):
         """
         Data structure for a FG play.
         """
@@ -877,8 +881,8 @@ class plays:
                 # "player_num":None,
                 # "player_full_name":None,
                 # "player_football_name":None,
-                # "return_start_yarline":0,
-                # "return_end_yarline":0,
+                # "return_start_yardline":0,
+                # "return_end_yardline":0,
                 # "is_return_td":False,
                 # "is_muffed_punt":False,
             },
@@ -944,7 +948,7 @@ class plays:
                 #     "player_football_name":None,
                 #     "is_defensive_fumble_recovery":False,
                 #     "fumble_recovered_at":None,
-                #     "retunred_to":None,
+                #     "returned_to":None,
                 #     "return_yards":0,
                 #     "player_fumbled":False,
                 #     "player_lost_fumble":False,
@@ -972,7 +976,7 @@ class plays:
 
         return xp_play
 
-    def conversion_attempt_play():
+    def conversion_attempt_play(self):
         """
         Data structure for a conversion attempt play (like a 2 point attempt).
         """
@@ -1049,7 +1053,7 @@ class plays:
                 # If a player commits a penalty,
                 # this is how this section will look like:
                 # {
-                #     # Auto incriments by 1 during the game.
+                #     # Auto increments by 1 during the game.
                 #     "penalty_num":0,
                 #     # ID for this specific penalty
                 #     "penalty_id":None,
@@ -1077,7 +1081,7 @@ class plays:
                 #     "player_num": None,
                 #     "player_full_name": None,
                 #     "player_football_name": None,
-                #     # String, identiying the suspected injury
+                #     # String, identifying the suspected injury
                 #     "type_of_injury":None
                 # }
             ],
@@ -1090,7 +1094,7 @@ class plays:
             "pass_caught_at_yardline": None,
             # If the pass is caught,
             # this is the yardline
-            # where the reciver was first touched by a defender.
+            # where the receiver was first touched by a defender.
             "first_contact_yardline": None,
             "passer": {
                 "player_id": None,
@@ -1112,7 +1116,7 @@ class plays:
             "is_throw_away": False,
             "is_catchable_ball": False,
             "is_contested_ball": False,
-            # Reciver physically pulls away the ball on a catch,
+            # Receiver physically pulls away the ball on a catch,
             "is_created_reception": False,
             "is_drop": False,
             "is_touchdown": False,
@@ -1187,7 +1191,7 @@ class plays:
                 #     "player_football_name":None,
                 #     "is_defensive_fumble_recovery":False,
                 #     "fumble_recovered_at":None,
-                #     "retunred_to":None,
+                #     "returned_to":None,
                 #     "return_yards":0,
                 #     "player_fumbled":False,
                 #     "player_lost_fumble":False,
@@ -1215,7 +1219,7 @@ class plays:
 
         return conversion_play
 
-    def kickoff_play(is_safety_kickoff: bool = False):
+    def kickoff_play(self, is_safety_kickoff: bool = False):
         """
         Data structure for a kickoff play.
         """
@@ -1306,8 +1310,8 @@ class plays:
                 # "player_num":None,
                 # "player_full_name":None,
                 # "player_football_name":None,
-                # "return_start_yarline":0,
-                # "return_end_yarline":0,
+                # "return_start_yardline":0,
+                # "return_end_yardline":0,
                 # "is_return_td":False,
                 # "is_muffed_punt":False,
             },
@@ -1376,7 +1380,7 @@ class plays:
                 #     "player_football_name":None,
                 #     "is_defensive_fumble_recovery":False,
                 #     "fumble_recovered_at":None,
-                #     "retunred_to":None,
+                #     "returned_to":None,
                 #     "return_yards":0,
                 #     "player_fumbled":False,
                 #     "player_lost_fumble":False,
@@ -1407,7 +1411,7 @@ class plays:
 
         return kickoff_play
 
-    def fair_catch_kick_play():
+    def fair_catch_kick_play(self):
         """
         Data structure for a fair catch kick play.
         """
@@ -1503,8 +1507,8 @@ class plays:
                 # "player_num":None,
                 # "player_full_name":None,
                 # "player_football_name":None,
-                # "return_start_yarline":0,
-                # "return_end_yarline":0,
+                # "return_start_yardline":0,
+                # "return_end_yardline":0,
                 # "is_return_td":False,
                 # "is_muffed_punt":False,
             },
@@ -1570,7 +1574,7 @@ class plays:
                 #     "player_football_name":None,
                 #     "is_defensive_fumble_recovery":False,
                 #     "fumble_recovered_at":None,
-                #     "retunred_to":None,
+                #     "returned_to":None,
                 #     "return_yards":0,
                 #     "player_fumbled":False,
                 #     "player_lost_fumble":False,

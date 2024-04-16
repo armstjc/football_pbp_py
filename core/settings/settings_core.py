@@ -1,19 +1,23 @@
-# Creation Date: 01/27/2024 12:02 PM EDT
-# Last Updated: 02/11/2024 11:50 AM EST
+"""
+# Creation Date: 01/27/2024 12:02 PM EST
+# Last Updated: 04/15/2024 10:25 AM EDT
 # Authors: Joseph Armstrong (armstrongjoseph08@gmail.com)
 # file: `./core/settings/settings_core.py`
 # Purpose: Core code for the settings of this application.
+"""
 ###############################################################################
 import json
 import logging
 from os import makedirs, mkdir
 from os.path import exists, expanduser
-from core.other.embeded import embeded_elements
+from core.other.embedded import EmbeddedElements
 from core.time import get_utc_and_local_time
 
 
-class app_themes:
+class AppThemes:
+    """ """
     def theme_names() -> list:
+        """ """
         return [
             "Black",
             "Blue Mono",
@@ -158,18 +162,18 @@ class app_themes:
             "Python",
             "Python Plus",
             "Reddit",
-            "Reds",
-            "Sandy Beach",
-            "System Default",
-            "System Default Alt",
-            "System Default For Reals",
-            "Tan",
-            "Tan Blue",
-            "Teal Mono",
-            "Topanga",
+            # "Reds",
+            # "Sandy Beach",
+            # "System Default",
+            # "System Default Alt",
+            # "System Default For Reals",
+            # "Tan",
+            # "Tan Blue",
+            # "Teal Mono",
         ]
 
     def theme_conversion_dictionary() -> dict:
+        """ """
         return {
             "Black": "Black",
             "Blue Mono": "BlueMono",
@@ -314,42 +318,43 @@ class app_themes:
             "Python": "Python",
             "Python Plus": "PythonPlus",
             "Reddit": "Reddit",
-            "Reds": "",
-            "Sandy Beach": "",
-            "System Default": "",
-            "System Default Alt": "",
-            "System Default For Reals": "",
-            "Tan": "",
-            "Tan Blue": "",
-            "Teal Mono": "",
-            "Topanga": "",
+            # "Reds": "",
+            # "Sandy Beach": "",
+            # "System Default": "",
+            # "System Default Alt": "",
+            # "System Default For Reals": "",
+            # "Tan": "",
+            # "Tan Blue": "",
+            # "Teal Mono": "",
         }
 
 
-class app_settings:
+class AppSettings:
+    """ """
     def __init__(self) -> None:
+        """ """
         pass
 
-    def generate_settings_data() -> dict:
+    def generate_settings_data(self) -> dict:
         """
         Holds the default settings dictionary for this application.
         """
 
         home_dir = expanduser("~")
         home_dir = home_dir.replace("\\", "/")
-        home_dir = f"{home_dir}/.sdv_pbp"
+        home_dir = f"{home_dir}/.sdv_pbp_fb"
 
         if exists(home_dir):
             pass
         else:
             logging.warning(
-                f"{home_dir} doesn't exist. " +
+                "%s doesn't exist. ", home_dir +
                 "Attempting to create the directory."
             )
             try:
                 makedirs(home_dir)
             except Exception as e:
-                logging.critical(f"An unhandled exception has occured {e}")
+                logging.critical("An unhandled exception has occurred %e", e)
                 raise NotADirectoryError(
                     "A directory for housing application " +
                     "data could not be made at \n"
@@ -360,14 +365,14 @@ class app_settings:
                     + e
                 )
 
-        now_formated, utc_time_formated = get_utc_and_local_time()
+        now_formatted, utc_time_formatted = get_utc_and_local_time()
         # print()
         default_settings = {
-            "app_version": embeded_elements.app_version(),
+            "app_version": EmbeddedElements.app_version(),
             # Could be a feature in the future where someone could
             # chart out a historical game, and be able upload the
             # game's JSON file directly through GitHub.
-            "app_theme": "DarkBlue",
+            "app_theme": "DarkBlack",
             "user_identity": {
                 "internet_identity": "Anonymous_Person",
                 "first_name": None,
@@ -375,6 +380,7 @@ class app_settings:
                 "contact": None,
                 "github_username": None,
                 "twitter_handle": None,
+                "reddit_username": None,
                 "email": None,
             },
             # This will default to ./{home}/.fb_pbp/
@@ -382,10 +388,11 @@ class app_settings:
                 "data_directory": home_dir,
                 "sql_directory": home_dir,
                 "sql_language": "sqlite",
+                # Probably something to implement in the future
+                "debug_log_to_file": False
             },
-            "last_opened": now_formated,
-            "last_opened_utc": utc_time_formated,
-            "debug_log_to_file": False,
+            "last_opened": now_formatted,
+            "last_opened_utc": utc_time_formatted,
             "show_menubar": True,
             "defaults": {
                 "default_league": "DEFL",
@@ -396,7 +403,7 @@ class app_settings:
         }
         return default_settings
 
-    def load_settings() -> dict:
+    def load_settings(self) -> dict:
         """
         Loads the settings for this app,
         and re-creates the settings file if it doesn't exist.
@@ -404,39 +411,38 @@ class app_settings:
         home_dir = expanduser("~")
 
         try:
-            mkdir(f"{home_dir}/.sdv_pbp/")
+            mkdir(f"{home_dir}/.sdv_pbp_fb/")
         except FileExistsError:
-            logging.info(f"{home_dir}/.sdv_pbp/ already exists.")
+            logging.info(f"{home_dir}/.sdv_pbp_fb/ already exists.")
 
         try:
-            with open(f"{home_dir}/.sdv_pbp/settings.json", "r") as f:
+            with open(f"{home_dir}/.sdv_pbp_fb/settings.json", "r") as f:
                 json_str = f.read()
         except FileNotFoundError:
             logging.warning(
                 "Settings file not found in "
-                + f"`{home_dir}/.sdv_pbp/`."
+                + f"`{home_dir}/.sdv_pbp_fb/`."
                 + "Attempting to create a settings file."
             )
-            app_settings.create_settings_file()
-            with open(f"{home_dir}/.sdv_pbp/settings.json", "r") as f:
+            self.create_settings_file()
+            with open(f"{home_dir}/.sdv_pbp_fb/settings.json", "r") as f:
                 json_str = f.read()
 
         json_arr = json.loads(json_str)
 
-        now_formated, utc_time_formated = get_utc_and_local_time()
-        json_arr["last_opened"] = now_formated
-        json_arr["last_opened_utc"] = utc_time_formated
+        now_formatted, utc_time_formatted = get_utc_and_local_time()
+        json_arr["last_opened"] = now_formatted
+        json_arr["last_opened_utc"] = utc_time_formatted
         return json_arr
 
-    def create_settings_file() -> None:
+    def create_settings_file(self) -> None:
         """ """
-        settings_dict = app_settings.generate_settings_data()
+        settings_dict = self.generate_settings_data()
 
         home_dir = expanduser("~")
         home_dir = home_dir.replace("\\", "/")
-        home_dir = f"{home_dir}/.sdv_pbp"
+        home_dir = f"{home_dir}/.sdv_pbp_fb"
 
-        # local_timezone = get_localzone()
         if exists(home_dir):
             pass
         else:
@@ -447,7 +453,7 @@ class app_settings:
             try:
                 makedirs(home_dir)
             except Exception as e:
-                logging.critical(f"An unhandled exception has occured {e}")
+                logging.critical(f"An unhandled exception has occurred {e}")
                 raise NotADirectoryError(
                     "A directory for housing application " +
                     "data could not be made at \n"
@@ -461,18 +467,31 @@ class app_settings:
         with open(f"{home_dir}/settings.json", "w+") as f:
             f.write(json.dumps(settings_dict, indent=4))
 
-    def save_settings(settings_dict: dict):
+    def save_settings(self, settings: dict):
         """ """
         home_dir = expanduser("~")
 
         try:
-            mkdir(f"{home_dir}/.sdv_pbp/")
+            mkdir(f"{home_dir}/.sdv_pbp_fb/")
         except FileExistsError:
-            logging.info(f"{home_dir}/.sdv_pbp/ already exists.")
+            logging.info(f"{home_dir}/.sdv_pbp_fb/ already exists.")
+
+        # with open(f"{home_dir}/.sdv_pbp_fb/settings.json", "w+") as f:
+        #     f.write(
+        #         json.dumps(
+        #             settings,
+        #             indent=4
+        #         )
+        #     )
 
         try:
-            with open(f"{home_dir}/.sdv_pbp/settings.json", "r") as f:
-                f.write(json.dumps(settings_dict))
+            with open(f"{home_dir}/.sdv_pbp_fb/settings.json", "w+") as f:
+                f.write(
+                    json.dumps(
+                        settings,
+                        indent=4
+                    )
+                )
         except Exception as e:
             logging.critical(
                 "Unhandled exception. "
@@ -482,4 +501,4 @@ class app_settings:
 
 
 if __name__ == "__main__":
-    print(app_settings.load_settings())
+    print(AppSettings.load_settings())
