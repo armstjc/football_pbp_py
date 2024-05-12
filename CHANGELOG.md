@@ -1,5 +1,10 @@
 # Changelog - The Football PBP Application
 
+## 0.0.4a: The "quick fix security" Update
+- Fixed a potential security issue in `core.views.edit_league_view.new_league_view()` caused by unwanted characters being passed in.
+- Fixed a potential security issue in `core.views.edit_league_view.new_league_view()` caused by too many characters being passed in.
+- Updated the app version to `0.0.4a`
+
 ## 0.0.4: The "Leagues of Leagues" Update
 - Added a prompt that allows one to create a new football league.
 - Added a prompt that allows one to edit an existing football league.
