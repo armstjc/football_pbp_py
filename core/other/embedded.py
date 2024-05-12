@@ -1,6 +1,6 @@
 """
 - Creation Date: 2/3/2024 1:18 PM EDT
-- Last Updated: 05/12/2024 04:25 PM EDT
+- Last Updated: 05/12/2024 05:30 PM EDT
 - Authors: Joseph Armstrong (armstrongjoseph08@gmail.com)
 - file: `./resources/embedded.py`
 - Purpose: Holds data that is embedded into this app,
@@ -12,7 +12,7 @@
 class EmbeddedElements:
     def app_version():
         """ """
-        return "0.0.4"
+        return "0.0.4a"
 
     def desktop_icon():
         """ """

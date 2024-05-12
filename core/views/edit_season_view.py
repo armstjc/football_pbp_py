@@ -1,10 +1,10 @@
 """
-- Creation Date: 03/10/2024 04:35 PM EDT
+- Creation Date: 05/12/2024 05:15 PM EDT
 - Last Updated: 05/12/2024 05:25 PM EDT
 - Authors: Joseph Armstrong (armstrongjoseph08@gmail.com)
-- file: `./core/views/edit_league_view.py`
+- file: `./core/views/edit_season_view.py`
 - Purpose: Code behind for the window
-    that allows a user to view and edit leagues.
+    that allows a user to view and edit a season for a league.
 """
 
 from datetime import datetime
@@ -2123,7 +2123,9 @@ def new_league_view(settings_json: dict):
                 )
                 raise e
 
-        if event == "-LG_SHORT_NAME-" and len(
+        if event == "-LG_LONG_NAME-":
+            league_long_name = values["-LG_LONG_NAME-"]
+        elif event == "-LG_SHORT_NAME-" and len(
             values["-LG_SHORT_NAME-"]
         ) > 5:
             window["-LG_SHORT_NAME-"].update(
@@ -2149,33 +2151,6 @@ def new_league_view(settings_json: dict):
                 values["-LG_SHORT_NAME-"].upper()
             )
             league_id = values["-LG_SHORT_NAME-"].upper()
-        if event == "-LG_LONG_NAME-" and len(
-            values["-LG_LONG_NAME-"]
-        ) > 256:
-            window["-LG_LONG_NAME-"].update(
-                values["-LG_LONG_NAME-"][:-1]
-            )
-        elif event == "-LG_LONG_NAME-" and (
-            values["-LG_LONG_NAME-"] and
-            values["-LG_LONG_NAME-"][-1] not in (
-                letters_and_numbers
-            )
-        ):
-            window["-LG_LONG_NAME-"].update(
-                values["-LG_LONG_NAME-"][:-1]
-            )
-            league_long_name = values["-LG_LONG_NAME-"]
-        elif event == "-LG_LONG_NAME-" and (
-            values["-LG_LONG_NAME-"] and
-            values["-LG_LONG_NAME-"][-1] in (
-                letters_and_numbers
-            )
-        ):
-            window["-LG_LONG_NAME-"].update(
-                values["-LG_LONG_NAME-"]
-            )
-            league_long_name = values["-LG_LONG_NAME-"]
         elif event == "-LATEST_SEASON-":
             latest_season = values["-LATEST_SEASON-"]
-
     window.close()
