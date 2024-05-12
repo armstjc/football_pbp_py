@@ -1,5 +1,12 @@
 # Changelog - The Football PBP Application
 
+## 0.0.4: The "Leagues of Leagues" Update
+- Added a prompt that allows one to create a new football league.
+- Added a prompt that allows one to edit an existing football league.
+- Added an "About" window for the application.
+- Fixed a number of unforeseen bugs that were encountered when changing between differient football leagues and/or seasons.
+- Simplified the `"fb_leagues"` and `"fb_seasons"` tables.
+- Updated the app version to `0.0.4`
 
 ## 0.0.3: The "The Structure" Update
 - Fixed spelling errors found in the code.

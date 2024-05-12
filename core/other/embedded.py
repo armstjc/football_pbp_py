@@ -1,10 +1,10 @@
 """
-# Creation Date: 2/3/2024 1:18 PM EDT
-# Last Updated: 04/15/2024 10:25 AM EDT
-# Authors: Joseph Armstrong (armstrongjoseph08@gmail.com)
-# file: `./resources/embedded.py`
-# Purpose: Holds data that is embedded into this app,
-#           often for performance/continence reasons.
+- Creation Date: 2/3/2024 1:18 PM EDT
+- Last Updated: 05/12/2024 04:25 PM EDT
+- Authors: Joseph Armstrong (armstrongjoseph08@gmail.com)
+- file: `./resources/embedded.py`
+- Purpose: Holds data that is embedded into this app,
+           often for performance/continence reasons.
 ###############################################################################
 """
 
@@ -12,7 +12,7 @@
 class EmbeddedElements:
     def app_version():
         """ """
-        return "0.0.0c"
+        return "0.0.4"
 
     def desktop_icon():
         """ """
