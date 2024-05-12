@@ -1,6 +1,6 @@
 """
 - Creation Date: 01/27/2024 12:01 PM EST
-- Last Updated: 04/15/2024 10:25 AM EDT
+- Last Updated: 05/12/2024 04:25 PM EDT
 - Authors: Joseph Armstrong (armstrongjoseph08@gmail.com)
 - file: `./core/views/settings_view.py`
 - Purpose: Settings window for this application.
@@ -335,6 +335,7 @@ class SettingsWindow:
                 ),
             ]
         ]
+
         window = sg.Window(
             title="Settings",
             layout=window_layout,

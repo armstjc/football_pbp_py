@@ -1,4 +1,5 @@
 ### Required
-#PySimpleGUI==4.60.5
+PySimpleGUI==4.60.5
+# PySimpleGUI @ git+https://github.com/gabrielsroka/PySimpleGUI@master
 tzlocal>=5.2
 polars>=0.20.6

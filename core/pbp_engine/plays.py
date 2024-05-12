@@ -1,9 +1,9 @@
 """
-# Creation Date: 01/14/2024 4:14 PM EDT
-# Last Updated: 04/15/2024 10:25 AM EDT
-# Authors: Joseph Armstrong (armstrongjoseph08@gmail.com)
-# file: `./core/pbp_engine/plays.py`
-# Purpose: Code for generating plays, and their objects.
+- Creation Date: 01/14/2024 4:14 PM EDT
+- Last Updated: 05/12/2024 04:25 PM EDT
+- Authors: Joseph Armstrong (armstrongjoseph08@gmail.com)
+- file: `./core/pbp_engine/plays.py`
+- Purpose: Code for generating plays, and their objects.
 ###############################################################################
 """
 
@@ -11,7 +11,7 @@
 class Plays:
     """
     """
-    def pass_play(self):
+    def pass_play():
         """
         Data structure for a passing play.
         """
@@ -84,42 +84,6 @@ class Plays:
             "is_no_huddle": False,
             "is_motion": False,
             "is_no_play": False,
-            "penalties": [
-                # If a player commits a penalty,
-                # this is how this section will look like:
-                # {
-                #     # Auto increments by 1 during the game.
-                #     "penalty_num":0,
-                #     # ID for this specific penalty
-                #     "penalty_id":None,
-                #     "penalty_name":None,
-                #     "is_offensive_penalty":False,
-                #     "is_penalty_accepted":False,
-                #     "is_personal_foul":False,
-                #     "is_player_ejected":False,
-                #     "is_team_penalty":False,
-                #     "player":{
-                #         "player_id": None,
-                #         "team_id": None,
-                #         "player_num": None,
-                #         "player_full_name": None,
-                #         "player_football_name": None,
-                #     }
-                # }
-            ],
-            "injured_players": [
-                # if there is a player or players injured
-                # on a play, this is how this section will look like:
-                # {
-                #     "player_id": None,
-                #     "team_id": None,
-                #     "player_num": None,
-                #     "player_full_name": None,
-                #     "player_football_name": None,
-                #     # String, identifying the suspected injury
-                #     "type_of_injury":None
-                # }
-            ],
             # The yardline where the QB attempts the pass.
             # (if the QB actually got a pass off)
             "pass_attempted_at_yardline": None,
@@ -164,7 +128,6 @@ class Plays:
             "receiver": {
                 # If this pass play results in a completed pass,
                 # this is what will be populated in this section.
-
                 # "player_id":None,
                 # "team_id":None,
                 # "player_num":None,
@@ -174,10 +137,46 @@ class Plays:
             "is_qb_fumble": False,
             "is_receiver_fumble": False,
             "is_assisted_tackle": False,
+            "penalties": [
+                # If a player commits a penalty,
+                # this is how this section will look like:
+                # {
+                #     # Auto increments by 1 during the game.
+                #     "penalty_num": 0,
+                #     # ID for penalties will follow this guide (p 226-229)
+                #     # http://www.myiafoa.org/mechanics/mofo19/mofo.pdf
+                #     "penalty_id": None,
+                #     "penalty_name": None,
+                #     "is_offensive_penalty": False,
+                #     "is_penalty_accepted": False,
+                #     "is_personal_foul": False,
+                #     "is_player_ejected": False,
+                #     "is_team_penalty": False,
+                #     "player": {
+                #         "player_id": None,
+                #         "team_id": None,
+                #         "player_num": None,
+                #         "player_full_name": None,
+                #         "player_football_name": None,
+                #     },
+                # }
+            ],
+            "injured_players": [
+                # if there is a player or players injured
+                # on a play, this is how this section will look like:
+                # {
+                #     "player_id": None,
+                #     "team_id": None,
+                #     "player_num": None,
+                #     "player_full_name": None,
+                #     "player_football_name": None,
+                #     # String, identifying the suspected injury
+                #     "type_of_injury":None
+                # }
+            ],
             "tacklers": [
                 # If this pass play results in a completed pass,
                 # this is what will be populated in this section.
-
                 # {
                 #     "player_id":None,
                 #     "team_id":None,
@@ -192,7 +191,6 @@ class Plays:
             "forced_fumbles": [
                 # If this pass play results in a completed pass,
                 # this is what will be populated in this section.
-
                 # {
                 #     "forced_fumble_num":0,
                 #     "player_id":None,
@@ -206,7 +204,6 @@ class Plays:
             "fumble_recoveries": [
                 # If this pass play results in a completed pass,
                 # this is what will be populated in this section.
-
                 # {
                 #     "fumble_recovery_num":0,
                 #     "player_id":None,
@@ -227,7 +224,6 @@ class Plays:
             "participating_players": [
                 # If someone is adding player participation data,
                 # here is how it will be formatted:
-
                 # {
                 #     "player_id":None,
                 #     "team_id":None,
@@ -244,7 +240,7 @@ class Plays:
 
         return passing_play
 
-    def rush_play(self):
+    def rush_play():
         """
         Data structure for a rushing play.
         """
@@ -348,6 +344,43 @@ class Plays:
             "is_fumble": False,
             "is_qb_kneel": False,
             "is_assisted_tackle": False,
+            "injured_players": [
+                # if there is a player or players injured
+                # on a play, this is how this section will look like:
+                # {
+                #     "player_id": None,
+                #     "team_id": None,
+                #     "player_num": None,
+                #     "player_full_name": None,
+                #     "player_football_name": None,
+                #     # String, identifying the suspected injury
+                #     "type_of_injury":None
+                # }
+            ],
+            "penalties": [
+                # If a player commits a penalty,
+                # this is how this section will look like:
+                # {
+                #     # Auto increments by 1 during the game.
+                #     "penalty_num": 0,
+                #     # ID for penalties will follow this guide (p 226-229)
+                #     # http://www.myiafoa.org/mechanics/mofo19/mofo.pdf
+                #     "penalty_id": None,
+                #     "penalty_name": None,
+                #     "is_offensive_penalty": False,
+                #     "is_penalty_accepted": False,
+                #     "is_personal_foul": False,
+                #     "is_player_ejected": False,
+                #     "is_team_penalty": False,
+                #     "player": {
+                #         "player_id": None,
+                #         "team_id": None,
+                #         "player_num": None,
+                #         "player_full_name": None,
+                #         "player_football_name": None,
+                #     },
+                # }
+            ],
             "tacklers": [
                 # If this pass play results in a completed pass,
                 # this is what will be populated in this section.
@@ -418,7 +451,7 @@ class Plays:
 
         return rushing_play
 
-    def punt_play(self):
+    def punt_play():
         """
         Data structure for a punt play.
         """
@@ -523,6 +556,43 @@ class Plays:
             "is_bad_snap": False,
             "is_fumble": False,
             "is_assisted_tackle": False,
+            "penalties": [
+                # If a player commits a penalty,
+                # this is how this section will look like:
+                # {
+                #     # Auto increments by 1 during the game.
+                #     "penalty_num": 0,
+                #     # ID for penalties will follow this guide (p 226-229)
+                #     # http://www.myiafoa.org/mechanics/mofo19/mofo.pdf
+                #     "penalty_id": None,
+                #     "penalty_name": None,
+                #     "is_offensive_penalty": False,
+                #     "is_penalty_accepted": False,
+                #     "is_personal_foul": False,
+                #     "is_player_ejected": False,
+                #     "is_team_penalty": False,
+                #     "player": {
+                #         "player_id": None,
+                #         "team_id": None,
+                #         "player_num": None,
+                #         "player_full_name": None,
+                #         "player_football_name": None,
+                #     },
+                # }
+            ],
+            "injured_players": [
+                # if there is a player or players injured
+                # on a play, this is how this section will look like:
+                # {
+                #     "player_id": None,
+                #     "team_id": None,
+                #     "player_num": None,
+                #     "player_full_name": None,
+                #     "player_football_name": None,
+                #     # String, identifying the suspected injury
+                #     "type_of_injury":None
+                # }
+            ],
             "tacklers": [
                 # If this pass play results in a completed pass,
                 # this is what will be populated in this section.
@@ -601,7 +671,7 @@ class Plays:
 
         return punt_play
 
-    def field_goal_play(self):
+    def field_goal_play():
         """
         Data structure for a FG play.
         """
@@ -723,6 +793,43 @@ class Plays:
                 #     "player_full_name":None,
                 #     "player_football_name":None,
             },
+            "penalties": [
+                # If a player commits a penalty,
+                # this is how this section will look like:
+                # {
+                #     # Auto increments by 1 during the game.
+                #     "penalty_num": 0,
+                #     # ID for penalties will follow this guide (p 226-229)
+                #     # http://www.myiafoa.org/mechanics/mofo19/mofo.pdf
+                #     "penalty_id": None,
+                #     "penalty_name": None,
+                #     "is_offensive_penalty": False,
+                #     "is_penalty_accepted": False,
+                #     "is_personal_foul": False,
+                #     "is_player_ejected": False,
+                #     "is_team_penalty": False,
+                #     "player": {
+                #         "player_id": None,
+                #         "team_id": None,
+                #         "player_num": None,
+                #         "player_full_name": None,
+                #         "player_football_name": None,
+                #     },
+                # }
+            ],
+            "injured_players": [
+                # if there is a player or players injured
+                # on a play, this is how this section will look like:
+                # {
+                #     "player_id": None,
+                #     "team_id": None,
+                #     "player_num": None,
+                #     "player_full_name": None,
+                #     "player_football_name": None,
+                #     # String, identifying the suspected injury
+                #     "type_of_injury":None
+                # }
+            ],
             "tacklers": [
                 # If this pass play results in a completed pass,
                 # this is what will be populated in this section.
@@ -793,7 +900,7 @@ class Plays:
 
         return fg_play
 
-    def extra_point_play(self):
+    def extra_point_play():
         """
         Data structure for a FG play.
         """
@@ -906,6 +1013,43 @@ class Plays:
                 #     "player_full_name":None,
                 #     "player_football_name":None,
             },
+            "penalties": [
+                # If a player commits a penalty,
+                # this is how this section will look like:
+                # {
+                #     # Auto increments by 1 during the game.
+                #     "penalty_num": 0,
+                #     # ID for penalties will follow this guide (p 226-229)
+                #     # http://www.myiafoa.org/mechanics/mofo19/mofo.pdf
+                #     "penalty_id": None,
+                #     "penalty_name": None,
+                #     "is_offensive_penalty": False,
+                #     "is_penalty_accepted": False,
+                #     "is_personal_foul": False,
+                #     "is_player_ejected": False,
+                #     "is_team_penalty": False,
+                #     "player": {
+                #         "player_id": None,
+                #         "team_id": None,
+                #         "player_num": None,
+                #         "player_full_name": None,
+                #         "player_football_name": None,
+                #     },
+                # }
+            ],
+            "injured_players": [
+                # if there is a player or players injured
+                # on a play, this is how this section will look like:
+                # {
+                #     "player_id": None,
+                #     "team_id": None,
+                #     "player_num": None,
+                #     "player_full_name": None,
+                #     "player_football_name": None,
+                #     # String, identifying the suspected injury
+                #     "type_of_injury":None
+                # }
+            ],
             "tacklers": [
                 # If this pass play results in a completed pass,
                 # this is what will be populated in this section.
@@ -976,7 +1120,7 @@ class Plays:
 
         return xp_play
 
-    def conversion_attempt_play(self):
+    def conversion_attempt_play():
         """
         Data structure for a conversion attempt play (like a 2 point attempt).
         """
@@ -1049,42 +1193,6 @@ class Plays:
             "is_no_huddle": False,
             "is_motion": False,
             "is_no_play": False,
-            "penalties": [
-                # If a player commits a penalty,
-                # this is how this section will look like:
-                # {
-                #     # Auto increments by 1 during the game.
-                #     "penalty_num":0,
-                #     # ID for this specific penalty
-                #     "penalty_id":None,
-                #     "penalty_name":None,
-                #     "is_offensive_penalty":False,
-                #     "is_penalty_accepted":False,
-                #     "is_personal_foul":False,
-                #     "is_player_ejected":False,
-                #     "is_team_penalty":False,
-                #     "player":{
-                #         "player_id": None,
-                #         "team_id": None,
-                #         "player_num": None,
-                #         "player_full_name": None,
-                #         "player_football_name": None,
-                #     }
-                # }
-            ],
-            "injured_players": [
-                # if there is a player or players injured
-                # on a play, this is how this section will look like:
-                # {
-                #     "player_id": None,
-                #     "team_id": None,
-                #     "player_num": None,
-                #     "player_full_name": None,
-                #     "player_football_name": None,
-                #     # String, identifying the suspected injury
-                #     "type_of_injury":None
-                # }
-            ],
             # The type of play ran on this conversion attempt.
             # can either ber a "pass" or "run" play.
             "conversion_play_type": "pass",
@@ -1149,6 +1257,43 @@ class Plays:
             },
             "is_receiver_fumble": False,
             "is_assisted_tackle": False,
+            "penalties": [
+                # If a player commits a penalty,
+                # this is how this section will look like:
+                # {
+                #     # Auto increments by 1 during the game.
+                #     "penalty_num": 0,
+                #     # ID for penalties will follow this guide (p 226-229)
+                #     # http://www.myiafoa.org/mechanics/mofo19/mofo.pdf
+                #     "penalty_id": None,
+                #     "penalty_name": None,
+                #     "is_offensive_penalty": False,
+                #     "is_penalty_accepted": False,
+                #     "is_personal_foul": False,
+                #     "is_player_ejected": False,
+                #     "is_team_penalty": False,
+                #     "player": {
+                #         "player_id": None,
+                #         "team_id": None,
+                #         "player_num": None,
+                #         "player_full_name": None,
+                #         "player_football_name": None,
+                #     },
+                # }
+            ],
+            "injured_players": [
+                # if there is a player or players injured
+                # on a play, this is how this section will look like:
+                # {
+                #     "player_id": None,
+                #     "team_id": None,
+                #     "player_num": None,
+                #     "player_full_name": None,
+                #     "player_football_name": None,
+                #     # String, identifying the suspected injury
+                #     "type_of_injury":None
+                # }
+            ],
             "tacklers": [
                 # If this pass play results in a completed pass,
                 # this is what will be populated in this section.
@@ -1219,7 +1364,7 @@ class Plays:
 
         return conversion_play
 
-    def kickoff_play(self, is_safety_kickoff: bool = False):
+    def kickoff_play(is_safety_kickoff: bool = False):
         """
         Data structure for a kickoff play.
         """
@@ -1338,6 +1483,43 @@ class Plays:
                 #     "recovered_at":None
                 # }
             },
+            "penalties": [
+                # If a player commits a penalty,
+                # this is how this section will look like:
+                # {
+                #     # Auto increments by 1 during the game.
+                #     "penalty_num": 0,
+                #     # ID for penalties will follow this guide (p 226-229)
+                #     # http://www.myiafoa.org/mechanics/mofo19/mofo.pdf
+                #     "penalty_id": None,
+                #     "penalty_name": None,
+                #     "is_offensive_penalty": False,
+                #     "is_penalty_accepted": False,
+                #     "is_personal_foul": False,
+                #     "is_player_ejected": False,
+                #     "is_team_penalty": False,
+                #     "player": {
+                #         "player_id": None,
+                #         "team_id": None,
+                #         "player_num": None,
+                #         "player_full_name": None,
+                #         "player_football_name": None,
+                #     },
+                # }
+            ],
+            "injured_players": [
+                # if there is a player or players injured
+                # on a play, this is how this section will look like:
+                # {
+                #     "player_id": None,
+                #     "team_id": None,
+                #     "player_num": None,
+                #     "player_full_name": None,
+                #     "player_football_name": None,
+                #     # String, identifying the suspected injury
+                #     "type_of_injury":None
+                # }
+            ],
             "tacklers": [
                 # If this pass play results in a completed pass,
                 # this is what will be populated in this section.
@@ -1411,7 +1593,7 @@ class Plays:
 
         return kickoff_play
 
-    def fair_catch_kick_play(self):
+    def fair_catch_kick_play():
         """
         Data structure for a fair catch kick play.
         """
@@ -1532,6 +1714,43 @@ class Plays:
                 #     "player_full_name":None,
                 #     "player_football_name":None,
             },
+            "penalties": [
+                # If a player commits a penalty,
+                # this is how this section will look like:
+                # {
+                #     # Auto increments by 1 during the game.
+                #     "penalty_num": 0,
+                #     # ID for penalties will follow this guide (p 226-229)
+                #     # http://www.myiafoa.org/mechanics/mofo19/mofo.pdf
+                #     "penalty_id": None,
+                #     "penalty_name": None,
+                #     "is_offensive_penalty": False,
+                #     "is_penalty_accepted": False,
+                #     "is_personal_foul": False,
+                #     "is_player_ejected": False,
+                #     "is_team_penalty": False,
+                #     "player": {
+                #         "player_id": None,
+                #         "team_id": None,
+                #         "player_num": None,
+                #         "player_full_name": None,
+                #         "player_football_name": None,
+                #     },
+                # }
+            ],
+            "injured_players": [
+                # if there is a player or players injured
+                # on a play, this is how this section will look like:
+                # {
+                #     "player_id": None,
+                #     "team_id": None,
+                #     "player_num": None,
+                #     "player_full_name": None,
+                #     "player_football_name": None,
+                #     # String, identifying the suspected injury
+                #     "type_of_injury":None
+                # }
+            ],
             "tacklers": [
                 # If this pass play results in a completed pass,
                 # this is what will be populated in this section.

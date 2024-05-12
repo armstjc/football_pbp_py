@@ -1,22 +1,24 @@
 """
-# Creation Date: 01/27/2024 12:00 PM EST
-# Last Updated: 04/15/2024 10:25 AM EDT
-# Authors: Joseph Armstrong (armstrongjoseph08@gmail.com)
-# file: `./core/views/main_window_view.py`
-# Purpose: Main startup window for this application.
+- Creation Date: 01/27/2024 12:00 PM EST
+- Last Updated: 05/12/2024 04:25 PM EDT
+- Authors: Joseph Armstrong (armstrongjoseph08@gmail.com)
+- file: `./core/views/main_window_view.py`
+- Purpose: Main startup window for this application.
 """
 
 from os.path import expanduser
+
 # from threading import Thread
-
 import polars as pl
-
 import PySimpleGUI as sg
+
 from core.database.load_db_elements import SqliteLoadData
 from core.database.sqlite3_connectors import initialize_sqlite3_connectors
 from core.other.embedded import EmbeddedElements
 from core.settings.settings_core import AppSettings
+from core.views.about_view import about_view
 from core.views.settings_view import SettingsWindow
+from core.views.edit_league_view import LeagueView, new_league_view
 
 
 class main_window:
@@ -94,6 +96,9 @@ class main_window:
         self.fb_seasons_df = SqliteLoadData.load_seasons(
             self.sqlite3_con, self.sqlite3_cur
         )
+        self.fb_seasons_df = self.fb_seasons_df.sort(
+            ["league_id", "season"],
+        )
         self.fb_stadiums_df = SqliteLoadData.load_fb_stadiums(
             self.sqlite3_con, self.sqlite3_cur
         )
@@ -101,11 +106,9 @@ class main_window:
             self.sqlite3_con, self.sqlite3_cur
         )
 
+        self.refresh_leagues()
         self.refresh_league_weeks()
-
-        self.league_seasons = self.fb_seasons_df.filter(
-            pl.col("league_id") == self.default_league
-        )["season"].to_list()
+        self.refresh_league_seasons(league=self.default_league)
 
         self.shown_schedule_df = self.fb_schedule_df.filter(
             (pl.col("league_id") == self.default_league)
@@ -162,7 +165,14 @@ class main_window:
             self.sqlite3_con, self.sqlite3_cur
         )
         self.league_weeks = self.fb_schedule_df["week"].to_list()
-        set(self.league_weeks)
+
+        # In the case there's no games in this league,
+        # add a "Week 1" to the weeks list.
+        # If there is a week 1, this move gets negated by the
+        # `set()` function.
+        self.league_weeks.append(1)
+
+        self.league_weeks = list(set(self.league_weeks))
         self.league_weeks.sort()
 
     def refresh_league_teams(self, lg_abv: str, lg_season: int):
@@ -178,8 +188,27 @@ class main_window:
         set(self.league_teams)
         self.league_teams.sort()
 
+    def refresh_leagues(self):
+        """
+        """
+        self.fb_leagues_df = SqliteLoadData.load_leagues(
+            self.sqlite3_con, self.sqlite3_cur
+        )
+        self.leagues_list = self.fb_leagues_df["league_id"].to_list()
+
+        set(self.leagues_list)
+        self.leagues_list.sort()
+
+    def refresh_league_seasons(self, league: str):
+        self.league_seasons = self.fb_seasons_df.filter(
+            pl.col("league_id") == league
+        )["season"].to_list()
+
     def main(self):
         """ """
+
+        sg.theme(self.app_theme)
+        # sg.theme("DarkBlack")
         menu_bar = [
             [
                 "File",
@@ -347,7 +376,6 @@ class main_window:
             ],
         ]
 
-        sg.theme(self.app_theme)
         window = sg.Window(
             icon=EmbeddedElements.desktop_icon(),
             title="The SDV Football PBP App",
@@ -378,7 +406,8 @@ class main_window:
             match event:
                 # File Menu
                 case "About":
-                    print(EmbeddedElements.app_version())
+                    # print(EmbeddedElements.app_version())
+                    about_view()
                 case "Exit":
                     keep_open = False
                 # File
@@ -402,7 +431,13 @@ class main_window:
                     print(event)
                 # New
                 case "New League":
-                    print(event)
+                    check = values["-LEAGUE_ABV_COMBO-"]
+                    new_league_view(settings_json=self.settings_dict)
+                    self.refresh_leagues()
+                    window["-LEAGUE_ABV_COMBO-"].update(
+                        values=self.leagues_list,
+                        value=check
+                    )
                 case "New Season":
                     print(event)
                 case "New Team":
@@ -419,9 +454,38 @@ class main_window:
                     print(event)
                 case "Documentation (Web)":
                     print(event)
+
                 # Window Button events
                 case "-LEAGUE_ABV_COMBO-":
-                    print(event)
+                    self.refresh_league_seasons(
+                        values["-LEAGUE_ABV_COMBO-"]
+                    )
+                    self.refresh_league_weeks()
+                    self.refresh_league_teams(
+                        lg_abv=values["-LEAGUE_ABV_COMBO-"],
+                        lg_season=self.league_seasons[0]
+                    )
+
+                    window["-LEAGUE_SEASON_COMBO-"].update(
+                        values=self.league_seasons,
+                        value=self.league_seasons[0],
+                    )
+                    window["-WEEK_SEASON_COMBO-"].update(
+                        values=self.league_weeks,
+                        value=self.league_weeks[0],
+                    )
+                    window["-TEAM_SEASON_COMBO-"].update(
+                        values=self.league_teams,
+                        value=self.league_teams[0]
+                    )
+                    self.filter_shown_schedule_df(
+                        lg_abv=values["-LEAGUE_ABV_COMBO-"],
+                        lg_season=self.league_seasons[0]
+                    )
+                    window["-SCHEDULE_TABLE-"].update(
+                        values=self.shown_schedule_df.rows()
+                    )
+
                 case "-LEAGUE_SEASON_COMBO-":
                     self.filter_shown_schedule_df(
                         values["-LEAGUE_ABV_COMBO-"],
@@ -439,8 +503,16 @@ class main_window:
                         values=self.shown_schedule_df.rows()
                     )
                 case "-LG_SETTINGS-":
-                    print(event)
-                    # window["-WINDOW_MENU-"].update(visible=False)
+                    # print(event)
+                    LeagueView(
+                        settings_json=self.settings_dict,
+                        league_id=values["-LEAGUE_ABV_COMBO-"]
+                    )
+                    self.refresh_leagues()
+                    window["-LEAGUE_ABV_COMBO-"].update(
+                        values=self.leagues_list
+                    )
+
                 case _:
                     pass
 

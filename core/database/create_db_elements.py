@@ -1,6 +1,6 @@
 """
 - Creation Date: 08/16/2023 07:28 PM EST
-- Last Updated: 04/15/2024 10:25 AM EDT
+- Last Updated: 05/12/2024 04:25 PM EDT
 - Author: Joseph Armstrong (armstrongjoseph08@gmail.com)
 - File Name: ./core/database/create_sdv_pbp_db.py
 - Purpose: Creates a database that can be used for this application.
@@ -6172,7 +6172,7 @@ class SqliteSampleFiles:
     def iso_timezones() -> str:
         """
         Returns a SQL INSERT script that inserts a list of timezones,
-        and their coresponding ISO country.
+        and their corresponding ISO country.
         Data sourced from https://gist.github.com/pamelafox/986163
 
         Parameters
@@ -6182,7 +6182,7 @@ class SqliteSampleFiles:
         Returns
         ----------
         A SQLite3 script that creates a a SQL INSERT script that inserts
-        a list of timezones, and their coresponding ISO country
+        a list of timezones, and their corresponding ISO country
 
         """
 
@@ -6545,9 +6545,9 @@ class SqliteSampleFiles:
             "league_id"  TEXT UNIQUE,
             "league_long_name"  TEXT NOT NULL,
             "league_short_name"  TEXT NOT NULL,
-            "league_sport_type"  TEXT NOT NULL,
-            "league_default_sex"  TEXT NOT NULL,
-            "league_default_gender"  TEXT NOT NULL,
+            -- "league_sport_type"  TEXT NOT NULL,
+            -- "league_default_sex"  TEXT NOT NULL,
+            -- "league_default_gender"  TEXT NOT NULL,
             "league_notes"  TEXT,
             "field_length"  INTEGER NOT NULL DEFAULT 100,
             "downs"  INTEGER NOT NULL DEFAULT 4,
@@ -6580,54 +6580,19 @@ class SqliteSampleFiles:
             "pat_defense"  INTEGER NOT NULL DEFAULT 2,
             "pat_safety"  INTEGER NOT NULL DEFAULT 1,
             "players_on_field"  INTEGER NOT NULL DEFAULT 11,
-            "preseason_overtime_enabled"
+            "xfl_pat"
+            INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
+            "preseason_ot_enabled"
             INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
             "reg_season_ot_enabled"
             INTEGER NOT NULL DEFAULT 1 COLLATE BINARY,
             "postseason_ot_enabled"
             INTEGER NOT NULL DEFAULT 1 COLLATE BINARY,
-            "preseason_sudden_death_ot"
-            INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
-            "reg_season_sudden_death_ot"
-            INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
-            "postseason_sudden_death_ot"
-            INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
-            "preseason_mod_sudden_death_ot"
-            INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
-            "reg_season_mod_sudden_death_ot"
-            INTEGER NOT NULL DEFAULT 1 COLLATE BINARY,
-            "postseason_mod_sudden_death_ot"
-            INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
-            "preseason_super_modified_ot"
-            INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
-            "reg_season_super_modified_ot"
-            INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
-            "postseason_super_modified_ot"
-            INTEGER NOT NULL DEFAULT 1 COLLATE BINARY,
-            "preseason_kansas_ot"
-            INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
-            "reg_season_kansas_ot"
-            INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
-            "postseason_kansas_ot"
-            INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
-            "preseason_ncaa_ot"
-            INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
-            "reg_season_ncaa_ot"
-            INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
-            "postseason_ncaa_ot"
-            INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
-            "preseason_xfl_ot"
-            INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
-            "reg_season_xfl_ot"
-            INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
-            "postseason_xfl_ot"
-            INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
-            "preseason_full_period_ot"
-            INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
-            "reg_season_full_period_ot"
-            INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
-            "postseason_full_period_ot"
-            INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
+
+            "preseason_ot_type"  TEXT DEFAULT "Kansas OT",
+            "reg_season_ot_type" TEXT DEFAULT "Kansas OT",
+            "postseason_ot_type" TEXT DEFAULT "Kansas OT",
+
             "two_forward_passes"
             INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
             "spikes_are_team_stats"
@@ -6660,6 +6625,8 @@ class SqliteSampleFiles:
             INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
             "fair_catch_enabled"
             INTEGER NOT NULL DEFAULT 1 COLLATE BINARY,
+            "special_onside_play_enabled"
+            INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
             CONSTRAINT "pk_league_id" PRIMARY KEY("league_id")
         );
 
@@ -6670,19 +6637,13 @@ class SqliteSampleFiles:
             "league_id",
             "league_short_name",
             "league_long_name",
-            "league_notes",
-            "league_sport_type",
-            "league_default_sex",
-            "league_default_gender"
+            "league_notes"
         )
         VALUES (
             "DEFL",
             "DEFL",
             "DEfault Football League",
-            "The default football league for this application.",
-            "NFL",
-            "M",
-            "Male"
+            "The default football league for this application."
         );
 
         """
@@ -6721,7 +6682,7 @@ class SqliteSampleFiles:
             "kansas_ot_yardline"  INTEGER NOT NULL DEFAULT 25,
             "pat_yardline"          INTEGER NOT NULL DEFAULT 3,
             "1PC_yardline"          INTEGER NOT NULL DEFAULT 3,
-            "2PC_yardline"          INTEGER NOT NULL DEFAULT 3,
+            "2PC_yardline"          INTEGER NOT NULL DEFAULT 5,
             "3PC_yardline"          INTEGER NOT NULL DEFAULT 10,
             "quarters"              INTEGER NOT NULL DEFAULT 4,
             "timeouts_per_half"      INTEGER NOT NULL DEFAULT 3,
@@ -6740,43 +6701,17 @@ class SqliteSampleFiles:
             "pat_defense"          INTEGER NOT NULL DEFAULT 2,
             "pat_safety"          INTEGER NOT NULL DEFAULT 1,
             "players_on_field"      INTEGER NOT NULL DEFAULT 11,
-            "preseason_overtime_enabled"
+            "xfl_pat"
+            INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
+            "preseason_ot_enabled"
                 INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
-            "reg_season_ot_enabled"  INTEGER NOT NULL DEFAULT 1 COLLATE BINARY,
-            "postseason_ot_enabled"  INTEGER NOT NULL DEFAULT 1 COLLATE BINARY,
-            "preseason_sudden_death_ot"
-                INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
-            "reg_season_sudden_death_ot"
-                INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
-            "postseason_sudden_death_ot"
-                INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
-            "preseason_mod_sudden_death_ot"
-                INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
-            "reg_season_mod_sudden_death_ot"
-                INTEGER NOT NULL DEFAULT 1 COLLATE BINARY,
-            "postseason_mod_sudden_death_ot"
-                INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
-            "preseason_super_modified_ot"
-                INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
-            "reg_season_super_modified_ot"
-                INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
-            "postseason_super_modified_ot"
-                INTEGER NOT NULL DEFAULT 1 COLLATE BINARY,
-            "preseason_kansas_ot"  INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
-            "reg_season_kansas_ot"  INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
-            "postseason_kansas_ot"  INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
-            "preseason_ncaa_ot"      INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
-            "reg_season_ncaa_ot"  INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
-            "postseason_ncaa_ot"  INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
-            "preseason_xfl_ot"      INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
-            "reg_season_xfl_ot"      INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
-            "postseason_xfl_ot"      INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
-            "preseason_full_period_ot"
-                INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
-            "reg_season_full_period_ot"
-                INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
-            "postseason_full_period_ot"
-                INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
+            "reg_season_ot_enabled" INTEGER NOT NULL DEFAULT 1 COLLATE BINARY,
+            "postseason_ot_enabled" INTEGER NOT NULL DEFAULT 1 COLLATE BINARY,
+
+            "preseason_ot_type" TEXT DEFAULT "Kansas OT",
+            "reg_season_ot_type" TEXT DEFAULT "Kansas OT",
+            "postseason_ot_type" TEXT DEFAULT "Kansas OT",
+
             "two_forward_passes"  INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
             "spikes_are_team_stats"  INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
             "sacks_are_rushes"      INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
@@ -6795,6 +6730,8 @@ class SqliteSampleFiles:
             "punting_enabled"      INTEGER NOT NULL DEFAULT 1 COLLATE BINARY,
             "onside_punts_enabled"  INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
             "fair_catch_enabled"  INTEGER NOT NULL DEFAULT 1 COLLATE BINARY,
+            "special_onside_play_enabled"
+            INTEGER NOT NULL DEFAULT 0 COLLATE BINARY,
             FOREIGN KEY ("league_id")
                 REFERENCES "fb_leagues" ("league_id")
                     ON DELETE CASCADE
@@ -6885,9 +6822,9 @@ class SqliteSampleFiles:
         )
         VALUES
             (2019,"DEFL","UGF","UGF",
-                "UGF Pandas","University of Georgia-Fairborn","Pandas"),
+                "UGF Pandas","University of Georgia-Fairburn","Pandas"),
             (2019,"DEFL","DVSU","DVSU",
-                "DVSU Dingos","Death Valley State University","Dingos")
+                "DVSU Dingoes","Death Valley State University","Dingoes")
 
         """
         return sql_script.replace("        ", "")
@@ -6968,9 +6905,9 @@ class SqliteSampleFiles:
             "years_exp"                 INT NOT NULL,
             "headshot_url"              TEXT,
             "headshot_image"            BLOB,
-            -- Only here for nflverse compatability.
+            -- Only here for nflverse compatibility.
             "ngs_position"              TEXT,
-            -- Here for nflverse compatability.
+            -- Here for nflverse compatibility.
             "status_description_abbr"   TEXT,
             /* Can have the following values, and is explained in detail here:
             https://www.the33rdteam.com/category/analysis/how-and-why-the-practice-squad-works/
@@ -6990,7 +6927,7 @@ class SqliteSampleFiles:
                 -- "R06": Reserve/Left Squad.
                 -- "R23": Reserve/Future
                     (If a player has this designation,
-                    they are not eligable for games in this season).
+                    they are not eligible for games in this season).
                 -- "R27": Reserve/Non-Football Illness.
                 -- "R30": Reserve/Commissioner Suspension, 1 year.
                 -- "R33": Reserve/Club Suspension.
@@ -7121,10 +7058,10 @@ class SqliteSampleFiles:
                 'Adam Huber','Adam','Adam','Huber','3/9/2004',
                 73,6,1,300,'UGF',0,2019,2019)
             ,(2019,'DEFL','UGF',25,'OL','C',61,'Active',
-                'Bubba Eldridge','Bubba','Bubba','Eldridge','11/22/1999',
+                'Bubba Eldrich','Bubba','Bubba','Eldrich','11/22/1999',
                 76,6,4,305,'UGF',0,2019,2019)
             ,(2019,'DEFL','UGF',26,'OL','C',54,'Active',
-                'Shaud Bates','Shaud','Shaud','Bates','10/20/2002',
+                'Saud Bates','Saud','Saud','Bates','10/20/2002',
                 70,5,10,284,'UGF',0,2019,2019)
             ,(2019,'DEFL','UGF',27,'DL','LDE',89,'Active',
                 'LeRoy Singleton','LeRoy','LeRoy','Singleton','8/2/1996',
@@ -7151,7 +7088,7 @@ class SqliteSampleFiles:
                 'J.T. Benton','J.T.','J.T.','Benton','1/16/2005',
                 73,6,1,243,'UGF',0,2019,2019)
             ,(2019,'DEFL','UGF',35,'DL','NG',92,'Active',
-                'Mike Dailey','Mike','Mike','Dailey','3/30/1992',
+                'Mike Daley','Mike','Mike','Daley','3/30/1992',
                 73,6,1,287,'UGF',0,2019,2019)
             ,(2019,'DEFL','UGF',36,'DL','DT',78,'Active',
                 'Gabriel Johnson','Gabriel','Gabriel','Johnson','1/7/1995',
@@ -7172,7 +7109,7 @@ class SqliteSampleFiles:
                 'Eric Tyson','Eric','Eric','Tyson','9/8/2001',
                 72,6,0,235,'UGF',0,2019,2019)
             ,(2019,'DEFL','UGF',42,'LB','MLB',51,'Active',
-                'Elgin Landry','Elgin','Elgin','Landry','7/15/2003',
+                'Elfin Landry','Elfin','Elfin','Landry','7/15/2003',
                 72,6,0,231,'UGF',0,2019,2019)
             ,(2019,'DEFL','UGF',43,'DB','RCB',37,'Active',
                 'Andrew Dale','Andrew','Andrew','Dale','4/7/1994',
@@ -7218,8 +7155,8 @@ class SqliteSampleFiles:
                 'Stephen','Stephen','Washington','3/15/2004',
                 75,6,3,185,'UGF',0,2019,2019)
             ,(2019,'DEFL','UGF',57,'SPEC','LS',14,'Active',
-                'Logjammer Baggagecling',
-                'Logjammer','Logjammer','Baggagecling',
+                'Legwarmer Smith',
+                'Legwarmer','Legwarmer','Smith',
                 '12/8/2001',72,6,0,180,'UGF',0,2019,2019)
             ,(2019,'DEFL','UGF',58,'SPEC','LS',56,'Active',
                 'Triple Parakeet-Shoes',
@@ -7268,7 +7205,7 @@ class SqliteSampleFiles:
                 'Richard Boulder','Richard','Richard','Boulder','12/11/2004',
                 71,5,11,180,'DVSU',0,2019,2019)
             ,(2019,'DEFL','DVSU',73,'WR','WR',85,'Active',
-                'Brady Millar','Brady','Brady','Millar','11/9/1993',
+                'Brady Miller','Brady','Brady','Miller','11/9/1993',
                 74,6,2,220,'DVSU',0,2019,2019)
             ,(2019,'DEFL','DVSU',74,'WR','WR',47,'Active',
                 'Alex King','Alex','Alex','King','2/23/1994',
@@ -7483,7 +7420,7 @@ class SqliteSampleFiles:
         )
         VALUES
             (1,'UGF',NULL,'Adamo Dome',50000,
-                'Fairborn','US-GA','USA',TRUE,FALSE,'America/Phoenix')
+                'Fairburn','US-GA','USA',TRUE,FALSE,'America/Phoenix')
             ,(2,'DVSU',NULL,'Death Valley Stadium',10000,
                 'Death Valley','US-NV','USA',FALSE,FALSE,'America/New_York');
 
@@ -7560,10 +7497,10 @@ class SqliteSampleFiles:
             'sleeper_id'                INT,
             'years_exp'                 INT NOT NULL,
             -- Letting users modify this is potentially a bad idea.
-            -- Only here for nflverse compatability.
+            -- Only here for nflverse compatibility.
             'headshot_url'              TEXT,
             'headshot_image'            BLOB,
-            -- Only here for nflverse compatability.
+            -- Only here for nflverse compatibility.
             'ngs_position'              TEXT,
             'week'                      INT NOT NULL,
             -- can be 'PRE', 'REG', or 'POST'.
@@ -7573,7 +7510,7 @@ class SqliteSampleFiles:
             -- > 'CON' (conference championship)
             -- > 'SB' (Super Bowl)
             'game_type'                 TEXT NOT NULL,
-            -- Here for nflverse compatability.
+            -- Here for nflverse compatibility.
             'status_description_abbr'   TEXT,
             /*
             Can have the following values, and is explained in detail here:
@@ -7594,7 +7531,7 @@ class SqliteSampleFiles:
                 -- 'R06': Reserve/Left Squad.
                 -- 'R23': Reserve/Future
                     (If a player has this designation,
-                    they are not eligable for games in this season).
+                    they are not eligible for games in this season).
                 -- 'R27': Reserve/Non-Football Illness.
                 -- 'R30': Reserve/Commissioner Suspension, 1 year.
                 -- 'R33': Reserve/Club Suspension.
