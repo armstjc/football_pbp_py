@@ -1,35 +1,39 @@
 """
 - Creation Date: 03/10/2024 04:35 PM EDT
-- Last Updated: 05/12/2024 05:25 PM EDT
+- Last Updated: 05/18/2024 01:30 AM EDT
 - Authors: Joseph Armstrong (armstrongjoseph08@gmail.com)
 - file: `./core/views/edit_league_view.py`
 - Purpose: Code behind for the window
     that allows a user to view and edit leagues.
 """
 
-from datetime import datetime
 import logging
 import operator
 import sqlite3
+from datetime import datetime
+
 import polars as pl
 import PySimpleGUI as sg
 
 from core.database.load_db_elements import SqliteLoadData
 from core.database.sqlite3_connectors import initialize_sqlite3_connectors
-from core.other.embedded import EmbeddedElements
+from core.other.embedded import EmbeddedElements, LettersAndNumbers
 
 
 class LeagueView:
     """
     Class for handling logic with editing league settings.
     """
-    letters_all = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
-    letters_lower = "abcdefghijklmnopqrstuvwxyz"
-    letters_upper = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-    numbers_all = "0123456789"
-    letters_and_numbers = "abcdefghijklmnopqrstuvwxyz" +\
-        "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
-    upper_letters_and_numbers = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+
+    letters_all = LettersAndNumbers.letters_all(include_space=True)
+    letters_lower = LettersAndNumbers.letters_lower()
+    letters_upper = LettersAndNumbers.letters_upper()
+    numbers_all = LettersAndNumbers.numbers_all()
+    letters_and_numbers = LettersAndNumbers.letters_and_numbers(
+        include_space=True
+    )
+    upper_letters_and_numbers = LettersAndNumbers.upper_letters_and_numbers()
+
     # sqlite3 connectors
     sqlite3_con = None
     sqlite3_cur = None
@@ -151,78 +155,142 @@ class LeagueView:
         # by a line being more than 80 characters long.
         kickoff_fc = self.kickoff_fc_always_goes_to_touchback
 
-        sql_script = f"""
+        sql_script = """
         UPDATE fb_leagues
         SET
-            "league_id" = "{self.league_id}",
-            "league_long_name" = "{self.league_long_name}",
-            "league_short_name" = "{self.league_short_name}",
-            "league_notes" = "{self.league_notes}",
-            "field_length" = {self.field_length},
+            "league_id" = ?,
+            "league_long_name" = ?,
+            "league_short_name" = ?,
+            "league_notes" = ?,
+            "field_length" = ?,
 
-            "downs" = {self.downs},
-            "first_down_yards" = {self.first_down_yards},
-            "kickoff_yardline" = {self.kickoff_yardline},
-            "safety_kick_yardline" = {self.safety_kick_yardline},
-            "kickoff_touchback_yardline" = {self.kickoff_touchback_yardline},
-            "punt_touchback_yardline" = {self.punt_touchback_yardline},
-            "normal_touchback_yardline" = {self.normal_touchback_yardline},
-            "kansas_ot_yardline" = {self.kansas_ot_yardline},
-            "pat_yardline" = {self.pat_yardline},
-            "1PC_yardline" = {self.one_PC_Yardline},
-            "2PC_yardline" = {self.two_PC_Yardline},
-            "3PC_yardline" = {self.three_PC_Yardline},
-            "quarters" = {self.quarters},
-            "timeouts_per_half" = {self.timeouts_per_half},
-            "ot_period_seconds" = {self.ot_period_seconds},
-            "game_seconds" = {self.game_seconds},
-            "half_seconds" = {self.half_seconds},
-            "quarter_seconds" = {self.quarter_seconds},
-            "ot_periods" = {self.ot_periods},
-            "ot_periods_until_shootout" = {self.ot_periods_until_shootout},
-            "min_xfl_ot_periods" = {self.min_xfl_ot_periods},
-            "set_xfl_ot_periods" = {self.set_xfl_ot_periods},
-            "touchdown_points" = {self.touchdown_points},
-            "field_goal_points" = {self.field_goal_points},
-            "safety_points" = {self.safety_points},
-            "pat_points" = {self.pat_points},
-            "pat_defense" = {self.pat_defense},
-            "pat_safety" = {self.pat_safety},
-            "players_on_field" = {self.players_on_field},
-            "xfl_pat" = {self.xfl_pat_enabled},
+            "downs" = ?,
+            "first_down_yards" = ?,
+            "kickoff_yardline" = ?,
+            "safety_kick_yardline" = ?,
+            "kickoff_touchback_yardline" = ?,
+            "punt_touchback_yardline" = ?,
+            "normal_touchback_yardline" = ?,
+            "kansas_ot_yardline" = ?,
+            "pat_yardline" = ?,
+            "1PC_yardline" = ?,
+            "2PC_yardline" = ?,
+            "3PC_yardline" = ?,
+            "quarters" = ?,
+            "timeouts_per_half" = ?,
+            "ot_period_seconds" = ?,
+            "game_seconds" = ?,
+            "half_seconds" = ?,
+            "quarter_seconds" = ?,
+            "ot_periods" = ?,
+            "ot_periods_until_shootout" = ?,
+            "min_xfl_ot_periods" = ?,
+            "set_xfl_ot_periods" = ?,
+            "touchdown_points" = ?,
+            "field_goal_points" = ?,
+            "safety_points" = ?,
+            "pat_points" = ?,
+            "pat_defense" = ?,
+            "pat_safety" = ?,
+            "players_on_field" = ?,
+            "xfl_pat" = ?,
 
-            "preseason_ot_enabled" = {self.preseason_ot_enabled},
-            "reg_season_ot_enabled" = {self.reg_season_ot_enabled},
-            "postseason_ot_enabled" = {self.postseason_ot_enabled},
+            "preseason_ot_enabled" = ?,
+            "reg_season_ot_enabled" = ?,
+            "postseason_ot_enabled" = ?,
 
-            "preseason_ot_type" = "{self.preseason_ot_type}",
-            "reg_season_ot_type" = "{self.reg_season_ot_type}",
-            "postseason_ot_type" = "{self.postseason_ot_type}",
+            "preseason_ot_type" = ?,
+            "reg_season_ot_type" = ?,
+            "postseason_ot_type" = ?,
 
-            "two_forward_passes" = {self.two_forward_passes},
-            "spikes_are_team_stats" = {self.spikes_are_team_stats},
-            "sacks_are_rushes" = {self.sacks_are_rushes},
-            "kneeldowns_are_team_stats" = {self.kneeldowns_are_team_stats},
-            "kickoff_fc_always_goes_to_touchback" = {kickoff_fc},
-            "kickoffs_enabled" = {self.kickoffs_enabled},
-            "use_xfl_kickoff" = {self.use_xfl_kickoff},
-            "drop_kick_enabled" = {self.drop_kick_enabled},
-            "drop_kick_bonus_point" = {self.drop_kick_bonus_point},
-            "fg_adds_ez_length" = {self.fg_adds_ez_length},
-            "long_fg_bonus_point" = {self.long_fg_bonus_point},
-            "xp_is_a_fg" = {self.xp_is_a_fg},
-            "rouges_enabled" = {self.rouges_enabled},
-            "punting_enabled" = {self.punting_enabled},
-            "onside_punts_enabled" = {self.onside_punts_enabled},
-            "special_onside_play_enabled" = {self.special_onside_play_enabled},
-            "fair_catch_enabled" = {self.fair_catch_enabled}
+            "two_forward_passes" = ?,
+            "spikes_are_team_stats" = ?,
+            "sacks_are_rushes" = ?,
+            "kneeldowns_are_team_stats" = ?,
+            "kickoff_fc_always_goes_to_touchback" = ?,
+            "kickoffs_enabled" = ?,
+            "use_xfl_kickoff" = ?,
+            "drop_kick_enabled" = ?,
+            "drop_kick_bonus_point" = ?,
+            "fg_adds_ez_length" = ?,
+            "long_fg_bonus_point" = ?,
+            "xp_is_a_fg" = ?,
+            "rouges_enabled" = ?,
+            "punting_enabled" = ?,
+            "onside_punts_enabled" = ?,
+            "special_onside_play_enabled" = ?,
+            "fair_catch_enabled" = ?
 
         WHERE
-            "league_id" = "{self.league_id}"
+            "league_id" = ?
         """
         # print(sql_script)
 
-        self.sqlite3_cur.executescript(sql_script)
+        self.sqlite3_cur.executemany(
+            sql_script,
+            [(
+                self.league_id,
+                self.league_long_name,
+                self.league_short_name,
+                self.league_notes,
+                self.field_length,
+                self.downs,
+                self.first_down_yards,
+                self.kickoff_yardline,
+                self.safety_kick_yardline,
+                self.kickoff_touchback_yardline,
+                self.punt_touchback_yardline,
+                self.normal_touchback_yardline,
+                self.kansas_ot_yardline,
+                self.pat_yardline,
+                self.one_PC_Yardline,
+                self.two_PC_Yardline,
+                self.three_PC_Yardline,
+                self.quarters,
+                self.timeouts_per_half,
+                self.ot_period_seconds,
+                self.game_seconds,
+                self.half_seconds,
+                self.quarter_seconds,
+                self.ot_periods,
+                self.ot_periods_until_shootout,
+                self.min_xfl_ot_periods,
+                self.set_xfl_ot_periods,
+                self.touchdown_points,
+                self.field_goal_points,
+                self.safety_points,
+                self.pat_points,
+                self.pat_defense,
+                self.pat_safety,
+                self.players_on_field,
+                self.xfl_pat_enabled,
+                self.preseason_ot_enabled,
+                self.reg_season_ot_enabled,
+                self.postseason_ot_enabled,
+                self.preseason_ot_type,
+                self.reg_season_ot_type,
+                self.postseason_ot_type,
+                self.two_forward_passes,
+                self.spikes_are_team_stats,
+                self.sacks_are_rushes,
+                self.kneeldowns_are_team_stats,
+                kickoff_fc,
+                self.kickoffs_enabled,
+                self.use_xfl_kickoff,
+                self.drop_kick_enabled,
+                self.drop_kick_bonus_point,
+                self.fg_adds_ez_length,
+                self.long_fg_bonus_point,
+                self.xp_is_a_fg,
+                self.rouges_enabled,
+                self.punting_enabled,
+                self.onside_punts_enabled,
+                self.special_onside_play_enabled,
+                self.fair_catch_enabled,
+                self.league_id
+
+            )]
+        )
         self.sqlite3_con.commit()
 
     def initial_data_load(self):
@@ -911,7 +979,7 @@ class LeagueView:
         ]
 
         window = sg.Window(
-            "About",
+            "Edit League...",
             layout=layout,
             # size=(500, 600),
             resizable=False,
@@ -1008,7 +1076,7 @@ class LeagueView:
                         )
                     del check
                 elif check_flag == "No":
-                    keep_open = False
+                    pass
                 del check_flag
                 window["-APPLY_BUTTON-"].update(
                     disabled=True
@@ -1058,6 +1126,33 @@ class LeagueView:
                 )
                 self.league_id = values["-LG_SHORT_NAME-"].upper()
                 change_count += 1
+
+            if event == "-LG_LONG_NAME-" and (
+                len(values["-LG_LONG_NAME-"]) > 256
+            ):
+                window["-LG_LONG_NAME-"].update(
+                    values["-LG_LONG_NAME-"][:-1]
+                )
+            elif event == "-LG_LONG_NAME-" and (
+                values["-LG_LONG_NAME-"] and
+                values["-LG_LONG_NAME-"][-1] not in (
+                    self.letters_and_numbers
+                )
+            ):
+                window["-LG_LONG_NAME-"].update(
+                    values["-LG_LONG_NAME-"][:-1]
+                )
+                self.league_long_name = values["-LG_LONG_NAME-"]
+            elif event == "-LG_LONG_NAME-" and (
+                values["-LG_LONG_NAME-"] and
+                values["-LG_LONG_NAME-"][-1] in (
+                    self.letters_and_numbers
+                )
+            ):
+                window["-LG_LONG_NAME-"].update(
+                    values["-LG_LONG_NAME-"]
+                )
+                self.league_long_name = values["-LG_LONG_NAME-"]
 
             if event == "-LG_LONG_NAME-":
                 self.league_long_name = values["-LG_LONG_NAME-"]
@@ -1246,15 +1341,16 @@ def safety_check_league_ids(
     Validates that if you're changing the league ID,
     you're not infringing on a league ID that already exists.
     """
-    sql_script = f"""
+    sql_script = """
     SELECT DISTINCT
         league_id
     FROM fb_leagues
-    WHERE league_id != "{league_id_original}"
+    WHERE league_id != ?
     """
-    lg_id_df = pl.read_database(
-        query=sql_script,
-        connection=cur,
+    data = cur.execute(sql_script, [(league_id_original)])
+    data.fetchall()
+    lg_id_df = pl.DataFrame(
+        data=data,
         schema_overrides={"league_id": pl.String},
     )
     if len(lg_id_df) > 0:
@@ -1279,8 +1375,9 @@ def new_league_view(settings_json: dict):
     sg.theme(settings_json["app_theme"])
     league_id = ""
     league_long_name = ""
-    letters_and_numbers = "abcdefghijklmnopqrstuvwxyz" +\
-        "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+    letters_and_numbers = LettersAndNumbers.letters_and_numbers(
+        include_space=True
+    )
 
     base_ruleset_arr = [
         "AAF",
@@ -1310,6 +1407,7 @@ def new_league_view(settings_json: dict):
     ]
     current_year = datetime.now().year
     latest_season = current_year
+
     layout = [
         [
             sg.Text(
@@ -1380,13 +1478,14 @@ def new_league_view(settings_json: dict):
     ]
 
     window = sg.Window(
-        "About",
+        "New League...",
         layout=layout,
         # size=(500, 600),
         resizable=False,
         finalize=True,
         keep_on_top=False
     )
+
     keep_open = True
     while keep_open is True:
         event, values = window.read(timeout=1000)
@@ -1402,7 +1501,7 @@ def new_league_view(settings_json: dict):
         elif event == "-CREATE_NEW_LEAGUE_BUTTON-" and (
             values["-BASE_RULESET-"] == "NFL"
         ):
-            sql_script = f"""
+            sql_script = """
             INSERT INTO "fb_leagues"
             (
                 "league_id",
@@ -1429,9 +1528,9 @@ def new_league_view(settings_json: dict):
             )
             VALUES
             (
-                "{league_id}",
-                "{league_id}",
-                "{league_long_name}",
+                ?,
+                ?,
+                ?,
                 100,
                 4,
                 10,
@@ -1451,7 +1550,8 @@ def new_league_view(settings_json: dict):
                 "Super Modified Sudden Death OT",
                 1
             );
-
+            """
+            sql_script_2 = """
             INSERT INTO "fb_seasons"
             (
                 "season",
@@ -1477,8 +1577,8 @@ def new_league_view(settings_json: dict):
             )
             VALUES
             (
-                {latest_season},
-                "{league_id}",
+                ?,
+                ?,
                 100,
                 4,
                 10,
@@ -1498,9 +1598,25 @@ def new_league_view(settings_json: dict):
                 "Super Modified Sudden Death OT",
                 1
             );
-            """
+            """.replace("            ", "")
             try:
-                sqlite3_cur.executescript(sql_script)
+                sqlite3_cur.executemany(
+                    sql_script,
+                    [(
+                        league_id,
+                        league_id,
+                        league_long_name
+                    )]
+                )
+                sqlite3_con.commit()
+
+                sqlite3_cur.executemany(
+                    sql_script_2,
+                    [(
+                        latest_season,
+                        league_id
+                    )]
+                )
                 sqlite3_con.commit()
                 keep_open = False
             except sqlite3.IntegrityError:
@@ -1517,7 +1633,7 @@ def new_league_view(settings_json: dict):
         elif event == "-CREATE_NEW_LEAGUE_BUTTON-" and (
             values["-BASE_RULESET-"] == "NCAA"
         ):
-            sql_script = f"""
+            sql_script = """
             INSERT INTO "fb_leagues"
             (
                 "league_id",
@@ -1548,9 +1664,9 @@ def new_league_view(settings_json: dict):
             )
             VALUES
             (
-                "{league_id}",
-                "{league_id}",
-                "{league_long_name}",
+                ?,
+                ?,
+                ?,
                 100,
                 4,
                 10,
@@ -1574,7 +1690,8 @@ def new_league_view(settings_json: dict):
                 1,
                 1
             );
-
+            """
+            sql_script_2 = """
             INSERT INTO "fb_seasons"
             (
                 "season",
@@ -1604,8 +1721,8 @@ def new_league_view(settings_json: dict):
             )
             VALUES
             (
-                {latest_season},
-                "{league_id}",
+                ?,
+                ?,
                 100,
                 4,
                 10,
@@ -1632,7 +1749,23 @@ def new_league_view(settings_json: dict):
 
             """
             try:
-                sqlite3_cur.executescript(sql_script)
+                sqlite3_cur.executemany(
+                    sql_script,
+                    [(
+                        league_id,
+                        league_id,
+                        league_long_name,
+                    )]
+                )
+                sqlite3_con.commit()
+
+                sqlite3_cur.executemany(
+                    sql_script_2,
+                    [(
+                        latest_season,
+                        league_id
+                    )]
+                )
                 sqlite3_con.commit()
                 keep_open = False
             except sqlite3.IntegrityError:
@@ -1649,7 +1782,7 @@ def new_league_view(settings_json: dict):
         elif event == "-CREATE_NEW_LEAGUE_BUTTON-" and (
             values["-BASE_RULESET-"] == "CFL"
         ):
-            sql_script = f"""
+            sql_script = """
             INSERT INTO "fb_leagues"
             (
                 "league_id",
@@ -1679,9 +1812,9 @@ def new_league_view(settings_json: dict):
             )
             VALUES
             (
-                "{league_id}",
-                "{league_id}",
-                "{league_long_name}",
+                ?,
+                ?,
+                ?,
                 110,
                 3,
                 10,
@@ -1704,7 +1837,8 @@ def new_league_view(settings_json: dict):
                 0,
                 1
             );
-
+            """
+            sql_script_2 = """
             INSERT INTO "fb_seasons"
             (
                 "season",
@@ -1733,8 +1867,8 @@ def new_league_view(settings_json: dict):
             )
             VALUES
             (
-                {latest_season},
-                "{league_id}",
+                ?,
+                ?,
                 110,
                 3,
                 10,
@@ -1759,7 +1893,23 @@ def new_league_view(settings_json: dict):
             );
             """
             try:
-                sqlite3_cur.executescript(sql_script)
+                sqlite3_cur.executemany(
+                    sql_script,
+                    [(
+                        league_id,
+                        league_id,
+                        league_long_name,
+                    )]
+                )
+                sqlite3_con.commit()
+
+                sqlite3_cur.executemany(
+                    sql_script_2,
+                    [(
+                        latest_season,
+                        league_id
+                    )]
+                )
                 sqlite3_con.commit()
                 keep_open = False
             except sqlite3.IntegrityError:
@@ -1776,7 +1926,7 @@ def new_league_view(settings_json: dict):
         elif event == "-CREATE_NEW_LEAGUE_BUTTON-" and (
             values["-BASE_RULESET-"] == "UFL (2024)"
         ):
-            sql_script = f"""
+            sql_script = """
             INSERT INTO "fb_leagues"
             (
                 "league_id",
@@ -1803,9 +1953,9 @@ def new_league_view(settings_json: dict):
             )
             VALUES
             (
-                "{league_id}",
-                "{league_id}",
-                "{league_long_name}",
+                ?,
+                ?,
+                ?,
                 20,
                 20,
                 75,
@@ -1825,7 +1975,8 @@ def new_league_view(settings_json: dict):
                 1,
                 1
             );
-
+            """
+            sql_script_2 = """
             INSERT INTO "fb_seasons"
             (
                 "season",
@@ -1851,8 +2002,8 @@ def new_league_view(settings_json: dict):
             )
             VALUES
             (
-                {latest_season},
-                "{league_id}",
+                ?,
+                ?,
                 20,
                 20,
                 75,
@@ -1874,7 +2025,23 @@ def new_league_view(settings_json: dict):
             );
             """
             try:
-                sqlite3_cur.executescript(sql_script)
+                sqlite3_cur.executemany(
+                    sql_script,
+                    [(
+                        league_id,
+                        league_id,
+                        league_long_name,
+                    )]
+                )
+                sqlite3_con.commit()
+
+                sqlite3_cur.executemany(
+                    sql_script_2,
+                    [(
+                        latest_season,
+                        league_id
+                    )]
+                )
                 sqlite3_con.commit()
                 keep_open = False
             except sqlite3.IntegrityError:
@@ -1891,7 +2058,7 @@ def new_league_view(settings_json: dict):
         elif event == "-CREATE_NEW_LEAGUE_BUTTON-" and (
             values["-BASE_RULESET-"] == "XFL"
         ):
-            sql_script = f"""
+            sql_script = """
             INSERT INTO "fb_leagues"
             (
                 "league_id",
@@ -1915,9 +2082,9 @@ def new_league_view(settings_json: dict):
             )
             VALUES
             (
-                "{league_id}",
-                "{league_id}",
-                "{league_long_name}",
+                ?,
+                ?,
+                ?,
                 30,
                 65,
                 65,
@@ -1934,7 +2101,8 @@ def new_league_view(settings_json: dict):
                 1,
                 1
             );
-
+            """
+            sql_script_2 = """
             INSERT INTO "fb_seasons"
             (
                 "season",
@@ -1957,8 +2125,8 @@ def new_league_view(settings_json: dict):
             )
             VALUES
             (
-                {latest_season},
-                "{league_id}",
+                ?,
+                ?,
                 30,
                 65,
                 65,
@@ -1978,7 +2146,23 @@ def new_league_view(settings_json: dict):
 
             """
             try:
-                sqlite3_cur.executescript(sql_script)
+                sqlite3_cur.executemany(
+                    sql_script,
+                    [(
+                        league_id,
+                        league_id,
+                        league_long_name,
+                    )]
+                )
+                sqlite3_con.commit()
+
+                sqlite3_cur.executemany(
+                    sql_script_2,
+                    [(
+                        latest_season,
+                        league_id
+                    )]
+                )
                 sqlite3_con.commit()
                 keep_open = False
             except sqlite3.IntegrityError:
@@ -1995,7 +2179,7 @@ def new_league_view(settings_json: dict):
         elif event == "-CREATE_NEW_LEAGUE_BUTTON-" and (
             values["-BASE_RULESET-"] == "AAF"
         ):
-            sql_script = f"""
+            sql_script = """
             INSERT INTO "fb_leagues"
             (
                 "league_id",
@@ -2009,16 +2193,17 @@ def new_league_view(settings_json: dict):
             )
             VALUES
             (
-                "{league_id}",
-                "{league_id}",
-                "{league_long_name}",
+                ?,
+                ?,
+                ?,
                 10,
                 0,
                 0,
                 0,
                 1
             );
-
+            """
+            sql_script_2 = """
             INSERT INTO "fb_seasons"
             (
                 "season",
@@ -2031,8 +2216,8 @@ def new_league_view(settings_json: dict):
             )
             VALUES
             (
-                {latest_season},
-                "{league_id}",
+                ?,
+                ?,
                 10,
                 0,
                 0,
@@ -2042,7 +2227,23 @@ def new_league_view(settings_json: dict):
 
             """
             try:
-                sqlite3_cur.executescript(sql_script)
+                sqlite3_cur.executemany(
+                    sql_script,
+                    [(
+                        league_id,
+                        league_id,
+                        league_long_name
+                    )]
+                )
+                sqlite3_con.commit()
+
+                sqlite3_cur.executemany(
+                    sql_script_2,
+                    [(
+                        latest_season,
+                        league_id
+                    )]
+                )
                 sqlite3_con.commit()
                 keep_open = False
             except sqlite3.IntegrityError:
@@ -2059,7 +2260,7 @@ def new_league_view(settings_json: dict):
         elif event == "-CREATE_NEW_LEAGUE_BUTTON-" and (
             values["-BASE_RULESET-"] == "High School"
         ):
-            sql_script = f"""
+            sql_script = """
             INSERT INTO "fb_leagues"
             (
                 "league_id",
@@ -2073,10 +2274,10 @@ def new_league_view(settings_json: dict):
             )
             VALUES
             (
-                "{league_id}",
-                "{league_id}",
-                "{league_long_name}",
-                -- Not all HS leagues are built the same,
+                ?,
+                ?,
+                ?,
+                -- Not all HS leagues are built the same
                 -- and I am not building out a ruleset for literally
                 -- every HS league.
                 2880,
@@ -2085,7 +2286,8 @@ def new_league_view(settings_json: dict):
                 1,
                 1
             );
-
+            """
+            sql_script_2 = """
             INSERT INTO "fb_seasons"
             (
                 "season",
@@ -2098,8 +2300,8 @@ def new_league_view(settings_json: dict):
             )
             VALUES
             (
-                {latest_season},
-                "{league_id}",
+                ?,
+                ?,
                 2880,
                 1440,
                 720,
@@ -2108,8 +2310,25 @@ def new_league_view(settings_json: dict):
             );
             """
             try:
-                sqlite3_cur.executescript(sql_script)
+                sqlite3_cur.executemany(
+                    sql_script,
+                    [(
+                        league_id,
+                        league_id,
+                        league_long_name
+                    )]
+                )
                 sqlite3_con.commit()
+
+                sqlite3_cur.executemany(
+                    sql_script_2,
+                    [(
+                        latest_season,
+                        league_id
+                    )]
+                )
+                sqlite3_con.commit()
+
                 keep_open = False
             except sqlite3.IntegrityError:
                 sg.popup_error(
@@ -2123,9 +2342,9 @@ def new_league_view(settings_json: dict):
                 )
                 raise e
 
-        if event == "-LG_SHORT_NAME-" and len(
-            values["-LG_SHORT_NAME-"]
-        ) > 5:
+        if event == "-LG_SHORT_NAME-" and (
+            len(values["-LG_SHORT_NAME-"]) > 5
+        ):
             window["-LG_SHORT_NAME-"].update(
                 values["-LG_SHORT_NAME-"][:-1]
             )
@@ -2149,9 +2368,9 @@ def new_league_view(settings_json: dict):
                 values["-LG_SHORT_NAME-"].upper()
             )
             league_id = values["-LG_SHORT_NAME-"].upper()
-        if event == "-LG_LONG_NAME-" and len(
-            values["-LG_LONG_NAME-"]
-        ) > 256:
+        if event == "-LG_LONG_NAME-" and (
+            len(values["-LG_LONG_NAME-"]) > 256
+        ):
             window["-LG_LONG_NAME-"].update(
                 values["-LG_LONG_NAME-"][:-1]
             )
