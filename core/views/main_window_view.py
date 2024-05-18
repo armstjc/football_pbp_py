@@ -1,6 +1,6 @@
 """
 - Creation Date: 01/27/2024 12:00 PM EST
-- Last Updated: 05/12/2024 04:25 PM EDT
+- Last Updated: 05/18/2024 02:05 PM EDT
 - Authors: Joseph Armstrong (armstrongjoseph08@gmail.com)
 - file: `./core/views/main_window_view.py`
 - Purpose: Main startup window for this application.
@@ -17,11 +17,12 @@ from core.database.sqlite3_connectors import initialize_sqlite3_connectors
 from core.other.embedded import EmbeddedElements
 from core.settings.settings_core import AppSettings
 from core.views.about_view import about_view
-from core.views.settings_view import SettingsWindow
 from core.views.edit_league_view import LeagueView, new_league_view
+from core.views.edit_season_view import SeasonView, new_season_view
+from core.views.settings_view import SettingsWindow
 
 
-class main_window:
+class MainWindow:
     """ """
 
     # sqlite3 connectors
@@ -200,9 +201,13 @@ class main_window:
         self.leagues_list.sort()
 
     def refresh_league_seasons(self, league: str):
+        self.fb_seasons_df = SqliteLoadData.load_seasons(
+            self.sqlite3_con, self.sqlite3_cur
+        )
         self.league_seasons = self.fb_seasons_df.filter(
             pl.col("league_id") == league
         )["season"].to_list()
+        self.league_seasons.sort()
 
     def main(self):
         """ """
@@ -316,7 +321,21 @@ class main_window:
                     key="-WEEK_SEASON_COMBO-",
                 ),
             ],
-            [sg.Button("New Game", key="-NEW_GAME_BUTTON-", expand_x=True)],
+            [
+                sg.Button(
+                    "New League", key="New League", expand_x=True
+                )
+            ],
+            [
+                sg.Button(
+                    "New Season", key="New Season", expand_x=True
+                )
+            ],
+            [
+                sg.Button(
+                    "New Game", key="New Game", expand_x=True
+                )
+            ],
             [
                 sg.Button(
                     "Import Game",
@@ -438,8 +457,20 @@ class main_window:
                         values=self.leagues_list,
                         value=check
                     )
+                    del check
                 case "New Season":
-                    print(event)
+                    check = values["-LEAGUE_SEASON_COMBO-"]
+                    check2 = values["-LEAGUE_ABV_COMBO-"]
+                    new_season_view(
+                        settings_json=self.settings_dict,
+                        league_id=values["-LEAGUE_ABV_COMBO-"]
+                    )
+                    self.refresh_league_seasons(league=check2)
+                    window["-LEAGUE_SEASON_COMBO-"].update(
+                        values=self.league_seasons,
+                        value=check
+                    )
+                    del check, check2
                 case "New Team":
                     print(event)
                 case "New Game":
@@ -495,6 +526,11 @@ class main_window:
                         values=self.shown_schedule_df.rows()
                     )
                 case "-SEA_SETTINGS-":
+                    SeasonView(
+                        settings_json=self.settings_dict,
+                        league_id=values["-LEAGUE_ABV_COMBO-"],
+                        season=values["-LEAGUE_SEASON_COMBO-"]
+                    )
                     self.filter_shown_schedule_df(
                         values["-LEAGUE_ABV_COMBO-"],
                         values["-LEAGUE_SEASON_COMBO-"]
@@ -504,14 +540,19 @@ class main_window:
                     )
                 case "-LG_SETTINGS-":
                     # print(event)
+                    check = values["-LEAGUE_ABV_COMBO-"]
                     LeagueView(
                         settings_json=self.settings_dict,
                         league_id=values["-LEAGUE_ABV_COMBO-"]
                     )
+
                     self.refresh_leagues()
+                    # self.refresh_league_teams(values["-LEAGUE_ABV_COMBO-"])
                     window["-LEAGUE_ABV_COMBO-"].update(
-                        values=self.leagues_list
+                        values=self.leagues_list,
+                        value=values["-LEAGUE_ABV_COMBO-"]
                     )
+                    del check
 
                 case _:
                     pass
@@ -520,5 +561,5 @@ class main_window:
 
 
 if __name__ == "__main__":
-    main_window()
+    MainWindow()
     # print(sg.theme_list())

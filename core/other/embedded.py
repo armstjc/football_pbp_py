@@ -1,6 +1,6 @@
 """
 - Creation Date: 2/3/2024 1:18 PM EDT
-- Last Updated: 05/12/2024 05:30 PM EDT
+- Last Updated: 05/18/2024 01:30 AM EDT
 - Authors: Joseph Armstrong (armstrongjoseph08@gmail.com)
 - file: `./resources/embedded.py`
 - Purpose: Holds data that is embedded into this app,
@@ -12,7 +12,7 @@
 class EmbeddedElements:
     def app_version():
         """ """
-        return "0.0.4a"
+        return "0.0.5"
 
     def desktop_icon():
         """ """
@@ -661,3 +661,44 @@ iz7MXFXNT5b771yPwL/bRkLC18+kyqCsAh/BZgodiYdI0ocEmvhSTuW1Ycrp9R/AZwl82l3eF2N0aeLV
 wD6HFmz/AXxMyodSSizTPwQfBxI6Nm17qqWS32vTRH8/C3yaoBelA/s4jX2slOD/A/AessspSzWVAAAA
 AElFTkSuQmCC
         """
+
+
+class LettersAndNumbers:
+    # This is separate, because we don't need a whole entire image reloaded
+    # to access a bunch of letters.
+    def letters_all(include_space: bool = False):
+        phrase = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+        if include_space is True:
+            phrase += " "
+        return phrase
+
+    def letters_lower(include_space: bool = False):
+        phrase = "abcdefghijklmnopqrstuvwxyz"
+        if include_space is True:
+            phrase += " "
+        return phrase
+
+    def letters_upper(include_space: bool = False):
+        phrase = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+        if include_space is True:
+            phrase += " "
+        return phrase
+
+    def numbers_all(include_space: bool = False):
+        phrase = "0123456789"
+        if include_space is True:
+            phrase += " "
+        return phrase
+
+    def letters_and_numbers(include_space: bool = False):
+        phrase = "abcdefghijklmnopqrstuvwxyz"
+        phrase += "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+        if include_space is True:
+            phrase += " "
+        return phrase
+
+    def upper_letters_and_numbers(include_space: bool = False):
+        phrase = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+        if include_space is True:
+            phrase += " "
+        return phrase
