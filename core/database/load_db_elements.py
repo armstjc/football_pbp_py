@@ -1,6 +1,6 @@
 """
 - Creation Date: 02/03/2024 02:54 PM EST
-- Last Updated: 05/12/2024 04:25 PM EDT
+- Last Updated: 05/25/2024 09:45 PM EDT
 - Author: Joseph Armstrong (armstrongjoseph08@gmail.com)
 - File Name: ./core/database/create_sdv_pbp_db.py
 - Purpose: Loads in data used by this application,
@@ -16,8 +16,7 @@ from os.path import expanduser
 import polars as pl
 
 from core.database.create_db_elements import (
-    create_app_sqlite3_db,
-    SqliteSampleFiles
+    SqliteSampleFiles, create_app_sqlite3_db
 )
 
 # class verify_db_integrity:
@@ -512,6 +511,7 @@ class SqliteLoadData:
             df = pl.read_database(
                 query="SELECT * FROM fb_teams",
                 connection=cur,
+                infer_schema_length=100,
                 schema_overrides={
                     "season": pl.UInt16,
                     "league_id": pl.String,
@@ -519,22 +519,27 @@ class SqliteLoadData:
                     "pfr_team_id": pl.String,
                     "pfr_fran_id": pl.String,
                     "sr_team_id": pl.String,
-                    "ncaa_old_team_id": pl.Int32,
+                    # "ncaa_old_team_id": pl.Int32,
                     "ncaa_team_id": pl.Int32,
                     "stats_crew_team_id": pl.String,
                     "footballdb_team_id": pl.String,
+                    "espn_team_id": pl.Int16,
+                    "arenafan_team_id": pl.Int16,
                     "team_abv": pl.String,
                     "team_name": pl.String,
                     "team_location": pl.String,
                     "team_nickname": pl.String,
                     "team_city": pl.String,
                     "team_state": pl.String,
+                    "team_nation": pl.String,
                     "team_conference": pl.String,
                     "team_division": pl.String,
                     "team_head_coach": pl.String,
                     "team_oc": pl.String,
                     "team_dc": pl.String,
+                    "timezone_name": pl.String,
                     "team_notes": pl.String,
+                    "stadium_id": pl.Int16
                 },
             )
         except sqlite3.OperationalError as e:
@@ -547,6 +552,7 @@ class SqliteLoadData:
             df = pl.read_database(
                 query="SELECT * FROM fb_teams",
                 connection=cur,
+                infer_schema_length=100,
                 schema_overrides={
                     "season": pl.UInt16,
                     "league_id": pl.String,
@@ -554,22 +560,27 @@ class SqliteLoadData:
                     "pfr_team_id": pl.String,
                     "pfr_fran_id": pl.String,
                     "sr_team_id": pl.String,
-                    "ncaa_old_team_id": pl.Int32,
+                    # "ncaa_old_team_id": pl.Int32,
                     "ncaa_team_id": pl.Int32,
                     "stats_crew_team_id": pl.String,
                     "footballdb_team_id": pl.String,
+                    "espn_team_id": pl.Int64,
+                    "arenafan_team_id": pl.Int64,
                     "team_abv": pl.String,
                     "team_name": pl.String,
                     "team_location": pl.String,
                     "team_nickname": pl.String,
                     "team_city": pl.String,
                     "team_state": pl.String,
+                    "team_nation": pl.String,
                     "team_conference": pl.String,
                     "team_division": pl.String,
                     "team_head_coach": pl.String,
                     "team_oc": pl.String,
                     "team_dc": pl.String,
+                    "timezone_name": pl.String,
                     "team_notes": pl.String,
+                    "stadium_id": pl.Int16
                 },
             )
         except Exception as e:

@@ -1,6 +1,6 @@
 """
 - Creation Date: 03/10/2024 04:35 PM EDT
-- Last Updated: 05/18/2024 02:05 AM EDT
+- Last Updated: 05/25/2024 09:45 PM EDT
 - Authors: Joseph Armstrong (armstrongjoseph08@gmail.com)
 - file: `./core/views/edit_season_view.py`
 - Purpose: Code behind for the window
@@ -992,9 +992,6 @@ class SeasonView:
             print(values)
             print(event)
 
-            if change_count == 1:
-                window["-APPLY_BUTTON-"].update(disabled=False)
-
             if event in (sg.WIN_CLOSED, "Exit"):
                 keep_open = False
             elif event == "-OK_BUTTON-" and (change_count != 0):
@@ -1019,6 +1016,11 @@ class SeasonView:
                 elif check_flag == "No":
                     pass
                 del check_flag
+                window["-APPLY_BUTTON-"].update(disabled=True)
+
+            if change_count == 1:
+                window["-APPLY_BUTTON-"].update(disabled=False)
+            elif change_count == 0:
                 window["-APPLY_BUTTON-"].update(disabled=True)
 
             # if event == "-LG_ID-" and len(values["-LG_ID-"]) > 5:

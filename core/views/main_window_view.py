@@ -1,6 +1,6 @@
 """
 - Creation Date: 01/27/2024 12:00 PM EST
-- Last Updated: 05/18/2024 02:05 PM EDT
+- Last Updated: 05/25/2024 09:45 PM EDT
 - Authors: Joseph Armstrong (armstrongjoseph08@gmail.com)
 - file: `./core/views/main_window_view.py`
 - Purpose: Main startup window for this application.
@@ -19,6 +19,7 @@ from core.settings.settings_core import AppSettings
 from core.views.about_view import about_view
 from core.views.edit_league_view import LeagueView, new_league_view
 from core.views.edit_season_view import SeasonView, new_season_view
+from core.views.edit_team_view import NewTeamView, TeamView
 from core.views.settings_view import SettingsWindow
 
 
@@ -151,11 +152,22 @@ class MainWindow:
             ]
         ]
 
-    def filter_shown_schedule_df(self, lg_abv: str, lg_season: int) -> None:
+    def filter_shown_schedule_df(
+        self,
+        lg_abv: str,
+        lg_season: int,
+        team_abv: str = None
+    ) -> None:
         """ """
         self.shown_schedule_df = self.fb_schedule_df.filter(
             (pl.col("league_id") == lg_abv) & (pl.col("season") == lg_season)
         )
+        if team_abv == "-ALL-":
+            pass
+        elif (team_abv is not None):
+            self.shown_schedule_df = self.shown_schedule_df.filter(
+                (pl.col("away_team_abv") == team_abv) | (pl.col("home_team_abv") == team_abv)
+            )
         self.shown_schedule_df = self.shown_schedule_df.sort(
             "nflverse_game_id"
         )
@@ -277,7 +289,7 @@ class MainWindow:
                     tooltip="Settings/rules for the selected league.",
                     size=(15, 1)
                 ),
-                # sg.Push(),
+                sg.Push(),
                 # sg.Button("test")
             ],
             [
@@ -294,6 +306,7 @@ class MainWindow:
                     key="-SEA_SETTINGS-",
                     size=(15, 1)
                 ),
+                sg.Push(),
             ],
             [
                 sg.Text("Team:\t"),
@@ -301,15 +314,17 @@ class MainWindow:
                     values=self.league_teams,
                     default_value=self.league_teams[0],
                     size=(10, 1),
-                    expand_x=True,
+                    # expand_x=True,
                     enable_events=True,
                     key="-TEAM_SEASON_COMBO-",
                 ),
                 sg.Button(
                     "Team Settings",
                     key="-TEAM_SETTINGS-",
+                    disabled=True,
                     size=(15, 1)
                 ),
+                sg.Push(),
             ],
             [
                 sg.Text("Week:\t"),
@@ -320,6 +335,7 @@ class MainWindow:
                     enable_events=True,
                     key="-WEEK_SEASON_COMBO-",
                 ),
+                sg.Push(),
             ],
             [
                 sg.Button(
@@ -329,6 +345,11 @@ class MainWindow:
             [
                 sg.Button(
                     "New Season", key="New Season", expand_x=True
+                )
+            ],
+            [
+                sg.Button(
+                    "New Team", key="New Team", expand_x=True
                 )
             ],
             [
@@ -365,12 +386,13 @@ class MainWindow:
         layout = [
             [sg.MenuBar(menu_bar, visible=True, key="-WINDOW_MENU-")],
             [],
-            [sg.Text("This is a test.")],
+            # [sg.Text("This is a test.")],
             [
                 sg.Frame(
-                    "test",
+                    "Sidebar",
                     game_sidebar_layout,
                     expand_y=True,
+                    expand_x=True,
                     size=300,
                     pad=0,
                     element_justification="top",
@@ -392,6 +414,7 @@ class MainWindow:
                     expand_y=True,
                     key="-SCHEDULE_TABLE-",
                 ),
+
             ],
         ]
 
@@ -421,6 +444,11 @@ class MainWindow:
                 window["-START_GAME_BUTTON-"].update(disabled=False)
                 window["-EDIT_GAME_BUTTON-"].update(disabled=False)
                 # print(values["-SCHEDULE_TABLE-"][0])
+
+            if values["-TEAM_SEASON_COMBO-"] == "-ALL-":
+                window["-TEAM_SETTINGS-"].update(disabled=True)
+            elif values["-TEAM_SEASON_COMBO-"] != "-ALL-":
+                window["-TEAM_SETTINGS-"].update(disabled=False)
 
             match event:
                 # File Menu
@@ -472,7 +500,24 @@ class MainWindow:
                     )
                     del check, check2
                 case "New Team":
-                    print(event)
+                    # print(event)
+                    check = values["-LEAGUE_ABV_COMBO-"]
+                    check2 = values["-LEAGUE_SEASON_COMBO-"]
+                    check3 = values["-TEAM_SEASON_COMBO-"]
+                    NewTeamView(
+                        settings_json=self.settings_dict,
+                        league_id=values["-LEAGUE_ABV_COMBO-"],
+                        season=check2
+                    )
+                    self.refresh_league_teams(
+                        lg_abv=check,
+                        lg_season=check2
+                    )
+                    window["-TEAM_SEASON_COMBO-"].update(
+                        values=self.league_teams,
+                        value=check3
+                    )
+                    del check, check2, check3
                 case "New Game":
                     print(event)
                 case "New Player":
@@ -543,7 +588,8 @@ class MainWindow:
                     check = values["-LEAGUE_ABV_COMBO-"]
                     LeagueView(
                         settings_json=self.settings_dict,
-                        league_id=values["-LEAGUE_ABV_COMBO-"]
+                        league_id=values["-LEAGUE_ABV_COMBO-"],
+
                     )
 
                     self.refresh_leagues()
@@ -553,7 +599,36 @@ class MainWindow:
                         value=values["-LEAGUE_ABV_COMBO-"]
                     )
                     del check
+                case "-TEAM_SETTINGS-":
 
+                    check = values["-LEAGUE_ABV_COMBO-"]
+                    check2 = values["-LEAGUE_SEASON_COMBO-"]
+                    check3 = values["-TEAM_SEASON_COMBO-"]
+                    TeamView(
+                        settings_json=self.settings_dict,
+                        league_id=values["-LEAGUE_ABV_COMBO-"],
+                        season=check2,
+                        team_id=check3
+                    )
+                    self.refresh_league_teams(
+                        lg_abv=check,
+                        lg_season=check2
+                    )
+                    window["-TEAM_SEASON_COMBO-"].update(
+                        values=self.league_teams,
+                        value=check3
+                    )
+                    del check, check2, check3
+                case "-TEAM_SEASON_COMBO-":
+
+                    self.filter_shown_schedule_df(
+                        lg_abv=values["-LEAGUE_ABV_COMBO-"],
+                        lg_season=values["-LEAGUE_SEASON_COMBO-"],
+                        team_abv=values["-TEAM_SEASON_COMBO-"],
+                    )
+                    window["-SCHEDULE_TABLE-"].update(
+                        values=self.shown_schedule_df.rows()
+                    )
                 case _:
                     pass
 
