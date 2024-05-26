@@ -1,16 +1,13 @@
 """
 - Creation Date: 01/27/2024 12:01 PM EST
-- Last Updated: 05/12/2024 04:25 PM EDT
+- Last Updated: 05/25/2024 09:45 PM EDT
 - Authors: Joseph Armstrong (armstrongjoseph08@gmail.com)
 - file: `./core/views/settings_view.py`
 - Purpose: Settings window for this application.
 """
 
-###############################################################################
-
 import PySimpleGUI as sg
 
-# from core.settings.settings_core import AppSettings, AppThemes
 from core.settings.settings_core import AppSettings
 
 

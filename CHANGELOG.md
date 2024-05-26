@@ -1,5 +1,15 @@
 # Changelog - The Football PBP Application
 
+## 0.0.6: The "Teamwork Makes the Dreams Work" Update:
+
+- Added a prompt that allows one to create a new team within a season.
+- Added a prompt that allows one to edit a team within an existing season.
+- Added a `include_dash_and_underscore` option to `core.other.embedded.LettersAndNumbers().letters_and_numbers()`.
+- Altered the game ID structure from `{season}_{week}_{away team}_{home team}` to `{season}_{league ID}_{week}_{away team}_{home team}`.
+- Added `[espn_team_id]`, `[arenafan_team_id]`, `[team_nation]`, `[]`, and `[stadium_id]` to the `[fb_teams]` table.
+- Consolidated `[ncaa_old_team_id]` and `[ncaa_team_id]` in the `[fb_teams]` table to just `[ncaa_team_id]`.
+- Updated the app version to `0.0.6`
+
 ## 0.0.5: The "Seasons" Update
 - Added a prompt that allows one to create a new season within a football league.
 - Added a prompt that allows one to edit a season within an existing football league.

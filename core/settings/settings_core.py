@@ -1,15 +1,16 @@
 """
-# Creation Date: 01/27/2024 12:02 PM EST
-# Last Updated: 04/15/2024 10:25 AM EDT
-# Authors: Joseph Armstrong (armstrongjoseph08@gmail.com)
-# file: `./core/settings/settings_core.py`
-# Purpose: Core code for the settings of this application.
+- Creation Date: 01/27/2024 12:02 PM EST
+- Last Updated: 05/25/2024 09:45 PM EDT
+- Authors: Joseph Armstrong (armstrongjoseph08@gmail.com)
+- file: `./core/settings/settings_core.py`
+- Purpose: Core code for the settings of this application.
 """
 ###############################################################################
 import json
 import logging
 from os import makedirs, mkdir
 from os.path import exists, expanduser
+
 from core.other.embedded import EmbeddedElements
 from core.time import get_utc_and_local_time
 

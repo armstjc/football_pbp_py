@@ -1,6 +1,6 @@
 """
 - Creation Date: 08/16/2023 07:28 PM EST
-- Last Updated: 05/12/2024 04:25 PM EDT
+- Last Updated: 05/25/2024 09:45 PM EDT
 - Author: Joseph Armstrong (armstrongjoseph08@gmail.com)
 - File Name: ./core/database/create_sdv_pbp_db.py
 - Purpose: Creates a database that can be used for this application.
@@ -6781,27 +6781,30 @@ class SqliteSampleFiles:
             -- Sports Reference Team ID (CFB)
             "sr_team_id"            TEXT,
             -- NCAA Team ID (stats.ncaa.org team ID)
-            "ncaa_old_team_id"      INT,
-            -- NCAA Team ID
-            -- (Newer Genius Sports system,
-            -- not compatible with the stats.ncaa.org site)
             "ncaa_team_id"          INT,
             -- Stats Crew Team ID (Various, https://www.statscrew.com/)
             "stats_crew_team_id"    TEXT,
             -- Football Database Team ID (https://www.footballdb.com/)
             "footballdb_team_id"    TEXT,
+            -- ESPN Team ID
+            "espn_team_id"          INT,
+            -- ArenaFan Team ID (https://www.arenafan.com/)
+            "arenafan_team_id"      INT,
             "team_abv"              TEXT NOT NULL,
             "team_name"             TEXT NOT NULL,
             "team_location"         TEXT NOT NULL,
             "team_nickname"         TEXT NOT NULL,
-            "team_city"             TEXT,
-            "team_state"            TEXT,
-            "team_conference"        TEXT,
+            "team_city"             TEXT NOT NULL,
+            "team_state"            TEXT NOT NULL,
+            "team_nation"           TEXT NOT NULL,
+            "team_conference"       TEXT,
             "team_division"         TEXT,
             "team_head_coach"       TEXT,
             "team_oc"               TEXT,
             "team_dc"               TEXT,
+            "timezone_name"         TEXT NOT NULL,
             "team_notes"            TEXT,
+            "stadium_id"            INT NOT NULL DEFAULT 0,
             FOREIGN KEY ("league_id")
                 REFERENCES "fb_leagues" ("league_id")
                     ON DELETE CASCADE
@@ -6818,13 +6821,39 @@ class SqliteSampleFiles:
             "team_abv",
             "team_name",
             "team_location",
-            "team_nickname"
+            "team_nickname",
+            "team_city",
+            "team_state",
+            "team_nation",
+            "timezone_name"
         )
         VALUES
-            (2019,"DEFL","UGF","UGF",
-                "UGF Pandas","University of Georgia-Fairburn","Pandas"),
-            (2019,"DEFL","DVSU","DVSU",
-                "DVSU Dingoes","Death Valley State University","Dingoes")
+            (
+                2019,
+                "DEFL",
+                "UGF",
+                "UGF",
+                "UGF Pandas",
+                "University of Georgia-Fairburn",
+                "Pandas",
+                "Fairburn",
+                "US-GA",
+                "US",
+                "America/New_York"
+            ),
+            (
+                2019,
+                "DEFL",
+                "DVSU",
+                "DVSU",
+                "DVSU Dingoes",
+                "Death Valley State University",
+                "Dingoes",
+                "Death Valley",
+                "US-NV",
+                "US",
+                'America/Phoenix'
+            )
 
         """
         return sql_script.replace("        ", "")
@@ -7419,10 +7448,45 @@ class SqliteSampleFiles:
             stadium_timezone
         )
         VALUES
-            (1,'UGF',NULL,'Adamo Dome',50000,
-                'Fairburn','US-GA','USA',TRUE,FALSE,'America/Phoenix')
-            ,(2,'DVSU',NULL,'Death Valley Stadium',10000,
-                'Death Valley','US-NV','USA',FALSE,FALSE,'America/New_York');
+            (
+                0,
+                '---',
+                NULL,
+                'Default Stadium',
+                50000,
+                'Cincinnati',
+                'US-OH',
+                'USA',
+                FALSE,
+                FALSE,
+                'America/Kentucky/Louisville'
+            )
+            ,(
+                1,
+                'UGF',
+                NULL,
+                'Adamo Dome',
+                50000,
+                'Fairburn',
+                'US-GA',
+                'USA',
+                TRUE,
+                FALSE,
+                'America/New_York'
+            )
+            ,(
+                2,
+                'DVSU',
+                NULL,
+                'Hale Kitchen',
+                10000,
+                'Death Valley',
+                'US-NV',
+                'USA',
+                FALSE,
+                FALSE,
+                'America/Phoenix'
+            );
 
         """
         return sql_script.replace("        ", "")
@@ -8323,13 +8387,13 @@ class SqliteSampleFiles:
             (although a user could specify additional field surface types):
 
             -- "a_turf"
-            -- "astroplay"
+            -- "astro_play"
             -- "astroturf"
-            -- "dessograss"
-            -- "fieldturf"
+            -- "desso_grass"
+            -- "field_turf"
             -- "grass"
-            -- "matrixturf"
-            -- "sportturf"
+            -- "matrix_turf"
+            -- "sport_turf"
             */
             "surface" STR DEFAULT "grass" NOT NULL,
             "temp_f"                DOUBLE, -- Temperature, in Fahrenheit (°F)
@@ -8374,7 +8438,7 @@ class SqliteSampleFiles:
             2019,
             'DEFL',
             'finished',
-            '2019_1_DVSU_UGF',
+            '2019_DEFL_01_DVSU_UGF',
             'REG',
             1,
             '08/01/2019',
