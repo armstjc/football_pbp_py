@@ -1,6 +1,6 @@
 """
 - Creation Date: 03/10/2024 4:40 PM EST
-- Last Updated: 05/12/2024 04:25 PM EDT
+- Last Updated: 05/29/2024 01:15 AM EDT
 - Authors: Joseph Armstrong (armstrongjoseph08@gmail.com)
 - file: `./core/settings/about_view.py`
 - Purpose: About page for this application.
@@ -21,10 +21,8 @@ def about_view():
     - Joseph Armstrong (GitHub: armstjc)
 
 
-    This application uses PySimpleGUI version 4.60.5,
-    and uses the `gabrielsroka/PySimpleGUI` fork of PySimpleGUI.
-
-    Copyright 2018, 2019, 2020, 2021, 2022, 2023 PySimpleGUI(tm).
+    This application uses FreeSimpleGUI version 5.1,
+    a continuation of PySimpleGUI 4.
 
     MaxPreps is a registered trademark of CBS Broadcasting Inc.
 

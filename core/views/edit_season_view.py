@@ -1,6 +1,6 @@
 """
 - Creation Date: 03/10/2024 04:35 PM EDT
-- Last Updated: 05/25/2024 09:45 PM EDT
+- Last Updated: 05/29/2024 01:15 AM EDT
 - Authors: Joseph Armstrong (armstrongjoseph08@gmail.com)
 - file: `./core/views/edit_season_view.py`
 - Purpose: Code behind for the window
@@ -13,7 +13,7 @@ import sqlite3
 from datetime import datetime
 
 import polars as pl
-import PySimpleGUI as sg
+import FreeSimpleGUI as sg
 
 from core.database.load_db_elements import SqliteLoadData
 from core.database.sqlite3_connectors import initialize_sqlite3_connectors
@@ -1018,9 +1018,9 @@ class SeasonView:
                 del check_flag
                 window["-APPLY_BUTTON-"].update(disabled=True)
 
-            if change_count == 1:
+            if change_count == 1 and event not in (sg.WIN_CLOSED, 'Exit'):
                 window["-APPLY_BUTTON-"].update(disabled=False)
-            elif change_count == 0:
+            elif change_count == 0 and event not in (sg.WIN_CLOSED, 'Exit'):
                 window["-APPLY_BUTTON-"].update(disabled=True)
 
             # if event == "-LG_ID-" and len(values["-LG_ID-"]) > 5:

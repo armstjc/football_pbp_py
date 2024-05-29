@@ -1,5 +1,12 @@
 # Changelog - The Football PBP Application
 
+## 0.0.7: The "Roster" Update:
+
+- Added a new window that allows a user to edit a roster, add players, manage players on a roster, and delete players from a roster (if needed).
+- Transitioned from `PySimpleGUI` version `4.60.5` to `FreeSimpleGUI` version `5.1` due to [the PySimpleGUI version being yanked from PyPi](https://pypi.org/project/PySimpleGUI/4.60.5/).
+- Fixed a potential bug in both `core.views.edit_league_view.LeagueView().league_edit_view()` and `core.views.edit_season_view.SeasonView().season_edit_view()` that could cause the app to crash when exiting the window associated with the two classes in Windows 10.
+- Updated the app version to `0.0.7`.
+
 ## 0.0.6: The "Teamwork Makes the Dreams Work" Update:
 
 - Added a prompt that allows one to create a new team within a season.
@@ -8,7 +15,7 @@
 - Altered the game ID structure from `{season}_{week}_{away team}_{home team}` to `{season}_{league ID}_{week}_{away team}_{home team}`.
 - Added `[espn_team_id]`, `[arenafan_team_id]`, `[team_nation]`, `[]`, and `[stadium_id]` to the `[fb_teams]` table.
 - Consolidated `[ncaa_old_team_id]` and `[ncaa_team_id]` in the `[fb_teams]` table to just `[ncaa_team_id]`.
-- Updated the app version to `0.0.6`
+- Updated the app version to `0.0.6`.
 
 ## 0.0.5: The "Seasons" Update
 - Added a prompt that allows one to create a new season within a football league.
@@ -24,12 +31,12 @@
 - Fixed a minor edge case issue in `core.views.main_window_view.MainWindow().refresh_league_seasons()` that would occasionally result in the list of seasons being noticeably out of order.
 - Added `"New League"` and `"New League"` buttons to the main window in `core.views.main_window_view.MainWindow()`.
 - Fixed a minor edge case in `core.views.main_window_view.MainWindow()` where the window would occasionally forget which league you had previously selected when accessing that league's settings.
-- Updated the app version to `0.0.5`
+- Updated the app version to `0.0.5`.
 
 ## 0.0.4a: The "quick fix security" Update
 - Fixed a potential security issue in `core.views.edit_league_view.new_league_view()` caused by unwanted characters being passed in.
 - Fixed a potential security issue in `core.views.edit_league_view.new_league_view()` caused by too many characters being passed in.
-- Updated the app version to `0.0.4a`
+- Updated the app version to `0.0.4a`.
 
 ## 0.0.4: The "Leagues of Leagues" Update
 - Added a prompt that allows one to create a new football league.
@@ -37,7 +44,7 @@
 - Added an "About" window for the application.
 - Fixed a number of unforeseen bugs that were encountered when changing between differient football leagues and/or seasons.
 - Simplified the `"fb_leagues"` and `"fb_seasons"` tables.
-- Updated the app version to `0.0.4`
+- Updated the app version to `0.0.4`.
 
 ## 0.0.3: The "The Structure" Update
 - Fixed spelling errors found in the code.
