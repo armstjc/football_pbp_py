@@ -1,6 +1,6 @@
 """
 - Creation Date: 01/27/2024 12:00 PM EST
-- Last Updated: 05/25/2024 09:45 PM EDT
+- Last Updated: 05/29/2024 01:15 AM EDT
 - Authors: Joseph Armstrong (armstrongjoseph08@gmail.com)
 - file: `./core/views/main_window_view.py`
 - Purpose: Main startup window for this application.
@@ -10,7 +10,7 @@ from os.path import expanduser
 
 # from threading import Thread
 import polars as pl
-import PySimpleGUI as sg
+import FreeSimpleGUI as sg
 
 from core.database.load_db_elements import SqliteLoadData
 from core.database.sqlite3_connectors import initialize_sqlite3_connectors
@@ -21,7 +21,7 @@ from core.views.edit_league_view import LeagueView, new_league_view
 from core.views.edit_season_view import SeasonView, new_season_view
 from core.views.edit_team_view import NewTeamView, TeamView
 from core.views.settings_view import SettingsWindow
-
+from core.views.edit_roster_view import RosterView
 
 class MainWindow:
     """ """
@@ -123,6 +123,7 @@ class MainWindow:
         self.main()
 
     def load_settings(self) -> None:
+        """ """
         # Load in settings file
         self.settings_dict = self.app_settings.load_settings()
         self.set_settings()
@@ -166,7 +167,8 @@ class MainWindow:
             pass
         elif (team_abv is not None):
             self.shown_schedule_df = self.shown_schedule_df.filter(
-                (pl.col("away_team_abv") == team_abv) | (pl.col("home_team_abv") == team_abv)
+                (pl.col("away_team_abv") == team_abv) |
+                (pl.col("home_team_abv") == team_abv)
             )
         self.shown_schedule_df = self.shown_schedule_df.sort(
             "nflverse_game_id"
@@ -174,6 +176,7 @@ class MainWindow:
         self.clean_shown_schedule_df()
 
     def refresh_league_weeks(self):
+        """ """
         self.fb_schedule_df = SqliteLoadData.load_fb_schedule(
             self.sqlite3_con, self.sqlite3_cur
         )
@@ -213,6 +216,7 @@ class MainWindow:
         self.leagues_list.sort()
 
     def refresh_league_seasons(self, league: str):
+        """ """
         self.fb_seasons_df = SqliteLoadData.load_seasons(
             self.sqlite3_con, self.sqlite3_cur
         )
@@ -334,6 +338,12 @@ class MainWindow:
                     size=(10, 1),
                     enable_events=True,
                     key="-WEEK_SEASON_COMBO-",
+                ),
+                sg.Button(
+                    "Edit Rosters",
+                    key="-EDIT_ROSTERS-",
+                    # disabled=True,
+                    size=(15, 1)
                 ),
                 sg.Push(),
             ],
@@ -562,6 +572,13 @@ class MainWindow:
                         values=self.shown_schedule_df.rows()
                     )
 
+                case "-EDIT_ROSTERS-":
+                    RosterView(
+                        settings_json=self.settings_dict,
+                        league_id=values["-LEAGUE_ABV_COMBO-"],
+                        season=values["-LEAGUE_SEASON_COMBO-"]
+
+                    )
                 case "-LEAGUE_SEASON_COMBO-":
                     self.filter_shown_schedule_df(
                         values["-LEAGUE_ABV_COMBO-"],

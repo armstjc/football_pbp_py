@@ -1,6 +1,6 @@
 """
 - Creation Date: 2/3/2024 1:18 PM EDT
-- Last Updated: 05/25/2024 09:45 PM EDT
+- Last Updated: 05/29/2024 01:15 AM EDT
 - Authors: Joseph Armstrong (armstrongjoseph08@gmail.com)
 - file: `./resources/embedded.py`
 - Purpose: Holds data that is embedded into this app,
@@ -12,7 +12,7 @@
 class EmbeddedElements:
     def app_version():
         """ """
-        return "0.0.6"
+        return "0.0.7"
 
     def desktop_icon():
         """ """
@@ -684,10 +684,15 @@ class LettersAndNumbers:
             phrase += " "
         return phrase
 
-    def numbers_all(include_space: bool = False):
+    def numbers_all(
+        include_space: bool = False,
+        include_dash_and_underscore: bool = False
+    ):
         phrase = "0123456789"
         if include_space is True:
             phrase += " "
+        if include_dash_and_underscore is True:
+            phrase += "_-"
         return phrase
 
     def letters_and_numbers(

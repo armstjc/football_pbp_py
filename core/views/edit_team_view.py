@@ -1,6 +1,6 @@
 """
 - Creation Date: 03/10/2024 4:35 PM EDT
-- Last Updated: 05/25/2024 09:45 PM EDT
+- Last Updated: 05/29/2024 01:15 AM EDT
 - Authors: Joseph Armstrong (armstrongjoseph08@gmail.com)
 - file: `./core/views/new_game_view.py`
 - Purpose: Code behind for the window that allows a user
@@ -8,7 +8,7 @@
 """
 
 import polars as pl
-import PySimpleGUI as sg
+import FreeSimpleGUI as sg
 
 from core.database.load_db_elements import SqliteLoadData
 from core.database.sqlite3_connectors import initialize_sqlite3_connectors
