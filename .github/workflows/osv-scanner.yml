@@ -34,6 +34,7 @@ jobs:
     with:
       # Example of specifying custom arguments
       scan-args: |-
+        --lockfile=requirements.txt
         -r
         --skip-git
         ./
@@ -43,6 +44,7 @@ jobs:
     with:
       # Example of specifying custom arguments
       scan-args: |-
+        --lockfile=requirements.txt
         -r
         --skip-git
         ./
