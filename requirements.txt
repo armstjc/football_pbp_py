@@ -4,3 +4,4 @@
 FreeSimpleGUI>=5.1
 tzlocal>=5.2
 polars>=0.20.6
+pytz>=2024.1

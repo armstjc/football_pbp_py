@@ -1,5 +1,12 @@
 # Changelog - The Football PBP Application
 
+## 0.0.8: The "Schedule" Update:
+- Added `core.time.convert_datetime_into_utc_time()`, a function that takes an a given date, time, and timezone, and returns back an ISO 8061 datetime, as well as the UTC datetime based on inputted data.
+- Added a new window that allows a user to edit a game, and it's surrounding information.
+- Added a new window that allows a user to create a game, and input any surrounding information.
+- Updated the app version to `0.0.8`.
+
+
 ## 0.0.7: The "Roster" Update:
 
 - Added a new window that allows a user to edit a roster, add players, manage players on a roster, and delete players from a roster (if needed).
