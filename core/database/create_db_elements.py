@@ -1,6 +1,6 @@
 """
 - Creation Date: 08/16/2023 07:28 PM EST
-- Last Updated: 05/29/2024 01:15 AM EDT
+- Last Updated: 06/04/2024 01:15 PM EDT
 - Author: Joseph Armstrong (armstrongjoseph08@gmail.com)
 - File Name: ./core/database/create_sdv_pbp_db.py
 - Purpose: Creates a database that can be used for this application.
@@ -6825,7 +6825,8 @@ class SqliteSampleFiles:
             "team_city",
             "team_state",
             "team_nation",
-            "timezone_name"
+            "timezone_name",
+            "stadium_id"
         )
         VALUES
             (
@@ -6839,7 +6840,8 @@ class SqliteSampleFiles:
                 "Fairburn",
                 "US-GA",
                 "US",
-                "America/New_York"
+                "America/New_York",
+                1
             ),
             (
                 2019,
@@ -6852,8 +6854,23 @@ class SqliteSampleFiles:
                 "Death Valley",
                 "US-NV",
                 "US",
-                'America/Phoenix'
-            )
+                'America/Phoenix',
+                2
+            ),
+            (
+                2019,
+                "DEFL",
+                "RCU",
+                "RCU",
+                "RCU Moon Men",
+                "Rocket City",
+                "Moon Men",
+                "Huntsville",
+                "US-AL",
+                "US",
+                "America/New_York",
+                3
+            );
 
         """
         return sql_script.replace("        ", "")
@@ -9921,6 +9938,19 @@ class SqliteSampleFiles:
                 FALSE,
                 FALSE,
                 'America/Phoenix'
+            )
+            ,(
+                3,
+                'RCU',
+                NULL,
+                'Apollo Field',
+                30000,
+                'Huntsville',
+                'US-AL',
+                'USA',
+                FALSE,
+                FALSE,
+                'America/New_York'
             );
 
         """
@@ -10760,47 +10790,63 @@ class SqliteSampleFiles:
 
         sql_script = """
         CREATE TABLE IF NOT EXISTS "fb_schedule"(
-            "game_is_in_progress"   INTEGER NOT NULL DEFAULT 0,
-            "game_is_finished"      INTEGER NOT NULL DEFAULT 0,
             "season"                INT NOT NULL,
             "game_id"               INTEGER PRIMARY KEY AUTOINCREMENT,
+            "game_is_in_progress"   INTEGER NOT NULL DEFAULT 0,
+            "game_is_finished"      INTEGER NOT NULL DEFAULT 0,
             "league_id"             TEXT NOT NULL,
+
             -- Can be "finished", "in_progress", "delayed", or "not_started"
-            "game_status"           TEXT NOT NULL,
-            -- Formatted as "[season]_[week]_[away_team_abv]_[home_team_abv]".
+            "game_status"           TEXT NOT NULL DEFAULT "not_started",
+
+            -- Formatted as
+            -- "[season]_[league]_[week]_[away_team_abv]_[home_team_abv]".
             "nflverse_game_id"      TEXT NOT NULL,
+
             -- Can be "PRE", "REG", or "POST".
             -- Optionally, postseason games can be represented by
             -- > "WC" (wild card)
             -- > "DIV" (divisional round)
             -- > "CON" (conference championship)
             -- > "SB" (Super Bowl)
+            -- > "CHAMP" (Non-Super Bowl championship)
             "game_type"             TEXT NOT NULL,
             "week"                  INT NOT NULL,
+
             -- Dates will be stored as "YYYY-MM-DD".
             "game_day"              TEXT NOT NULL,
+
             -- Formatted as "HH:MM:SS", in 24-hour time.
             "game_time"             TEXT NOT NULL,
+            "game_datetime"         TEXT NOT NULL,
             "game_time_zone"        TEXT NOT NULL,
-            -- Stored as "YYYY-MM-DDTHH:MM:SS"
+
+            -- Stored as "YYYY-MM-DDTHH:MM:SS+00:00"
             "game_datetime_utc"     TEXT NOT NULL,
             "game_day_of_week"      TEXT NOT NULL, -- Like "Monday" or "Sunday"
+            "game_nation"           TEXT NOT NULL,
+            "game_state"            TEXT NOT NULL,
+
             "away_team_abv"         TEXT NOT NULL,
             "away_team_score"       INT DEFAULT 0 NOT NULL,
             "home_team_abv"         TEXT NOT NULL,
             "home_team_score"       INT DEFAULT 0 NOT NULL,
             "nflverse_old_game_id"  INT,
             "gsis_id"               INT,
-            "nfl_detail_id"         TEXT,
             "pfr_game_id"           TEXT,
             "pff_game_id"           TEXT,
             "espn_game_id"          INT,
             "ftn_game_id"           INT,
+            "ncaa_game_id"           INT,
+            "football_db_game_id"   TEXT,
+            "arenafan_game_id"      INT,
+            "yahoo_game_id"         TEXT,
             "away_days_rest"        INT,
             "home_days_rest"        INT,
             "is_neutral_site_game"  BOOLEAN DEFAULT FALSE NOT NULL,
             "is_overtime_game"      BOOLEAN DEFAULT FALSE NOT NULL,
             "is_divisional_game"    BOOLEAN DEFAULT FALSE NOT NULL,
+
             /*
             Can be one of the following categories:
             -- "dome": Means the game is played in a stadium with
@@ -10816,6 +10862,7 @@ class SqliteSampleFiles:
                 and the roof is OPEN for this game.
             */
             "game_roof"             TEXT NOT NULL,
+
             /*
             Playing surface used in this game.
             Can be  one of the following categories
@@ -10833,13 +10880,10 @@ class SqliteSampleFiles:
             "surface" STR DEFAULT "grass" NOT NULL,
             "temp_f"                DOUBLE, -- Temperature, in Fahrenheit (°F)
             "temp_c"                DOUBLE, -- Temperature, in Celsius (°C)
+
             -- Wind Speed, in MPH unless otherwise specified.
             "wind"                  INT,
-            "away_coach_name"       TEXT NOT NULL,
-            "home_coach_name"       TEXT NOT NULL,
-            "stadium_ID"            INT NOT NULL,
-            "stadium_name"          TEXT NOT NULL,
-            "pfr_stadium_id"        TEXT,
+            "stadium_id"            INT NOT NULL,
             FOREIGN KEY ("stadium_id") REFERENCES "fb_stadiums" ("stadium_id")
                 ON DELETE NO ACTION
                 ON UPDATE NO ACTION
@@ -10858,15 +10902,15 @@ class SqliteSampleFiles:
             "game_day",
             "game_time",
             "game_time_zone",
+            "game_datetime",
             "game_datetime_utc",
             "game_day_of_week",
+            "game_nation",
+            "game_state",
             "away_team_abv",
             "home_team_abv",
             "game_roof",
             "surface",
-            "away_coach_name",
-            "home_coach_name",
-            "stadium_name",
             "stadium_id"
         )
         VALUES (
@@ -10876,18 +10920,18 @@ class SqliteSampleFiles:
             '2019_DEFL_01_DVSU_UGF',
             'REG',
             1,
-            '08/01/2019',
+            '2019-08-01',
             '12:00',
             'EST',
-            '2019-08-01T07:00:00',
+            '2019-08-01T07:00:00+04:00',
+            '2019-08-01T07:00:00Z',
             'Thursday',
+            'US',
+            'US-OH',
             'DVSU',
             'UGF',
             'dome',
             'fieldturf',
-            'Bob Gyles',
-            'Caden Ernest',
-            'Adamo Dome',
             1
         );
 

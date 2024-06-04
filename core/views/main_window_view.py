@@ -1,6 +1,6 @@
 """
 - Creation Date: 01/27/2024 12:00 PM EST
-- Last Updated: 05/29/2024 01:15 AM EDT
+- Last Updated: 06/04/2024 03:23 PM EDT
 - Authors: Joseph Armstrong (armstrongjoseph08@gmail.com)
 - file: `./core/views/main_window_view.py`
 - Purpose: Main startup window for this application.
@@ -8,20 +8,22 @@
 
 from os.path import expanduser
 
-# from threading import Thread
-import polars as pl
 import FreeSimpleGUI as sg
+import polars as pl
 
 from core.database.load_db_elements import SqliteLoadData
 from core.database.sqlite3_connectors import initialize_sqlite3_connectors
 from core.other.embedded import EmbeddedElements
 from core.settings.settings_core import AppSettings
 from core.views.about_view import about_view
+from core.views.edit_game_view import EditGameView
 from core.views.edit_league_view import LeagueView, new_league_view
+from core.views.edit_roster_view import RosterView
 from core.views.edit_season_view import SeasonView, new_season_view
 from core.views.edit_team_view import NewTeamView, TeamView
+from core.views.new_game_view import NewGameView
 from core.views.settings_view import SettingsWindow
-from core.views.edit_roster_view import RosterView
+
 
 class MainWindow:
     """ """
@@ -63,7 +65,7 @@ class MainWindow:
 
     # Weeks
     league_weeks = [None]
-    default_week = 1
+    default_week = 0
 
     # Teams
     league_teams = [None]
@@ -157,12 +159,21 @@ class MainWindow:
         self,
         lg_abv: str,
         lg_season: int,
-        team_abv: str = None
+        team_abv: str = None,
+        week: int = None
     ) -> None:
         """ """
         self.shown_schedule_df = self.fb_schedule_df.filter(
-            (pl.col("league_id") == lg_abv) & (pl.col("season") == lg_season)
+            (pl.col("league_id") == lg_abv)
         )
+
+        if lg_season == "-ALL-":
+            pass
+        elif lg_season > 1800:
+            self.shown_schedule_df = self.fb_schedule_df.filter(
+                (pl.col("season") == lg_season)
+            )
+
         if team_abv == "-ALL-":
             pass
         elif (team_abv is not None):
@@ -170,6 +181,15 @@ class MainWindow:
                 (pl.col("away_team_abv") == team_abv) |
                 (pl.col("home_team_abv") == team_abv)
             )
+        if week is None:
+            pass
+        elif week == 0:
+            pass
+        elif week > 0 or week < 0:
+            self.shown_schedule_df = self.shown_schedule_df.filter(
+                (pl.col("week") == week)
+            )
+
         self.shown_schedule_df = self.shown_schedule_df.sort(
             "nflverse_game_id"
         )
@@ -187,6 +207,8 @@ class MainWindow:
         # If there is a week 1, this move gets negated by the
         # `set()` function.
         self.league_weeks.append(1)
+
+        self.league_weeks.append(0)
 
         self.league_weeks = list(set(self.league_weeks))
         self.league_weeks.sort()
@@ -224,6 +246,11 @@ class MainWindow:
             pl.col("league_id") == league
         )["season"].to_list()
         self.league_seasons.sort()
+
+    def refresh_schedules(self):
+        self.fb_schedule_df = SqliteLoadData.load_fb_schedule(
+            self.sqlite3_con, self.sqlite3_cur
+        )
 
     def main(self):
         """ """
@@ -364,7 +391,7 @@ class MainWindow:
             ],
             [
                 sg.Button(
-                    "New Game", key="New Game", expand_x=True
+                    "New Game", key="-NEW_GAME_BUTTON-", expand_x=True
                 )
             ],
             [
@@ -468,8 +495,8 @@ class MainWindow:
                 case "Exit":
                     keep_open = False
                 # File
-                case "New Game":
-                    print(event)
+                # case "New Game":
+                #     print(event)
                 # case "Load Game":
                 #     print(event)
                 case "Import Game":
@@ -528,8 +555,23 @@ class MainWindow:
                         value=check3
                     )
                     del check, check2, check3
-                case "New Game":
-                    print(event)
+                case "-NEW_GAME_BUTTON-" | "New Game":
+                    check = values["-LEAGUE_ABV_COMBO-"]
+                    check2 = values["-LEAGUE_SEASON_COMBO-"]
+                    NewGameView(
+                        settings_json=self.settings_dict,
+                        season=check2,
+                        league_id=check
+                    )
+                    self.refresh_schedules()
+                    self.filter_shown_schedule_df(
+                        lg_abv=values["-LEAGUE_ABV_COMBO-"],
+                        lg_season=self.league_seasons[0]
+                    )
+                    window["-SCHEDULE_TABLE-"].update(
+                        values=self.shown_schedule_df.rows()
+                    )
+                    del check, check2
                 case "New Player":
                     print(event)
                 # Settings
@@ -646,6 +688,35 @@ class MainWindow:
                     window["-SCHEDULE_TABLE-"].update(
                         values=self.shown_schedule_df.rows()
                     )
+                case "-EDIT_GAME_BUTTON-":
+                    check = values["-SCHEDULE_TABLE-"][0]
+                    check2 = self.shown_schedule_df["nflverse_game_id"][check]
+                    EditGameView(
+                        settings_json=self.settings_dict,
+                        game_id=check2
+                    )
+                    self.refresh_schedules()
+                    self.filter_shown_schedule_df(
+                        lg_abv=values["-LEAGUE_ABV_COMBO-"],
+                        lg_season=self.league_seasons[0]
+                    )
+                    window["-SCHEDULE_TABLE-"].update(
+                        values=self.shown_schedule_df.rows()
+                    )
+                    window["-EDIT_GAME_BUTTON-"].update(
+                        disabled=True
+                    )
+                    del check, check2
+                case "-WEEK_SEASON_COMBO-":
+                    self.filter_shown_schedule_df(
+                        lg_abv=values["-LEAGUE_ABV_COMBO-"],
+                        lg_season=values["-LEAGUE_SEASON_COMBO-"],
+                        week=values["-WEEK_SEASON_COMBO-"]
+                    )
+                    window["-SCHEDULE_TABLE-"].update(
+                        values=self.shown_schedule_df.rows()
+                    )
+
                 case _:
                     pass
 

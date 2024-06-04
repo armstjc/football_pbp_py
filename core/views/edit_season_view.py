@@ -1,6 +1,6 @@
 """
 - Creation Date: 03/10/2024 04:35 PM EDT
-- Last Updated: 05/29/2024 01:15 AM EDT
+- Last Updated: 06/04/2024 01:15 PM EDT
 - Authors: Joseph Armstrong (armstrongjoseph08@gmail.com)
 - file: `./core/views/edit_season_view.py`
 - Purpose: Code behind for the window
@@ -12,8 +12,8 @@ import operator
 import sqlite3
 from datetime import datetime
 
-import polars as pl
 import FreeSimpleGUI as sg
+import polars as pl
 
 from core.database.load_db_elements import SqliteLoadData
 from core.database.sqlite3_connectors import initialize_sqlite3_connectors

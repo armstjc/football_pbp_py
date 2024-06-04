@@ -1,14 +1,14 @@
 """
 - Creation Date: 03/10/2024 4:35 PM EDT
-- Last Updated: 05/29/2024 01:15 AM EDT
+- Last Updated: 05/31/2024 01:15 PM EDT
 - Authors: Joseph Armstrong (armstrongjoseph08@gmail.com)
 - file: `./core/views/new_game_view.py`
 - Purpose: Code behind for the window that allows a user
     to view and edit a teams.
 """
 
-import polars as pl
 import FreeSimpleGUI as sg
+import polars as pl
 
 from core.database.load_db_elements import SqliteLoadData
 from core.database.sqlite3_connectors import initialize_sqlite3_connectors
@@ -270,9 +270,7 @@ class TeamView():
         for i in range(0, len(temp_state_names_arr)):
             temp_state_name = temp_state_names_arr[i]
             temp_iso = self.iso_states_arr[i]
-            self.show_states_arr.append(
-                f"{temp_state_name} ({temp_iso})"
-            )
+            self.show_states_arr.append(f"({temp_iso}) {temp_state_name}")
             del temp_state_name
             del temp_iso
 
